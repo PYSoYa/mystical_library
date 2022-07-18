@@ -2,19 +2,17 @@ package com.its.library.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Getter@Setter
+@EntityListeners(AuditingEntityListener.class)
+@Getter
 public class BaseEntity {
-    @Column(name = "createdDateTime")
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdDateTime;
-    @Column(name = "updateDateTime")
-    private LocalDateTime updateDateTime;
-
 }

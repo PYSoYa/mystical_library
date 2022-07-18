@@ -18,8 +18,10 @@ public class HistoryEntity {
     private Long memberId;
     @Column(name = "episodeId")
     private Long episodeId;
-    @Column(name = "lastTime",nullable = true,updatable = true)
+    @Column(name = "lastTime",nullable = false,updatable = false)
     private LocalDateTime lastTime;
     @Column(name = "hidden",columnDefinition = "int default 0")
     private int hidden;
+    //열람내역 - 맴버 manyToOne
+    //열람내역 - 회차 oneToMany
 }

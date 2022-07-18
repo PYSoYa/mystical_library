@@ -18,5 +18,10 @@ public class ReqReportEntity {
     private Long commentId;
     @Column(name = "debutCommentId")
     private Long debutCommentId;
+    //신고 - 맴버 manyToOne
+    //신고 - 작가댓글 manyToOne
+    //신고 - 데뷔글 댓글 manyToOne
+
+
 
 }

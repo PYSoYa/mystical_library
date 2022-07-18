@@ -16,9 +16,11 @@ public class DebutCommentEntity {
     private Long debutId;
     @Column(name = "memberId")
     private Long memberId;
-    @Column(name = "memberName",nullable = true,length = 20)
+    @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
-    @Column(name = "contents",nullable = true,length = 500)
+    @Column(name = "contents",nullable = false,length = 500)
     private String contents;
-
+    //데뷔글 댓글- 데뷔글 ManyToOne
+    //데뷔글 댓글- 맴버 ManyToOne
+    
 }

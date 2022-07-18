@@ -12,7 +12,8 @@ public class DebutCategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "category",nullable = true,length = 20)
+    @Column(name = "category",nullable = false,length = 20)
     private String category;
+    //데뷔글 카테고리- 데뷔글 oneToMany
 
 }

@@ -14,5 +14,6 @@ public class ReqWriterEntity {
     private Long id;
     @Column(name = "memberId")
     private Long memberId;
+    //작가승인 - 멤버 manyToOne
 
 }

@@ -12,20 +12,26 @@ public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "genreId",nullable = true)
+    @Column(name = "genreId",nullable = false)
     private Long genreId;
-    @Column(name = "memberId",nullable = true)
+    @Column(name = "memberId",nullable = false)
     private Long memberId;
-    @Column(name = "memberName",nullable = true,length = 20)
+    @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
     @Column(name = "with",length = 50)
     private String with;
-    @Column(name = "bookTitle",nullable = true,length = 50)
+    @Column(name = "bookTitle",nullable = false,length = 50)
     private String bookTitle;
-    @Column(name = "introduce",nullable = true,length = 500)
+    @Column(name = "introduce",length = 500)
     private String introduce;
-    @Column(name = "bookImgName",nullable = true,length = 100)
+    @Column(name = "bookImgName",nullable = false,length = 100)
     private String bookImgName;
-    @Column(name = "status",nullable = true,length = 10)
+    @Column(name = "status",nullable = false,length = 10)
     private String status;
+    //책 - 회차  oneToMany
+    //책 - 맴버  manyToOne
+    //책 - 보관함 manyToOne
+    //책 - 장르 manyToOne
+    //책 - 관심 oneToMany
+
 }

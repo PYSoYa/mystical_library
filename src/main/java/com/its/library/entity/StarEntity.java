@@ -16,6 +16,9 @@ public class StarEntity {
     private Long memberId;
     @Column(name = "episodeId")
     private Long episodeId;
-    @Column(name = "star",nullable = true)
+    @Column(name = "star",nullable = false)
     private Double star;
+    //별점 - 맴버 manyToOne
+    //별점 - 회차 manyToOne
+
 }
