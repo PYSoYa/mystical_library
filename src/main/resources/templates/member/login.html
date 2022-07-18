@@ -7,6 +7,10 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+  <form action="/member/login" method="post">
+    <input type="text" id="loginId" name="loginId" placeholder="아이디"><br>
+    <input type="password" id="memberPassword" name="memberPassword" placeholder="비밀번호"><br>
+    <input type="submit" th:value="로그인">
+  </form>
 </body>
 </html>
