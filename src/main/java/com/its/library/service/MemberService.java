@@ -48,6 +48,7 @@ public class MemberService {
             return null;
         }
     }
+    //아이디 찾기
     public MemberEntity findById(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         if(optionalMemberEntity.isPresent()){
