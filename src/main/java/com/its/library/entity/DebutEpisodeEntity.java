@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.DebutEpisodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,10 +13,12 @@ public class DebutEpisodeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "categoryId",nullable = false)
-    private Long categoryId;
-    @Column(name = "memberId")
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId")
+    private DebutCategoryEntity debutCategoryEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
     @Column(name = "feat",nullable = false,length = 50)
@@ -30,7 +33,21 @@ public class DebutEpisodeEntity {
     private int debutHits;
     @Column(name = "debutImgName",length = 200)
     private String debutImgName;
+
     //데뷔글 - 데뷔글 카테고리 manyToOne
     //데뷔글 - 데뷔글 댓글 OneToMany
     //데뷔글 - 좋아요  OneToMany
+    public static DebutEpisodeEntity toSave(DebutCategoryEntity categoryEntity, DebutEpisodeDTO debutEpisodeDTO, MemberEntity memberEntity) {
+        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
+        debutEpisodeEntity.setMemberEntity(memberEntity);
+        debutEpisodeEntity.setMemberName(memberEntity.getMemberName());
+        debutEpisodeEntity.setFeat(debutEpisodeDTO.getFeat());
+        debutEpisodeEntity.setDebutImgName(debutEpisodeDTO.getDebutImgName());
+        debutEpisodeEntity.setDebutCategoryEntity(categoryEntity);
+        debutEpisodeEntity.setDebutTitle(debutEpisodeDTO.getDebutTitle());
+        debutEpisodeEntity.setDebutContents(debutEpisodeDTO.getDebutContents());
+        debutEpisodeEntity.setIntroduce(debutEpisodeDTO.getIntroduce());
+        return debutEpisodeEntity;
+    }
+
 }

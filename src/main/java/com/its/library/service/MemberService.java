@@ -48,6 +48,15 @@ public class MemberService {
             return null;
         }
     }
+    public MemberEntity findById(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if(optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity =optionalMemberEntity.get();
+            return memberEntity;
+        }
+        return null;
+    }
+
 
 
     public MemberDTO myPage(Long id) {
