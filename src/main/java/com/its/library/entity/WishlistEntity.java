@@ -11,14 +11,21 @@ import javax.persistence.*;
 public class WishlistEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "wishlistId")
     private Long id;
-    @Column(name = "memberId")
-    private Long memberId;
-    @Column(name = "bookId")
-    private Long bookId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookId")
+    private BookEntity bookEntity;
+
     @Column(name = "memberName",length = 20)
     private String memberName;
-    //관심 - 맴버 manyToOne
-    //관심 - 책 manyToOne
+
+    //관심 - 맴버 manyToOne ㅇ
+    //관심 - 책 manyToOne ㅇ
 
 }

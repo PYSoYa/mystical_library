@@ -33,6 +33,7 @@ public class MemberService {
         return id;
     }
 
+    // 아이디+비밀번호 체크 후 로그인 처리
     public MemberDTO login(MemberDTO memberDTO) {
        Optional<MemberEntity> memberEntity = memberRepository.findByLoginId(memberDTO.getLoginId());
         if(memberEntity.isPresent()){

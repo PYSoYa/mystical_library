@@ -14,7 +14,7 @@ public class BookDTO {
     private Long genreId;
     private Long memberId;
     private String memberName;
-    private String with;
+    private String feat;
     private String bookTitle;
     private String introduce;
     private MultipartFile bookImg;

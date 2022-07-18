@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.ValueGenerationType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter@Setter
@@ -13,6 +15,7 @@ import javax.persistence.*;
 public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "memberId")
     private Long id;
     @Column(name = "loginId",length = 20,unique = true,nullable = false)
     private String loginId;
@@ -30,17 +33,51 @@ public class MemberEntity {
     private String memberImgName;
     @Column(name = "role",nullable = true,length = 20)
     private String role;
-    //멤버 - 책 oneToMany
-    //멤버 - 보관홤 oneToMany
-    //멤버 - 작가댓글 oneToMany
-    //멤버 - 비작가 댓글 oneToMany
-    //멤버 - 열람내역 oneToMany
-    //멤버 - 좋아요 oneToMany
-    //멤버 - 포인트 oneToMany
-    //멤버 - 신고 oneToMany
-    //멤버 - 작가승인 oneToMany
-    //멤버 - 별점 oneToMany
-    //멤버 - 관심  oneToMany
+    //멤버 - 책 oneToMany ㅇ
+    //멤버 - 보관홤 oneToMany ㅇ
+    //멤버 - 작가댓글 oneToMany ㅇ
+    //멤버 - 비작가 댓글 oneToMany ㅇ
+    //멤버 - 열람내역 oneToMany ㅇ
+    //멤버 - 좋아요 oneToMany ㅇ
+    //멤버 - 포인트 oneToMany ㅇ
+    //멤버 - 신고 oneToMany ㅇ
+    //멤버 - 작가승인 oneToMany ㅇ
+    //멤버 - 별점 oneToMany ㅇ
+    //멤버 - 관심  oneToMany ㅇ
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BookEntity> bookEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoxEntity> boxEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DebutCommentEntity> debutCommentEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<HistoryEntity> historyEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LoveEntity> loveEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PointEntity> pointEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReqReportEntity> reqReportEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReqWriterEntity> reqWriterEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StarEntity> starEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<WishlistEntity> wishlistEntityList = new ArrayList<>();
+
 
     public static MemberEntity saveEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();

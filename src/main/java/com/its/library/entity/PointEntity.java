@@ -11,13 +11,21 @@ import javax.persistence.*;
 public class PointEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pointId")
     private Long id;
-    @Column(name = "memberId")
-    private Long memberId;
-    @Column(name = "episodeId")
-    private Long episodeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "episodeId")
+    private EpisodeEntity episodeEntity;
+
     @Column(name = "point")
     private int point;
-    //포인트(결제) - 맴버 manyToOne
-    //포인트(결제) - 회차 manyToOne
+
+
+    //포인트(결제) - 맴버 manyToOne ㅇ
+    //포인트(결제) - 회차 manyToOne ㅇ
 }

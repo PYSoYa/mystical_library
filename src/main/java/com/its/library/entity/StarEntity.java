@@ -11,14 +11,20 @@ import javax.persistence.*;
 public class StarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "starId")
     private Long id;
-    @Column(name = "memberId")
-    private Long memberId;
-    @Column(name = "episodeId")
-    private Long episodeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "episodeId")
+    private EpisodeEntity episodeEntity;
+
     @Column(name = "star",nullable = false)
     private Double star;
-    //별점 - 맴버 manyToOne
-    //별점 - 회차 manyToOne
+    //별점 - 맴버 manyToOne ㅇ
+    //별점 - 회차 manyToOne ㅇ
 
 }

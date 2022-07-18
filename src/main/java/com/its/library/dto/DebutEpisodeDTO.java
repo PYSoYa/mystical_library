@@ -16,7 +16,7 @@ public class DebutEpisodeDTO {
     private Long categoryId;
     private Long memberId;
     private String memberName;
-    private String with;
+    private String feat;
     private String debutTitle;
     private String introduce;
     private String debutContents;
