@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +31,20 @@ public class MemberService {
         MemberEntity memberEntity = MemberEntity.saveEntity(memberDTO);
         Long id = memberRepository.save(memberEntity).getId();
         return id;
+    }
+
+    public MemberDTO login(MemberDTO memberDTO) {
+       Optional<MemberEntity> memberEntity = memberRepository.findByLoginId(memberDTO.getLoginId());
+        if(memberEntity.isPresent()){
+            if(memberDTO.getMemberPassword().equals(memberEntity.get().getMemberPassword())){
+                MemberDTO loginDTO = MemberDTO.toDTO(memberEntity.get());
+                return loginDTO;
+            }
+            else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

@@ -23,5 +23,10 @@ public class MemberDTO {
     private String role;
 
 
-
+    public static MemberDTO toDTO(MemberEntity memberEntity) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setLoginId(memberEntity.getLoginId());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        return memberDTO;
+    }
 }
