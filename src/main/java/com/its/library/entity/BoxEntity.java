@@ -16,5 +16,7 @@ public class BoxEntity {
     private Long memberId;
     @Column(name = "bookId")
     private Long bookId;
+    //보관함 - 맴버 manyToOne
+    //보관함 - 책 oneToMany
 
 }

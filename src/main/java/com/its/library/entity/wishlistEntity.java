@@ -16,5 +16,9 @@ public class wishlistEntity {
     private Long memberId;
     @Column(name = "bookId")
     private Long bookId;
+    @Column(name = "memberName",length = 20)
+    private String memberName;
+    //관심 - 맴버 manyToOne
+    //관심 - 책 manyToOne
 
 }

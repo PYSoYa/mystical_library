@@ -14,5 +14,7 @@ public class GenreEntity {
     private Long id;
     @Column(name = "genre",nullable = false,length = 20)
     private String genre;
+    //장르-카테고리 manyToOne
+    //장르- 책 oneToMany
 
 }

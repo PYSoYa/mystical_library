@@ -16,8 +16,10 @@ public class CommentEntity {
     private Long memberId;
     @Column(name = "episodeId")
     private Long episodeId;
-    @Column(name = "memberName",nullable = true,length = 20)
+    @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
-    @Column(name = "contents",nullable = true,length = 500)
+    @Column(name = "contents",nullable = false,length = 500)
     private String contents;
+    //댓글-회차 ManyToOne
+    //댓글-맴버 ManyToOne
 }

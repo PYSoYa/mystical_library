@@ -18,5 +18,6 @@ public class PointEntity {
     private Long episodeId;
     @Column(name = "point")
     private int point;
-
+    //포인트(결제) - 맴버 manyToOne
+    //포인트(결제) - 회차 manyToOne
 }

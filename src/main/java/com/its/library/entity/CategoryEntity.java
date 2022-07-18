@@ -13,7 +13,7 @@ public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "category",nullable = true,length = 20)
+    @Column(name = "category",nullable = false,length = 20)
     private String category;
-
+    //카테고리 - 장르 oneToMany
 }

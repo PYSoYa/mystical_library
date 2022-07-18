@@ -18,5 +18,6 @@ public class LoveEntity {
     private Long debutId;
     @Column(name = "love")
     private int love;
-
+    //좋아요 - 맴버 manyToOne
+    //좋아요 - 데뷔글 manyToOne
 }
