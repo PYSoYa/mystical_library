@@ -13,13 +13,13 @@ public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "loginId",length = 20,unique = false,nullable = false)
+    @Column(name = "loginId",length = 20,unique = true,nullable = false)
     private String loginId;
-    @Column(name = "memberEmail",length = 50,unique = false,nullable = false)
+    @Column(name = "memberEmail",length = 50,unique = true,nullable = false)
     private String memberEmail;
     @Column(name = "memberPassword", nullable = false,length = 100)
     private String memberPassword;
-    @Column(name = "memberName",length = 20,unique = false)
+    @Column(name = "memberName",length = 20,unique = true)
     private String memberName;
     @Column(name = "memberPoint",columnDefinition = "int default 500")//columnDefinition = "int default 500"초기값 500
     private int memberPoint;
