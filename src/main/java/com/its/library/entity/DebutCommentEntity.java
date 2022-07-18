@@ -11,11 +11,13 @@ import javax.persistence.*;
 public class DebutCommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "debutCommentId")
     private Long id;
     @Column(name = "debutId")
     private Long debutId;
-    @Column(name = "memberId")
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
     @Column(name = "contents",nullable = false,length = 500)

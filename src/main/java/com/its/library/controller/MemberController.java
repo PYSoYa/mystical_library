@@ -41,7 +41,9 @@ public class MemberController {
     // 로그인 처리
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
-        memberService.login(memberDTO);
+
+        MemberDTO memberDTO1 = memberService.login(memberDTO);
+        session.setAttribute("id",memberDTO1.getId());
         return "index";
     }
 }

@@ -13,8 +13,9 @@ public class LoveEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loveId")
     private Long id;
-    @Column(name = "memberId")
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
     @Column(name = "debutId")
     private Long debutId;
     @Column(name = "love")
