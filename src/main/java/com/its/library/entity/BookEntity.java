@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter@Setter
@@ -11,15 +13,21 @@ import javax.persistence.*;
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bookId")
     private Long id;
-    @Column(name = "genreId",nullable = false)
-    private Long genreId;
-    @Column(name = "memberId",nullable = false)
-    private Long memberId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genreId",nullable = false)
+    private GenreEntity genreEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId",nullable = false)
+    private MemberEntity memberEntity;
+
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
-    @Column(name = "with",length = 50)
-    private String with;
+    @Column(name = "feat",length = 50)
+    private String feat;
     @Column(name = "bookTitle",nullable = false,length = 50)
     private String bookTitle;
     @Column(name = "introduce",length = 500)
@@ -28,10 +36,23 @@ public class BookEntity {
     private String bookImgName;
     @Column(name = "status",nullable = false,length = 10)
     private String status;
-    //책 - 회차  oneToMany
-    //책 - 맴버  manyToOne
-    //책 - 보관함 manyToOne
-    //책 - 장르 manyToOne
-    //책 - 관심 oneToMany
+
+    @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private  List<WishlistEntity> wishlistEntityList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "boxId", nullable = false)
+    private BoxEntity boxEntity;
+
+
+    //책 - 회차  oneToMany ㅇ
+    //책 - 맴버  manyToOne ㅇ
+    //책 - 보관함 manyToOne ㅇ
+    //책 - 장르 manyToOne  ㅇ
+    //책 - 관심 oneToMany  ㅇ
+
 
 }

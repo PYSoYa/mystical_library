@@ -11,9 +11,12 @@ import javax.persistence.*;
 public class ReqWriterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reqWriterId")
     private Long id;
-    @Column(name = "memberId")
-    private Long memberId;
-    //작가승인 - 멤버 manyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private MemberEntity memberEntity;
+    //작가승인 - 멤버 manyToOne ㅇ
 
 }

@@ -18,8 +18,8 @@ public class DebutEpisodeEntity {
     private Long memberId;
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
-    @Column(name = "with",nullable = false,length = 50)
-    private String with;
+    @Column(name = "feat",nullable = false,length = 50)
+    private String feat;
     @Column(name = "debutTitle",nullable = false,length = 100)
     private String debutTitle;
     @Column(name = "introduce",length = 500)

@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class LoveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "loveId")
     private Long id;
     @Column(name = "memberId")
     private Long memberId;
