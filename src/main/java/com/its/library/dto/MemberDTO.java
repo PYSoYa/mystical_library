@@ -30,4 +30,17 @@ public class MemberDTO {
         memberDTO.setMemberPassword(memberEntity.getMemberPassword());
         return memberDTO;
     }
+
+    public static MemberDTO findDTO(MemberEntity memberEntity) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setLoginId(memberEntity.getLoginId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberName(memberEntity.getMemberName());
+        memberDTO.setMemberPoint(memberEntity.getMemberPoint());
+        memberDTO.setIntroduction(memberEntity.getIntroduction());
+        memberDTO.setMemberImgName(memberEntity.getMemberImgName());
+        return memberDTO;
+    }
 }
