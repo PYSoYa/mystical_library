@@ -7,6 +7,17 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+<form action="/debut/save" method="post" enctype="multipart/form-data">
+  <select name="categoryId">
+    <option value="1">시</option><br>
+    <option value="2">에세이</option><br>
+    <option value="3">웹소설</option><br>
+    <input type="text" name="debutTitle"><br>
+    <textarea name="debutContents"  cols="30" rows="10"></textarea><br>
+    <textarea name="introduce"  cols="30" rows="10"></textarea><br>
+    <input type="file" name="debutImgName"><br>
+    <input type="submit" value="글저장">
+  </select>
+</form>
 </body>
 </html>
