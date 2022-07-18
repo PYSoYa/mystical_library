@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberDTO {
 
     private Long id;
+    private String loginId;
     private String memberEmail;
     private String memberPassword;
     private String memberName;
@@ -19,6 +21,7 @@ public class MemberDTO {
     private MultipartFile memberImg;
     private String memberImgName;
     private String role;
+
 
 
 }

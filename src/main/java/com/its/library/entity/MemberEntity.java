@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ValueGenerationType;
@@ -27,7 +28,7 @@ public class MemberEntity {
     private String introduction;
     @Column(name = "memberImgName",length = 100)
     private String memberImgName;
-    @Column(name = "role",nullable = false,length = 20)
+    @Column(name = "role",nullable = true,length = 20)
     private String role;
     //멤버 - 책 oneToMany
     //멤버 - 보관홤 oneToMany
@@ -41,5 +42,15 @@ public class MemberEntity {
     //멤버 - 별점 oneToMany
     //멤버 - 관심  oneToMany
 
-
+    public static MemberEntity saveEntity(MemberDTO memberDTO){
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setLoginId(memberDTO.getLoginId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberPoint(memberDTO.getMemberPoint());
+        memberEntity.setIntroduction(memberDTO.getIntroduction());
+        memberEntity.setMemberImgName(memberDTO.getMemberImgName());
+        return memberEntity;
+    }
 }

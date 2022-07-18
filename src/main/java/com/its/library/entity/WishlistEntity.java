@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Setter@Getter
 @Table(name = "wishlist")
-public class wishlistEntity {
+public class WishlistEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
