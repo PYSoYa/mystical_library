@@ -1,5 +1,7 @@
 package com.its.library.entity;
 
+import com.its.library.dto.BookDTO;
+import com.its.library.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Getter@Setter
 @Table(name = "book")
 public class BookEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookId")
@@ -46,6 +49,19 @@ public class BookEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boxId", nullable = false)
     private BoxEntity boxEntity;
+
+    public static BookEntity saveEntity(BookDTO bookDTO, MemberEntity memberEntity, GenreEntity genreEntity) {
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setGenreEntity(genreEntity);
+        bookEntity.setMemberEntity(memberEntity);
+        bookEntity.setMemberName(memberEntity.getMemberName());
+        bookEntity.setFeat(bookDTO.getFeat());
+        bookEntity.setBookTitle(bookDTO.getBookTitle());
+        bookEntity.setIntroduce(bookDTO.getIntroduce());
+        bookEntity.setBookImgName(bookDTO.getBookImgName());
+        bookEntity.setStatus(bookDTO.getStatus());
+        return  bookEntity;
+    }
 
 
     //책 - 회차  oneToMany ㅇ

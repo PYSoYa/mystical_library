@@ -4,10 +4,8 @@ import com.its.library.dto.MemberDTO;
 import com.its.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -43,5 +41,13 @@ public class MemberController {
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         memberService.login(memberDTO);
         return "index";
+    }
+
+    // 회원정보 조회
+    @GetMapping("/myPage/{id}")
+    public String myPage(@PathVariable("id") Long id, Model model){
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/myPage";
     }
 }
