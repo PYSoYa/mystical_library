@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter@Setter
 @Table(name = "debut_episode")
-public class DebutEpisodeEntity {
+public class DebutEpisodeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
