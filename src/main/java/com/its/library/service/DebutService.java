@@ -20,6 +20,7 @@ public class DebutService {
     private final MemberService memberService;
     private final DebutCategoryRepository debutCategoryRepository;
 
+    //데뷔글 저장 파일 처리 
     public void save(DebutEpisodeDTO debutEpisodeDTO, Long id) throws IOException {
         MemberEntity memberEntity = memberService.findById(id);
         DebutCategoryEntity categoryEntity= debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId()).get();
