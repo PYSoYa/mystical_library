@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.EpisodeDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,6 +48,18 @@ public class EpisodeEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "episodeEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<StarEntity> starEntityList = new ArrayList<>();
+
+    public static EpisodeEntity saveEntity(EpisodeDTO episodeDTO, BookEntity bookEntity) {
+        EpisodeEntity episodeEntity = new EpisodeEntity();
+        episodeEntity.setBookEntity(bookEntity);
+        episodeEntity.setEpisodeTitle(episodeDTO.getEpisodeTitle());
+        episodeEntity.setEpisodeContents(episodeDTO.getEpisodeContents());
+        episodeEntity.setEpisodeImgName(episodeDTO.getEpisodeImgName());
+        episodeEntity.setPayment(episodeDTO.getPayment());
+        episodeEntity.setEpisodeHits(0);
+        episodeEntity.setHidden(0);
+        return episodeEntity;
+    }
 
 
     //회차 - 책 manyToOne ㅇ

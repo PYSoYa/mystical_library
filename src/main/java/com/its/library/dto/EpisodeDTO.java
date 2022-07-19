@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.EpisodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,28 @@ public class EpisodeDTO {
     private int hidden;
     private LocalDateTime createdTime;
 
+    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int hidden, LocalDateTime createdTime) {
+        this.id = id;
+        this.bookId = bookId;
+        this.episodeTitle = episodeTitle;
+        this.episodeContents = episodeContents;
+        this.episodeImgName = episodeImgName;
+        this.payment = payment;
+        this.episodeHits = episodeHits;
+        this.hidden = hidden;
+        this.createdTime = createdTime;
+    }
 
+    public static EpisodeDTO findDTO(EpisodeEntity episodeEntity) {
+        EpisodeDTO episodeDTO = new EpisodeDTO();
+        episodeDTO.setBookId(episodeEntity.getBookEntity().getId());
+        episodeDTO.setEpisodeTitle(episodeEntity.getEpisodeTitle());
+        episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
+        episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
+        episodeDTO.setPayment(episodeEntity.getPayment());
+        episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
+        episodeDTO.setHidden(episodeEntity.getHidden());
+        episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
+        return episodeDTO;
+    }
 }
