@@ -51,4 +51,14 @@ public class DebutService {
        }
        return null;
     }
+
+    public DebutEpisodeDTO updateForm(Long id) {
+       Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
+       if (optionalDebutEpisodeEntity.isPresent()){
+           DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+          DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity);
+          return debutEpisodeDTO;
+       }
+       return null;
+    }
 }

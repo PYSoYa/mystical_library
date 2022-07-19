@@ -35,8 +35,9 @@ public class DebutController {
       return "debut/detail";
     }
     @GetMapping("/update-form/{id}")
-    public String updateForm(@PathVariable Long id){
-        debutService.updateForm(id);
+    public String updateForm(@PathVariable Long id,Model model){
+      DebutEpisodeDTO debutEpisodeDTO =  debutService.updateForm(id);
+      model.addAttribute("debut",debutEpisodeDTO);
         return "debut/update";
     }
 
