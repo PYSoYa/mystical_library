@@ -34,8 +34,6 @@ public class DebutEpisodeEntity extends BaseEntity {
     @Column(name = "debutImgName",length = 200)
     private String debutImgName;
 
-    //데뷔글 - 데뷔글 카테고리 manyToOne
-    //데뷔글 - 데뷔글 댓글 OneToMany
     //데뷔글 - 좋아요  OneToMany
     public static DebutEpisodeEntity toSave(DebutCategoryEntity categoryEntity, DebutEpisodeDTO debutEpisodeDTO, MemberEntity memberEntity) {
         DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
@@ -50,4 +48,17 @@ public class DebutEpisodeEntity extends BaseEntity {
         return debutEpisodeEntity;
     }
 
+    public static DebutEpisodeEntity  toUpdate(DebutCategoryEntity debutCategoryEntity,DebutEpisodeDTO debutEpisodeDTO,MemberEntity memberEntity) {
+        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
+        debutEpisodeEntity.setId(debutEpisodeDTO.getId());
+        debutEpisodeEntity.setMemberEntity(memberEntity);
+        debutEpisodeEntity.setMemberName(memberEntity.getMemberName());
+        debutEpisodeEntity.setFeat(debutEpisodeDTO.getFeat());
+        debutEpisodeEntity.setDebutImgName(debutEpisodeDTO.getDebutImgName());
+        debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
+        debutEpisodeEntity.setDebutTitle(debutEpisodeDTO.getDebutTitle());
+        debutEpisodeEntity.setDebutContents(debutEpisodeDTO.getDebutContents());
+        debutEpisodeEntity.setIntroduce(debutEpisodeDTO.getIntroduce());
+        return debutEpisodeEntity;
+    }
 }

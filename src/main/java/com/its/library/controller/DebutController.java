@@ -34,5 +34,24 @@ public class DebutController {
       model.addAttribute("debut",debutEpisodeDTO);
       return "debut/detail";
     }
+    //데뷔글 업데이트 폼
+    @GetMapping("/update-form/{id}")
+    public String updateForm(@PathVariable Long id,Model model){
+      DebutEpisodeDTO debutEpisodeDTO =  debutService.updateForm(id);
+      model.addAttribute("debut",debutEpisodeDTO);
+        return "debut/update";
+    }
+    //데뷔글 업데이트 처리
+    @PostMapping("/update")
+    public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO){
+        debutService.update(debutEpisodeDTO);
+        return "index";
+    }
+    //글 삭제 처리
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        debutService.delete(id);
+        return "index";
+    }
 
 }

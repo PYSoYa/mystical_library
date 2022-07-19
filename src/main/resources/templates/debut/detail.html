@@ -14,6 +14,8 @@
     <th>제목</th>
     <th>작성시간</th>
     <th>내용</th>
+    <th>수정</th>
+    <th>삭제</th>
   </tr>
   <tr>
     <td><img th:src="@{|/upload/${debut.getDebutImgName()}|}" width="100" height="100"> </td>
@@ -21,6 +23,10 @@
     <td th:text="${debut.getDebutTitle()}"></td>
     <td th:text="${debut.getCreatedTime()}"></td>
     <td th:text="${debut.getDebutContents()}"></td>
+    <td th:text="${debut.getDebutContents()}"></td>
+    <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
+    <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
+
   </tr>
 </table>
 </body>
