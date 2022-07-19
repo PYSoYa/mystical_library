@@ -1,0 +1,33 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/* root */
+*, *::after, *::before {font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased;}
+html {line-height: normal; color: #222; font-weight: 400; font-size: 0.875rem; letter-spacing: -0.03em; -webkit-text-size-adjust: 100%;}
+body {background-color: #fff;}
+input {font-family: inherit; appearance: none; background: none; box-shadow: none; border: 0; border-radius: 0; margin: 0; padding: 0;}
+a {text-decoration: none; outline: none; font-family: inherit; cursor: pointer; color:inherit;}
+a:link {text-decoration: none; -webkit-text-decoration: none;}
+ul {list-style-type: none; margin: 0; padding: 0;}
+li {line-height: initial;}
+hr {margin: 0; padding: 0; box-sizing: content-box; overflow: visible;}
+h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
+
+
+/* footer */
+.container {width: 100% !important; max-width: 1170px !important;}
+.footer {position: relative !important; z-index: 1 !important; padding: 1.125rem 0 !important; font-size: 0.75rem !important; line-height: 1.25rem !important; text-align: center !important; color: #909090 !important; backface-visibility: hidden !important;}
+.footer b {font-weight: 700 !important;}
+.footer .list-inline {margin: 0 !important;}
+.footer .copyright {display: block !important; margin-top: 0.625rem !important; font-weight: 400 !important; font-size: 0.75rem !important; text-transform: uppercase !important;}
+.footer address {max-width: 640px !important; margin: 1.25rem auto 0 !important; font-size: 0.688rem !important; text-align: center !important; word-break: keep-all !important; -webkit-font-smoothing: antialiased !important; color: #b4b4b4 !important;}
+.footer address > span:not(:last-child)::after {content: ''; display: inline-block; width: 0; height: 0.75rem; margin: 0.125rem 0.25rem 0 0.5rem; vertical-align: text-top; border-left: 1px solid rgba(0,0,0,.15);}
+.footer .guide {font-size: 0.688rem; text-align: center; word-break: keep-all; -webkit-font-smoothing: antialiased; color: #b4b4b4;}
+.list-inline-item, .list-inline-item-last {position: relative !important; line-height: 1.2 !important;}
+.list-inline-item > *, .list-inline-item-last > * {line-height: 1 !important;}
+.list-inline-item:not(:last-child) {margin-right: 10px !important;}
+.list-inline-item:not(:last-child)::after {content: '' !important; position: absolute !important; top: calc(50% - 0.45em) !important; right: -7px !important; width: 0 !important; height: 0.9em !important; border-right: 1px solid !important; opacity: .25 !important;}
+.list-inline-item .list-inline-item-a, .list-inline-item-last .list-inline-item-a {color: currentColor !important; text-decoration: none !important; outline: none !important;}
+.list-inline-item .divider-none, address span {margin-right: 0 !important;}
+.list-inline-item-last {display: inline-block;}
