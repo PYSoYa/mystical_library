@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <!-- CSS only -->
+
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script th:src="@{/js/jquery.js}"></script>
   <title>신비한 서재입니다.</title>
 </head>
 <body>
@@ -16,18 +21,53 @@
     <th>내용</th>
     <th>수정</th>
     <th>삭제</th>
+    <th>좋아요</th>
   </tr>
   <tr>
-    <td><img th:src="@{|/upload/${debut.getDebutImgName()}|}" width="100" height="100"> </td>
-    <td th:text="${debut.getId()}"></td>
-    <td th:text="${debut.getDebutTitle()}"></td>
-    <td th:text="${debut.getCreatedTime()}"></td>
-    <td th:text="${debut.getDebutContents()}"></td>
-    <td th:text="${debut.getDebutContents()}"></td>
+    <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"> </td>
+    <td th:text="${debut.id}"></td>
+    <td th:text="${debut.debutTitle}"></td>
+    <td th:text="${debut.createdTime}"></td>
+    <td th:text="${debut.debutContents}"></td>
     <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
     <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
-
+    <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
+    <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
   </tr>
 </table>
+<script th:inline="javascript">
+  function heartCheck(num) {
+    const love = document.getElementById("emptyHeart");
+    const hate = document.getElementById("fullHeart");
+    const memberId = [[${debut.memberId}]];
+    const id= [[${debut.id}]];
+    if (num==1) {
+      $.ajax({
+        type: "get",
+        url: "/debut/love/" + id,
+        data: {"memberId": memberId,"num":num},
+        dataType: "text",
+        success: function (result) {
+            love.className="bi bi-heart-fill";
+        }
+
+      });
+    }else {
+      $.ajax({
+        type: "get",
+        url: "/debut/love/" + id,
+        data: {"memberId": memberId, "num":num},
+        dataType: "text",
+        success: function (result) {
+            hate.className="bi bi-heart";
+        }
+
+      });
+    }
+
+
+  }
+
+</script>
 </body>
 </html>
