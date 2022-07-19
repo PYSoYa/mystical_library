@@ -48,17 +48,8 @@ public class MemberService {
             return null;
         }
     }
-    public MemberEntity findById(Long id) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if(optionalMemberEntity.isPresent()){
-            MemberEntity memberEntity =optionalMemberEntity.get();
-            return memberEntity;
-        }
-        return null;
-    }
 
-
-
+    // 회원 상세조회
     public MemberDTO myPage(Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
         if(memberEntity.isPresent()){
