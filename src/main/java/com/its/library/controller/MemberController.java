@@ -42,6 +42,7 @@ public class MemberController {
 
         MemberDTO memberDTO1 = memberService.login(memberDTO);
         session.setAttribute("id",memberDTO1.getId());
+        session.setAttribute("name", memberDTO1.getMemberName());
         return "index";
     }
 

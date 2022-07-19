@@ -7,6 +7,27 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+  <form action="/book/req-book-save" method="post" enctype="multipart/form-data">
+    <select id="categoryId" name="categoryId">
+      <option value="1">시</option>
+      <option value="2">에세이</option>
+      <option value="3">웹소설</option>
+    </select>
+    <select id="genreId" name="genreId">
+      <option value="1">판타지</option>
+      <option value="2">현판</option>
+      <option value="3">로맨스</option>
+      <option value="4">로판</option>
+      <option value="5">무협</option>
+      <option value="6">BL</option>
+      <option value="7">단행본</option>
+    </select><br>
+    <input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
+    <input type="text" id="feat" name="feat" placeholder="함께하는 작가"><br>
+    <input type="text" id="bookTitle" name="bookTitle" placeholder="도서명"><br>
+    <textarea id="introduce" name="introduce" placeholder="소개글"></textarea><br>
+    <input type="file" id="bookImg" name="bookImg"><br>
+    <input type="submit" th:value="전송">
+  </form>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class MemberEntity {
     private String memberPassword;
     @Column(name = "memberName",length = 20,unique = true)
     private String memberName;
-    @Column(name = "memberPoint",columnDefinition = "int default 500")//columnDefinition = "int default 500"초기값 500
+    @Column(name = "memberPoint")
     private int memberPoint;
     @Column(name = "introduction",length = 500)
     private String introduction;
@@ -86,7 +86,7 @@ public class MemberEntity {
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberName(memberDTO.getMemberName());
-        memberEntity.setMemberPoint(memberDTO.getMemberPoint());
+        memberEntity.setMemberPoint(500);
         memberEntity.setIntroduction(memberDTO.getIntroduction());
         memberEntity.setMemberImgName(memberDTO.getMemberImgName());
         return memberEntity;
