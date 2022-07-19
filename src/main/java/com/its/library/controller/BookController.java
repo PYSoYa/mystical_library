@@ -31,7 +31,7 @@ public class BookController {
 
     @GetMapping("/category")
     public String categoryList(@RequestParam("category") String category){
-
+        bookService.categoryList(category);
         return "book/category";
     }
 }
