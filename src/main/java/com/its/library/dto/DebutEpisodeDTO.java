@@ -1,5 +1,7 @@
 package com.its.library.dto;
 
+import com.its.library.entity.BaseEntity;
+import com.its.library.entity.DebutEpisodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DebutEpisodeDTO {
+public class DebutEpisodeDTO{
 
     private Long id;
     private Long categoryId;
@@ -25,4 +27,13 @@ public class DebutEpisodeDTO {
     private String debutImgName;
     private LocalDateTime createdTime;
 
+    public static DebutEpisodeDTO toDTO(DebutEpisodeEntity debutEpisodeEntity) {
+        DebutEpisodeDTO debutEpisodeDTO = new DebutEpisodeDTO();
+        debutEpisodeDTO.setId(debutEpisodeEntity.getId());
+        debutEpisodeDTO.setDebutTitle(debutEpisodeEntity.getDebutTitle());
+        debutEpisodeDTO.setCreatedTime(debutEpisodeEntity.getCreatedDateTime());
+        debutEpisodeDTO.setDebutImgName(debutEpisodeEntity.getDebutImgName());
+        debutEpisodeDTO.setDebutContents(debutEpisodeEntity.getDebutContents());
+        return debutEpisodeDTO;
+    }
 }
