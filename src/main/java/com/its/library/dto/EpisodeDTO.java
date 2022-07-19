@@ -24,6 +24,17 @@ public class EpisodeDTO {
     private int hidden;
     private LocalDateTime createdTime;
 
+    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int hidden, LocalDateTime createdTime) {
+        this.id = id;
+        this.bookId = bookId;
+        this.episodeTitle = episodeTitle;
+        this.episodeContents = episodeContents;
+        this.episodeImgName = episodeImgName;
+        this.payment = payment;
+        this.episodeHits = episodeHits;
+        this.hidden = hidden;
+        this.createdTime = createdTime;
+    }
 
     public static EpisodeDTO findDTO(EpisodeEntity episodeEntity) {
         EpisodeDTO episodeDTO = new EpisodeDTO();
@@ -34,6 +45,7 @@ public class EpisodeDTO {
         episodeDTO.setPayment(episodeEntity.getPayment());
         episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
         episodeDTO.setHidden(episodeEntity.getHidden());
+        episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
     }
 }

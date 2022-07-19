@@ -1,9 +1,13 @@
 package com.its.library.controller;
 
+import com.its.library.common.PagingConst;
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.EpisodeDTO;
 import com.its.library.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +56,18 @@ public class BookController {
 
     // 책 상세조회
     @GetMapping("/book/{id}")
-    public String bookDetail(@RequestParam("categoryId") Long categoryId, @PathVariable("id") Long id){
+    public String bookDetail(@PageableDefault(page = 1) Pageable pageable,
+                             @RequestParam("categoryId") Long categoryId,
+                             @PathVariable("id") Long id, Model model){
         BookDTO bookDTO = bookService.findById(id);
-        List<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id);
-        return ""
+        model.addAttribute("book", bookDTO);
+        Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+        model.addAttribute("episodeList", episodeDTOList);
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "book/detail";
     }
 
     // 회차 상세조회
@@ -66,7 +78,7 @@ public class BookController {
         BookDTO bookDTO = bookService.findById(bookId);
         model.addAttribute("book", bookDTO);
         model.addAttribute("episode", episodeDTO);
-        return "book/detail";
+        return "book/episodeDetail";
     }
 
 
