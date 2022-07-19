@@ -14,40 +14,6 @@ li {line-height: initial;}
 hr {margin: 0; padding: 0; box-sizing: content-box; overflow: visible;}
 h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 
-/* header */
-.header-div, .category-div, .slider-div {width: 100%; position: relative;}
-.header-header, .category-container, .slider-container {max-width: 1170px; padding: 0 1.875rem; margin: 0 auto; position: relative;}
-.header-nav {display: flex; -webkit-box-pack: justify; -webkit-box-align: center; align-items: center; padding: 1rem 1.125rem 1rem 1.375rem;}
-
-/* 로고 */
-.logo-container {margin-right:auto;}
-.logo-container, .logo-container a {display: flex;}
-.logo-container .logo-wrap {margin-right: 0.75rem;}
-
-/* 검색 */
-.search-form {display: flex; align-items: flex-start; width: 16.25rem; margin-right: 0.5rem;}
-.search-container {min-width: 0; flex: 1;}
-.search-wrap {background: #f0f0f0; border: 1px solid rgba(0, 0, 0, 0.5%); border-radius: 0.375rem; display: flex; align-items: center; padding: 0 0.688rem; height: 2.5rem;}
-.search-wrap .search-icon {flex: none; color: #787878; font-size: 1rem; margin-right: 0.75rem; opacity: 1;}
-.search-wrap .search-input {flex: 1; min-width: 0; height: 100%; font-size: 0.938rem; line-height: 1.125rem; letter-spacing: -0.01em; color: #141414; caret-color: #1E9EFF;}
-.search-wrap .search-input:focus {border: 0; outline: none;}
-
-/* 메뉴 */
-.menu-container {display: flex; -webkit-box-align: center; align-items: center; position: relative;}
-.menu-wrap-div {max-width: 1170px; padding: 0 1.875rem; margin: 0 auto; display: flex;}
-.menu-wrap-ul {display: flex; flex: 0 0 auto;}
-/* 메뉴-로그인 안 된 상태 */
-.sign-up-wrap, .sign-in-wrap {display: inline-flex; justify-content: center; -webkit-box-align: center; align-items: center; padding-top: 0.825rem;}
-.sign-up, .sign-in {display: inline-flex; padding: 0.688rem 0.75rem 0.625rem; font-weight: bold; font-size: 1rem; line-height: 1.125rem; text-align: center; letter-spacing: -0.01em; transition: opacity 0.2s ease;}
-.sign-up::after, .sign-in::after {content: ''; display: inline-block; width: 0.188rem; height: 0.188rem; margin-top: 0.188rem; border-radius: 0.188rem; background: #e6e6e6;}
-.sign-up:hover, .sign-in:hover {opacity: 0.5; transition: 0.2s ease;}
-.sign-up:link, .sign-in:link {color: #666;}
-/* 메뉴-로그인 된 상태 */
-.menu-icon-container {display: flex; -webkit-box-align: center; align-items: center; position: relative;}
-.menu-icon-wrap {display: inline-flex; font-size: 1.75rem; margin: 0 0.375rem; color: #141414;}
-.notification, .wishlist, .box, .my-page {position: relative; display: inline-flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; border: none; background: transparent; padding: 0.438rem 0.375rem 0.313rem;}
-.icon-notification, .icon-wishlist, .icon-box, .icon-my-page {color: #141414; font-size: 2.225rem;}
-
 /* 카테고리 */
 .category-div {margin-top: 1.25rem}
 .category-ul {margin-left: -9.375rem; display: flex; padding: 0 1.875rem 0 1.125rem; justify-content: center;}
