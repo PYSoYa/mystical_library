@@ -30,25 +30,22 @@
     <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
     <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
 
-    <i class="bi bi-heart" id="emptyHeart" th:value="1" onclick="emptyHeart()"></i>
-    <i class="bi bi-heart-fill" th:value="2" id="fullHeart"onclick="fullHeart()"></i>
+    <i class="bi bi-heart" id="emptyHeart" th:value="1" onclick="heartCheck()"></i>
+    <i class="bi bi-heart-fill" th:value="2" id="fullHeart"ontoggle="heartCheck()" ></i>
   </tr>
 </table>
 <script th:inline="javascript">
-  function emptyHeart() {
+  function heartCheck() {
     const love = document.getElementById("emptyHeart").value;
     const hate = document.getElementById("fullHeart").value;
     const id = [[${debut.memberId}]];
-    switch ()
+    $.ajax({
+
+    })
 
 
   }
-  function fullHeart() {
-    const love = document.getElementById("emptyHeart").value;
-    const hate = document.getElementById("fullHeart").value;
 
-
-  }
 </script>
 </body>
 </html>
