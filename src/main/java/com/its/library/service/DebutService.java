@@ -1,6 +1,7 @@
 package com.its.library.service;
 
 import com.its.library.dto.DebutEpisodeDTO;
+import com.its.library.dto.MemberDTO;
 import com.its.library.entity.DebutCategoryEntity;
 import com.its.library.entity.DebutEpisodeEntity;
 import com.its.library.entity.MemberEntity;
@@ -63,7 +64,17 @@ public class DebutService {
     }
 
     public void update(DebutEpisodeDTO debutEpisodeDTO) {
-       DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutEpisodeDTO);
-       debutRepository.save(debutEpisodeEntity);
+       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutEpisodeDTO.getMemberId());
+       Optional<DebutCategoryEntity> optionalDebutCategoryEntity =debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
+       if (optionalMemberEntity.isPresent()){
+           MemberEntity memberEntity = optionalMemberEntity.get();
+           if(optionalDebutCategoryEntity.isPresent()){
+               DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+               DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutCategoryEntity,debutEpisodeDTO,memberEntity);
+               debutRepository.save(debutEpisodeEntity);
+           }
+
+       }
+
     }
 }

@@ -50,12 +50,14 @@ public class DebutEpisodeEntity extends BaseEntity {
         return debutEpisodeEntity;
     }
 
-    public static DebutEpisodeEntity  toUpdate(DebutEpisodeDTO debutEpisodeDTO) {
+    public static DebutEpisodeEntity  toUpdate(DebutCategoryEntity debutCategoryEntity,DebutEpisodeDTO debutEpisodeDTO,MemberEntity memberEntity) {
         DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
         debutEpisodeEntity.setId(debutEpisodeDTO.getId());
-        debutEpisodeEntity.setMemberName(debutEpisodeDTO.getMemberName());
+        debutEpisodeEntity.setMemberEntity(memberEntity);
+        debutEpisodeEntity.setMemberName(memberEntity.getMemberName());
         debutEpisodeEntity.setFeat(debutEpisodeDTO.getFeat());
         debutEpisodeEntity.setDebutImgName(debutEpisodeDTO.getDebutImgName());
+        debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
         debutEpisodeEntity.setDebutTitle(debutEpisodeDTO.getDebutTitle());
         debutEpisodeEntity.setDebutContents(debutEpisodeDTO.getDebutContents());
         debutEpisodeEntity.setIntroduce(debutEpisodeDTO.getIntroduce());
