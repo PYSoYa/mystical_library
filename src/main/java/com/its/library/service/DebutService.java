@@ -77,4 +77,8 @@ public class DebutService {
        }
 
     }
+
+    public void delete(Long id) {
+        debutRepository.deleteById(id);
+    }
 }

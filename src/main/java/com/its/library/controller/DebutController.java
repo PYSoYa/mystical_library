@@ -51,6 +51,7 @@ public class DebutController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
         debutService.delete(id);
+        return "index";
     }
 
 }
