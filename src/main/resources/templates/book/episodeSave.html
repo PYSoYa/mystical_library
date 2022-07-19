@@ -7,6 +7,16 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+  <form action="/book/req-episode-save" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="bookId" name="bookId" th:value="${bookId}"><br>
+    <select name="payment">
+      <option value="0">무료</option>
+      <option value="1">유료</option>
+    </select><br>
+    <input type="text" id="episodeTitle" name="episodeTitle" placeholder="제목"><br>
+    <textarea id="episodeContents" name="episodeContents" placeholder="내용"></textarea><br>
+    <input type="file" id="episodeImg" name="episodeImg" th:value="이미지"><br>
+    <input type="submit" value="전송">
+  </form>
 </body>
 </html>

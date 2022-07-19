@@ -1,16 +1,11 @@
 package com.its.library.service;
 
 import com.its.library.dto.BookDTO;
+import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.GenreDTO;
 import com.its.library.dto.MemberDTO;
-import com.its.library.entity.BookEntity;
-import com.its.library.entity.CategoryEntity;
-import com.its.library.entity.GenreEntity;
-import com.its.library.entity.MemberEntity;
-import com.its.library.repository.BookRepository;
-import com.its.library.repository.CategoryRepository;
-import com.its.library.repository.GenreRepository;
-import com.its.library.repository.MemberRepository;
+import com.its.library.entity.*;
+import com.its.library.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +26,8 @@ public class BookService {
 
     private final CategoryRepository categoryRepository;
     private final GenreRepository genreRepository;
+
+    private final EpisodeRepository episodeRepository;
 
     public BookDTO reqBookSave(BookDTO bookDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
@@ -70,7 +68,47 @@ public class BookService {
         }
     }
 
+    public Long reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
+        MultipartFile episodeImg = episodeDTO.getEpisodeImg();
+        String episodeImgName = episodeImg.getOriginalFilename();
+        episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
+        String savePath = "C:\\springboot_img\\" + episodeImgName;
+        if (!episodeImg.isEmpty()) {
+            episodeImg.transferTo(new File(savePath));
+        }
+        episodeDTO.setEpisodeImgName(episodeImgName);
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTO.getBookId());
+
+        if (optionalBookEntity.isPresent()) {
+            BookEntity bookEntity = optionalBookEntity.get();
+
+            EpisodeEntity episodeEntity = EpisodeEntity.saveEntity(episodeDTO, bookEntity);
+            Long id = episodeRepository.save(episodeEntity).getId();
+
+            return id;
+        } else {
+            return null;
+        }
+
+
+    }
+
+    public EpisodeDTO episodeFindById(Long id){
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
+        if (optionalEpisodeEntity.isPresent()){
+            EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+            EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
+            return episodeDTO;
+        } else {
+            return null;
+        }
+    }
     public void categoryList(String category) {
 
+    }
+
+
+    public List<EpisodeDTO> episodeFindAll(Long bookId) {
+        episodeRepository.find
     }
 }

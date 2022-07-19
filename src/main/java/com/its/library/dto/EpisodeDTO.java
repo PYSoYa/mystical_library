@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.EpisodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,15 @@ public class EpisodeDTO {
     private LocalDateTime createdTime;
 
 
+    public static EpisodeDTO findDTO(EpisodeEntity episodeEntity) {
+        EpisodeDTO episodeDTO = new EpisodeDTO();
+        episodeDTO.setBookId(episodeEntity.getBookEntity().getId());
+        episodeDTO.setEpisodeTitle(episodeEntity.getEpisodeTitle());
+        episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
+        episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
+        episodeDTO.setPayment(episodeEntity.getPayment());
+        episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
+        episodeDTO.setHidden(episodeEntity.getHidden());
+        return episodeDTO;
+    }
 }
