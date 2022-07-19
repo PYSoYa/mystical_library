@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.LoveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,14 @@ public class LoveEntity {
     private Long debutId;
     @Column(name = "love")
     private int love;
+
+    public static LoveEntity toSave(LoveDTO loveDTO, MemberEntity memberEntity) {
+        LoveEntity loveEntity = new LoveEntity();
+        loveEntity.setDebutId(loveDTO.getDebutId());
+        loveEntity.setMemberEntity(memberEntity);
+        loveEntity.setLove(1);
+        return loveEntity;
+    }
     //좋아요 - 맴버 manyToOne
     //좋아요 - 데뷔글 manyToOne
 }

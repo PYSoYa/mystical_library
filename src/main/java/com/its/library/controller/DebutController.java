@@ -1,6 +1,7 @@
 package com.its.library.controller;
 
 import com.its.library.dto.DebutEpisodeDTO;
+import com.its.library.dto.LoveDTO;
 import com.its.library.service.DebutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,43 +16,60 @@ import java.io.IOException;
 @RequestMapping("/debut")
 public class DebutController {
     private final DebutService debutService;
+
     //데뷔글 화면 요청처리
     @GetMapping("/save-form")
-    public String saveForm(){
+    public String saveForm() {
         return "debut/save";
     }
+
     //데뷔글 저장처리
     @PostMapping("/save")
     public String save(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO, HttpSession session) throws IOException {
         Long id = (Long) session.getAttribute("id");
-        debutService.save(debutEpisodeDTO,id);
+        debutService.save(debutEpisodeDTO, id);
         return "index";
     }
+
     //데뷔글 상세조회
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model){
-      DebutEpisodeDTO debutEpisodeDTO = debutService.detail(id);
-      model.addAttribute("debut",debutEpisodeDTO);
-      return "debut/detail";
+    public String detail(@PathVariable Long id, Model model) {
+        DebutEpisodeDTO debutEpisodeDTO = debutService.detail(id);
+        model.addAttribute("debut", debutEpisodeDTO);
+        return "debut/detail";
     }
+
     //데뷔글 업데이트 폼
     @GetMapping("/update-form/{id}")
-    public String updateForm(@PathVariable Long id,Model model){
-      DebutEpisodeDTO debutEpisodeDTO =  debutService.updateForm(id);
-      model.addAttribute("debut",debutEpisodeDTO);
+    public String updateForm(@PathVariable Long id, Model model) {
+        DebutEpisodeDTO debutEpisodeDTO = debutService.updateForm(id);
+        model.addAttribute("debut", debutEpisodeDTO);
         return "debut/update";
     }
+
     //데뷔글 업데이트 처리
     @PostMapping("/update")
-    public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO){
+    public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO) {
         debutService.update(debutEpisodeDTO);
         return "index";
     }
+
     //글 삭제 처리
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) {
         debutService.delete(id);
         return "index";
+    }
+
+    @GetMapping("/love/{id}")
+    public @ResponseBody int love(@PathVariable Long id, @RequestParam("memberId") Long memberId, @RequestParam("num") int num) {
+        if (num == 1) {
+            int resultNum = debutService.loveSave(id, memberId);
+            return resultNum;
+        } else {
+            int resultNum = debutService.loveDelete(id, memberId);
+            return resultNum;
+        }
     }
 
 
