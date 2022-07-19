@@ -61,4 +61,9 @@ public class DebutService {
        }
        return null;
     }
+
+    public void update(DebutEpisodeDTO debutEpisodeDTO) {
+       DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutEpisodeDTO);
+       debutRepository.save(debutEpisodeEntity);
+    }
 }

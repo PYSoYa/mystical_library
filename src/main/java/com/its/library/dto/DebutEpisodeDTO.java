@@ -34,6 +34,11 @@ public class DebutEpisodeDTO{
         debutEpisodeDTO.setCreatedTime(debutEpisodeEntity.getCreatedDateTime());
         debutEpisodeDTO.setDebutImgName(debutEpisodeEntity.getDebutImgName());
         debutEpisodeDTO.setDebutContents(debutEpisodeEntity.getDebutContents());
+        debutEpisodeDTO.setMemberName(debutEpisodeEntity.getMemberName());
+        debutEpisodeDTO.setMemberId(debutEpisodeEntity.getMemberEntity().getId());
+        debutEpisodeDTO.setFeat(debutEpisodeEntity.getFeat());
+        debutEpisodeDTO.setCategoryId(debutEpisodeEntity.getDebutCategoryEntity().getId());
+        debutEpisodeDTO.setIntroduce(debutEpisodeEntity.getIntroduce());
         return debutEpisodeDTO;
     }
 }

@@ -50,4 +50,15 @@ public class DebutEpisodeEntity extends BaseEntity {
         return debutEpisodeEntity;
     }
 
+    public static DebutEpisodeEntity  toUpdate(DebutEpisodeDTO debutEpisodeDTO) {
+        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
+        debutEpisodeEntity.setId(debutEpisodeDTO.getId());
+        debutEpisodeEntity.setMemberName(debutEpisodeDTO.getMemberName());
+        debutEpisodeEntity.setFeat(debutEpisodeDTO.getFeat());
+        debutEpisodeEntity.setDebutImgName(debutEpisodeDTO.getDebutImgName());
+        debutEpisodeEntity.setDebutTitle(debutEpisodeDTO.getDebutTitle());
+        debutEpisodeEntity.setDebutContents(debutEpisodeDTO.getDebutContents());
+        debutEpisodeEntity.setIntroduce(debutEpisodeDTO.getIntroduce());
+        return debutEpisodeEntity;
+    }
 }
