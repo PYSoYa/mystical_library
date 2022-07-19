@@ -20,13 +20,9 @@ public class CategoryEntity {
     @Column(name = "category",nullable = false,length = 20)
     private String category;
 
-    //카테고리 - 장르 oneToMany ㅇ
+    //카테고리 - 책 oneToMany ㅇ
+
     @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<GenreEntity> genreEntityList = new ArrayList<>();
+    private List<BookEntity> bookEntityList = new ArrayList<>();
 
-
-    @PreRemove
-    private void preRemove() {
-        genreEntityList.forEach(genre -> genre.setCategoryEntity(null));
-    }
 }

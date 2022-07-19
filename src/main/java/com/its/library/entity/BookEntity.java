@@ -20,6 +20,10 @@ public class BookEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId", nullable = false)
+    private CategoryEntity categoryEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genreId",nullable = false)
     private GenreEntity genreEntity;
 
@@ -37,8 +41,11 @@ public class BookEntity {
     private String introduce;
     @Column(name = "bookImgName",nullable = false,length = 100)
     private String bookImgName;
-    @Column(name = "status",nullable = false,length = 10)
+    @Column(name = "status", length = 10)
     private String status;
+    @Column
+    private int hidden;
+
 
     @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EpisodeEntity> episodeEntityList = new ArrayList<>();
@@ -47,11 +54,12 @@ public class BookEntity {
     private  List<WishlistEntity> wishlistEntityList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boxId", nullable = false)
+    @JoinColumn(name = "boxId")
     private BoxEntity boxEntity;
 
-    public static BookEntity saveEntity(BookDTO bookDTO, MemberEntity memberEntity, GenreEntity genreEntity) {
+    public static BookEntity saveEntity(BookDTO bookDTO, MemberEntity memberEntity, CategoryEntity categoryEntity, GenreEntity genreEntity) {
         BookEntity bookEntity = new BookEntity();
+        bookEntity.setCategoryEntity(categoryEntity);
         bookEntity.setGenreEntity(genreEntity);
         bookEntity.setMemberEntity(memberEntity);
         bookEntity.setMemberName(memberEntity.getMemberName());
@@ -59,7 +67,8 @@ public class BookEntity {
         bookEntity.setBookTitle(bookDTO.getBookTitle());
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
-        bookEntity.setStatus(bookDTO.getStatus());
+        bookEntity.setStatus("연재");
+        bookEntity.setHidden(0);
         return  bookEntity;
     }
 

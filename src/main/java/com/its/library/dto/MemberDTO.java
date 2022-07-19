@@ -23,13 +23,6 @@ public class MemberDTO {
     private String role;
 
 
-    public static MemberDTO toDTO(MemberEntity memberEntity) {
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberEntity.getId());
-        memberDTO.setLoginId(memberEntity.getLoginId());
-        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
-        return memberDTO;
-    }
 
     public static MemberDTO findDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();

@@ -38,7 +38,7 @@ public class MemberService {
        Optional<MemberEntity> memberEntity = memberRepository.findByLoginId(memberDTO.getLoginId());
         if(memberEntity.isPresent()){
             if(memberDTO.getMemberPassword().equals(memberEntity.get().getMemberPassword())){
-                MemberDTO loginDTO = MemberDTO.toDTO(memberEntity.get());
+                MemberDTO loginDTO = MemberDTO.findDTO(memberEntity.get());
                 return loginDTO;
             }
             else {
