@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class BookDTO {
 
     private Long id;
+    private Long categoryId;
     private Long genreId;
     private Long memberId;
     private String memberName;
@@ -25,6 +26,7 @@ public class BookDTO {
     public static BookDTO findDTO(BookEntity bookEntity) {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setId(bookEntity.getId());
+        bookDTO.setCategoryId(bookEntity.getCategoryEntity().getId());
         bookDTO.setGenreId(bookEntity.getGenreEntity().getId());
         bookDTO.setMemberId(bookEntity.getMemberEntity().getId());
         bookDTO.setMemberName(bookEntity.getMemberName());
