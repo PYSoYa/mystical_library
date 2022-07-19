@@ -8,13 +8,17 @@
 </head>
 <body>
 <form action="/debut/update" method="post" enctype="multipart/form-data">
-  <select name="categoryId" th:value="${debut.getCategoryId()}">
+
+  <select name="categoryId" th:value="${debut.categoryId}">
     <option value="1">시</option><br>
     <option value="2">에세이</option><br>
     <option value="3">웹소설</option><br>
-    <input type="text" name="debutTitle" th:value="${debut.getDebutTitle()}"><br>
-    <textarea th:text="${debut.getDebutContents()}" name="debutContents"  cols="30" rows="10"></textarea><br>
-    <textarea th:text="${debut.getIntroduce()}" name="introduce"  cols="30" rows="10"></textarea><br>
+    <input type="text" name="id" th:value="${debut.id}" hidden><br>
+    <input type="text" name="memberId" th:value="${debut.memberId}" hidden><br>
+    <input type="text" name="memberName" th:value="${debut.memberName}" hidden>
+    <input type="text" name="debutTitle" th:value="${debut.debutTitle}"><br>
+    <textarea th:text="${debut.debutContents}" name="debutContents"  cols="30" rows="10"></textarea><br>
+    <textarea th:text="${debut.introduce}" name="introduce"  cols="30" rows="10"></textarea><br>
     <input type="text" name="feat" th:value="${debut.feat}"><br>
     <input type="file" name="debutImg"><br>
     <input type="submit" value="글저장">
