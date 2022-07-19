@@ -37,13 +37,13 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .menu-wrap-div {max-width: 1170px; padding: 0 1.875rem; margin: 0 auto; display: flex;}
 .menu-wrap-ul {display: flex; flex: 0 0 auto;}
 /* 메뉴-로그인 안 된 상태 */
-.sign-up-wrap, .sign-in-wrap {display: inline-flex; justify-content: center; -webkit-box-align: center; align-items: center; padding-top: 0.75rem;}
+.sign-up-wrap, .sign-in-wrap {display: inline-flex; justify-content: center; -webkit-box-align: center; align-items: center; padding-top: 0.825rem;}
 .sign-up, .sign-in {display: inline-flex; padding: 0.688rem 0.75rem 0.625rem; font-weight: bold; font-size: 1rem; line-height: 1.125rem; text-align: center; letter-spacing: -0.01em; transition: opacity 0.2s ease;}
 .sign-up::after, .sign-in::after {content: ''; display: inline-block; width: 0.188rem; height: 0.188rem; margin-top: 0.188rem; border-radius: 0.188rem; background: #e6e6e6;}
 .sign-up:hover, .sign-in:hover {opacity: 0.5; transition: 0.2s ease;}
 .sign-up:link, .sign-in:link {color: #666;}
 /* 메뉴-로그인 된 상태 */
-.menu-icon-container {display: flex; align-items: center;}
+.menu-icon-container {display: flex; -webkit-box-align: center; align-items: center; position: relative;}
 .menu-icon-wrap {display: inline-flex; font-size: 1.75rem; margin: 0 0.375rem; color: #141414;}
 .notification, .wishlist, .box, .my-page {position: relative; display: inline-flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; border: none; background: transparent; padding: 0.438rem 0.375rem 0.313rem;}
 .icon-notification, .icon-wishlist, .icon-box, .icon-my-page {color: #141414; font-size: 2.225rem;}
@@ -59,6 +59,7 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 
 /* main */
 .main-container {margin-top: 2.5rem; background: #fff; position: relative;}
+.star-symbol {margin: 0.188rem 0.125rem 0.125rem 0; color: #dc3232; font-size: 0.688rem;}
 /* 슬라이더 */
 .w-100 {height: 31.25rem;}
 .carousel-inner {border-radius: 6px;}
@@ -67,15 +68,37 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .popular-books-title-container {display: flex; height: 3rem; padding-top: 0.375rem; padding-bottom: 1rem; -webkit-box-pack: justify; justify-content: space-between;}
 .popular-books-title-wrap {width: 100%; height: 100%; max-width: 360px;}
 .popular-books-title-text {display: flex; align-items: center; width: 100%;}
-.popular-books-title {font-size: 1.375rem; font-weight: 600; line-height: 1.625rem; letter-spacing: -0.01em; display: inline-block; flex-shrink: 1; -webkit-box-flex: 0; flex-grow: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.popular-books-title {font-size: 1.5rem; font-weight: 600; line-height: 1.625rem; letter-spacing: -0.01em; display: inline-block; flex-shrink: 1; -webkit-box-flex: 0; flex-grow: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
 .popular-books-list-container {margin-top: 1.25rem; position: relative;}
 .popular-books-list-wrap {display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; width: 100%; overflow: hidden; overflow: -moz-scrollbars-none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
 .popular-books-list-div {--item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; width: 30rem; height: 30rem; margin-right: 10rem;}
 .popular-books {max-height: 360px; display: flex; margin-bottom: 2.25rem; width: 35rem;}
 .popular-books .rank-wrap .rank {font-size: 1.5rem; font-weight: 500; padding-left: 1.25rem; padding-top: 3.25rem; position: absolute;}
 .popular-books .img-wrap {margin-left: 5rem;}
-.popular-books .img-wrap img {width: 5.25rem; height: 8.25rem;}
+.popular-books .img-wrap img {width: 5.25rem; height: 8.25rem; border-radius: 6px;}
 .popular-books .detail-wrap {margin-left: 2.5rem;}
 .popular-books .detail-wrap .title {font-size: 1.125rem; font-weight: 600;}
 .popular-books .detail-wrap .intro {padding-top: 0.75rem; height: 5rem; word-wrap: break-word;}
+.popular-books .detail-wrap .star-wrap {display: flex;}
+.popular-books .detail-wrap .star-wrap .star {font-size: 0.875rem;}
+/* 최신 데뷔글 */
+.recent-debut-post-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;}
+.recent-debut-post-title-container {display: flex; height: 3rem; padding-top: 0.375rem; padding-bottom: 1rem; -webkit-box-pack: justify; justify-content: space-between;}
+.recent-debut-post-title-wrap {width: 100%; height: 100%; max-width: 360px;}
+.recent-debut-post-title-text {display: flex; align-items: center; width: 100%;}
+.recent-debut-post-title {font-size: 1.5rem; font-weight: 600; line-height: 1.625rem; letter-spacing: -0.01em; display: inline-block; flex-shrink: 1; -webkit-box-flex: 0; flex-grow: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.recent-debut-post-list-container {position: relative;}
+.recent-debut-post-list-wrap {display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-flex-wrap: nowrap; -webkit-flex-wrap: nowrap; -ms-flex-wrap: nowrap; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; overflow: -moz-scrollbars-none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.recent-debut-post-div {display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex: 1 0 auto; -ms-flex: 1 0 auto; flex: 1 0 auto;}
+.recent-debut-post-ul {display: flex; margin-top: 1.25rem;}
+.recent-debut-post-li {margin-right: 2rem;}
+.recent-debut-post {position: relative; display: flex; flex-direction: column; align-items: flex-start;}
+.recent-debut-post .img-wrap {width: 13.5rem; height: 17.5rem;}
+.recent-debut-post .img-wrap .img {width: 13.5rem; height: 17.5rem; border-radius: 0.375rem;}
+.recent-debut-post .detail-wrap {position: relative; display: flex; flex-direction: column; margin-top: 0.875rem;}
+.recent-debut-post .detail-wrap .title {font-size: 1.25rem; font-weight: 600;}
+.recent-debut-post .detail-wrap .author {margin-top: 0.5rem; font-size: 1rem;}
+.recent-debut-post .detail-wrap .star-wrap {display: flex; margin-top: 0.5rem; font-size: 0.875rem;}
+.recent-debut-post .detail-wrap .star-wrap .star {font-size: 0.875rem;}
+
 
