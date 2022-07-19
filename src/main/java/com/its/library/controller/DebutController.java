@@ -4,10 +4,8 @@ import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.service.DebutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -28,7 +26,13 @@ public class DebutController {
         Long id = (Long) session.getAttribute("id");
         debutService.save(debutEpisodeDTO,id);
         return "index";
-
-
     }
+    //데뷔글 상세조회
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+      DebutEpisodeDTO debutEpisodeDTO = debutService.detail(id);
+      model.addAttribute("debut",debutEpisodeDTO);
+      return "debut/detail";
+    }
+
 }
