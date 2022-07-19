@@ -114,12 +114,17 @@ public class BookService {
     }
 
 
-    public Page<EpisodeDTO> episodeFindAll(Long bookId, Pageable pageable) {
+    public Page<EpisodeDTO> episodeFindAll(Long id, Pageable pageable) {
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
+        BookEntity bookEntity = new BookEntity();
+        if (optionalBookEntity.isPresent()) {
+            bookEntity = optionalBookEntity.get();
+        }
 
         int page = pageable.getPageNumber();
 
         page = (page == 1)? 0: (page-1);
-        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookId(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")),bookId);
+        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")),bookEntity);
 
         Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
