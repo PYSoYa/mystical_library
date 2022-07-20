@@ -27,13 +27,7 @@ public class MemberController {
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) throws IOException {
         memberService.save(memberDTO);
-        return "member/login";
-    }
-
-    // 로그인 페이지 요청
-    @GetMapping("/login-form")
-    public String loginForm(){
-        return "member/login";
+        return "index";
     }
 
     // 로그인 처리
@@ -43,7 +37,7 @@ public class MemberController {
         MemberDTO memberDTO1 = memberService.login(memberDTO);
         session.setAttribute("id",memberDTO1.getId());
         session.setAttribute("name", memberDTO1.getMemberName());
-        return "index";
+        return "redirect:/";
     }
 
     // 회원정보 조회

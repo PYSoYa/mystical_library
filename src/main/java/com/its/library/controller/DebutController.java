@@ -1,9 +1,13 @@
 package com.its.library.controller;
 
+import com.its.library.common.PagingConst;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.LoveDTO;
 import com.its.library.service.DebutService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +65,7 @@ public class DebutController {
         return "index";
     }
 
+    //데뷔글 좋아요 처리
     @GetMapping("/love/{id}")
     public @ResponseBody int love(@PathVariable Long id, @RequestParam("memberId") Long memberId, @RequestParam("num") int num) {
         if (num == 1) {
@@ -70,6 +75,19 @@ public class DebutController {
             int resultNum = debutService.loveDelete(id, memberId);
             return resultNum;
         }
+    }
+
+    //데뷔글 페이징 리스트
+    //
+    @GetMapping("/category/{category}")
+    public String list(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.list(categoryId,pageable);
+        model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "debut/list";
     }
 
 
