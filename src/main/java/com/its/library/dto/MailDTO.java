@@ -14,4 +14,5 @@ public class MailDTO {
     private String mailTitle;
     private String fromAddress;
     private BookDTO bookDTO;
+    private EpisodeDTO episodeDTO;
 }
