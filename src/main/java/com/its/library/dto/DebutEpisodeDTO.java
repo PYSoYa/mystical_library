@@ -27,6 +27,20 @@ public class DebutEpisodeDTO{
     private String debutImgName;
     private LocalDateTime createdTime;
 
+    public DebutEpisodeDTO(Long id) {
+    }
+
+    public DebutEpisodeDTO(Long id, Long categoryId, String memberName, String feat, String debutTitle, String introduce, int debutHits, String debutImgName) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.memberName = memberName;
+        this.feat = feat;
+        this.debutTitle = debutTitle;
+        this.introduce = introduce;
+        this.debutHits = debutHits;
+        this.debutImgName = debutImgName;
+    }
+
     public static DebutEpisodeDTO toDTO(DebutEpisodeEntity debutEpisodeEntity) {
         DebutEpisodeDTO debutEpisodeDTO = new DebutEpisodeDTO();
         debutEpisodeDTO.setId(debutEpisodeEntity.getId());
