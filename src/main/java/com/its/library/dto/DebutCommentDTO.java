@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.DebutCommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,8 @@ public class DebutCommentDTO {
     private String contents;
     private LocalDateTime createdTime;
 
+    public static DebutCommentDTO toSave(DebutCommentEntity debutComment) {
+        DebutCommentDTO debutCommentDTO = new DebutCommentDTO();
+        return debutCommentDTO;
+    }
 }

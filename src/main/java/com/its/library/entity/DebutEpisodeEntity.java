@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter@Setter
@@ -33,7 +35,8 @@ public class DebutEpisodeEntity extends BaseEntity {
     private int debutHits;
     @Column(name = "debutImgName",length = 200)
     private String debutImgName;
-
+    @OneToMany(mappedBy = "debutEpisodeEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<DebutCommentEntity> debutCommentEntityList = new ArrayList<>();
     //데뷔글 - 좋아요  OneToMany
     public static DebutEpisodeEntity toSave(DebutCategoryEntity categoryEntity, DebutEpisodeDTO debutEpisodeDTO, MemberEntity memberEntity) {
         DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();

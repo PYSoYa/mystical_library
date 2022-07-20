@@ -34,6 +34,15 @@
     <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
     <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
   </tr>
+  <tr>
+    <form action="/debutComment/save" method="post">
+      <input type="text" id="debutId" th:value="${debut.id}" hidden>
+      <input type="text" id="memberId" th:value="${debut.memberId}" hidden>
+      <input type="text" id="memberName" th:value="${debut.memberName}"readonly>
+      <input type="text" id="contents">
+      <input type="button" onclick="commentSave()" value="댓글작성">
+    </form>
+  </tr>
 </table>
 <script th:inline="javascript">
   function heartCheck(num) {
@@ -67,7 +76,22 @@
 
 
   }
+  function commentSave(){
+    const memberId = document.getElementById("memberId").value;
+    const debutId = document.getElementById("debutId").value;
+    const contents = document.getElementById("contents").value;
+    const memberName = document.getElementById("memberName").value;
+    $.ajax({
+      type:"post",
+      url:"/debutComment/save",
+      data:{"memberId":memberId,"debutId":debutId,"contents":contents,"memberName":memberName}
+      dataType:"json",
+      success:function (result){
 
+      }
+    });
+
+  }
 </script>
 </body>
 </html>
