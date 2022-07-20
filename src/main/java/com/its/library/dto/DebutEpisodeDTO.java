@@ -26,6 +26,8 @@ public class DebutEpisodeDTO{
     private MultipartFile debutImg;
     private String debutImgName;
     private LocalDateTime createdTime;
+    private int love;
+
 
     public DebutEpisodeDTO(Long id) {
     }
