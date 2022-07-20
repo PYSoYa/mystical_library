@@ -1,24 +1,26 @@
 package com.its.library.service;
 
 import com.its.library.common.PagingConst;
-import com.its.library.dto.BookDTO;
-import com.its.library.dto.EpisodeDTO;
-import com.its.library.dto.GenreDTO;
-import com.its.library.dto.MemberDTO;
+import com.its.library.dto.*;
 import com.its.library.entity.*;
 import com.its.library.repository.*;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +29,9 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
-
     private final MemberRepository memberRepository;
-
     private final CategoryRepository categoryRepository;
     private final GenreRepository genreRepository;
-
     private final EpisodeRepository episodeRepository;
 
     public BookDTO reqBookSave(BookDTO bookDTO) throws IOException {
@@ -141,5 +140,29 @@ public class BookService {
 
             return episodeDTOList;
 
+    }
+
+    private final JavaMailSender mailSender;
+    public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException{
+        MultipartFile bookImg = bookDTO.getBookImg();
+        String bookImgName = bookImg.getOriginalFilename();
+        bookImgName = System.currentTimeMillis() + "_" + bookImgName;
+        String savePath = "C:\\springboot_img\\" + bookImgName;
+        if (!bookImg.isEmpty()) {
+            bookImg.transferTo(new File(savePath));
+        }
+        bookDTO.setBookImgName(bookImgName);
+
+        mailDTO.setBookDTO(bookDTO);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailDTO.getToAddress());
+        message.setFrom(mailDTO.getFromAddress());
+        message.setSubject(mailDTO.getMailTitle());
+        message.setText(String.valueOf(mailDTO.getBookDTO()));
+        Date localDateTime = new Date();
+        message.setSentDate(localDateTime);
+        System.out.println("message = " + message);
+        mailSender.send(message);
     }
 }

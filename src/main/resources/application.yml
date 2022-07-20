@@ -16,3 +16,13 @@ spring:
   # 타임리프 캐시 무효화
   thymeleaf:
     cache: false
+
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: dbstjr5402@naver.com
+    password: qkrdbstjr97!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com

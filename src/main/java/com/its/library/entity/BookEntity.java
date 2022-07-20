@@ -72,6 +72,22 @@ public class BookEntity {
         return  bookEntity;
     }
 
+    public static BookEntity updateEntity(BookDTO bookDTO, MemberEntity memberEntity, CategoryEntity categoryEntity, GenreEntity genreEntity) {
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setCategoryEntity(categoryEntity);
+        bookEntity.setGenreEntity(genreEntity);
+        bookEntity.setMemberEntity(memberEntity);
+        bookEntity.setMemberName(memberEntity.getMemberName());
+        bookEntity.setFeat(bookDTO.getFeat());
+        bookEntity.setBookTitle(bookDTO.getBookTitle());
+        bookEntity.setIntroduce(bookDTO.getIntroduce());
+        bookEntity.setBookImgName(bookDTO.getBookImgName());
+        bookEntity.setStatus(bookDTO.getStatus());
+        bookEntity.setHidden(0);
+        return  bookEntity;
+    }
+
+
 
     //책 - 회차  oneToMany ㅇ
     //책 - 맴버  manyToOne ㅇ
