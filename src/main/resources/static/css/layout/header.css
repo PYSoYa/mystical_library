@@ -47,3 +47,43 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .menu-icon-wrap {display: inline-flex; font-size: 1.75rem; margin: 0 0.375rem; color: #141414;}
 .notification, .wishlist, .box, .my-page {position: relative; display: inline-flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; border: none; background: transparent; padding: 0.438rem 0.375rem 0.313rem;}
 .icon-notification, .icon-wishlist, .icon-box, .icon-my-page {color: #141414; font-size: 2.225rem;}
+
+/* modal */
+/* modal-header */
+.modal-sm {--bs-modal-width: 350px !important;}
+.modal-header {justify-content: center !important; box-sizing: border-box !important;}
+.modal-header .sign-in-wrap {display: flex; text-align: center;}
+.modal-header .sign-in-wrap h5 {font-size: 1.25rem; color: #1e9eff; font-family: inherit; font-weight: 600;}
+/* modal-body */
+.modal-body form {margin: 0; padding: 0; font-family: inherit; display: block;}
+.modal-body .input-wrap input {-webkit-appearance: none; appearance: none; background: transparent; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; caret-color: #1e9eff; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 100%; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
+.modal-body .input-wrap input:focus {border-color: #667390;}
+.modal-body .input-wrap input:hover {border-color: #667390;}
+.modal-body .input-wrap ::placeholder {vertical-align: middle;}
+.modal-body .input-wrap label {color: #666; font-size: 0.813rem; font-weight: 400; margin: 0; padding-left: 0.25rem; padding-bottom: 0.25rem;}
+.modal-body .input-wrap span {color: #dd2424; font-size: 0.625rem; font-weight: 400; font-family: inherit; margin: 0; padding-left: 0.25rem; padding-top: 0.25rem;}
+.modal-body .find-wrap span {color: #666; font-size: 0.625rem; font-weight: 400; font-family: inherit; margin: 0; padding: 0 2.5rem;}
+.modal-body .find-wrap .find-pw-wrap span {padding-left: 3.25rem;}
+.modal-body .find-wrap span:hover,
+.modal-body .sign-in-btn-wrap .btn-wrap:hover,
+.modal-footer .social-login-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
+.modal-body .find-wrap div:not(:last-child)::after {content: ''; border: 1px solid #e5e5e5; display: inline-block; width: 0; height: 1rem; margin: 0.125rem 0.25rem 0 0.5rem; vertical-align: text-top; position: absolute; top: 16.45rem;}
+.modal-body .find-wrap {display: flex; justify-content: center; margin-bottom: 1.25rem;}
+.login-form > .input-wrap:not(:last-child) {margin-bottom: 1.25rem;}
+.modal-body .sign-in-btn-wrap {margin-bottom: 0.625rem;}
+.modal-body .sign-in-btn-wrap .btn-wrap .submit-btn {position: relative; width: 100%; color: #faf7eb; font-size: 1rem; background-color: #1e9eff; border-color: #1e9eff; border: 1px solid; border: none; border-radius: 0.188rem; outline: none; margin: 0; padding: 0.813rem 16px 0.875rem; letter-spacing: 0.013rem; justify-content: center; align-items: center; box-shadow: 0 0.125rem 0.313rem #00000026;}
+/* modal-footer */
+.modal-footer {justify-content: center !important;}
+.modal-footer .social-login-wrap {margin-top: 0.625rem; width: 100%;}
+.modal-footer .social-login-wrap span {flex: 1; display: flex; align-items: center; justify-content: center; height: 100%;}
+.modal-footer .social-login-wrap button {display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; height: 3rem; border: 0; border-radius: 0.188rem; padding: 0; margin: 0; background: inherit; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.modal-footer .social-login-wrap img {width: 3rem; height: 3rem; vertical-align: middle; border: 0; margin: 0; padding: 0;}
+.modal-footer .social-login-wrap div:not(:last-child) {margin-bottom: 0.75rem; width: 100%;}
+.modal-footer .social-login-wrap .naver-login-wrap .naver {background-color: #1ec800; color: #fcfcfc;}
+.modal-footer .social-login-wrap .naver-login-wrap .naver img {border-right: 1px solid #04B200;}
+.modal-footer .social-login-wrap .google-login-wrap .google {background-color: #fcfcfc; color: #999;}
+.modal-footer .social-login-wrap .google-login-wrap .google img {border-right: 1px solid #F2F2F2;}
+.modal-footer .social-login-wrap .facebook-login-wrap .facebook {background-color: #4267b2; color: #fcfcfc;}
+.modal-footer .social-login-wrap .facebook-login-wrap .facebook img {border-right: 1px solid #39599E;}
+.modal-footer .social-login-wrap .kakao-login-wrap .kakao {background-color: #fee500; color: #000000 85%;}
+.modal-footer .social-login-wrap .kakao-login-wrap .kakao img {border-right: 1px solid #e4cf00;}
