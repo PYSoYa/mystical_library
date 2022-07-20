@@ -26,7 +26,7 @@ public class BookController {
 
     // 책 저장페이지 요청
     @GetMapping("/book-save-form")
-    public String bookSaveForm(){
+    public String bookSaveForm() {
 
         return "book/save";
     }
@@ -42,8 +42,8 @@ public class BookController {
 
     // 회차 저장페이지 출력
     @GetMapping("/episode-save-form/{id}")
-    public String episodeSaveForm(@PathVariable("id") Long bookId, Model model){
-        model.addAttribute("bookId",bookId);
+    public String episodeSaveForm(@PathVariable("id") Long bookId, Model model) {
+        model.addAttribute("bookId", bookId);
         return "book/episodeSave";
     }
 
@@ -52,12 +52,12 @@ public class BookController {
     public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
         Long id = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
-        return "redirect:/book?category="+ bookDTO.getCategoryId() + "/book/" + id;
+        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + id;
     }
 
     // 책 수정 페이지 출력
     @GetMapping("/req-book-update")
-    public String bookUpdateForm(@RequestParam("id") Long id, Model model){
+    public String bookUpdateForm(@RequestParam("id") Long id, Model model) {
         BookDTO bookDTO = bookService.findById(id);
         model.addAttribute("book", bookDTO);
         return "book/update";
@@ -65,7 +65,7 @@ public class BookController {
 
     // 책 수정처리 요청
     @PostMapping("/req-book-update")
-    public String reqBookUpdate(@ModelAttribute BookDTO bookDTO, @ModelAttribute MailDTO mailDTO) throws IOException{
+    public String reqBookUpdate(@ModelAttribute BookDTO bookDTO, @ModelAttribute MailDTO mailDTO) throws IOException {
 
         bookService.reqBookUpdate(bookDTO, mailDTO);
 //        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + bookDTO.getId();
@@ -76,7 +76,7 @@ public class BookController {
     @GetMapping("/req-episode-update")
     public String episodeUpdateForm(@RequestParam("id") Long id, Model model) {
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
-        model.addAttribute("episode",episodeDTO);
+        model.addAttribute("episode", episodeDTO);
         return "book/episodeUpdate";
     }
 
@@ -87,11 +87,41 @@ public class BookController {
         return "redirect:/";
     }
 
+    // 책 삭제 페이지 요청
+    @GetMapping("/req-book-delete")
+    public String reqBookDeleteForm(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("id", id);
+        return "book/delete";
+    }
+
+    // 책 삭제 요청
+    @PostMapping("/req-book-delete")
+    public String reqBookDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
+                                @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
+        bookService.reqBookDelete(id, memberName, why, mailTitle);
+        return "redirect:/";
+    }
+
+    // 회차 삭제페이지 요청
+    @GetMapping("/req-episode-delete")
+    public String reqEpisodeDeleteForm(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("id", id);
+        return "book/episodeDelete";
+    }
+
+    // 회차 삭제 요청
+    @PostMapping("/req-episode-delete")
+    public String reqEpisodeDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
+                                   @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
+        bookService.reqEpisodeDelete(id, memberName, why, mailTitle);
+        return "redirect:/";
+    }
+
     // 책 상세조회 + 페이징
     @GetMapping("/book/{id}")
     public String bookDetail(@PageableDefault(page = 1) Pageable pageable,
 //                             @RequestParam("category") Long categoryId,
-                             @PathVariable("id") Long id, Model model){
+                             @PathVariable("id") Long id, Model model) {
         BookDTO bookDTO = bookService.findById(id);
         model.addAttribute("book", bookDTO);
         Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
@@ -122,7 +152,6 @@ public class BookController {
         model.addAttribute("episode", episodeDTO);
         return "book/episodeDetail";
     }
-
 
 
 }
