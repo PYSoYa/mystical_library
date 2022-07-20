@@ -3,6 +3,7 @@ package com.its.library.controller;
 import com.its.library.common.PagingConst;
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.EpisodeDTO;
+import com.its.library.dto.MailDTO;
 import com.its.library.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,6 +53,24 @@ public class BookController {
         Long id = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
         return "redirect:/book?category="+ bookDTO.getCategoryId() + "/book/" + id;
+    }
+
+    // 책 수정 페이지 출력
+    @GetMapping("/req-book-update")
+    public String bookUpdateForm(@RequestParam("id") Long id, Model model){
+        BookDTO bookDTO = bookService.findById(id);
+        model.addAttribute("book", bookDTO);
+        return "book/update";
+    }
+
+    // 책 수정처리 요청
+    @PostMapping("/req-book-update")
+    public String reqBookUpdate(@ModelAttribute BookDTO bookDTO, @ModelAttribute MailDTO mailDTO) throws IOException{
+        System.out.println("mailDTO = " + mailDTO);
+
+        bookService.reqBookUpdate(bookDTO, mailDTO);
+//        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + bookDTO.getId();
+        return "index";
     }
 
     // 책 상세조회 + 페이징
