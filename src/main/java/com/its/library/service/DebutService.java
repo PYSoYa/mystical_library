@@ -1,5 +1,6 @@
 package com.its.library.service;
 
+import com.its.library.common.PagingConst;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.LoveDTO;
 import com.its.library.dto.MemberDTO;
@@ -12,9 +13,15 @@ import com.its.library.repository.DebutRepository;
 import com.its.library.repository.LoveRepository;
 import com.its.library.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Pageable;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +54,7 @@ public class DebutService {
         }
 
     }
-
+    //데뷔글 상세조회
     public DebutEpisodeDTO detail(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
         if (optionalDebutEpisodeEntity.isPresent()) {
@@ -60,7 +67,7 @@ public class DebutService {
 
 
     }
-
+    //데뷔글 업데이트 화면 처리
     public DebutEpisodeDTO updateForm(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
         if (optionalDebutEpisodeEntity.isPresent()) {
@@ -72,7 +79,7 @@ public class DebutService {
         }
 
     }
-
+    // 데뷔글 업데이트 처리
     public void update(DebutEpisodeDTO debutEpisodeDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutEpisodeDTO.getMemberId());
         Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
@@ -87,28 +94,13 @@ public class DebutService {
         }
 
     }
-
+    //데뷔글 삭제 처리
     public void delete(Long id) {
         debutRepository.deleteById(id);
     }
 
-    public LoveDTO love(Long debutId, Long memberId) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity memberEntity = optionalMemberEntity.get();
-            Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(debutId, memberEntity);
-            if (optionalLoveEntity.isPresent()) {
-                LoveEntity loveEntity = optionalLoveEntity.get();
-                LoveDTO loveDTO = LoveDTO.toSave(loveEntity, memberEntity);
-                return loveDTO;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
 
+    //데뷔글 좋아요 등록(좋아요 중복체크 좋아요 종합)
     public int loveSave(Long debutId, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
         if (optionalMemberEntity.isPresent()) {
@@ -131,7 +123,7 @@ public class DebutService {
             return 0;
         }
     }
-
+    //좋아요 삭제 기능
     @Transactional
     public int loveDelete(Long debutId, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
@@ -146,5 +138,23 @@ public class DebutService {
         } else {
             return 0;
         }
+    }
+
+    public Page<DebutEpisodeDTO> list(Pageable pageable) {
+        int page = pageable.getPageNumber();
+        page =(page == 1)? 0: (page-1);
+        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findAll(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC,"id")));
+        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutEpisodeEntityPage.map(
+                debutEpisode -> new DebutEpisodeDTO(
+                        debutEpisode.getId(),
+                        debutEpisode.getDebutCategoryEntity().getId(),
+                        debutEpisode.getDebutTitle(),
+                        debutEpisode.getMemberEntity().getMemberName(),
+                        debutEpisode.getFeat(),
+                        debutEpisode.getIntroduce(),
+                        debutEpisode.getDebutHits(),
+                        debutEpisode.getDebutImgName()
+        ));
+        return  debutEpisodeDTOPage;
     }
 }
