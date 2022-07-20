@@ -66,7 +66,6 @@ public class BookController {
     // 책 수정처리 요청
     @PostMapping("/req-book-update")
     public String reqBookUpdate(@ModelAttribute BookDTO bookDTO, @ModelAttribute MailDTO mailDTO) throws IOException{
-        System.out.println("mailDTO = " + mailDTO);
 
         bookService.reqBookUpdate(bookDTO, mailDTO);
 //        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + bookDTO.getId();
