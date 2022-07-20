@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>신비한 서재입니다.</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+<form action="/book/req-book-update" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${book.id}"><br>
+    <select name="categoryId">
+        <option value="1">시</option>
+        <option value="2">에세이</option>
+        <option value="3">웹소설</option>
+    </select>
+    <select name="genreId">
+        <option value="1">판타지</option>
+        <option value="2">현판</option>
+        <option value="3">로맨스</option>
+        <option value="4">로판</option>
+        <option value="5">무협</option>
+        <option value="6">BL</option>
+        <option value="7">단행본</option>
+    </select>
+    <select name="status">
+        <option value="연재">연재</option>
+        <option value="완결">완결</option>
+        <option value="휴재">휴재</option>
+    </select><br>
+    <input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
+    <input type="text" id="feat" name="feat" th:value="${book.feat}"><br>
+    <input type="text" id="bookTitle" name="bookTitle" th:value="${book.bookTitle}"><br>
+    <textarea id="introduce" name="introduce" th:text="${book.introduce}"></textarea><br>
+    <img th:src="@{|/upload/${book.bookImgName}|}" width="130" height="200"><br>
+    <input type="file" id="bookImg" name="bookImg"><br>
+    <input type="hidden" name="bookImgName" th:value="${book.bookImgName}"><br>
+    <input type="text" name="fromAddress" placeholder="본인 이메일" required><br>
+    <input type="text" name="mailTitle" placeholder="메일 제목" required><br>
+    <input type="hidden" name="toAddress" value="dbstjr5402@naver.com">
+    <input type="submit" th:value="전송">
+</form>
 </body>
 </html>

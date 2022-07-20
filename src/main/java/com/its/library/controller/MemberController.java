@@ -47,4 +47,5 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/myPage";
     }
+
 }
