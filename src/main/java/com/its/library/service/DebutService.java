@@ -13,6 +13,7 @@ import com.its.library.repository.LoveRepository;
 import com.its.library.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -116,14 +117,22 @@ public class DebutService {
             loveDTO.setDebutId(debutId);
             loveDTO.setMemberId(memberId);
             LoveEntity loveEntity = LoveEntity.toSave(loveDTO, memberEntity);
-            loveRepository.save(loveEntity);
-            int loveNum = loveRepository.countByDebutId(debutId);
-            return loveNum;
+            Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(debutId, memberEntity);
+            if (optionalLoveEntity.isPresent()) {
+                return 0;
+            } else {
+                loveRepository.save(loveEntity);
+                int loveNum = loveRepository.countByDebutId(debutId);
+                return loveNum;
+            }
+
+
         } else {
             return 0;
         }
     }
 
+    @Transactional
     public int loveDelete(Long debutId, Long memberId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
         if (optionalMemberEntity.isPresent()) {
@@ -134,7 +143,8 @@ public class DebutService {
             loveRepository.deleteByDebutIdAndMemberEntity(debutId, memberEntity);
             int loveNum = loveRepository.countByDebutId(debutId);
             return loveNum;
-        } else {return 0;
+        } else {
+            return 0;
         }
     }
 }
