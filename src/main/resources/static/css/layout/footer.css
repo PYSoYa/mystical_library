@@ -2,19 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-/* root */
-*, *::after, *::before {font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased;}
-html {line-height: normal; color: #222; font-weight: 400; font-size: 0.875rem; letter-spacing: -0.03em; -webkit-text-size-adjust: 100%;}
-body {background-color: #fff;}
-input {font-family: inherit; appearance: none; background: none; box-shadow: none; border: 0; border-radius: 0; margin: 0; padding: 0;}
-a {text-decoration: none; outline: none; font-family: inherit; cursor: pointer; color:inherit;}
-a:link {text-decoration: none; -webkit-text-decoration: none;}
-ul {list-style-type: none; margin: 0; padding: 0;}
-li {line-height: initial;}
-hr {margin: 0; padding: 0; box-sizing: content-box; overflow: visible;}
-h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
-
-
 /* footer */
 .container {width: 100% !important; max-width: 1170px !important;}
 .footer {position: relative !important; z-index: 1 !important; padding: 1.125rem 0 !important; font-size: 0.75rem !important; line-height: 1.25rem !important; text-align: center !important; color: #909090 !important; backface-visibility: hidden !important;}
