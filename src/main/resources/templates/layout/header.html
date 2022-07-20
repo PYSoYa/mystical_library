@@ -44,7 +44,7 @@
               <a href="/member/save-form" class="sign-up">회원가입</a>
             </li>
             <li class="sign-in-wrap">
-              <a href="/member/login-form" class="sign-in">로그인</a>
+              <a href="javascript:void(0)" class="sign-in" data-bs-toggle="modal" data-bs-target="#exampleModal">로그인</a>
             </li>
           </ul>
         </div>
@@ -52,5 +52,84 @@
     </nav>
   </header>
 </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="sign-in-wrap">
+            <h5 class="modal-title sign-in" id="exampleModalLabel">로그인</h5>
+          </div>
+        </div>
+        <div class="modal-body">
+          <form action="/member/login" method="post" class="login-form">
+            <div class="input-wrap">
+              <div class="label-id-wrap">
+                <label class="label-id">아이디</label>
+              </div>
+              <div class="input-id-wrap">
+                <input type="text" name="loginId" class="input-id" placeholder="아이디123">
+              </div>
+              <div class="result-id-wrap">
+                <span class="span-id" id="result-id">잘 좀 입력하세요</span>
+              </div>
+            </div>
+            <div class="input-wrap">
+              <div class="label-pw-wrap">
+                <label class="label-pw">비밀번호</label>
+              </div>
+              <div class="input-pw-wrap">
+                <input type="password" name="memberPassword" class="input-pw" placeholder="********">
+              </div>
+              <div class="result-pw-wrap">
+                <span class="span-pw" id="result-pw">비밀번호도 입력해보세요</span>
+              </div>
+            </div>
+            <div class="find-wrap">
+              <div class="find-id-wrap">
+                <span class="label-find-id">아이디 찾기</span>
+              </div>
+              <div class="find-pw-wrap">
+                <span class="label-find-pw">비밀번호 찾기</span>
+              </div>
+            </div>
+            <div class="sign-in-btn-wrap">
+              <div class="btn-wrap">
+                <button type="submit" class="submit-btn">아이디로 로그인</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="social-login-wrap">
+            <div class="naver-login-wrap">
+              <button type="button" class="naver">
+                <img th:src="@{/img/naver.png}" class="naver-img" alt="">
+                <span class="naver-content">네이버 아이디로 로그인</span>
+              </button>
+            </div>
+            <div class="google-login-wrap">
+              <button type="button" class="google">
+                <img th:src="@{/img/google.png}" class="google-img" alt="">
+                <span class="google-content">구글 아이디로 로그인</span>
+              </button>
+            </div>
+            <div class="facebook-login-wrap">
+              <button type="button" class="facebook">
+                <img th:src="@{/img/facebook.png}" class="facebook-img" alt="">
+                <span class="facebook-content">페이스북 아이디로 로그인</span>
+              </button>
+            </div>
+            <div class="kakao-login-wrap">
+              <button type="button" class="kakao">
+                <img th:src="@{/img/kakao.png}" class="kakao-img" alt="">
+                <span class="kakao-content">카카오 아이디로 로그인</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </th:block>
 </html>
