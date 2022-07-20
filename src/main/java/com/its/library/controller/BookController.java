@@ -69,7 +69,22 @@ public class BookController {
 
         bookService.reqBookUpdate(bookDTO, mailDTO);
 //        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + bookDTO.getId();
-        return "index";
+        return "redirect:/";
+    }
+
+    // 회차 수정 페이지 출력
+    @GetMapping("/req-episode-update")
+    public String episodeUpdateForm(@RequestParam("id") Long id, Model model) {
+        EpisodeDTO episodeDTO = bookService.episodeFindById(id);
+        model.addAttribute("episode",episodeDTO);
+        return "book/episodeUpdate";
+    }
+
+    // 회차 수정처리 요청
+    @PostMapping("/req-episode-update")
+    public String reqEpisodeUpdate(@ModelAttribute EpisodeDTO episodeDTO, @ModelAttribute MailDTO mailDTO) throws IOException {
+        bookService.reqEpisodeUpdate(episodeDTO, mailDTO);
+        return "redirect:/";
     }
 
     // 책 상세조회 + 페이징

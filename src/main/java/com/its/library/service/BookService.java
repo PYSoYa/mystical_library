@@ -165,4 +165,26 @@ public class BookService {
         System.out.println("message = " + message);
         mailSender.send(message);
     }
+
+    public void reqEpisodeUpdate(EpisodeDTO episodeDTO, MailDTO mailDTO) throws IOException {
+        MultipartFile episodeImg = episodeDTO.getEpisodeImg();
+        String episodeImgName = episodeImg.getOriginalFilename();
+        episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
+        String savePath = "C:\\springboot_img\\" + episodeImgName;
+        if (!episodeImg.isEmpty()) {
+            episodeImg.transferTo(new File(savePath));
+        }
+        episodeDTO.setEpisodeImgName(episodeImgName);
+
+        mailDTO.setEpisodeDTO(episodeDTO);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailDTO.getToAddress());
+        message.setFrom(mailDTO.getFromAddress());
+        message.setSubject(mailDTO.getMailTitle());
+        message.setText(String.valueOf(mailDTO.getBookDTO()));
+        Date localDateTime = new Date();
+        message.setSentDate(localDateTime);
+        mailSender.send(message);
+    }
 }
