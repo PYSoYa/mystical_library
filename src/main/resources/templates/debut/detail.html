@@ -34,16 +34,35 @@
     <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
     <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
   </tr>
-  <tr>
-    <form action="/debutComment/save" method="post">
-      <input type="text" id="debutId" th:value="${debut.id}" hidden>
-      <input type="text" id="memberId" th:value="${debut.memberId}" hidden>
-      <input type="text" id="memberName" th:value="${debut.memberName}"readonly>
-      <input type="text" id="contents">
-      <input type="button" onclick="commentSave()" value="댓글작성">
-    </form>
-  </tr>
+
 </table>
+
+
+
+  <input type="text" id="debutId" th:value="${debut.id}" hidden>
+  <input type="text" id="memberId" th:value="${session.id}" hidden>
+  <input type="text" id="memberName" th:value="${session.name}" readonly>
+  <input type="text" id="contents">
+  <input type="button" onclick="commentSave()" value="댓글작성">
+  <div id="commentList">
+    <table>
+      <tr>
+
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성시간</th>
+      </tr>
+
+
+    <tr th:each="comment: ${commentList}">
+    <td th:text="${comment.memberName}"></td>
+    <td th:text="${comment.contents}"></td>
+    <td th:text="${comment.createdTime}"></td>
+    </tr>
+    </table>
+  </div>
+
+
 <script th:inline="javascript">
   function heartCheck(num) {
     const love = document.getElementById("emptyHeart");
@@ -74,20 +93,36 @@
       });
     }
 
-
   }
   function commentSave(){
     const memberId = document.getElementById("memberId").value;
     const debutId = document.getElementById("debutId").value;
     const contents = document.getElementById("contents").value;
     const memberName = document.getElementById("memberName").value;
+    const commentList = document.getElementById("commentList")
     $.ajax({
       type:"post",
       url:"/debutComment/save",
-      data:{"memberId":memberId,"debutId":debutId,"contents":contents,"memberName":memberName}
+      data:{"memberId":memberId,"debutId":debutId,"contents":contents,"memberName":memberName},
       dataType:"json",
       success:function (result){
+        let output ="<table>\n" +
+                "      <tr>\n" +
+                "        <th>작성자</th>\n" +
+                "        <th>내용</th>\n" +
+                "        <th>작성시간</th>\n" +
+                "      </tr>\n";
+                 for (let i in result){
+                   output+= "<tr>"+
+                "    <td>result[i].memberName</td>\n" +
+                "    <td>result[i].contents</td>\n" +
+                "    <td>result[i].createdTime</td>" +
+                           "</tr>"
+                 }
+                output+="    </table>";
 
+                 commentList.innerHTML=output;
+                 document.getElementById("contents").innerHTML="";
       }
     });
 
