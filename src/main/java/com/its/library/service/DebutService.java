@@ -4,10 +4,7 @@ import com.its.library.common.PagingConst;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.LoveDTO;
 import com.its.library.dto.MemberDTO;
-import com.its.library.entity.DebutCategoryEntity;
-import com.its.library.entity.DebutEpisodeEntity;
-import com.its.library.entity.LoveEntity;
-import com.its.library.entity.MemberEntity;
+import com.its.library.entity.*;
 import com.its.library.repository.DebutCategoryRepository;
 import com.its.library.repository.DebutRepository;
 import com.its.library.repository.LoveRepository;
@@ -140,10 +137,18 @@ public class DebutService {
         }
     }
 
-    public Page<DebutEpisodeDTO> list(Pageable pageable) {
+    @Transactional
+    public Page<DebutEpisodeDTO> list(Long categoryId,Pageable pageable) {
+        Optional<DebutCategoryEntity> optionalCategoryEntity =debutCategoryRepository.findById(categoryId);
+        DebutCategoryEntity debutCategoryEntity = new DebutCategoryEntity();
+        if (optionalCategoryEntity.isPresent()){
+            debutCategoryEntity = optionalCategoryEntity.get();
+        }
+
         int page = pageable.getPageNumber();
         page =(page == 1)? 0: (page-1);
-        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findAll(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC,"id")));
+
+        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findByDebutCategoryEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC,"id")),debutCategoryEntity);
         Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutEpisodeEntityPage.map(
                 debutEpisode -> new DebutEpisodeDTO(
                         debutEpisode.getId(),

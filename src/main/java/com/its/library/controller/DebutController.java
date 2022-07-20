@@ -78,9 +78,10 @@ public class DebutController {
     }
 
     //데뷔글 페이징 리스트
-    @GetMapping()
-    public String list(@PageableDefault(page = 1) Pageable pageable, Model model) {
-        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.list(pageable);
+    //
+    @GetMapping("/category/{category}")
+    public String list(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.list(categoryId,pageable);
         model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
