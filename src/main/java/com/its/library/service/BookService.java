@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Book;
@@ -200,4 +201,52 @@ public class BookService {
         message.setText("회차 고유번호: "+ id + "\n"+"\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
         mailSender.send(message);
     }
+
+    @Transactional
+    public Page<BookDTO> bookList(Pageable pageable, Long categoryId, Long genreId) {
+        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(categoryId);
+        Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(genreId);
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        GenreEntity genreEntity = new GenreEntity();
+
+        if (optionalCategoryEntity.isPresent() && optionalGenreEntity.isPresent()){
+            categoryEntity = optionalCategoryEntity.get();
+            genreEntity = optionalGenreEntity.get();
+        }
+
+        int page = pageable.getPageNumber();
+
+        page = (page == 1)? 0: (page-1);
+        Page<BookEntity> bookEntityList = bookRepository.findByCategoryEntityAndGenreEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), categoryEntity, genreEntity);
+
+        Page<BookDTO> bookDTOList = bookEntityList.map(
+
+                book -> new BookDTO(book.getId(),
+                        book.getCategoryEntity().getId(),
+                        book.getGenreEntity().getId(),
+                        book.getMemberEntity().getId(),
+                        book.getMemberName(),
+                        book.getFeat(),
+                        book.getBookTitle(),
+                        book.getIntroduce(),
+                        book.getBookImgName(),
+                        book.getStatus()
+                ));
+
+        return bookDTOList;
+    }
+//        List<BookEntity> bookEntityList = bookRepository.findByCategoryEntityAndGenreEntity(categoryId, genreId);
+//        List<BookDTO> bookDTOList = new ArrayList<>();
+//        if (!bookEntityList.isEmpty()){
+//
+//            for (BookEntity book: bookEntityList){
+//                bookDTOList.add(BookDTO.findDTO(book));
+//            }
+//            return bookDTOList;
+//        } else {
+//            return null;
+//        }
+//
+//    }
 }

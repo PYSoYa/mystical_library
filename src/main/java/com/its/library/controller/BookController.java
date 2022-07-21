@@ -117,8 +117,32 @@ public class BookController {
         return "redirect:/";
     }
 
+    // 책 목록 조회 + 페이징
+    @GetMapping
+    public String bookList(@PageableDefault(page = 1) Pageable pageable, @RequestParam("categoryId") Long categoryId,
+                           @RequestParam("genreId") Long genreId, Model model) {
+        Page<BookDTO> bookDTOList = bookService.bookList(pageable, categoryId, genreId);
+        model.addAttribute("bookList", bookDTOList);
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < bookDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : bookDTOList.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        System.out.println(" = " + "sdfsdf");
+        System.out.println("boardEntities.getContent() = " + bookDTOList.getContent()); // 요청페이지에 들어있는 데이터
+        System.out.println("boardEntities.getTotalElements() = " + bookDTOList.getTotalElements()); // 전체 글갯수
+        System.out.println("boardEntities.getNumber() = " + bookDTOList.getNumber()); // 요청페이지(jpa 기준)
+        System.out.println("boardEntities.getTotalPages() = " + bookDTOList.getTotalPages()); // 전체 페이지 갯수
+        System.out.println("boardEntities.getSize() = " + bookDTOList.getSize()); // 한페이지에 보여지는 글갯수
+        System.out.println("boardEntities.hasPrevious() = " + bookDTOList.hasPrevious()); // 이전페이지 존재 여부
+        System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
+        System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
+        return "book/book";
+    }
+
+
     // 책 상세조회 + 페이징
     @GetMapping("/book/{id}")
+
     public String bookDetail(@PageableDefault(page = 1) Pageable pageable,
 //                             @RequestParam("category") Long categoryId,
                              @PathVariable("id") Long id, Model model) {
