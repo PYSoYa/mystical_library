@@ -1,0 +1,27 @@
+/* 수정 */
+.update-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;}
+.update-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.update-div {--item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%;}
+/* 메뉴 */
+.menu-list-container {display: flex; flex-direction: column; position: relative; border: none; text-align: center; margin-top: 6.25rem; margin-right: 10rem; justify-content: center; padding: 1.25rem; width: 15rem; height: 22rem; border-radius: 0.25rem;}
+.menu-list-container div span {font-size: 1.125rem; font-weight: 600; font-family: inherit; position: relative; text-align: center;}
+.menu-list-container div .selected-item {color: #1e9eff;}
+.menu-list-container > div:not(:last-child) {margin-bottom: 2rem;}
+.menu-list-container a {text-decoration: none; color: inherit !important;}
+.menu-list-container a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.menu-list-container a:link {color: #666;}
+/* 업데이트 폼 */
+.member-container {display: flex; flex-direction: column; width: 100%;}
+.member-container .member-title-wrap {margin-bottom: 0.625rem; padding: 1.25rem; border-bottom: 1px solid #d1d5d9;}
+.member-container .member-title-wrap .title {font-size: 1.5rem; font-weight: 600; font-family: inherit;}
+.member-container .member-detail-wrap {border-radius: 0.25rem; padding: 1.25rem;}
+.member-container .member-detail-wrap .input-wrap {display: flex; flex-direction: row;}
+.member-container .member-detail-wrap .input-wrap:not(:last-child) {margin-bottom: 1.25rem;}
+.member-container .member-detail-wrap .input-wrap .label-wrap {margin-right: 0.625rem; padding: 0.625rem;}
+.member-container .member-detail-wrap .input-wrap label {font-size: 1rem; font-weight: 500; font-family: inherit;}
+.member-container .member-detail-wrap .input-wrap input {-webkit-appearance: none; appearance: none; background-color: #fff; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; caret-color: #1e9eff; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 25rem; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
+.member-container .member-detail-wrap .input-wrap .input-intro {appearance: none; background-color: #fff; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; border-width: 1px; caret-color: #1e9eff; color: #4a5469; line-height: 1.5; outline: none; text-decoration: none; padding: 0.75rem 1.875rem 0.75rem 0.625rem; width: 25rem; height: 10rem; overflow: hidden; word-break: keep-all; resize: none;}
+.member-container .member-detail-wrap .btn-wrap {display: flex; justify-content: flex-end; margin-top: 2.5rem;}
+.member-container .member-detail-wrap .btn-wrap button {position: relative; margin-left: 0.62rem; border: none; outline: none; border-radius: 0.188rem; width: 8.465rem; height: 3rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.member-container .member-detail-wrap .btn-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
+.member-container .member-detail-wrap .btn-wrap .update-btn-wrap {margin-right: 1.25rem;}
