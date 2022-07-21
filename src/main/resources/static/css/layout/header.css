@@ -67,7 +67,8 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .modal-body .find-wrap .find-pw-wrap span {padding-left: 3.25rem;}
 .modal-body .find-wrap span:hover,
 .modal-body .sign-in-btn-wrap .btn-wrap:hover,
-.modal-footer .social-login-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
+.modal-footer .social-login-wrap button:hover,
+.modal-body .input-wrap .input-email-wrap .request-auth:hover {opacity: 0.5; transition: 0.2s ease;}
 .modal-body .find-wrap div:not(:last-child)::after {content: ''; border: 1px solid #e5e5e5; display: inline-block; width: 0; height: 1rem; margin: 0.125rem 0.25rem 0 0.5rem; vertical-align: text-top; position: absolute; top: 16.45rem;}
 .modal-body .find-wrap {display: flex; justify-content: center; margin-bottom: 1.25rem;}
 .login-form > .input-wrap:not(:last-child) {margin-bottom: 1.25rem;}
@@ -94,7 +95,17 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .modal-body .title {margin-bottom: 8px; font-size: 16px; font-weight: 600; padding-left: 4px;}
 .modal-body .terms {height: 9.375rem; padding: 0.625rem; background: #fafafa; border: 1px solid #e5e5e5; color: #404040; border-radius: 0.25rem; font-size: 0.75rem; overflow-y: scroll;}
 .modal-body .agreement {margin-top: 0.5rem; display: flex; flex-direction: row; align-items: center; margin-bottom: 0.625rem;}
-.modal-body .agreement input[type="checkbox"] {border: 1px solid gray; border-radius: 0.188rem; width: 1rem; height: 1rem; vertical-align: middle; margin: 0; padding: 0; appearance: auto;}
+.modal-body .agreement input[type="checkbox"] {border: 1px solid #e5e5e5; border-radius: 0.188rem; width: 1rem; height: 1rem; vertical-align: middle; margin: 0; padding: 0; appearance: auto;}
 .modal-body .agreement .check-desc {font-size: 0.75rem; display: inline-block; color: #404040; margin-left: 0.625rem; padding: 0;}
+.register-form > .input-wrap:not(:last-child) {margin-bottom: 0.125rem;}
+.register-form .last-input-wrap {margin-bottom: 1rem !important;}
+.register-form .input-wrap .input-image-wrap label {padding: 0.5em 0.75em; color: #faf7eb; border: none; outline: none; border-radius: 0.188rem; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.modal-body .input-wrap .input-email-wrap,
+.modal-body .input-wrap .input-auth-wrap {display: flex;}
+.modal-body .input-wrap .input-email-wrap input,
+.modal-body .input-wrap .input-auth-wrap input {width: 60%;}
+.modal-body .input-wrap .input-email-wrap button,
+.modal-body .input-wrap .input-auth-wrap button {position: relative; margin-left: 0.62rem; border: none; outline: none; border-radius: 0.188rem; width: 8.465rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 /* modal-footer */
+.hide-footer {margin: 0; padding: 0.813rem 16px 0.875rem !important;}
 .modal-footer .social-login-wrap .btn-wrap button {position: relative; width: 100%; color: #faf7eb; font-size: 1rem; background-color: #1e9eff; border-color: #1e9eff; border: 1px solid; border: none; border-radius: 0.188rem; outline: none; margin: 0; padding: 0.813rem 16px 0.875rem; letter-spacing: 0.013rem; justify-content: center; align-items: center; box-shadow: 0 0.125rem 0.313rem #00000026;}

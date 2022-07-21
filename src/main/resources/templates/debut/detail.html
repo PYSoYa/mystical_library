@@ -40,7 +40,7 @@
 
 
   <input type="text" id="debutId" th:value="${debut.id}" hidden>
-  <input type="text" id="memberId" th:value="${session.id}" hidden>
+  <input type="text" id="memberId" th:value="${session.id}" readonly>
   <input type="text" id="memberName" th:value="${session.name}" readonly>
   <input type="text" id="contents">
   <input type="button" onclick="commentSave()" value="댓글작성">
@@ -51,19 +51,62 @@
         <th>작성자</th>
         <th>내용</th>
         <th>작성시간</th>
+        <th>삭제</th>
+
       </tr>
 
 
     <tr th:each="comment: ${commentList}">
+    <td th:text="${comment.id}" hidden id="commentId"></td>
     <td th:text="${comment.memberName}"></td>
     <td th:text="${comment.contents}"></td>
     <td th:text="${comment.createdTime}"></td>
+      <div th:if="${comment.memberName}==${session.name}">
+      <td><input type="button" value="댓글삭제" onclick="commentDelete()"></td>
+      </div>
     </tr>
     </table>
   </div>
 
 
 <script th:inline="javascript">
+  function commentDelete() {
+    const commentId = document.getElementById("commentId").value;
+    $.ajax({
+      type:"delete",
+      url:"/debutComment/delete",
+      data:{"commentId":commentId},
+      dataType:"json",
+      success:function (result){
+        let output ="<table>\n" +
+                "      <tr>\n" +
+                "        <th>작성자</th>\n" +
+                "        <th>내용</th>\n" +
+                "        <th>작성시간</th>\n" +
+                "         <th>삭제</th>"  +
+
+        "      </tr>\n";
+        for (let i in result){
+          output+= "<tr>"+
+                  "    <td>result[i].memberName</td>\n" +
+                  "    <td>result[i].contents</td>\n" +
+                  "    <td>result[i].createdTime</td>" ;
+                  if(result[i].memberName=="${session.name}"){
+                output+=  "<div>\n" +
+                  "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete()\"></td>\n" +
+                  "      </div>"+
+                  "</tr>";
+        }
+        }
+        output+="    </table>";
+
+        commentList.innerHTML=output;
+        document.getElementById("contents").innerHTML="";
+      }
+    });
+
+
+  }
   function heartCheck(num) {
     const love = document.getElementById("emptyHeart");
     const hate = document.getElementById("fullHeart");
@@ -127,6 +170,7 @@
     });
 
   }
+
 </script>
 </body>
 </html>
