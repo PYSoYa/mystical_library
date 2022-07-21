@@ -1,3 +1,40 @@
-.my-page-container {
-  max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;
-}
+/* 프로필 */
+/* 상세정보 */
+.profile-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;}
+.profile-detail-container {margin-top: 1.25rem; position: relative;}
+.profile-detail-wrap {display: block; position: relative; width: 100%; overflow: hidden; -ms-overflow-style: none; text-align: center; justify-content: center; padding: 2rem 1.25rem 2.25rem 1.25rem; border-bottom: 1px solid #e5e5e5; margin-bottom: 1.25rem;}
+.profile-image-wrap {margin-bottom: 1.25rem; display: inline-block;}
+.profile-image-wrap img {width: 7.5rem; height: 7.5rem; border-radius: 50%;}
+.profile-author-wrap {position: relative; margin-bottom: 1.25rem;}
+.profile-author-wrap h5 {font-weight: 600; font-size: 1.25rem; white-space: initial;}
+.profile-intro-wrap {position: relative; margin-bottom: 1.25rem;}
+.profile-intro-wrap span {font-size: 1rem; font-weight: 400; line-height: 1.25rem; color: #909090; word-break: break-word; text-align: center;}
+.profile-sns-btn-wrap {margin-bottom: 2.5rem; display: -webkit-flex; display: flex; justify-content: space-between; width: 15rem; margin-left: 31rem;}
+.profile-sns-btn-wrap a,
+.profile-sns-btn-wrap a:link {color: #141414;}
+.profile-sns-btn-wrap .instagram:hover,
+.profile-sns-btn-wrap .twitter:hover,
+.profile-sns-btn-wrap .facebook:hover {opacity: 0.5; transition: 0.2s ease;}
+.profile-heart-wrap {margin-bottom: 1.25rem;}
+.profile-heart-wrap .heart a:hover {opacity: 0.5; transition: 0.2s ease;}
+.profile-heart-wrap svg {color: #bb3636;}
+.profile-heart-detail-wrap span {font-size: 1rem; font-weight: 400; color: #141414; text-align: center;}
+/* 작품 정보 */
+/* 메뉴 */
+.profile-nav {display: flex; height: 3rem; padding: 0.625rem 0.26rem; margin-bottom: 2.5rem;}
+.profile-nav .nav-item:hover {opacity: 0.5; transition: 0.2s ease;}
+.profile-nav > .nav-item:not(:last-child) {margin-right: 3.75rem;}
+.profile-nav .nav-item a {font-size: 1rem; text-decoration: none; text-align: center; color: #141414; font-weight: 600;}
+.profile-nav .selected-item a {color: #1e9eff;}
+/* 목록 */
+.post-list-container {display: block; padding: 0.625rem 0.625rem;}
+.post-container {display: flex; padding: 0 0.625rem; justify-content: center;}
+.post-container > div:not(:last-child) {margin-bottom: 1.25rem;}
+.post-container .img-wrap {margin-right: 2.5rem;}
+.post-container .img-wrap:hover {opacity: 0.5; transition: 0.2s ease;}
+.post-container .img-wrap img {position: relative; width: 8.5rem; border: none; border-radius: 0.188rem;}
+.post-container .detail-wrap {display: flex; flex-direction: column; position: relative; padding: 0;}
+.post-container .detail-wrap .item:not(:last-child) {margin-bottom: 1.25rem;}
+.post-container .detail-wrap .title-wrap .title {font-size: 1.125rem; font-weight: 600; font-family: inherit;}
+.post-container .detail-wrap .intro-wrap {height: 5rem; width: 50rem; word-break: keep-all;}
+.post-container .detail-wrap .intro-wrap .intro {font-size: 1rem; font-weight: 500; font-family: inherit;}
