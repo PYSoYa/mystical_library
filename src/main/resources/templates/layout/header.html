@@ -354,9 +354,17 @@
         beforeHTML.setAttribute('aria-hidden', 'false');
         beforeFooter.style.display = 'flex';
         beforeFooter.setAttribute('aria-hidden', 'false');
-
         afterHTML.style.display = 'none';
         afterHTML.setAttribute('aria-hidden', 'true');
+
+        $('form').each(function () {
+          this.reset();
+        });
+      });
+      $('#exampleModal1').on('hidden.bs.modal', function () {
+        $('form').each(function () {
+          this.reset();
+        });
       });
     });
   </script>
