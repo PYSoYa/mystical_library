@@ -5,8 +5,40 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+    <script th:src="@{/js/jquery.js}"></script>
+
 </head>
 <body>
-
+    <select id="star" name="star">
+      <option value="1">★☆☆☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="4">★★★★☆</option>
+      <option value="5">★★★★★</option>
+    </select>
+    <input type="button" onclick="saveStar()" value="버튼">
 </body>
+<script>
+  const saveStar = () => {
+        const memberId = 1;
+        const episodeId = 2;
+        const star = document.getElementById("star").value;
+
+      $.ajax({
+        type: "post",
+        url: "/book/save-star",
+        data: {
+            "memberId": memberId,
+            "episodeId": episodeId,
+            "star":star
+        },
+        dataType: "text",
+        success: function (result) {
+            alert(result);
+        },
+
+              }
+      )
+  }
+</script>
 </html>

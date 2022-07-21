@@ -33,6 +33,7 @@ public class BookService {
     private final CategoryRepository categoryRepository;
     private final GenreRepository genreRepository;
     private final EpisodeRepository episodeRepository;
+    private final StarRepository starRepository;
 
     public BookDTO reqBookSave(BookDTO bookDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
@@ -98,9 +99,9 @@ public class BookService {
 
     }
 
-    public EpisodeDTO episodeFindById(Long id){
+    public EpisodeDTO episodeFindById(Long id) {
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
-        if (optionalEpisodeEntity.isPresent()){
+        if (optionalEpisodeEntity.isPresent()) {
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
             return episodeDTO;
@@ -108,6 +109,7 @@ public class BookService {
             return null;
         }
     }
+
     public void categoryList(String category) {
 
     }
@@ -122,29 +124,30 @@ public class BookService {
 
         int page = pageable.getPageNumber();
 
-        page = (page == 1)? 0: (page-1);
-        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")),bookEntity);
+        page = (page == 1) ? 0 : (page - 1);
+        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
 
         Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
                 episode -> new EpisodeDTO(episode.getId(),
-                                episode.getBookEntity().getId(),
-                                episode.getEpisodeTitle(),
-                                episode.getEpisodeContents(),
-                                episode.getEpisodeImgName(),
-                                episode.getPayment(),
-                                episode.getEpisodeHits(),
-                                episode.getHidden(),
-                                episode.getCreatedDateTime()
-                        ));
+                        episode.getBookEntity().getId(),
+                        episode.getEpisodeTitle(),
+                        episode.getEpisodeContents(),
+                        episode.getEpisodeImgName(),
+                        episode.getPayment(),
+                        episode.getEpisodeHits(),
+                        episode.getHidden(),
+                        episode.getCreatedDateTime()
+                ));
 
-            return episodeDTOList;
+        return episodeDTOList;
 
     }
 
     private final JavaMailSender mailSender;
     private String mail = "pysoya@naver.com";
-    public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException{
+
+    public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
         String bookImgName = bookImg.getOriginalFilename();
         bookImgName = System.currentTimeMillis() + "_" + bookImgName;
@@ -189,7 +192,7 @@ public class BookService {
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailTitle);
-        message.setText("책 고유번호: "+ id + "\n"+"\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
+        message.setText("책 고유번호: " + id + "\n" + "\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
         mailSender.send(message);
     }
 
@@ -198,7 +201,7 @@ public class BookService {
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailTitle);
-        message.setText("회차 고유번호: "+ id + "\n"+"\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
+        message.setText("회차 고유번호: " + id + "\n" + "\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
         mailSender.send(message);
     }
 
@@ -210,14 +213,14 @@ public class BookService {
         CategoryEntity categoryEntity = new CategoryEntity();
         GenreEntity genreEntity = new GenreEntity();
 
-        if (optionalCategoryEntity.isPresent() && optionalGenreEntity.isPresent()){
+        if (optionalCategoryEntity.isPresent() && optionalGenreEntity.isPresent()) {
             categoryEntity = optionalCategoryEntity.get();
             genreEntity = optionalGenreEntity.get();
         }
 
         int page = pageable.getPageNumber();
 
-        page = (page == 1)? 0: (page-1);
+        page = (page == 1) ? 0 : (page - 1);
         Page<BookEntity> bookEntityList = bookRepository.findByCategoryEntityAndGenreEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), categoryEntity, genreEntity);
 
         Page<BookDTO> bookDTOList = bookEntityList.map(
@@ -231,22 +234,41 @@ public class BookService {
                         book.getBookTitle(),
                         book.getIntroduce(),
                         book.getBookImgName(),
-                        book.getStatus()
+                        book.getStatus(),
+                        book.getHidden(),
+                        book.getStar()
                 ));
 
         return bookDTOList;
     }
-//        List<BookEntity> bookEntityList = bookRepository.findByCategoryEntityAndGenreEntity(categoryId, genreId);
-//        List<BookDTO> bookDTOList = new ArrayList<>();
-//        if (!bookEntityList.isEmpty()){
-//
-//            for (BookEntity book: bookEntityList){
-//                bookDTOList.add(BookDTO.findDTO(book));
-//            }
-//            return bookDTOList;
-//        } else {
-//            return null;
-//        }
-//
-//    }
+
+    public double saveStar(StarDTO starDTO) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(starDTO.getMemberId());
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(starDTO.getEpisodeId());
+
+        MemberEntity memberEntity = new MemberEntity();
+        EpisodeEntity episodeEntity = new EpisodeEntity();
+
+        if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            episodeEntity = optionalEpisodeEntity.get();
+            StarEntity starEntity = StarEntity.saveEntity(starDTO, memberEntity, episodeEntity);
+            starRepository.save(starEntity).getId();
+            double starAvg = starRepository.starAvg(episodeEntity.getId());
+            episodeEntity.setStar(starAvg);
+            Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
+            if (optionalBookEntity.isPresent()) {
+                episodeRepository.save(episodeEntity);
+                BookEntity bookEntity = optionalBookEntity.get();
+                double bookStarAvg = bookRepository.starAvg(bookEntity.getId());
+                bookEntity.setStar(bookStarAvg);
+                bookRepository.save(bookEntity);
+            }
+            return starAvg;
+        } else {
+            return 0.0;
+        }
+    }
+
+
 }

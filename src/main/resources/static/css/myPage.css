@@ -18,7 +18,10 @@
 .profile-heart-wrap {margin-bottom: 1.25rem;}
 .profile-heart-wrap .heart a:hover {opacity: 0.5; transition: 0.2s ease;}
 .profile-heart-wrap svg {color: #bb3636;}
+.profile-heart-detail-wrap {margin-bottom: 1rem;}
 .profile-heart-detail-wrap span {font-size: 1rem; font-weight: 400; color: #141414; text-align: center;}
+.edit-btn-wrap button {border: none; position: relative; outline: none; border-radius: 0.188rem; width: 5rem; height: 2.5rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.edit-btn-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
 /* 작품 정보 */
 /* 메뉴 */
 .profile-nav {display: flex; height: 3rem; padding: 0.625rem 0.26rem; margin-bottom: 2.5rem;}

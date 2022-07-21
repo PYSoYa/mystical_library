@@ -30,10 +30,12 @@ public class EpisodeEntity extends BaseEntity{
     private String episodeImgName;
     @Column(name = "payment",nullable = false)
     private int payment;
-    @Column(name = "episodeHits",columnDefinition = "int default 0")
+    @Column
     private int episodeHits;
-    @Column(name = "hidden",columnDefinition = "int default 0" )
+    @Column
     private int hidden;
+    @Column
+    private double star;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "historyId")
@@ -58,8 +60,10 @@ public class EpisodeEntity extends BaseEntity{
         episodeEntity.setPayment(episodeDTO.getPayment());
         episodeEntity.setEpisodeHits(0);
         episodeEntity.setHidden(0);
+        episodeEntity.setStar(0.0);
         return episodeEntity;
     }
+
 
 
     //회차 - 책 manyToOne ㅇ

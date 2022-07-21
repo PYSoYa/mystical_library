@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="/book/req-book-update" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" th:value="${book.id}"><br>
+    <input type="hidden" name="id" th:value="${book.id}">
     <select name="categoryId">
         <option value="1">시</option>
         <option value="2">에세이</option>
@@ -24,6 +24,7 @@
         <option value="7">단행본</option>
     </select>
     <select name="status">
+
         <option value="연재">연재</option>
         <option value="완결">완결</option>
         <option value="휴재">휴재</option>
@@ -34,7 +35,9 @@
     <textarea id="introduce" name="introduce" th:text="${book.introduce}"></textarea><br>
     <img th:src="@{|/upload/${book.bookImgName}|}" width="130" height="200"><br>
     <input type="file" id="bookImg" name="bookImg"><br>
-    <input type="hidden" name="bookImgName" th:value="${book.bookImgName}"><br>
+    <input type="hidden" name="bookImgName" th:value="${book.bookImgName}">
+    <input type="hidden" name="hidden" th:value="${book.hidden}">
+    <input type="hidden" name="star" th:value="${book.star}">
     <input type="text" name="fromAddress" placeholder="본인 이메일" required><br>
     <input type="text" name="mailTitle" placeholder="메일 제목" required><br>
     <input type="hidden" name="toAddress" value="pysoya@naver.com">

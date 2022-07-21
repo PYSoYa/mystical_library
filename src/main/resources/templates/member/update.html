@@ -5,8 +5,106 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/update.css}">
 </head>
 <body>
+<th:block th:replace="layout/header :: header"></th:block>
 
+<main class="main-container">
+  <div class="update-container">
+    <div class="update-wrap">
+      <div class="update-div">
+        <div class="menu-list-container">
+          <div class="my-page">
+            <a href="#">
+              <span class="item">마이페이지</span>
+            </a>
+          </div>
+          <div class="update-form">
+            <a href="#">
+              <span class="item selected-item">회원정보수정</span>
+            </a>
+          </div>
+          <div class="get-point">
+            <a href="#">
+              <span class="item">포인트 충전</span>
+            </a>
+          </div>
+          <div class="point-history">
+            <a href="#">
+              <span class="item">포인트 이용내역</span>
+            </a>
+          </div>
+          <div class="delete-member">
+            <a href="#">
+              <span class="item">회원탈퇴</span>
+            </a>
+          </div>
+        </div>
+        <div class="member-container">
+          <div class="member-title-wrap">
+            <h5 class="title">회원정보 수정</h5>
+          </div>
+          <div class="member-detail-wrap">
+            <form class="form-for-update" action="/member/update" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id" th:value="${member.id}">
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-id no-type">아이디</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-id" name="loginId" th:value="${member.loginId}">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-name no-type">닉네임</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-name" name="memberName" th:value="${member.memberName}">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-email no-type">이메일</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-email" name="memberEmail" th:value="${member.memberEmail}">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-intro no-type">소개글</label>
+                </div>
+                <div class="input-wrapper">
+                  <textarea maxlength="500" name="introduction" th:text="${member.introduction}" onkeyup="resize(this)" class="input-intro"></textarea>
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-image">프로필</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="file" class="input-image" name="memberImg" th:value="${member.memberImgName}">
+                </div>
+              </div>
+              <div class="btn-wrap">
+                <div class="update-btn-wrap">
+                  <button type="button" class="update-btn">수정</button>
+                </div>
+                <div class="cancel-btn-wrap">
+                  <button type="button" class="cancel-btn">취소</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>
