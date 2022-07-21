@@ -60,22 +60,10 @@ public class EpisodeEntity extends BaseEntity{
         episodeEntity.setPayment(episodeDTO.getPayment());
         episodeEntity.setEpisodeHits(0);
         episodeEntity.setHidden(0);
-        episodeEntity.setStar(0);
+        episodeEntity.setStar(0.0);
         return episodeEntity;
     }
 
-    public static EpisodeEntity starEntity(EpisodeEntity episodeEntity, BookEntity bookEntity) {
-        episodeEntity.setId(episodeEntity.getId());
-        episodeEntity.setBookEntity(bookEntity);
-        episodeEntity.setEpisodeTitle(episodeEntity.getEpisodeTitle());
-        episodeEntity.setEpisodeContents(episodeEntity.getEpisodeContents());
-        episodeEntity.setEpisodeImgName(episodeEntity.getEpisodeImgName());
-        episodeEntity.setPayment(episodeEntity.getPayment());
-        episodeEntity.setEpisodeHits(episodeEntity.getEpisodeHits());
-        episodeEntity.setHidden(episodeEntity.getHidden());
-        episodeEntity.setStar(episodeEntity.getStar());
-        return episodeEntity;
-    }
 
 
     //회차 - 책 manyToOne ㅇ
