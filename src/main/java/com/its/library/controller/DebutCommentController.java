@@ -30,11 +30,11 @@ public class DebutCommentController {
         return result;
     }
 
-    @PutMapping("/update-form")
-    public @ResponseBody DebutCommentDTO updateForm(@RequestParam("commentId") Long id, @RequestParam("debutId") Long debutId) {
-         DebutCommentDTO result = debutCommentService.updateForm(id);
-    return result;
+    @PutMapping("/update")
+    public @ResponseBody List<DebutCommentDTO> update(@ModelAttribute DebutCommentDTO debutCommentDTO) {
+        List<DebutCommentDTO> result = debutCommentService.update(debutCommentDTO);
+        System.out.println("result = " + result);
+        return result;
     }
-//    @PostMapping("/update")
-//    public
+
 }

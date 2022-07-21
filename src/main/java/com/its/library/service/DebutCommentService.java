@@ -75,17 +75,35 @@ public class DebutCommentService {
         debutCommentRepository.deleteById(id);
     }
 
-    public DebutCommentDTO updateForm(Long id) {
-       Optional<DebutCommentEntity> optionalDebutCommentRepository = debutCommentRepository.findById(id);
-       if (optionalDebutCommentRepository.isPresent()){
-           DebutCommentEntity debutComment = optionalDebutCommentRepository.get();
-          DebutCommentDTO debutCommentDTO = DebutCommentDTO.toDTO(debutComment);
-          return debutCommentDTO;
+    public List<DebutCommentDTO> update(DebutCommentDTO debutCommentDTO) {
+        Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutCommentDTO.getDebutId());
+        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
+        if (optionalDebutEpisodeEntity.isPresent()) {
+            debutEpisodeEntity = optionalDebutEpisodeEntity.get();
 
+        }
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutCommentDTO.getMemberId());
+        MemberEntity memberEntity = new MemberEntity();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+        }
 
-       }else {
-           return null;
-       }
+        DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutCommentDTO, memberEntity, debutEpisodeEntity);
+        debutCommentRepository.save(debutCommentEntity);
+        Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity1 = debutRepository.findById(debutCommentDTO.getDebutId());
+        List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
 
+        if (optionalDebutEpisodeEntity1.isPresent()) {
+            DebutEpisodeEntity debutEpisodeEntity1 = optionalDebutEpisodeEntity1.get();
+            List<DebutCommentEntity> debutCommentEntityList = debutEpisodeEntity1.getDebutCommentEntityList();
+            for (DebutCommentEntity debutComment : debutCommentEntityList) {
+                DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
+                debutCommentDTOList.add(debutCommentDTO1);
+            }
+            return debutCommentDTOList;
+        } else {
+            return null;
+
+        }
     }
 }
