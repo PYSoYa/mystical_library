@@ -37,6 +37,7 @@
 
 </table>
 
+</form>
 
 
   <input type="text" id="debutId" th:value="${debut.id}" hidden>
@@ -51,6 +52,7 @@
         <th>작성자</th>
         <th>내용</th>
         <th>작성시간</th>
+        <th>수정</th>
         <th>삭제</th>
 
       </tr>
@@ -62,6 +64,7 @@
     <td th:text="${comment.contents}"></td>
     <td th:text="${comment.createdTime}"></td>
       <div th:if="${comment.memberName}==${session.name}">
+      <td><input type="button" value="댓글수정" th:onclick="commentUpdate([[${comment.id}]])"></td>
       <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
       </div>
     </tr>
@@ -129,6 +132,7 @@
                   "    <td>"+ result[i].createdTime+"</td>\n" ;
           if(result[i].memberName == memberName){
             output+=  "<div>\n" +
+                    "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdate("+result.id+")\"></td>" +
                     "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
                     "      </div>"+
                     "</tr>";
@@ -142,6 +146,46 @@
     });
 
 
+  }
+  function commentUpdate(commentId){
+    const debutId = document.getElementById("debutId").value;
+    const commentList = document.getElementById("commentList");
+    const memberName = document.getElementById("memberName").value;
+    $.ajax({
+      type:"put",
+      url:"/debutComment/update-form",
+      data:{"commentId":commentId,"debutId":debutId},
+      dataType:"json",
+      success:function (result){
+        let output ="<table>\n" +
+                "      <tr>\n" +
+                "        <th>작성자</th>\n" +
+                "        <th>내용</th>\n" +
+                "        <th>작성시간</th>\n" +
+                "         <th>삭제</th>"  +
+
+                "      </tr>\n";
+        for (let i in result){
+          output+= "<form action=\"/debutComment/update\" method=\"post\">\n" +
+                  "  <input type=\"text\"  value=\"" + result.memberName+ "\" readonly>\n" +
+                  "  <input type=\"text\"  value=\"" + result.contents +"\">\n" +
+                  "  <input type=\"submit\"  value=\"댓글수정\">";
+
+
+          if(result[i].memberName == memberName){
+            output+=  "<div>\n" +
+                    "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdate("+result.id+")\"></td>" +
+                    "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                    "      </div>"+
+                    "</tr>";
+          }
+        }
+        output+="    </table>";
+
+        commentList.innerHTML=output;
+        document.getElementById("contents").innerHTML="";
+      }
+    });
   }
   function commentDelete(commentId) {
       const memberName = document.getElementById("memberName").value;
@@ -168,6 +212,7 @@
                       "    <td>"+ result[i].createdTime+"</td>\n" ;
                   if(result[i].memberName == memberName){
                       output+=  "<div>\n" +
+                              "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdate("+result.id+")\"></td>" +
                           "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
                           "      </div>"+
                           "</tr>";

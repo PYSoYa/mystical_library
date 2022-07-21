@@ -58,7 +58,6 @@ public class DebutCommentService {
     public List<DebutCommentDTO> findById(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity1 = debutRepository.findById(id);
         List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
-
         if (optionalDebutEpisodeEntity1.isPresent()) {
             DebutEpisodeEntity debutEpisodeEntity1 = optionalDebutEpisodeEntity1.get();
             List<DebutCommentEntity> debutCommentEntityList = debutEpisodeEntity1.getDebutCommentEntityList();
@@ -74,5 +73,19 @@ public class DebutCommentService {
 
     public void delete(Long id) {
         debutCommentRepository.deleteById(id);
+    }
+
+    public DebutCommentDTO updateForm(Long id) {
+       Optional<DebutCommentEntity> optionalDebutCommentRepository = debutCommentRepository.findById(id);
+       if (optionalDebutCommentRepository.isPresent()){
+           DebutCommentEntity debutComment = optionalDebutCommentRepository.get();
+          DebutCommentDTO debutCommentDTO = DebutCommentDTO.toDTO(debutComment);
+          return debutCommentDTO;
+
+
+       }else {
+           return null;
+       }
+
     }
 }
