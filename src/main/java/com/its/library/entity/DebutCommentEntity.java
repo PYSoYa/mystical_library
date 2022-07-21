@@ -35,6 +35,18 @@ public class DebutCommentEntity extends BaseEntity {
     }
 
 
+
+    public static DebutCommentEntity toUpdate(DebutCommentDTO debutCommentDTO, MemberEntity memberEntity, DebutEpisodeEntity debutEpisodeEntity) {
+        DebutCommentEntity debutComment = new DebutCommentEntity();
+        debutComment.setId(debutCommentDTO.getId());
+        debutComment.setMemberEntity(memberEntity);
+        debutComment.setMemberName(memberEntity.getMemberName());
+        debutComment.setDebutEpisodeEntity(debutEpisodeEntity);
+        debutComment.setContents(debutCommentDTO.getContents());
+        return debutComment;
+    }
+
+
     //데뷔글 댓글- 데뷔글 ManyToOne
     //데뷔글 댓글- 맴버 ManyToOne
     
