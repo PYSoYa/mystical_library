@@ -7,6 +7,20 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<th:block th:replace="layout/header :: header"></th:block>
 
+<main class="main-container">
+  <div class="my-page-container">
+    <div class="my-page-wrap">
+      <div class="my-page-detail-wrap">
+        <div class="img">
+          <img th:src="@{|/upload/${member.memberImgName}|}" alt="..">
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>
