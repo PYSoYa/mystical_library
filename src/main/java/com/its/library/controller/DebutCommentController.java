@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("debutComment")
+@RequestMapping("/debutComment")
 public class DebutCommentController {
     private final DebutCommentService debutCommentService;
     //댓글 저장
@@ -22,9 +22,10 @@ public class DebutCommentController {
 
     }
     @DeleteMapping("/delete")
-    public @ResponseBody List<DebutCommentDTO>delete(@RequestParam("id")Long id){
+    public @ResponseBody List<DebutCommentDTO>delete(@RequestParam("commentId")Long id,@RequestParam("debutId")Long debutId){
         debutCommentService.delete(id);
-       List<DebutCommentDTO> result = debutCommentService.findById(id);
+       List<DebutCommentDTO> result = debutCommentService.findById(debutId);
+        System.out.println("result = " + result);
         return result;
     }
 
