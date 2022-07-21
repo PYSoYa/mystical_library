@@ -16,13 +16,13 @@
     <div class="profile-detail-container">
       <div class="profile-detail-wrap">
         <div class="profile-image-wrap">
-          <img th:src="@{/img/book_img_1.jpeg}" class="image" alt="">
+          <img th:src="@{|/upload/${member.memberImgName}|}" class="image" alt="">
         </div>
         <div class="profile-author-wrap">
-          <h5 class="author">톰보이1</h5>
+          <h5 class="author" th:text="${member.memberName}"></h5>
         </div>
         <div class="profile-intro-wrap">
-          <span class="intro">소개글입니다 소개글이에요 소개글 소개글도 길면 어떻게 될까</span>
+          <span class="intro" th:text="${member.introduction}"></span>
         </div>
         <div class="profile-sns-btn-wrap">
           <div class="instagram">
