@@ -57,12 +57,12 @@
 
 
     <tr th:each="comment: ${commentList}">
-    <td th:text="${comment.id}" hidden id="commentId"></td>
+    <td th:text="${comment.id}" hidden></td>
     <td th:text="${comment.memberName}"></td>
     <td th:text="${comment.contents}"></td>
     <td th:text="${comment.createdTime}"></td>
       <div th:if="${comment.memberName}==${session.name}">
-      <td><input type="button" value="댓글삭제" onclick="commentDelete()"></td>
+      <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
       </div>
     </tr>
     </table>
@@ -70,43 +70,7 @@
 
 
 <script th:inline="javascript">
-  function commentDelete() {
-    const commentId = document.getElementById("commentId").value;
-    $.ajax({
-      type:"delete",
-      url:"/debutComment/delete",
-      data:{"commentId":commentId},
-      dataType:"json",
-      success:function (result){
-        let output ="<table>\n" +
-                "      <tr>\n" +
-                "        <th>작성자</th>\n" +
-                "        <th>내용</th>\n" +
-                "        <th>작성시간</th>\n" +
-                "         <th>삭제</th>"  +
 
-        "      </tr>\n";
-        for (let i in result){
-          output+= "<tr>"+
-                  "    <td>result[i].memberName</td>\n" +
-                  "    <td>result[i].contents</td>\n" +
-                  "    <td>result[i].createdTime</td>" ;
-                  if(result[i].memberName=="${session.name}"){
-                output+=  "<div>\n" +
-                  "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete()\"></td>\n" +
-                  "      </div>"+
-                  "</tr>";
-        }
-        }
-        output+="    </table>";
-
-        commentList.innerHTML=output;
-        document.getElementById("contents").innerHTML="";
-      }
-    });
-
-
-  }
   function heartCheck(num) {
     const love = document.getElementById("emptyHeart");
     const hate = document.getElementById("fullHeart");
@@ -142,7 +106,8 @@
     const debutId = document.getElementById("debutId").value;
     const contents = document.getElementById("contents").value;
     const memberName = document.getElementById("memberName").value;
-    const commentList = document.getElementById("commentList")
+    const commentList = document.getElementById("commentList");
+
     $.ajax({
       type:"post",
       url:"/debutComment/save",
@@ -154,23 +119,69 @@
                 "        <th>작성자</th>\n" +
                 "        <th>내용</th>\n" +
                 "        <th>작성시간</th>\n" +
+                "         <th>삭제</th>"  +
+
                 "      </tr>\n";
-                 for (let i in result){
-                   output+= "<tr>"+
-                "    <td>result[i].memberName</td>\n" +
-                "    <td>result[i].contents</td>\n" +
-                "    <td>result[i].createdTime</td>" +
-                           "</tr>"
-                 }
-                output+="    </table>";
+        for (let i in result){
+          output+= "<tr>"+
+                  "    <td>"+ result[i].memberName+"</td>\n" +
+                  "    <td>"+ result[i].contents+"</td>\n" +
+                  "    <td>"+ result[i].createdTime+"</td>\n" ;
+          if(result[i].memberName == memberName){
+            output+=  "<div>\n" +
+                    "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                    "      </div>"+
+                    "</tr>";
+          }
+        }
+        output+="    </table>";
 
                  commentList.innerHTML=output;
                  document.getElementById("contents").innerHTML="";
       }
     });
 
-  }
 
+  }
+  function commentDelete(commentId) {
+      const memberName = document.getElementById("memberName").value;
+      const commentList = document.getElementById("commentList");
+      const debutId = document.getElementById("debutId").value;
+      $.ajax({
+          type:"delete",
+          url:"/debutComment/delete",
+          data:{"commentId":commentId,"debutId":debutId},
+          dataType:"json",
+          success:function (result){
+              let output ="<table>\n" +
+                  "      <tr>\n" +
+                  "        <th>작성자</th>\n" +
+                  "        <th>내용</th>\n" +
+                  "        <th>작성시간</th>\n" +
+                  "         <th>삭제</th>"  +
+
+                  "      </tr>\n";
+              for (let i in result){
+                  output+= "<tr>"+
+                      "    <td>"+ result[i].memberName+"</td>\n" +
+                      "    <td>"+ result[i].contents+"</td>\n" +
+                      "    <td>"+ result[i].createdTime+"</td>\n" ;
+                  if(result[i].memberName == memberName){
+                      output+=  "<div>\n" +
+                          "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                          "      </div>"+
+                          "</tr>";
+                  }
+              }
+              output+="    </table>";
+
+              commentList.innerHTML=output;
+              document.getElementById("contents").innerHTML="";
+          }
+      });
+
+
+  }
 </script>
 </body>
 </html>
