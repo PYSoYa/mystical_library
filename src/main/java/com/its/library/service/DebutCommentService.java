@@ -21,6 +21,7 @@ public class DebutCommentService {
     private final MemberRepository memberRepository;
     private final DebutRepository debutRepository;
 
+    //댓글 저장 후 댓글 목록 조회 처리
     public List<DebutCommentDTO> save(DebutCommentDTO debutCommentDTO) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutCommentDTO.getDebutId());
         DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
@@ -53,7 +54,7 @@ public class DebutCommentService {
         }
     }
 
-
+    //아이디 찾기
     public List<DebutCommentDTO> findById(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity1 = debutRepository.findById(id);
         List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
@@ -69,5 +70,9 @@ public class DebutCommentService {
         } else {
             return null;
         }
+    }
+
+    public void delete(Long id) {
+        debutCommentRepository.deleteById(id);
     }
 }

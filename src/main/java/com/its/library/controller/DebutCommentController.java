@@ -4,10 +4,7 @@ import com.its.library.dto.DebutCommentDTO;
 import com.its.library.service.DebutCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,12 +13,19 @@ import java.util.List;
 @RequestMapping("debutComment")
 public class DebutCommentController {
     private final DebutCommentService debutCommentService;
+    //댓글 저장
     @PostMapping("/save")
     public @ResponseBody List<DebutCommentDTO> save(@ModelAttribute DebutCommentDTO debutCommentDTO){
        List<DebutCommentDTO> result = debutCommentService.save(debutCommentDTO);
         return result;
 
 
+    }
+    @DeleteMapping("/delete")
+    public @ResponseBody List<DebutCommentDTO>delete(@RequestParam("id")Long id){
+        debutCommentService.delete(id);
+       List<DebutCommentDTO> result = debutCommentService.findById(id);
+        return result;
     }
 
 }
