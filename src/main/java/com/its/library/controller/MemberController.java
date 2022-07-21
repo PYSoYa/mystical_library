@@ -64,4 +64,11 @@ public class MemberController {
         return "member/myPageDebut";
     }
 
+    // 업데이트 폼 페이지 요청
+    @GetMapping("/update-form/{id}")
+    public String updateForm(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/update";
+    }
 }
