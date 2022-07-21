@@ -1,5 +1,7 @@
 package com.its.library.entity;
 
+import com.its.library.dto.MemberDTO;
+import com.its.library.dto.StarDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +25,15 @@ public class StarEntity {
     private EpisodeEntity episodeEntity;
 
     @Column(name = "star",nullable = false)
-    private Double star;
+    private double star;
     //별점 - 맴버 manyToOne ㅇ
     //별점 - 회차 manyToOne ㅇ
 
+    public static StarEntity saveEntity(StarDTO starDTO, MemberEntity memberEntity, EpisodeEntity episodeEntity) {
+        StarEntity starEntity = new StarEntity();
+        starEntity.setMemberEntity(memberEntity);
+        starEntity.setEpisodeEntity(episodeEntity);
+        starEntity.setStar(starDTO.getStar());
+        return starEntity;
+    }
 }

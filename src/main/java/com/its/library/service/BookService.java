@@ -33,6 +33,7 @@ public class BookService {
     private final CategoryRepository categoryRepository;
     private final GenreRepository genreRepository;
     private final EpisodeRepository episodeRepository;
+    private final StarRepository starRepository;
 
     public BookDTO reqBookSave(BookDTO bookDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
@@ -231,22 +232,37 @@ public class BookService {
                         book.getBookTitle(),
                         book.getIntroduce(),
                         book.getBookImgName(),
-                        book.getStatus()
+                        book.getStatus(),
+                        book.getHidden(),
+                        book.getStar()
                 ));
 
         return bookDTOList;
     }
-//        List<BookEntity> bookEntityList = bookRepository.findByCategoryEntityAndGenreEntity(categoryId, genreId);
-//        List<BookDTO> bookDTOList = new ArrayList<>();
-//        if (!bookEntityList.isEmpty()){
-//
-//            for (BookEntity book: bookEntityList){
-//                bookDTOList.add(BookDTO.findDTO(book));
-//            }
-//            return bookDTOList;
-//        } else {
-//            return null;
-//        }
-//
-//    }
+
+    public double saveStar(StarDTO starDTO) {
+         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(starDTO.getMemberId());
+         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(starDTO.getEpisodeId());
+
+         MemberEntity memberEntity = new MemberEntity();
+         EpisodeEntity episodeEntity = new EpisodeEntity();
+
+         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
+             memberEntity = optionalMemberEntity.get();
+             episodeEntity = optionalEpisodeEntity.get();
+             StarEntity starEntity = StarEntity.saveEntity(starDTO, memberEntity, episodeEntity);
+             starRepository.save(starEntity).getId();
+             double starAvg = starRepository.starAvg();
+             episodeEntity.setStar(starAvg);
+             Optional<BookEntity> optionalBookEntity = bookRepository.findById(starDTO.getEpisodeId());
+             if (optionalBookEntity.isPresent()){
+                 BookEntity bookEntity = optionalBookEntity.get();
+                 EpisodeEntity.starEntity(episodeEntity, bookEntity);
+                 episodeRepository.save(episodeEntity);
+             }
+             return starAvg;
+         } else {
+             return 0.0;
+         }
+    }
 }
