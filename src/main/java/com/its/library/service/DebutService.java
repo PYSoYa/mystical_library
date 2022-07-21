@@ -112,6 +112,19 @@ public class DebutService {
             } else {
                 loveRepository.save(loveEntity);
                 int loveNum = loveRepository.countByDebutId(debutId);
+               Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
+               if (optionalDebutEpisodeEntity.isPresent()){
+                   DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+                   Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
+                   if(optionalDebutCategoryEntity.isPresent()){
+                       DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+                       debutEpisodeEntity.setMemberEntity(memberEntity);
+                       debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
+                       debutEpisodeEntity.setLove(loveNum);
+                       debutRepository.save(debutEpisodeEntity);
+
+                   }
+               }
                 return loveNum;
             }
 
@@ -131,7 +144,21 @@ public class DebutService {
             loveDTO.setMemberId(memberId);
             loveRepository.deleteByDebutIdAndMemberEntity(debutId, memberEntity);
             int loveNum = loveRepository.countByDebutId(debutId);
+            Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
+            if (optionalDebutEpisodeEntity.isPresent()){
+                DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
+                if(optionalDebutCategoryEntity.isPresent()){
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+                    debutEpisodeEntity.setMemberEntity(memberEntity);
+                    debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
+                    debutEpisodeEntity.setLove(loveNum);
+                    debutRepository.save(debutEpisodeEntity);
+
+                }
+            }
             return loveNum;
+
         } else {
             return 0;
         }

@@ -1,8 +1,10 @@
 package com.its.library.controller;
 
 import com.its.library.common.PagingConst;
+import com.its.library.dto.DebutCommentDTO;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.LoveDTO;
+import com.its.library.service.DebutCommentService;
 import com.its.library.service.DebutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/debut")
 public class DebutController {
     private final DebutService debutService;
+    private final DebutCommentService debutCommentService;
 
     //데뷔글 화면 요청처리
     @GetMapping("/save-form")
@@ -39,6 +43,8 @@ public class DebutController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
         DebutEpisodeDTO debutEpisodeDTO = debutService.detail(id);
+        List<DebutCommentDTO> debutCommentDTOList = debutCommentService.findById(id);
+        model.addAttribute("commentList",debutCommentDTOList);
         model.addAttribute("debut", debutEpisodeDTO);
         return "debut/detail";
     }

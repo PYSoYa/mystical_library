@@ -27,7 +27,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BookService {
-
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
@@ -143,6 +142,7 @@ public class BookService {
     }
 
     private final JavaMailSender mailSender;
+    private String mail = "pysoya@naver.com";
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException{
         MultipartFile bookImg = bookDTO.getBookImg();
         String bookImgName = bookImg.getOriginalFilename();
@@ -156,13 +156,10 @@ public class BookService {
         mailDTO.setBookDTO(bookDTO);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailDTO.getToAddress());
-        message.setFrom(mailDTO.getFromAddress());
+        message.setTo(mail);
+        message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
         message.setText(String.valueOf(mailDTO.getBookDTO()));
-        Date localDateTime = new Date();
-        message.setSentDate(localDateTime);
-        System.out.println("message = " + message);
         mailSender.send(message);
     }
 
@@ -179,12 +176,28 @@ public class BookService {
         mailDTO.setEpisodeDTO(episodeDTO);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailDTO.getToAddress());
-        message.setFrom(mailDTO.getFromAddress());
+        message.setTo(mail);
+        message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
-        message.setText(String.valueOf(mailDTO.getBookDTO()));
-        Date localDateTime = new Date();
-        message.setSentDate(localDateTime);
+        message.setText(String.valueOf(mailDTO.getEpisodeDTO()));
+        mailSender.send(message);
+    }
+
+    public void reqBookDelete(Long id, String memberName, String why, String mailTitle) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mail);
+        message.setFrom(mail);
+        message.setSubject(mailTitle);
+        message.setText("책 고유번호: "+ id + "\n"+"\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
+        mailSender.send(message);
+    }
+
+    public void reqEpisodeDelete(Long id, String memberName, String why, String mailTitle) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mail);
+        message.setFrom(mail);
+        message.setSubject(mailTitle);
+        message.setText("회차 고유번호: "+ id + "\n"+"\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
         mailSender.send(message);
     }
 }

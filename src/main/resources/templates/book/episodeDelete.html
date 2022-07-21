@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/book/req-episode-delete" method="post">
+    <input type="hidden" name="id" th:value="${id}">
+    <input type="hidden" name="memberName" th:value="${session.name}">
+    <input type="text" name="mailTitle" placeholder="메일제목"><br>
+    <textarea name="why" placeholder="삭제사유"></textarea><br>
+    <input type="submit" value="전송">
+</form>
+</body>
+</html>
