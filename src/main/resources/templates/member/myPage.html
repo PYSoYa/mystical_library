@@ -59,6 +59,10 @@
         <div class="profile-heart-detail-wrap">
           <span class="detail">234234명이 좋아해요</span>
         </div>
+        <div th:if="${member.id.equals(session.id)}" class="edit-btn-wrap">
+          <span id="memberIdForUpdate" th:text="${member.id}" hidden></span>
+          <button type="button" onclick="reqUpdate()">정보수정</button>
+        </div>
       </div>
       <div class="profile-nav-container">
         <div class="profile-nav">
@@ -131,4 +135,14 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+
+<script th:inline="javascript">
+  const reqUpdate = () => {
+    const id = document.getElementById('memberIdForUpdate').innerHTML;
+
+    // 비밀번호 입력 후 이동 해야 함
+
+    location.href = '/member/update-form/' + id;
+  }
+</script>
 </html>
