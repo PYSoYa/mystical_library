@@ -10,22 +10,31 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("debutComment")
+@RequestMapping("/debutComment")
 public class DebutCommentController {
     private final DebutCommentService debutCommentService;
+
     //댓글 저장
     @PostMapping("/save")
-    public @ResponseBody List<DebutCommentDTO> save(@ModelAttribute DebutCommentDTO debutCommentDTO){
-       List<DebutCommentDTO> result = debutCommentService.save(debutCommentDTO);
+    public @ResponseBody List<DebutCommentDTO> save(@ModelAttribute DebutCommentDTO debutCommentDTO) {
+        List<DebutCommentDTO> result = debutCommentService.save(debutCommentDTO);
         return result;
 
 
     }
+
     @DeleteMapping("/delete")
-    public @ResponseBody List<DebutCommentDTO>delete(@RequestParam("id")Long id){
+    public @ResponseBody List<DebutCommentDTO> delete(@RequestParam("commentId") Long id, @RequestParam("debutId") Long debutId) {
         debutCommentService.delete(id);
-       List<DebutCommentDTO> result = debutCommentService.findById(id);
+        List<DebutCommentDTO> result = debutCommentService.findById(debutId);
         return result;
     }
 
+    @PutMapping("/update-form")
+    public @ResponseBody DebutCommentDTO updateForm(@RequestParam("commentId") Long id, @RequestParam("debutId") Long debutId) {
+         DebutCommentDTO result = debutCommentService.updateForm(id);
+    return result;
+    }
+//    @PostMapping("/update")
+//    public
 }

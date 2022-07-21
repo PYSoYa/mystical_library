@@ -48,4 +48,20 @@ public class MemberController {
         return "member/myPage";
     }
 
+    // 회원정보 조회 (완결 작품)
+    @GetMapping("/myPage/{id}/completion")
+    public String myPage2(@PathVariable("id") Long id, Model model){
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/myPageCompletion";
+    }
+
+    // 회원정보 조회 (데뷔 글)
+    @GetMapping("/myPage/{id}/debut")
+    public String myPage3(@PathVariable("id") Long id, Model model){
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/myPageDebut";
+    }
+
 }
