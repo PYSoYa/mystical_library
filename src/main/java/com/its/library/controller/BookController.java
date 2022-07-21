@@ -121,7 +121,6 @@ public class BookController {
     // 카테고리 목록 조회
     @GetMapping("/category")
     public String categoryList(@RequestParam("id") Long id){
-
         return null;
     }
 
@@ -191,5 +190,7 @@ public class BookController {
         double result = bookService.saveStar(starDTO);
          return result;
     }
+
+    // 책 별점 저장처리
 
 }

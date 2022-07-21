@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface StarRepository extends JpaRepository<StarEntity, Long> {
 
-    @Query(value = "select avg(s.star) from StarEntity s")
-    double starAvg();
+    @Query(value = "select avg(s.star) from StarEntity s where s.episodeEntity.id = :episodeId")
+    double starAvg(@Param("episodeId") Long episodeId);
 
 }
