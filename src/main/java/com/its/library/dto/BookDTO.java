@@ -23,6 +23,19 @@ public class BookDTO {
     private String bookImgName;
     private String status;
 
+    public BookDTO(Long id, Long categoryId, Long genreId, Long memberId, String memberName, String feat, String bookTitle, String introduce, String bookImgName, String status) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.genreId = genreId;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.feat = feat;
+        this.bookTitle = bookTitle;
+        this.introduce = introduce;
+        this.bookImgName = bookImgName;
+        this.status = status;
+    }
+
     public static BookDTO findDTO(BookEntity bookEntity) {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setId(bookEntity.getId());
