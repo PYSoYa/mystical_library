@@ -23,12 +23,17 @@
           </div>
           <div class="update-form">
             <a th:href="@{|/member/update-form/${member.id}|}">
-              <span class="item selected-item">회원정보수정</span>
+              <span class="item">회원정보수정</span>
             </a>
           </div>
           <div class="get-point">
             <a th:href="@{|/member/purchase-point/${member.id}|}">
               <span class="item">포인트 충전</span>
+            </a>
+          </div>
+          <div class="point-purchase-history">
+            <a th:href="@{|/member/point-history/purchase/${member.id}|}">
+              <span class="item selected-item">포인트 충전내역</span>
             </a>
           </div>
           <div class="point-history">
@@ -86,7 +91,7 @@
                   <label class="label-image">프로필</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="file" class="input-image" name="memberImg" th:value="${member.memberImgName}">
+                  <input type="file" class="input-image" name="memberImg">
                 </div>
               </div>
               <div class="btn-wrap">
