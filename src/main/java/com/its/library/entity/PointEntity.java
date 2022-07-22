@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Setter@Getter
 @Table(name = "point")
-public class PointEntity {
+public class PointEntity extends BaseEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pointId")

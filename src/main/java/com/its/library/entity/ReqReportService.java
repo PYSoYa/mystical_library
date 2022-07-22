@@ -15,8 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReqReportService {
     private final ReqReportRepository reqReportRepository;
-    private final MemberRepository memberRepository;
-    private final DebutCommentRepository debutCommentRepository;
     //데뷔글 신고 내역
     public List<ReqReportDTO> debutReportList() {
         List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAll();
