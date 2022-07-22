@@ -33,6 +33,8 @@ public class ReqReportEntity {
         return reqReportEntity;
     }
 
+    public static ReqReportEntity
+
     //신고 - 맴버 manyToOne ㅇ
     //신고 - 작가댓글 manyToOne ㅇ
     //신고 - 데뷔글 댓글 manyToOne ㅇ

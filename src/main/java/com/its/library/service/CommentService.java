@@ -100,4 +100,21 @@ public class CommentService {
         }
 
     }
+
+    public String reportSave(Long id) {
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(id);
+        CommentEntity commentEntity = new CommentEntity();
+        CommentDTO commentDTO = new CommentDTO();
+        if (optionalCommentEntity.isPresent()) {
+            commentEntity = optionalCommentEntity.get();
+            commentDTO = CommentDTO.findDTO(commentEntity);
+            if(commentDTO != null){
+                return "ok";
+            } else {
+                return "no";
+            }
+        } else {
+            return null;
+        }
+    }
 }
