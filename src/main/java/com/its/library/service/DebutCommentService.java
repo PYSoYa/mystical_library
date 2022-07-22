@@ -101,11 +101,12 @@ public class DebutCommentService {
         List<DebutCommentEntity> byDebutEpisodeEntity = debutCommentRepository.findByDebutEpisodeEntity(debutEpisodeEntity);
         for(DebutCommentEntity debutComment : byDebutEpisodeEntity) {
                 DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
+
                 debutCommentDTOList.add(debutCommentDTO1);
 
 
         }
-        System.out.println("debutCommentDTOList = " + debutCommentDTOList);
+
 //          List<DebutCommentDTO> debutCommentDTOList =  findById(debutCommentDTO.getDebutId());
           return debutCommentDTOList;
     }
