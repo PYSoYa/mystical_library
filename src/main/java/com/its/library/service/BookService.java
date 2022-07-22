@@ -101,14 +101,11 @@ public class BookService {
         if (optionalEpisodeEntity.isPresent()) {
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
+            System.out.println("episodeDTO = " + episodeDTO);
             return episodeDTO;
         } else {
             return null;
         }
-    }
-
-    public void categoryList(String category) {
-
     }
 
 
@@ -273,16 +270,16 @@ public class BookService {
         Map<String, String> search = new HashMap<>();
         search.put("type", searchType);
         search.put("q", q);
-        if (searchType.equals("작가")){
-            List<BookEntity> bookEntityList = bookRepository.findByMemberName(q);
-            for (BookEntity book: bookEntityList){
+        if (searchType.equals("작가")) {
+            List<BookEntity> bookEntityList = bookRepository.findByMemberNameContaining(q);
+            for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
             return bookDTOList;
         }
         if (searchType.equals("책")) {
-            List<BookEntity> bookEntityList = bookRepository.findByBookTitle(q);
-            for (BookEntity book: bookEntityList) {
+            List<BookEntity> bookEntityList = bookRepository.findByBookTitleContaining(q);
+            for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
             return bookDTOList;
