@@ -17,17 +17,17 @@
       <div class="update-div">
         <div class="menu-list-container">
           <div class="my-page">
-            <a href="#">
+            <a th:href="@{|/member/myPage/${member.id}|}">
               <span class="item">마이페이지</span>
             </a>
           </div>
           <div class="update-form">
-            <a href="#">
+            <a th:href="@{|/member/update-form/${member.id}|}">
               <span class="item selected-item">회원정보수정</span>
             </a>
           </div>
           <div class="get-point">
-            <a href="#">
+            <a th:href="@{|/member/purchase-point/${member.id}|}">
               <span class="item">포인트 충전</span>
             </a>
           </div>

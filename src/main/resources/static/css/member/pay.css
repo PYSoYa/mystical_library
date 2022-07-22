@@ -1,0 +1,36 @@
+.pay-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
+.pay-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.pay-div {--item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%;}
+
+/* 메뉴 */
+.menu-list-container {display: flex; flex-direction: column; position: relative; border: none; text-align: center; margin-top: 4.2rem; margin-right: 10rem; justify-content: center; padding: 1.25rem; width: 15rem; height: 22rem; border-radius: 0.25rem;}
+.menu-list-container div span {font-size: 1.125rem; font-weight: 600; font-family: inherit; position: relative; text-align: center;}
+.menu-list-container div .selected-item {color: #1e9eff;}
+.menu-list-container > div:not(:last-child) {margin-bottom: 2rem;}
+.menu-list-container a {text-decoration: none; color: inherit !important;}
+.menu-list-container a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.menu-list-container a:link {color: #666;}
+/* 디테일 */
+.pay-point-container {display: flex; flex-direction: column; width: 100%;}
+.pay-point-container .pay-title-wrap {margin-bottom: 0.625rem; padding: 1.25rem; border-bottom: 1px solid #d1d5d9;}
+.pay-point-container .pay-title-wrap .title {font-size: 1.5rem; font-weight: 600; font-family: inherit;}
+.pay-point-container .pay-detail-wrap {border-radius: 0.25rem; padding: 0;}
+.pay-point-container .pay-detail-wrap .pay-detail-wrapper {width: 40rem; display: flex; flex-direction: column; padding: 0 0.675rem;}
+.pay-detail-wrapper .point-have-wrap,
+.pay-detail-wrapper .point-after-have-wrap,
+.pay-detail-wrapper .point-price-wrap,
+.pay-detail-wrapper .submit-btn-wrap {position: relative; width: 100%; height: 5rem; margin: 0; padding: 1.75rem 0.625rem; display: flex; flex-direction: row; justify-content: space-between; border-bottom: 1px solid #e5e5e5;}
+.pay-detail-wrapper .point-have-wrap span,
+.pay-detail-wrapper .point-after-have-wrap span,
+.pay-detail-wrapper .point-price-wrap span {font-size: 1.125rem; font-weight: 600; font-family: inherit;}
+.pay-detail-wrapper .point-quantity-wrap {display: flex; flex-direction: column; border-bottom: 1px solid #e5e5e5; padding-bottom: 1.125rem;}
+.pay-detail-wrapper .point-quantity-wrap .item-box {display: flex; flex-direction: row; justify-content: space-between; width: 100%; height: 3rem; margin-top: 0.625rem; padding: 1rem 0.625rem;}
+.pay-detail-wrapper .point-quantity-wrap .item-box .cash-area {display: flex; position: relative;}
+.pay-detail-wrapper .point-quantity-wrap .item-box .cash-area .btn-wrap {margin-right: 0.125rem; padding: 0.215rem 0.625rem;}
+.pay-detail-wrapper .point-quantity-wrap .item-box .radio-btn {appearance: auto; border: 1px solid #222; width: 1em; height: 1em; border-radius: 50%;}
+.pay-detail-wrapper .point-quantity-wrap .item-box label {font-size: 1.125rem; font-weight: 600; font-family: inherit; position: relative; letter-spacing: 0.03rem;}
+.pay-detail-wrapper .point-quantity-wrap .item-box span {font-size: 1.125rem; font-weight: 500; font-family: inherit;}
+.pay-detail-wrapper .submit-btn-wrap {justify-content: end; border: none;}
+.pay-detail-wrapper .submit-btn-wrap .submit-btn {position: relative; margin-left: 0.62rem; border: none; outline: none; border-radius: 0.188rem; width: 8.465rem; height: 3rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.pay-detail-wrapper .submit-btn-wrap .submit-btn:hover {opacity: 0.5; transition: 0.2s ease;}
+#point-have, #point-after-have, #price {color: #1e9eff;}
