@@ -184,13 +184,19 @@ public class BookController {
         return "book/episodeDetail";
     }
 
-    //별점 저장처리
+    //회차+책 별점 저장처리
     @PostMapping("/save-star")
     public @ResponseBody double saveStar(@ModelAttribute StarDTO starDTO) {
         double result = bookService.saveStar(starDTO);
          return result;
     }
 
-    // 책 별점 저장처리
+    // 책+작가 검색
+    @GetMapping("/search")
+    public String search(@RequestParam("searchType") String searchType, @RequestParam("q") String q, Model model) {
+        List<BookDTO> bookDTOList = bookService.search(searchType, q);
+        model.addAttribute("bookList", bookDTOList);
+        return "book/search";
+    }
 
 }
