@@ -20,10 +20,7 @@ import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -271,4 +268,26 @@ public class BookService {
     }
 
 
+    public List<BookDTO> search(String searchType, String q) {
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        Map<String, String> search = new HashMap<>();
+        search.put("type", searchType);
+        search.put("q", q);
+        if (searchType.equals("작가")){
+            List<BookEntity> bookEntityList = bookRepository.findByMemberName(q);
+            for (BookEntity book: bookEntityList){
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+            return bookDTOList;
+        }
+        if (searchType.equals("책")) {
+            List<BookEntity> bookEntityList = bookRepository.findByBookTitle(q);
+            for (BookEntity book: bookEntityList) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+            return bookDTOList;
+        } else {
+            return null;
+        }
+    }
 }

@@ -28,13 +28,17 @@
         </a>
       </div>
 
-      <form class="search-form">
+      <form action="/book/search" method="get" class="search-form">
         <div tabindex="-1" class="search-container">
           <label class="search-wrap">
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M16.026 9.862a6.163 6.163 0 11-12.327 0 6.163 6.163 0 0112.327 0zm-1.183 5.824a7.663 7.663 0 111-1.031c.066.035.13.08.186.137l5.4 5.4a.75.75 0 01-1.06 1.06l-5.4-5.4a.746.746 0 01-.126-.166z" fill="currentColor"></path>
             </svg>
-            <input type="text" value maxlength="64" class="search-input">
+            <select name="searchType">
+              <option value="작가">작가</option>
+              <option value="책">책</option>
+            </select>
+            <input type="text" maxlength="64" name="q" class="search-input">
           </label>
         </div>
       </form>
