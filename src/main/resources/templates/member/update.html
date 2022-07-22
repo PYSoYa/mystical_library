@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
 
-  <link rel="stylesheet" th:href="@{/css/update.css}">
+  <link rel="stylesheet" th:href="@{/css/member/update.css}">
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
@@ -17,17 +17,17 @@
       <div class="update-div">
         <div class="menu-list-container">
           <div class="my-page">
-            <a href="#">
+            <a th:href="@{|/member/myPage/${member.id}|}">
               <span class="item">마이페이지</span>
             </a>
           </div>
           <div class="update-form">
-            <a href="#">
+            <a th:href="@{|/member/update-form/${member.id}|}">
               <span class="item selected-item">회원정보수정</span>
             </a>
           </div>
           <div class="get-point">
-            <a href="#">
+            <a th:href="@{|/member/purchase-point/${member.id}|}">
               <span class="item">포인트 충전</span>
             </a>
           </div>
@@ -107,4 +107,10 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const resize = (obj) => {
+    obj.style.height = '9.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+</script>
 </html>

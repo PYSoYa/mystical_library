@@ -7,6 +7,8 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+  <div th:each="book:${bookList}">
+    <p th:text="${book}"></p>
+  </div>
 </body>
 </html>
