@@ -5,8 +5,100 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
+<th:block th:replace="layout/header :: header"></th:block>
 
+<main class="main-container">
+  <div class="history-container">
+    <div class="history-wrap">
+      <div class="history-div">
+        <div class="menu-list-container">
+          <div class="my-page">
+            <a th:href="@{|/member/myPage/${member.id}|}">
+              <span class="item">마이페이지</span>
+            </a>
+          </div>
+          <div class="update-form">
+            <a th:href="@{|/member/update-form/${member.id}|}">
+              <span class="item">회원정보수정</span>
+            </a>
+          </div>
+          <div class="get-point">
+            <a th:href="@{|/member/purchase-point/${member.id}|}">
+              <span class="item">포인트 충전</span>
+            </a>
+          </div>
+          <div class="point-purchase-history">
+            <a th:href="@{|/member/point-history/purchase/${member.id}|}">
+              <span class="item selected-item">포인트 충전내역</span>
+            </a>
+          </div>
+          <div class="point-history">
+            <a href="#">
+              <span class="item">포인트 이용내역</span>
+            </a>
+          </div>
+          <div class="delete-member">
+            <a href="#">
+              <span class="item">회원탈퇴</span>
+            </a>
+          </div>
+        </div>
+        <div class="history-detail-container">
+          <div class="history-title-wrap">
+            <h5 class="title">포인트 충전내역</h5>
+          </div>
+          <div class="history-detail-wrap">
+            <div class="history-detail-wrapper">
+              <div class="table-wrap">
+                <table class="history-table">
+                  <tr>
+                    <th>#</th>
+                    <th>충전일자</th>
+                    <th>충전 금액</th>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>1981-04-02 23:15:57</td>
+                    <td>2000 원</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>1981-04-02 23:15:57</td>
+                    <td>2000 원</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>1981-04-02 23:15:57</td>
+                    <td>2000 원</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>1981-04-02 23:15:57</td>
+                    <td>2000 원</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>1981-04-02 23:15:57</td>
+                    <td>12000 원</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="total-amount">
+                <div class="title">총 충전 금액</div>
+                <div class="detail">20000 원</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>

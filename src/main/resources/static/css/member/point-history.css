@@ -1,0 +1,34 @@
+.history-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
+.history-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.history-div {--item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%;}
+
+/* 메뉴 */
+.menu-list-container {display: flex; flex-direction: column; position: relative; border: none; text-align: center; margin-top: 5.85rem; margin-right: 10rem; justify-content: center; padding: 1.25rem; width: 15rem; height: 22rem; border-radius: 0.25rem;}
+.menu-list-container div span {font-size: 1.125rem; font-weight: 600; font-family: inherit; position: relative; text-align: center;}
+.menu-list-container div .selected-item {color: #1e9eff;}
+.menu-list-container > div:not(:last-child) {margin-bottom: 2rem;}
+.menu-list-container a {text-decoration: none; color: inherit !important;}
+.menu-list-container a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.menu-list-container a:link {color: #666;}
+/* 디테일 */
+.history-detail-container {display: flex; flex-direction: column; width: 100%;}
+.history-detail-container .history-title-wrap {margin-bottom: 0.625rem; padding: 1.25rem; border-bottom: 1px solid #d1d5d9;}
+.history-detail-container .history-title-wrap .title {font-size: 1.5rem; font-weight: 600; font-family: inherit;}
+.history-detail-container .history-detail-wrap {border-radius: 0.25rem; padding-top: 1.25rem;}
+.history-detail-container .history-detail-wrap .history-detail-wrapper {width: 100%; display: flex; flex-direction: column; padding: 0 0.675rem;}
+/* 테이블 */
+.history-table {width: 100%; background-color: #fff; border-collapse: collapse; box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); border-radius: 0.25rem; overflow: hidden;}
+.history-table tr {border-bottom: 1px solid #eee;}
+.history-table tr:last-child {border: none;}
+.history-table tr:nth-child(odd) {background-color: #ddd;}
+.history-table th,
+.history-table td {padding: 0.625rem; text-align: center; position: relative;}
+.history-table td {font-size: 1.125rem; color: inherit;}
+.history-table tr th {background-color: #1e9eff; color: #fff; font-size: 1.25rem;}
+.history-table tr th:first-child {border-radius: 0.25rem 0 0 0;}
+.history-table tr th:last-child {border-radius: 0 0.25rem 0 0;}
+.history-table tr td:last-child {color: #bb3636; font-weight: 600;}
+/* 총 충전 금액 */
+.total-amount {display: flex; flex-direction: row; position: relative; justify-content: end; margin: 0; padding-top: 1.5rem; font-size: 1.25rem; font-weight: 600;}
+.total-amount .title {margin-right: 8rem;}
+.total-amount .detail {padding-right: 6.725rem;}
