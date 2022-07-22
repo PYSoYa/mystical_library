@@ -34,11 +34,43 @@
             <td th:text="${comment.memberName}"></td>
             <td th:text="${comment.contents}"></td>
             <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:if="${session.name == comment.memberName}">
+                <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
+            </td>
         </tr>
     </table>
 </div>
 </body>
-<script>
+<script th:inline="javascript">
+  const deleteComment = (id, memberName) => {
+      const div = document.getElementById("test")
+      const episodeId = [[${episode.id}]];
+      const loginName = [[${session.name}]];
+      $.ajax({
+          type: "post",
+          url: "/comment/delete/" + id,
+          data: {
+              "episodeId": episodeId
+          },
+          dataType: "json",
+          success: function (result) {
+              var output = "<table>";
+              output += "<tr>" + "<th>" + "작성자" + "</th>";
+              output +=     "<th>" + "댓글내용" + "</th>";
+              output +=     "<th>" + "작성시간" + "</th>" + "</tr>";
+              for (let i in result){
+                  output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
+                  output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
+                  output += "<tr>" + "<td>"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                  if (loginName === memberName){
+                      output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">"+ "</td>" + "</tr>";
+                  }
+              }
+              output += "</table>";
+              div.innerHTML = output;
+          }
+      })
+  }
   const saveComment = () => {
       const memberId = document.getElementById("memberId").value;
       const episodeId = document.getElementById("episodeId").value;

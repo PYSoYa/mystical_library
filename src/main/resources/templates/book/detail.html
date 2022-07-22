@@ -7,6 +7,22 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+<div id="test">
+  <table th:each="comment:${commentList}">
+    <tr>
+      <th>작성자</th>
+      <th>댓글 내용</th>
+      <th>작성시간</th>
+    </tr>
+    <tr>
+      <td th:text="${comment.memberName}"></td>
+      <td th:text="${comment.contents}"></td>
+      <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <td th:if="${session.name == comment.memberName}">
+        <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

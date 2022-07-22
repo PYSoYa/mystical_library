@@ -153,13 +153,14 @@ public class BookController {
                              @PathVariable("id") Long id, Model model) {
         BookDTO bookDTO = bookService.findById(id);
         model.addAttribute("book", bookDTO);
+        List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+        model.addAttribute("commentList", commentDTOList);
         Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
         model.addAttribute("episodeList", episodeDTOList);
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        System.out.println(" = " + "sdfsdf");
         System.out.println("boardEntities.getContent() = " + episodeDTOList.getContent()); // 요청페이지에 들어있는 데이터
         System.out.println("boardEntities.getTotalElements() = " + episodeDTOList.getTotalElements()); // 전체 글갯수
         System.out.println("boardEntities.getNumber() = " + episodeDTOList.getNumber()); // 요청페이지(jpa 기준)
