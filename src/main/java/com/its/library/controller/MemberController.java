@@ -71,4 +71,16 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/update";
     }
+
+    // 비밀번호 체크
+    @PostMapping("/check-password")
+    public @ResponseBody String checkPassword(@ModelAttribute MemberDTO memberDTO) {
+        System.out.println("memberDTO = " + memberDTO);
+        MemberDTO loginDTO = memberService.login(memberDTO);
+        if (loginDTO != null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
 }

@@ -1,6 +1,6 @@
 /* 프로필 */
 /* 상세정보 */
-.profile-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;}
+.profile-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
 .profile-detail-container {margin-top: 1.25rem; position: relative;}
 .profile-detail-wrap {display: block; position: relative; width: 100%; overflow: hidden; -ms-overflow-style: none; text-align: center; justify-content: center; padding: 2rem 1.25rem 2.25rem 1.25rem; border-bottom: 1px solid #e5e5e5; margin-bottom: 1.25rem;}
 .profile-image-wrap {margin-bottom: 1.25rem; display: inline-block;}
