@@ -7,6 +7,37 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<table>
+  <tr>
+    <div>데뷔글 신고내역</div>
+    <th>신고번호</th>
+    <th>회원번호</th>
+    <th>신고데뷔글번호</th>
+  </tr>
+  <tr th:each="debut:${debutReportList}">
 
+    <td th:text="${debut.id}"></td>
+    <td th:text="${debut.memberId}"></td>
+    <td th:text="${debut.debutCommentId}"></td>
+  </tr>
+
+</table>
+
+
+<table>
+  <tr>
+    <div>작가글 신고내역</div>
+    <th>신고번호</th>
+    <th>회원번호</th>
+    <th>신고작가글번호</th>
+  </tr>
+  <tr th:each="report:${reportList}">
+
+    <td th:text="${report.id}"></td>
+    <td th:text="${report.memberId}"></td>
+    <td th:text="${report.debutCommentId}"></td>
+  </tr>
+
+</table>
 </body>
 </html>

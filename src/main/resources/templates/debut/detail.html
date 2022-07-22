@@ -54,6 +54,8 @@
             <th>작성시간</th>
             <th>수정</th>
             <th>삭제</th>
+            <th>댓글신고</th>
+
 
         </tr>
 
@@ -67,6 +69,7 @@
                 <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
                 <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
             </div>
+            <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
         </tr>
     </table>
 </div>
@@ -241,6 +244,25 @@
             }
         });
 
+
+
+        }
+    function commentReport(id) {
+        const memberId = [[${debut.memberId}]];
+        $.ajax({
+            type:"post",
+            url:"/debutComment/list/"+id,
+            data:{"memberId":memberId},
+            dataType:"text",
+            success:function (result){
+                if (result==="ok"){
+                    alert("댓글 신고가 접수되었습니다 ")
+                }else {
+                    alert("댓글 신고 처리가 실패하였습니다 ")
+                }
+
+            }
+        });
 
     }
 </script>
