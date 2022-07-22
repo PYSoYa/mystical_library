@@ -107,4 +107,10 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const resize = (obj) => {
+    obj.style.height = '9.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+</script>
 </html>
