@@ -90,4 +90,12 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/pay";
     }
+
+    // 포인트 충전내역 페이지 이동 (수정필요)
+    @GetMapping("/point-history/purchase/{id}")
+    public String purchaseHistory(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/pointHistoryPurchase";
+    }
 }

@@ -1,6 +1,10 @@
 const requestPay = () => {
   const cash = $('input[name=point-quantity]:checked').val();
   alert(cash);
+
+  // 여기에 결제 함수 추가
+
+    // point-history 에 추가, memberPoint 수정
 }
 
 const changePoint = () => {

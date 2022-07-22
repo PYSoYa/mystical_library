@@ -3,7 +3,7 @@
 .update-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
 .update-div {--item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%;}
 /* 메뉴 */
-.menu-list-container {display: flex; flex-direction: column; position: relative; border: none; text-align: center; margin-top: 4.2rem; margin-right: 10rem; justify-content: center; padding: 1.25rem; width: 15rem; height: 22rem; border-radius: 0.25rem;}
+.menu-list-container {display: flex; flex-direction: column; position: relative; border: none; text-align: center; margin-top: 5.85rem; margin-right: 10rem; justify-content: center; padding: 1.25rem; width: 15rem; height: 22rem; border-radius: 0.25rem;}
 .menu-list-container div span {font-size: 1.125rem; font-weight: 600; font-family: inherit; position: relative; text-align: center;}
 .menu-list-container div .selected-item {color: #1e9eff;}
 .menu-list-container > div:not(:last-child) {margin-bottom: 2rem;}
