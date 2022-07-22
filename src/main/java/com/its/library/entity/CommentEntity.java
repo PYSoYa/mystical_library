@@ -24,6 +24,9 @@ public class CommentEntity extends BaseEntity{
     @JoinColumn(name = "episodeId")
     private EpisodeEntity episodeEntity;
 
+    @Column
+    private Long bookId;
+
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
     @Column(name = "contents",nullable = false,length = 500)
@@ -37,6 +40,7 @@ public class CommentEntity extends BaseEntity{
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setMemberEntity(memberEntity);
         commentEntity.setEpisodeEntity(episodeEntity);
+        commentEntity.setBookId(episodeEntity.getBookEntity().getId());
         commentEntity.setMemberName(memberEntity.getMemberName());
         commentEntity.setContents(commentDTO.getContents());
         return commentEntity;
