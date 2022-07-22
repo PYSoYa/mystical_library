@@ -38,6 +38,7 @@ public class EpisodeDTO {
 
     public static EpisodeDTO findDTO(EpisodeEntity episodeEntity) {
         EpisodeDTO episodeDTO = new EpisodeDTO();
+        episodeDTO.setId(episodeEntity.getId());
         episodeDTO.setBookId(episodeEntity.getBookEntity().getId());
         episodeDTO.setEpisodeTitle(episodeEntity.getEpisodeTitle());
         episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
