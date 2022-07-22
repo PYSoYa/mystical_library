@@ -21,8 +21,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
 
     @Query(value = "select b from BookEntity b where b.memberName like %:q%")
-    List<BookEntity> findByMemberName(@Param("q") String q);
+    List<BookEntity> findByMemberNameContaining(@Param("q") String q);
 
     @Query(value = "select b from BookEntity b where b.bookTitle like %:q%")
-    List<BookEntity> findByBookTitle(@Param("q") String q);
+    List<BookEntity> findByBookTitleContaining(@Param("q") String q);
 }

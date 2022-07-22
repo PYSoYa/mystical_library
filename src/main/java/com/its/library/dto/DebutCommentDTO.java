@@ -19,10 +19,10 @@ public class DebutCommentDTO {
     private String contents;
     private LocalDateTime createdTime;
 
-    public static DebutCommentDTO toSave(DebutCommentEntity debutComment) {
-        DebutCommentDTO debutCommentDTO = new DebutCommentDTO();
-        return debutCommentDTO;
-    }
+//    public static DebutCommentDTO toSave(DebutCommentEntity debutComment) {
+//        DebutCommentDTO debutCommentDTO = new DebutCommentDTO();
+//        return debutCommentDTO;
+//    }
 
     public static DebutCommentDTO toDTO(DebutCommentEntity debutComment) {
         DebutCommentDTO debutCommentDTO = new DebutCommentDTO();

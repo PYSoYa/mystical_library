@@ -26,6 +26,13 @@ public class ReqReportEntity {
     @JoinColumn(name = "debutCommentId")
     private DebutCommentEntity debutCommentEntity;
 
+    public static ReqReportEntity toSave(MemberEntity memberEntity, DebutCommentEntity debutComment) {
+        ReqReportEntity reqReportEntity = new ReqReportEntity();
+        reqReportEntity.setDebutCommentEntity(debutComment);
+        reqReportEntity.setMemberEntity(memberEntity);
+        return reqReportEntity;
+    }
+
     //신고 - 맴버 manyToOne ㅇ
     //신고 - 작가댓글 manyToOne ㅇ
     //신고 - 데뷔글 댓글 manyToOne ㅇ

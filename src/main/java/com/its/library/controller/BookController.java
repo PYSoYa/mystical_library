@@ -1,11 +1,9 @@
 package com.its.library.controller;
 
 import com.its.library.common.PagingConst;
-import com.its.library.dto.BookDTO;
-import com.its.library.dto.EpisodeDTO;
-import com.its.library.dto.MailDTO;
-import com.its.library.dto.StarDTO;
+import com.its.library.dto.*;
 import com.its.library.service.BookService;
+import com.its.library.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +22,8 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+
+    private final CommentService commentService;
 
     // 책 저장페이지 요청
     @GetMapping("/book-save-form")
@@ -120,7 +120,7 @@ public class BookController {
 
     // 카테고리 목록 조회
     @GetMapping("/category")
-    public String categoryList(@RequestParam("id") Long id){
+    public String categoryList(@RequestParam("id") Long id) {
         return null;
     }
 
@@ -172,15 +172,16 @@ public class BookController {
     }
 
 
-
     // 회차 상세조회
     @GetMapping("/episode")
     public String episodeDetail(@RequestParam("bookId") Long bookId, @RequestParam("id") Long id,
                                 Model model) {
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
         BookDTO bookDTO = bookService.findById(bookId);
+        List<CommentDTO> commentDTOList = commentService.commentList(id);
         model.addAttribute("book", bookDTO);
         model.addAttribute("episode", episodeDTO);
+        model.addAttribute("commentList", commentDTOList);
         return "book/episodeDetail";
     }
 
@@ -188,7 +189,7 @@ public class BookController {
     @PostMapping("/save-star")
     public @ResponseBody double saveStar(@ModelAttribute StarDTO starDTO) {
         double result = bookService.saveStar(starDTO);
-         return result;
+        return result;
     }
 
     // 책+작가 검색
