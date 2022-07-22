@@ -82,4 +82,12 @@ public class MemberController {
             return "no";
         }
     }
+
+    // 포인트 충전 페이지 이동
+    @GetMapping("/purchase-point/{id}")
+    public String purchasePoint(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/pay";
+    }
 }

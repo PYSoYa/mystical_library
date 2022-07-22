@@ -5,8 +5,166 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/pay.css}">
+  <script th:src="@{/js/pay.js}"></script>
 </head>
 <body>
+<th:block th:replace="layout/header :: header"></th:block>
 
+<main class="main-container">
+  <div class="pay-container">
+    <div class="pay-wrap">
+      <div class="pay-div">
+        <div class="menu-list-container">
+          <div class="my-page">
+            <a th:href="@{|/member/myPage/${member.id}|}">
+              <span class="item">마이페이지</span>
+            </a>
+          </div>
+          <div class="update-form">
+            <a th:href="@{|/member/update-form/${member.id}|}">
+              <span class="item">회원정보수정</span>
+            </a>
+          </div>
+          <div class="get-point">
+            <a th:href="@{|/member/purchase-point/${member.id}|}">
+              <span class="item selected-item">포인트 충전</span>
+            </a>
+          </div>
+          <div class="point-history">
+            <a href="#">
+              <span class="item">포인트 이용내역</span>
+            </a>
+          </div>
+          <div class="delete-member">
+            <a href="#">
+              <span class="item">회원탈퇴</span>
+            </a>
+          </div>
+        </div>
+        <div class="pay-point-container">
+          <div class="pay-title-wrap">
+            <h5 class="title">포인트 충전</h5>
+          </div>
+          <div class="pay-detail-wrap">
+            <div class="pay-detail-wrapper">
+              <div class="point-have-wrap">
+                <span class="title">보유 포인트</span>
+                <span class="detail" id="point-have" th:text="${member.memberPoint}"></span>
+              </div>
+              <div class="point-quantity-wrap">
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="1000" name="point-quantity" checked>
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">1000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus">+ 1000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="3000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">3000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 3000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="5000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">5000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 5000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="10000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">10000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 11000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="30000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">30000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 33000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="50000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">50000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 55000 포인트</span>
+                  </div>
+                </div>
+                <div class="item-box">
+                  <div class="cash-area">
+                    <div class="btn-wrap">
+                      <input type="radio" onclick="changePoint()" class="radio-btn" value="100000" name="point-quantity">
+                    </div>
+                    <div class="label-wrap">
+                      <label class="label-cash">100000 원</label>
+                    </div>
+                  </div>
+                  <div class="bonus-area">
+                    <span class="bonus"> + 110000 포인트</span>
+                  </div>
+                </div>
+              </div>
+              <div class="point-after-have-wrap">
+                <span class="title">충전 후 보유 포인트</span>
+                <span class="detail" id="point-after-have"></span>
+              </div>
+              <div class="point-price-wrap">
+                <span class="title">결제 금액</span>
+                <span class="detail" id="price"></span>
+              </div>
+              <div class="submit-btn-wrap">
+                <button type="button" class="submit-btn" onclick="requestPay()">결제하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>
