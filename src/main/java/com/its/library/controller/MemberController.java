@@ -98,4 +98,12 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryPurchase";
     }
+
+    // 포인트 이용내역 페이지 이동 (수정필요)
+    @GetMapping("/point-history/use/{id}")
+    public String useHistory(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/pointHistoryUse";
+    }
 }
