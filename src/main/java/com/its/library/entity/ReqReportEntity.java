@@ -33,6 +33,14 @@ public class ReqReportEntity {
         return reqReportEntity;
     }
 
+    public static ReqReportEntity saveEntity(MemberEntity memberEntity, CommentEntity commentEntity) {
+        ReqReportEntity reqReportEntity = new ReqReportEntity();
+        reqReportEntity.setMemberEntity(memberEntity);
+        reqReportEntity.setCommentEntity(commentEntity);
+        return reqReportEntity;
+    }
+
+
     //신고 - 맴버 manyToOne ㅇ
     //신고 - 작가댓글 manyToOne ㅇ
     //신고 - 데뷔글 댓글 manyToOne ㅇ

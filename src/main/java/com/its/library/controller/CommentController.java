@@ -32,4 +32,11 @@ public class CommentController {
 
         return result;
     }
+
+    // 회차 댓글 신고처리
+    @PostMapping("/report-save/{id}")
+    public @ResponseBody String reportSave(@PathVariable("id") Long id, @RequestParam("loginId") Long loginId) {
+        String result = commentService.reportSave(id, loginId);
+        return result;
+    }
 }

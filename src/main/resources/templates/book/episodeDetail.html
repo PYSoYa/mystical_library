@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>신비한 서재입니다.</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신비한 서재입니다.</title>
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js}"></script>
 </head>
 <body>
-    <select id="star" name="star">
-      <option value="1">★☆☆☆☆</option>
-      <option value="2">★★☆☆☆</option>
-      <option value="3">★★★☆☆</option>
-      <option value="4">★★★★☆</option>
-      <option value="5">★★★★★</option>
-    </select>
-    <input type="button" onclick="saveStar()" value="버튼">
-    <h3></h3>
-        <input type="hidden" id="memberId" name="memberId" th:value="${session.id}">
-        <input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
-        <input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
-        <textarea type="text" id="contents" name="contents"></textarea>
-        <input type="button" onclick="saveComment()" value="댓글 작성">
+<select id="star" name="star">
+    <option value="1">★☆☆☆☆</option>
+    <option value="2">★★☆☆☆</option>
+    <option value="3">★★★☆☆</option>
+    <option value="4">★★★★☆</option>
+    <option value="5">★★★★★</option>
+</select>
+<input type="button" onclick="saveStar()" value="버튼">
+<h3></h3>
+<input type="hidden" id="memberId" name="memberId" th:value="${session.id}">
+<input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
+<input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
+<textarea type="text" id="contents" name="contents"></textarea>
+<input type="button" onclick="saveComment()" value="댓글 작성">
 <div id="test">
     <table th:each="comment:${commentList}">
         <tr>
@@ -37,91 +37,114 @@
             <td th:if="${session.name == comment.memberName}">
                 <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
             </td>
+            <td>
+                <input type="button" th:onclick="reportComment([[${comment.id}]])" value="신고">
+            </td>
         </tr>
     </table>
 </div>
 </body>
 <script th:inline="javascript">
-  const deleteComment = (id, memberName) => {
-      const div = document.getElementById("test")
-      const episodeId = [[${episode.id}]];
-      const loginName = [[${session.name}]];
-      $.ajax({
-          type: "post",
-          url: "/comment/delete/" + id,
-          data: {
-              "episodeId": episodeId
-          },
-          dataType: "json",
-          success: function (result) {
-              var output = "<table>";
-              output += "<tr>" + "<th>" + "작성자" + "</th>";
-              output +=     "<th>" + "댓글내용" + "</th>";
-              output +=     "<th>" + "작성시간" + "</th>" + "</tr>";
-              for (let i in result){
-                  output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
-                  output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
-                  output += "<tr>" + "<td>"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                  if (loginName === memberName){
-                      output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">"+ "</td>" + "</tr>";
-                  }
-              }
-              output += "</table>";
-              div.innerHTML = output;
-          }
-      })
-  }
-  const saveComment = () => {
-      const memberId = document.getElementById("memberId").value;
-      const episodeId = document.getElementById("episodeId").value;
-      const memberName = document.getElementById("memberName").value;
-      const contents = document.getElementById("contents").value;
-      const div = document.getElementById("test");
-      $.ajax({
-          type: "post",
-          url: "/comment/save",
-          data: {
-              "memberId": memberId,
-              "episodeId": episodeId,
-              "memberName": memberName,
-              "contents": contents
-          },
-          dataType: "json",
-          success: function (result){
-              var output = "<table>";
-              output += "<tr>" + "<th>" + "작성자" + "</th>";
-              output += "<tr>" + "<th>" + "댓글내용" + "</th>";
-              output += "<tr>" + "<th>" + "작성시간" + "</th>";
-              for (let i in result){
-                  output += "<tr>" + "<td>" + result[i].memberName + "</td>";
-                  output += "<tr>" + "<td>" + result[i].contents + "</td>";
-                  output += "<td>"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-              }
-              output += "</table>";
-              div.innerHTML = output;
-          }
-      })
-  }
-  const saveStar = () => {
+    const reportComment = (id) => {
+        const loginId = [[${session.id}]];
+
+        $.ajax({
+            type: "post",
+            url: "/comment/report-save/" + id,
+            data: {
+                "id":id,
+                "loginId": loginId
+            },
+            dataType: "text",
+            success: function (result) {
+                if (result === 'ok') {
+                    alert("신고완료");
+                } else {
+                    alert("신고실패");
+                }
+            }
+        })
+    }
+    const deleteComment = (id, memberName) => {
+        const div = document.getElementById("test")
+        const episodeId = [[${episode.id}]];
+        const loginName = [[${session.name}]];
+        $.ajax({
+            type: "post",
+            url: "/comment/delete/" + id,
+            data: {
+                "episodeId": episodeId
+            },
+            dataType: "json",
+            success: function (result) {
+                var output = "<table>";
+                output += "<tr>" + "<th>" + "작성자" + "</th>";
+                output += "<th>" + "댓글내용" + "</th>";
+                output += "<th>" + "작성시간" + "</th>" + "</tr>";
+                for (let i in result) {
+                    output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
+                    output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
+                    output += "<tr>" + "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    if (loginName === memberName) {
+                        output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">" + "</td>" + "</tr>";
+                    }
+                }
+                output += "</table>";
+                div.innerHTML = output;
+            }
+        })
+    }
+    const saveComment = () => {
+        const memberId = document.getElementById("memberId").value;
+        const episodeId = document.getElementById("episodeId").value;
+        const memberName = document.getElementById("memberName").value;
+        const contents = document.getElementById("contents").value;
+        const div = document.getElementById("test");
+        $.ajax({
+            type: "post",
+            url: "/comment/save",
+            data: {
+                "memberId": memberId,
+                "episodeId": episodeId,
+                "memberName": memberName,
+                "contents": contents
+            },
+            dataType: "json",
+            success: function (result) {
+                var output = "<table>";
+                output += "<tr>" + "<th>" + "작성자" + "</th>";
+                output += "<tr>" + "<th>" + "댓글내용" + "</th>";
+                output += "<tr>" + "<th>" + "작성시간" + "</th>";
+                for (let i in result) {
+                    output += "<tr>" + "<td>" + result[i].memberName + "</td>";
+                    output += "<tr>" + "<td>" + result[i].contents + "</td>";
+                    output += "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                }
+                output += "</table>";
+                div.innerHTML = output;
+            }
+        })
+    }
+    const saveStar = () => {
         const memberId = 1;
         const episodeId = 2;
         const star = document.getElementById("star").value;
 
-      $.ajax({
-        type: "post",
-        url: "/book/save-star",
-        data: {
-            "memberId": memberId,
-            "episodeId": episodeId,
-            "star":star
-        },
-        dataType: "text",
-        success: function (result) {
-            alert(result);
-        },
+        $.ajax({
+                type: "post",
+                url: "/book/save-star",
+                data: {
+                    "memberId": memberId,
+                    "episodeId": episodeId,
+                    "star": star
+                },
+                dataType: "text",
+                success: function (result) {
+                    alert(result);
+                },
 
-              }
-      )
-  }
+            }
+        )
+    }
 </script>
 </html>
