@@ -12,6 +12,9 @@ public class PointDTO {
     private Long id;
     private Long memberId;
     private Long episodeId;
-    private int point;
+    private int plusPoint;
+    private int minusPoint;
+    private int totalPoint;
+
 
 }
