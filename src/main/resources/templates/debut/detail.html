@@ -57,6 +57,8 @@
             <th>댓글신고</th>
 
 
+
+
         </tr>
 
 
@@ -66,10 +68,14 @@
             <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
             <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
             <div th:if="${comment.memberName}==${session.name}">
+                <div th:if="${comment.report}==false">
                 <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
                 <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
+                </div>
             </div>
             <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
+
+
         </tr>
     </table>
 </div>

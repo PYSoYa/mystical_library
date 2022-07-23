@@ -24,6 +24,8 @@ public class DebutCommentEntity extends BaseEntity {
     private String memberName;
     @Column(name = "contents",nullable = false,length = 500)
     private String contents;
+    @Column
+    private boolean report;
 
     public static DebutCommentEntity toSave(DebutCommentDTO debutCommentDTO, MemberEntity memberEntity, DebutEpisodeEntity debutEpisodeEntity) {
         DebutCommentEntity debutComment = new DebutCommentEntity();
@@ -31,18 +33,17 @@ public class DebutCommentEntity extends BaseEntity {
         debutComment.setMemberName(memberEntity.getMemberName());
         debutComment.setDebutEpisodeEntity(debutEpisodeEntity);
         debutComment.setContents(debutCommentDTO.getContents());
+        debutComment.setReport(false);
         return debutComment;
     }
 
 
 
-    public static DebutCommentEntity toUpdate(DebutCommentDTO debutCommentDTO, MemberEntity memberEntity, DebutEpisodeEntity debutEpisodeEntity) {
-        DebutCommentEntity debutComment = new DebutCommentEntity();
-        debutComment.setId(debutCommentDTO.getId());
-        debutComment.setMemberEntity(memberEntity);
-        debutComment.setMemberName(memberEntity.getMemberName());
-        debutComment.setDebutEpisodeEntity(debutEpisodeEntity);
-        debutComment.setContents(debutCommentDTO.getContents());
+    public static DebutCommentEntity toUpdate(DebutCommentEntity debutComment) {
+       debutComment.setId(debutComment.getId());
+       debutComment.setContents("관리자에 의해 숨겨진 글입니다");
+       debutComment.setMemberName(debutComment.getMemberName());
+       debutComment.setReport(true);
         return debutComment;
     }
 

@@ -18,6 +18,7 @@ public class DebutCommentDTO {
     private String memberName;
     private String contents;
     private LocalDateTime createdTime;
+    private boolean report;
 
 //    public static DebutCommentDTO toSave(DebutCommentEntity debutComment) {
 //        DebutCommentDTO debutCommentDTO = new DebutCommentDTO();
@@ -32,6 +33,8 @@ public class DebutCommentDTO {
         debutCommentDTO.setMemberName(debutComment.getMemberName());
         debutCommentDTO.setContents(debutComment.getContents());
         debutCommentDTO.setCreatedTime(debutComment.getCreatedDateTime());
+        debutCommentDTO.setReport(debutComment.isReport());
+
         return debutCommentDTO;
     }
 }
