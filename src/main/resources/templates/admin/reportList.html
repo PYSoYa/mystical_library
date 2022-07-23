@@ -9,16 +9,21 @@
 <body>
 <table>
   <tr>
-    <div>데뷔글 신고내역</div>
+    <div>데뷔글 댓글 신고내역</div>
     <th>신고번호</th>
     <th>회원번호</th>
-    <th>신고데뷔글번호</th>
+    <th>신고데뷔글 댓글 번호</th>
+    <th>신고 승인</th>
+    <th>신고 거절</th>
+
   </tr>
   <tr th:each="debut:${debutReportList}">
 
     <td th:text="${debut.id}"></td>
     <td th:text="${debut.memberId}"></td>
     <td th:text="${debut.debutCommentId}"></td>
+    <td><input type="button" th:value="승인" th:onclick="debutReportTrue([[${debut.id}]])"></td>
+    <td><input type="button" th:value="거절" th:onclick="debutReportFalse([[${debut.id}]])"></td>
   </tr>
 
 </table>
@@ -26,18 +31,36 @@
 
 <table>
   <tr>
-    <div>작가글 신고내역</div>
+    <div>작가글 댓글 신고내역</div>
     <th>신고번호</th>
     <th>회원번호</th>
-    <th>신고작가글번호</th>
+    <th>신고작가글 댓글 번호</th>
+    <th>신고 승인</th>
+    <th>신고 거절</th>
   </tr>
   <tr th:each="report:${reportList}">
 
     <td th:text="${report.id}"></td>
     <td th:text="${report.memberId}"></td>
-    <td th:text="${report.debutCommentId}"></td>
+    <td th:text="${report.commentId}"></td>
+    <td><input type="button" th:value="승인" th:onclick="reportTrue([[${report.id}]])"></td>
+    <td><input type="button" th:value="거절" th:onclick="reportFalse([[${report.id}]])"></td>
   </tr>
 
 </table>
+<script>
+  function debutReportTrue(id){
+    location.href="/admin/debutComment-delete/"+id;
+  }
+  function debutReportFalse(id){
+    location.href="/admin/debut-reqReport-delete/"+id;
+  }
+  function reportTrue(id){
+    location.href="/admin/comment-delete/"+id;
+  }
+  function reportFalse(id){
+    location.href="/admin/book-reqReport-delete/"+id;
+  }
+</script>
 </body>
 </html>

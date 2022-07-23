@@ -1,8 +1,9 @@
-package com.its.library.entity;
+package com.its.library.service;
 
 import com.its.library.dto.ReqReportDTO;
+import com.its.library.entity.DebutCommentEntity;
+import com.its.library.entity.ReqReportEntity;
 import com.its.library.repository.DebutCommentRepository;
-import com.its.library.repository.MemberRepository;
 import com.its.library.repository.ReqReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReqReportService {
     private final ReqReportRepository reqReportRepository;
+    private final DebutCommentRepository debutCommentRepository;
     //데뷔글 신고 내역
     public List<ReqReportDTO> debutReportList() {
         List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAll();
@@ -49,5 +51,21 @@ public class ReqReportService {
 
         }
         return null;
+    }
+
+    public void debutCommentDelete(Long id) {
+       Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
+        if(reqReportEntity.isPresent()){
+            ReqReportEntity reqReportEntity1 =reqReportEntity.get();
+           Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(reqReportEntity1.getDebutCommentEntity().getId());
+           if(optionalDebutCommentEntity.isPresent()){
+               DebutCommentEntity debutComment =optionalDebutCommentEntity.get();
+              DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutComment);
+              DebutCommentEntity debutComment1 = debutCommentRepository.save(debutCommentEntity);
+              reqReportRepository.deleteById(id);
+
+           }
+        }
+
     }
 }
