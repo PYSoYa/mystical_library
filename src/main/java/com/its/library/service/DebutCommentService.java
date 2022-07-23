@@ -82,49 +82,51 @@ public class DebutCommentService {
     }
 
     public List<DebutCommentDTO> update(DebutCommentDTO debutCommentDTO) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutCommentDTO.getMemberId());
+        MemberEntity memberEntity = new MemberEntity();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+        }
+        Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(debutCommentDTO.getId());
+        if (optionalDebutCommentEntity.isPresent()) {
+            DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
+            debutComment.setContents(debutCommentDTO.getContents());
+            debutCommentRepository.save(debutComment);
+        }
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutCommentDTO.getDebutId());
         DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
         if (optionalDebutEpisodeEntity.isPresent()) {
             debutEpisodeEntity = optionalDebutEpisodeEntity.get();
 
         }
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutCommentDTO.getMemberId());
-        MemberEntity memberEntity = new MemberEntity();
-        if (optionalMemberEntity.isPresent()) {
-            memberEntity = optionalMemberEntity.get();
-        }
 
-        DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutCommentDTO, memberEntity, debutEpisodeEntity);
-        debutCommentRepository.save(debutCommentEntity);
 
         List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
-        List<DebutCommentEntity> byDebutEpisodeEntity = debutCommentRepository.findByDebutEpisodeEntity(debutEpisodeEntity);
-        for(DebutCommentEntity debutComment : byDebutEpisodeEntity) {
-                DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
-                debutCommentDTOList.add(debutCommentDTO1);
+        List<DebutCommentEntity> byDebutEpisodeEntity = debutEpisodeEntity.getDebutCommentEntityList();
+        for (DebutCommentEntity debutComment : byDebutEpisodeEntity) {
+            DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
 
+            debutCommentDTOList.add(debutCommentDTO1);
 
         }
-        System.out.println("debutCommentDTOList = " + debutCommentDTOList);
-//          List<DebutCommentDTO> debutCommentDTOList =  findById(debutCommentDTO.getDebutId());
-          return debutCommentDTOList;
+        return debutCommentDTOList;
     }
 
     public String reportSave(Long id, Long memberId) {
-       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-       MemberEntity memberEntity = new MemberEntity();
-       if (optionalMemberEntity.isPresent()){
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        MemberEntity memberEntity = new MemberEntity();
+        if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
 
-       }
+        }
         Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
-        if(optionalDebutCommentEntity.isPresent()){
+        if (optionalDebutCommentEntity.isPresent()) {
             DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
-           ReqReportEntity reqReportEntity = ReqReportEntity.toSave(memberEntity,debutComment);
-          ReqReportEntity reqReportEntity1 = reqReportRepository.save(reqReportEntity);
-          if(reqReportEntity1!=null)
-              return "ok";
-        }else {
+            ReqReportEntity reqReportEntity = ReqReportEntity.toSave(memberEntity, debutComment);
+            ReqReportEntity reqReportEntity1 = reqReportRepository.save(reqReportEntity);
+            if (reqReportEntity1 != null)
+                return "ok";
+        } else {
             return "no";
         }
         return null;

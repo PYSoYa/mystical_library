@@ -4,10 +4,8 @@ import com.its.library.dto.CommentDTO;
 import com.its.library.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +16,27 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    // 회차 댓글 저장처리
     @PostMapping("/save")
     public @ResponseBody List<CommentDTO> commentSave(@ModelAttribute CommentDTO commentDTO){
        List<CommentDTO> result = commentService.commentSave(commentDTO);
+        return result;
+    }
+
+    // 회차 댓글 삭제처리
+    @PostMapping("/delete/{id}")
+    public @ResponseBody List<CommentDTO> commentDelete(@PathVariable("id") Long id,
+                                                        @RequestParam("episodeId") Long episodeId,
+                                                        Model model) {
+        List<CommentDTO> result = commentService.commentDelete(id, episodeId);
+
+        return result;
+    }
+
+    // 회차 댓글 신고처리
+    @PostMapping("/report-save/{id}")
+    public @ResponseBody String reportSave(@PathVariable("id") Long id, @RequestParam("loginId") Long loginId) {
+        String result = commentService.reportSave(id, loginId);
         return result;
     }
 }

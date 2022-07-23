@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @Table(name = "episode")
-public class EpisodeEntity extends BaseEntity{
+public class EpisodeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "episodeId")
@@ -22,13 +23,13 @@ public class EpisodeEntity extends BaseEntity{
     @JoinColumn(name = "bookId")
     private BookEntity bookEntity;
 
-    @Column(name = "episodeTitle",nullable = false,length = 30)
+    @Column(name = "episodeTitle", nullable = false, length = 30)
     private String episodeTitle;
-    @Column(name = "episodeContents",nullable = false,length = 6000)
+    @Column(name = "episodeContents", nullable = false, length = 6000)
     private String episodeContents;
-    @Column(name = "episodeImgName",length = 100)
+    @Column(name = "episodeImgName", length = 100)
     private String episodeImgName;
-    @Column(name = "payment",nullable = false)
+    @Column(name = "payment", nullable = false)
     private int payment;
     @Column
     private int episodeHits;
@@ -65,12 +66,11 @@ public class EpisodeEntity extends BaseEntity{
     }
 
 
-
     //회차 - 책 manyToOne ㅇ
     //회차 - 댓글 oneToMany ㅇ
     //회차 - 열람내역 manyToOne ㅇ
     //회차 - 포인트 manyToOne ㅇ
     //회차 - 별점 oneToMany ㅇ
 
-    
+
 }
