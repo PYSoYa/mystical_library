@@ -22,8 +22,13 @@ public class PointEntity extends BaseEntity  {
     @JoinColumn(name = "episodeId")
     private EpisodeEntity episodeEntity;
 
-    @Column(name = "point")
-    private int point;
+    @Column(name = "plusPoint")
+    private int plusPoint;
+    @Column(name = "minusPoint")
+    private int minusPoint;
+    @Column(name = "totalPoint")
+    private  int totalPoint;
+
 
 
     //포인트(결제) - 맴버 manyToOne ㅇ
