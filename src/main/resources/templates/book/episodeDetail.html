@@ -46,11 +46,14 @@
 </body>
 <script th:inline="javascript">
     const reportComment = (id) => {
+        const loginId = [[${session.id}]];
+
         $.ajax({
             type: "post",
             url: "/comment/report-save/" + id,
             data: {
-                "id":id
+                "id":id,
+                "loginId": loginId
             },
             dataType: "text",
             success: function (result) {

@@ -2,14 +2,8 @@ package com.its.library.service;
 
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.CommentDTO;
-import com.its.library.entity.BookEntity;
-import com.its.library.entity.CommentEntity;
-import com.its.library.entity.EpisodeEntity;
-import com.its.library.entity.MemberEntity;
-import com.its.library.repository.BookRepository;
-import com.its.library.repository.CommentRepository;
-import com.its.library.repository.EpisodeRepository;
-import com.its.library.repository.MemberRepository;
+import com.its.library.entity.*;
+import com.its.library.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +20,7 @@ public class CommentService {
     private final BookRepository bookRepository;
     private final EpisodeRepository episodeRepository;
     private final MemberRepository memberRepository;
+    private final ReqReportRepository reqReportRepository;
 
     public List<CommentDTO> commentSave(CommentDTO commentDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(commentDTO.getMemberId());
@@ -101,12 +96,16 @@ public class CommentService {
 
     }
 
-    public String reportSave(Long id) {
+    public String reportSave(Long id, Long loginId) {
         Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(id);
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(loginId);
         CommentEntity commentEntity = new CommentEntity();
+        MemberEntity memberEntity = new MemberEntity();
         CommentDTO commentDTO = new CommentDTO();
-        if (optionalCommentEntity.isPresent()) {
+        if (optionalCommentEntity.isPresent() && optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
             commentEntity = optionalCommentEntity.get();
+            reqReportRepository.save(ReqReportEntity.saveEntity(memberEntity ,commentEntity));
             commentDTO = CommentDTO.findDTO(commentEntity);
             if(commentDTO != null){
                 return "ok";
