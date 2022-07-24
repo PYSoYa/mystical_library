@@ -1,8 +1,10 @@
 package com.its.library.service;
 
 import com.its.library.dto.ReqReportDTO;
+import com.its.library.entity.CommentEntity;
 import com.its.library.entity.DebutCommentEntity;
 import com.its.library.entity.ReqReportEntity;
+import com.its.library.repository.CommentRepository;
 import com.its.library.repository.DebutCommentRepository;
 import com.its.library.repository.ReqReportRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class ReqReportService {
     private final ReqReportRepository reqReportRepository;
     private final DebutCommentRepository debutCommentRepository;
+    private final CommentRepository commentRepository;
     //데뷔글 신고 내역
     public List<ReqReportDTO> debutReportList() {
         List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAll();
@@ -61,11 +64,35 @@ public class ReqReportService {
            if(optionalDebutCommentEntity.isPresent()){
                DebutCommentEntity debutComment =optionalDebutCommentEntity.get();
               DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutComment);
-              DebutCommentEntity debutComment1 = debutCommentRepository.save(debutCommentEntity);
+              debutCommentRepository.save(debutCommentEntity);
               reqReportRepository.deleteById(id);
 
            }
         }
 
     }
+
+    public void debutReportDelete(Long id) {
+        reqReportRepository.deleteById(id);
+
+    }
+    public void commentDelete(Long id) {
+        Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
+        if (reqReportEntity.isPresent()) {
+            ReqReportEntity reqReportEntity1 = reqReportEntity.get();
+            Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(reqReportEntity1.getDebutCommentEntity().getId());
+            if (optionalCommentEntity.isPresent()) {
+                CommentEntity comment = optionalCommentEntity.get();
+                CommentEntity commentEntity = CommentEntity.toUpdate(comment);
+                commentRepository.save(commentEntity);
+                reqReportRepository.deleteById(id);
+
+            }
+        }
+    }
+    public void reportDelete(Long id) {
+        reqReportRepository.deleteById(id);
+    }
+
+
 }
