@@ -31,6 +31,8 @@ public class CommentEntity extends BaseEntity{
     private String memberName;
     @Column(name = "contents",nullable = false,length = 500)
     private String contents;
+    @Column
+    private boolean commentReport;
 
 
 
@@ -44,5 +46,13 @@ public class CommentEntity extends BaseEntity{
         commentEntity.setMemberName(memberEntity.getMemberName());
         commentEntity.setContents(commentDTO.getContents());
         return commentEntity;
+    }
+
+    public static CommentEntity toUpdate(CommentEntity comment) {
+        comment.setId(comment.getId());
+        comment.setContents("관리자에 의해 숨겨진 글입니다");
+        comment.setMemberName(comment.getMemberName());
+        comment.setCommentReport(true);
+        return comment;
     }
 }

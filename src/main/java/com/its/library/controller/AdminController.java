@@ -34,14 +34,17 @@ public class AdminController {
     }
     @GetMapping("/debut-reqReport-delete/{id}")
     public String debutReqReportDelete(@PathVariable("id")Long id){
+        reqReportService.debutReportDelete(id);
         return "redirect:/admin/req-report-list";
     }
     @GetMapping("/comment-delete/{id}")
     public String commentDelete(@PathVariable("id")Long id){
+        reqReportService.commentDelete(id);
         return "redirect:/admin/req-report-list";
     }
     @GetMapping("/reqReport-delete/{id}")
     public String reqReportDelete(@PathVariable("id")Long id){
+        reqReportService.reportDelete(id);
         return "redirect:/admin/req-report-list";
     }
 

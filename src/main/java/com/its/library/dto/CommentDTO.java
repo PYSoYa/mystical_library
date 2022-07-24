@@ -20,6 +20,7 @@ public class CommentDTO {
     private String memberName;
     private String contents;
     private LocalDateTime createdTime;
+    private boolean commentReport;
 
     public static CommentDTO findDTO(CommentEntity commentEntity) {
         CommentDTO commentDTO = new CommentDTO();
@@ -30,6 +31,7 @@ public class CommentDTO {
         commentDTO.setMemberName(commentEntity.getMemberName());
         commentDTO.setContents(commentEntity.getContents());
         commentDTO.setCreatedTime(commentEntity.getCreatedDateTime());
+        commentDTO.setCommentReport(false) ;
         return commentDTO;
     }
 }
