@@ -1,7 +1,6 @@
 package com.its.library.entity;
 
 import com.its.library.dto.BookDTO;
-import com.its.library.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,7 +53,7 @@ public class BookEntity {
     private List<EpisodeEntity> episodeEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private  List<WishlistEntity> wishlistEntityList = new ArrayList<>();
+    private  List<WishEntity> wishlistEntityList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boxId")

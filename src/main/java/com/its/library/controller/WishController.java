@@ -5,10 +5,7 @@ import com.its.library.service.WishService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,8 +13,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WishController {
     private final WishService wishService;
 
-    @GetMapping("/save-writer")
+    // 관심작가 유무 체크
+    @PostMapping("/check")
+    private @ResponseBody String check(@ModelAttribute WishlistDTO wishlistDTO) {
+        String result = wishService.check(wishlistDTO);
+        return result;
+    }
+    // 관심작가 저장처리
+    @PostMapping("/save-writer")
     private @ResponseBody String saveWriter(@ModelAttribute WishlistDTO wishlistDTO){
-
+        String result = wishService.saveWriter(wishlistDTO);
+        return result;
+    }
+    // 관심작가 삭제처리
+    @DeleteMapping("/delete")
+    private @ResponseBody String delete(@ModelAttribute WishlistDTO wishlistDTO) {
+        String result = wishService.delete(wishlistDTO);
+        return result;
     }
 }

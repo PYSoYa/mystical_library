@@ -1,8 +1,13 @@
 package com.its.library.repository;
 
-import com.its.library.entity.WishlistEntity;
+import com.its.library.entity.MemberEntity;
+import com.its.library.entity.WishEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WishRepository extends JpaRepository<WishlistEntity, Long> {
+import java.util.Optional;
+
+public interface WishRepository extends JpaRepository<WishEntity, Long> {
+    Optional<WishEntity> findByMemberEntityAndMemberName(MemberEntity memberEntity, String memberName);
+
 
 }
