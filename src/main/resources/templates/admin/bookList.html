@@ -39,7 +39,7 @@
     <td th:text="${book.writerRole}"></td>
     <td th:text="${book.star}"></td>
     <td><input type="button" th:value="승인" th:onclick="bookAgree([[${book.id}]])"></td>
-    <td><input type="button" th:value="거절" th:onclick="bookFalse([[${book.id}]])"></td>
+    <td><input type="button" th:value="거절" th:onclick="bookDelete([[${book.id}]])"></td>
     </div>
   </tr>
 </table>
@@ -47,6 +47,9 @@
 function bookAgree(id){
 location.href="/admin/book-agree/"+id;
 
+}
+function bookDelete(id){
+  location.href="/admin/book-delete/"+id;
 }
 </script>
 </body>

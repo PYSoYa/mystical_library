@@ -318,4 +318,8 @@ public class BookService {
 
         }
     }
+
+    public void bookDelete(Long id) {
+        bookRepository.deleteById(id);
+    }
 }
