@@ -135,7 +135,7 @@
         $.ajax({
           type: 'post',
           url: '/admin/req-writer-save',
-          data: {"memberId": id},
+          data: {"id": id},
           dataType: 'text',
           success: function (result) {
             if (result === 'ok') {

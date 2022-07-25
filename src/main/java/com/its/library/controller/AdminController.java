@@ -116,7 +116,7 @@ public class AdminController {
        return "admin/reqWriterList";
 
     }
-    @PostMapping("/req--writer-save")
+    @PostMapping("/req-writer-save")
     public @ResponseBody String reqWriterSave(@RequestParam("id")Long id){
       String result =  reqWriterService.save(id);
         return result;
