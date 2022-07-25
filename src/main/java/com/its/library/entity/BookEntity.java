@@ -91,6 +91,22 @@ public class BookEntity {
         return  bookEntity;
     }
 
+    public static BookEntity bookAgree(BookDTO bookDTO, MemberEntity memberEntity, CategoryEntity categoryEntity, GenreEntity genreEntity) {
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setId(bookDTO.getId());
+        bookEntity.setCategoryEntity(categoryEntity);
+        bookEntity.setGenreEntity(genreEntity);
+        bookEntity.setMemberEntity(memberEntity);
+        bookEntity.setMemberName(memberEntity.getMemberName());
+        bookEntity.setFeat(bookDTO.getFeat());
+        bookEntity.setBookTitle(bookDTO.getBookTitle());
+        bookEntity.setIntroduce(bookDTO.getIntroduce());
+        bookEntity.setBookImgName(bookDTO.getBookImgName());
+        bookEntity.setStatus(bookDTO.getStatus());
+        bookEntity.setWriterRole(2);
+        bookEntity.setStar(bookDTO.getStar());
+        return  bookEntity;
+    }
 
 
     //책 - 회차  oneToMany ㅇ

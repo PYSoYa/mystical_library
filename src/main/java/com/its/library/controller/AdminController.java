@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -77,6 +78,13 @@ public class AdminController {
        model.addAttribute(bookList);
         return "admin/bookList";
 
+    }
+    @GetMapping("/book-agree/{id}")
+    public String bookAgree(@PathVariable("id")Long id)  {
+      BookDTO bookDTO =  bookService.findById(id);
+        System.out.println("bookDTO = " + bookDTO);
+       bookService.bookAgree(bookDTO);
+       return "redirect:/admin/book-list";
     }
 
 

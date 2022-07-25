@@ -24,7 +24,9 @@
     <td>거절</td>
 
   </tr>
+
   <tr th:each="book:${bookDTOList}">
+    <div th:if="${book.writerRole}==1">
     <td th:text="${book.id}"></td>
     <td th:text="${book.categoryId}"></td>
     <td th:text="${book.genreId}"></td>
@@ -36,18 +38,15 @@
     <td th:text="${book.status}"></td>
     <td th:text="${book.writerRole}"></td>
     <td th:text="${book.star}"></td>
-    <td><input type="button" th:value="승인" th:onclick="bookTrue([[${book.id}]])"></td>
+    <td><input type="button" th:value="승인" th:onclick="bookAgree([[${book.id}]])"></td>
     <td><input type="button" th:value="거절" th:onclick="bookFalse([[${book.id}]])"></td>
-
+    </div>
   </tr>
 </table>
 <script>
-function bookTrue(id){
-  $.ajax({
-    type:"post",
-    url:"/admin/bookAgree",
+function bookAgree(id){
+location.href="/admin/book-agree/"+id;
 
-  });
 }
 </script>
 </body>
