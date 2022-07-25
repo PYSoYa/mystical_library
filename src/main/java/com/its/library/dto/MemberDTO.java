@@ -34,6 +34,7 @@ public class MemberDTO {
         memberDTO.setMemberPoint(memberEntity.getMemberPoint());
         memberDTO.setIntroduction(memberEntity.getIntroduction());
         memberDTO.setMemberImgName(memberEntity.getMemberImgName());
+        memberDTO.setRole(memberEntity.getRole());
         return memberDTO;
     }
 }

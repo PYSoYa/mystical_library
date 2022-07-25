@@ -37,8 +37,8 @@ public class BookController {
     public String reqBookSave(@ModelAttribute BookDTO bookDTO) throws IOException {
 
         BookDTO saveDTO = bookService.reqBookSave(bookDTO);
-//      return "redirect:/book?category=" + saveDTO.getCategoryId()  + "/book/" + saveDTO.getId();
-        return "redirect:/member/myPage/" + saveDTO.getMemberId();
+//        return "redirect:/book?category=" + saveDTO.getCategoryId()  + "/book/" + saveDTO.getId();
+        return "index";
     }
 
     // 회차 저장페이지 출력
