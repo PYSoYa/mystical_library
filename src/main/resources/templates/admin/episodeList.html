@@ -7,6 +7,44 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<table>
+  <tr>
+    <td>회차번호</td>
+    <td>책번호</td>
+    <td>에피소드 제목</td>
+    <td>에피소드 내용</td>
+    <td>에피소드 표지</td>
+    <td>에피소드 가격 </td>
+    <td>에피소드 조회수</td>
+    <td>에피소드 권한</td>
+    <td>승인</td>
+    <td>거절</td>
+  </tr>
 
+  <tr th:each="episode:${episodeList}">
+    <div th:if="${episode.writerRole}!=2">
+      <td th:text="${episode.id}"></td>
+      <td th:text="${episode.bookId}"></td>
+      <td th:text="${episode.episodeTitle}"></td>
+      <td th:text="${episode.episodeContents}"></td>
+      <td><img th:src="@{|/upload/${episode.episodeImgName}|}" width="100" height="100"></td>
+      <td th:text="${episode.payment}"></td>
+      <td th:text="${episode.episodeHits}"></td>
+      <td th:text="${episode.writerRole}"></td>
+
+      <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${episode.id}]])"></td>
+      <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${episode.id}]])"></td>
+    </div>
+  </tr>
+</table>
+<script>
+  function episodeAgree(id){
+    location.href="/admin/episode-agree/"+id;
+
+  }
+  function episodeDelete(id){
+    location.href="/admin/episode-delete/"+id;
+  }
+</script>
 </body>
 </html>

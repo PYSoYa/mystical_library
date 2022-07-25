@@ -49,4 +49,17 @@ public class EpisodeDTO {
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
     }
+    public static EpisodeDTO agreeList(EpisodeEntity episodeEntity) {
+        EpisodeDTO episodeDTO = new EpisodeDTO();
+        episodeDTO.setId(episodeEntity.getId());
+        episodeDTO.setBookId(episodeEntity.getBookEntity().getId());
+        episodeDTO.setEpisodeTitle(episodeEntity.getEpisodeTitle());
+        episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
+        episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
+        episodeDTO.setPayment(episodeEntity.getPayment());
+        episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
+        episodeDTO.setWriterRole(episodeEntity.getWriterRole());
+        episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
+        return episodeDTO;
+    }
 }

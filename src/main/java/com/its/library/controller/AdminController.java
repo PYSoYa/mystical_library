@@ -1,9 +1,11 @@
 package com.its.library.controller;
 
 import com.its.library.dto.BookDTO;
+import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.ReqReportDTO;
 import com.its.library.service.BookService;
+import com.its.library.service.EpisodeService;
 import com.its.library.service.MemberService;
 import com.its.library.service.ReqReportService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class AdminController {
     private final ReqReportService reqReportService;
     private final MemberService memberService;
     private final BookService bookService;
+    private final EpisodeService episodeService;
 
     //댓글 신고 내역 리스트
     @GetMapping("/req-report-list")
@@ -79,12 +82,33 @@ public class AdminController {
         return "admin/bookList";
 
     }
+    //작가글  승인처리
     @GetMapping("/book-agree/{id}")
     public String bookAgree(@PathVariable("id")Long id)  {
       BookDTO bookDTO =  bookService.findById(id);
         System.out.println("bookDTO = " + bookDTO);
        bookService.bookAgree(bookDTO);
        return "redirect:/admin/book-list";
+    }
+    //작가글 거절 처리
+    @GetMapping("/book-delete/{id}")
+    public String bookDelete(@PathVariable("id")Long id){
+        bookService.bookDelete(id);
+        return "redirect:/admin/book-list";
+    }
+
+    //회차 승인 리스트
+    @GetMapping("/episode-list")
+    public String episodeList(Model model){
+        List<EpisodeDTO> episodeDTOList = episodeService.findAll();
+        model.addAttribute("episodeList",episodeDTOList);
+        return "admin/episodeList";
+
+    }
+    @GetMapping("/episode-agree/{id}")
+    public String episodeAgree(@PathVariable("id")Long id){
+        episodeService.episodeAgree(id);
+        return "redirect:/admin/episode-list";
     }
 
 

@@ -12,5 +12,5 @@ public class WishlistDTO {
     private Long id;
     private Long memberId;
     private Long bookId;
-
+    private String memberName;
 }
