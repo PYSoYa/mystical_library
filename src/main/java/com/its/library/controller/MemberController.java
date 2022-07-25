@@ -17,12 +17,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 회원가입 페이지 요청
-    @GetMapping("/save-form")
-    public String saveForm(){
-        return "member/save";
-    }
-
     // 회원가입 처리
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) throws IOException {
@@ -113,5 +107,29 @@ public class MemberController {
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/boxRecent";
+    }
+
+    // 보관함-소장중인 책 목록 페이지 이동 (수정필요)
+    @GetMapping("/box/bought/{id}")
+    public String boxBought(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/boxBought";
+    }
+
+    // 위시리스트-관심 책 목록 페이지 이동 (수정필요)
+    @GetMapping("/wishlist/book/{id}")
+    public String wishlistBook(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/wishlistBook";
+    }
+
+    // 위시리스트-관심 작가 목록 페이지 이동 (수정필요)
+    @GetMapping("/wishlist/author/{id}")
+    public String wishlistAuthor(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/wishlistAuthor";
     }
 }

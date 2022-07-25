@@ -26,3 +26,12 @@
 .content-container .detail-wrap .intro-wrap {height: 6rem; width: 50rem; word-break: keep-all;}
 .content-container .detail-wrap .intro-wrap .intro {font-size: 1rem; font-weight: 500; font-family: inherit;}
 .content-container .detail-wrap .hide-btn {width: 24px; height: 24px; padding: 0.285rem; color: #dc3232;}
+
+/* 관심 작가 */
+.list-author-container .list-author-wrap {display: flex; flex-direction: row; padding: 1rem; position: relative;}
+.list-author-container .list-author-wrap:not(:last-child) {margin-bottom: 2rem;}
+.list-author-container .list-author-wrap .author-wrap:not(:last-child) {padding-right: 8.5rem;}
+.list-author-container .list-author-wrap .author-wrap .img-wrap .img {width: 8rem; height: 8rem; border-radius: 50%;}
+.list-author-container .list-author-wrap .author-wrap .img-wrap .img:hover {opacity: 0.5; transition: 0.2s ease;}
+.list-author-container .list-author-wrap .author-wrap .detail-wrap {text-align: center; padding-top: 1.5rem;}
+.list-author-container .list-author-wrap .author-wrap .detail-wrap .title {font-weight: 600; font-size: 1.125rem; font-family: inherit; position: relative;}

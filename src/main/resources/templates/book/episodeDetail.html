@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>신비한 서재입니다.</title>
     <script th:src="@{/js/jquery.js}"></script>
-    <script th:src="@{https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js}"></script>
+    <script th:src="@{|https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js|}"></script>
 </head>
 <body>
 <select id="star" name="star">
@@ -18,10 +18,10 @@
 </select>
 <input type="button" onclick="saveStar()" value="버튼">
 <h3></h3>
-<input type="hidden" id="memberId" name="memberId" th:value="${session.id}">
-<input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
-<input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
-<textarea type="text" id="contents" name="contents"></textarea>
+<input type="hidden" name="memberId" th:value="${session.id}">
+<input type="hidden" name="episodeId" th:value="${episode.id}">
+<input type="hidden" name="memberName" th:value="${session.name}">
+<textarea type="text" name="contents"></textarea>
 <input type="button" onclick="saveComment()" value="댓글 작성">
 <div id="test">
     <table th:each="comment:${commentList}">
@@ -32,9 +32,12 @@
         </tr>
         <tr>
             <td th:text="${comment.memberName}"></td>
-            <td th:text="${comment.contents}"></td>
+            <td id="contentsUpdate" th:text="${comment.contents}"></td>
             <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:if="${session.name == comment.memberName}">
+                <input type="button"
+                       th:onclick="updateComment([[${comment.id}]],[[${comment.memberName}]],[[${comment.contents}]])"
+                       value="수정">
                 <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
             </td>
             <td>
@@ -45,6 +48,46 @@
 </div>
 </body>
 <script th:inline="javascript">
+    const updateComment = (id, memberName, contents) => {
+        const contentsUpdate = document.getElementById("contentsUpdate");
+        // const inputContents = document.getElementById("contents").value = contents;
+        var output = "<input type='text' id='contents' name='contents'>" +
+            "<input type='button' onclick='update(" + id + "," + memberName + ")' value='수정완료'>";
+        contentsUpdate.innerHTML = output;
+    }
+    const update = (id, memberName) => {
+        const contents = document.getElementById("contents").value;
+        const episodeId = [[${episode.id}]];
+        const memberId = [[${session.id}]];
+        const div = document.getElementById("test")
+
+        $.ajax({
+            type: "put",
+            url: "/comment/update",
+            data: {
+                "id": id,
+                "memberId": memberId,
+                "memberName": memberName,
+                "contents": contents,
+                "episodeId": episodeId
+            },
+            dataType: "json",
+            success: function (result) {
+                var output = "<table>";
+                output += "<tr>" + "<th>" + "작성자" + "</th>";
+                output += "<tr>" + "<th>" + "댓글내용" + "</th>";
+                output += "<tr>" + "<th>" + "작성시간" + "</th>";
+                for (let i in result) {
+                    output += "<tr>" + "<td>" + result[i].memberName + "</td>";
+                    output += "<tr>" + "<td>" + result[i].contents + "</td>";
+                    output += "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    console.log(result[i].createdTime);
+                }
+                output += "</table>";
+                div.innerHTML = output;
+            }
+        })
+    }
     const reportComment = (id) => {
         const loginId = [[${session.id}]];
 
@@ -52,7 +95,7 @@
             type: "post",
             url: "/comment/report-save/" + id,
             data: {
-                "id":id,
+                "id": id,
                 "loginId": loginId
             },
             dataType: "text",
@@ -70,7 +113,7 @@
         const episodeId = [[${episode.id}]];
         const loginName = [[${session.name}]];
         $.ajax({
-            type: "post",
+            type: "delete",
             url: "/comment/delete/" + id,
             data: {
                 "episodeId": episodeId

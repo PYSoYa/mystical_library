@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/box.css}">
+</head>
+<body>
+<th:block th:replace="layout/header :: header"></th:block>
+
+<main class="main-container">
+  <div class="list-container">
+    <div class="list-wrap">
+      <div class="list-div">
+        <div class="list-nav-container">
+          <div class="list-nav">
+            <div class="nav-item">
+              <a th:href="@{|/member/box/recent/${member.id}|}">열람 내역</a>
+            </div>
+            <div class="nav-item">
+              <a th:href="@{|/member/box/bought/${member.id}|}">소장중인 책</a>
+            </div>
+            <div class="nav-item selected-item">
+              <a th:href="@{|/member/wishlist/author/${member.id}|}">관심 작가</a>
+            </div>
+            <div class="nav-item">
+              <a th:href="@{|/member/wishlist/book/${member.id}|}">관심 책</a>
+            </div>
+          </div>
+          <div class="list-author-container">
+            <div class="list-author-wrap">
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이1</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이2</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이3</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이4</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이5</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="list-author-wrap">
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이6</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="author-wrap">
+                <div class="img-wrap">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <div class="title-wrap">
+                    <h5 class="title">톰보이7</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+</body>
+</html>
