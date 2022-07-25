@@ -17,6 +17,8 @@
     <td>보유포인트</td>
     <td>소개글</td>
     <td>프로필사진</td>
+    <td>삭제</td>
+
   </tr>
   <tr th:each="member:${memberList}">
     <td th:text="${member.id}"></td>
@@ -27,7 +29,15 @@
     <td th:text="${member.memberPoint}"></td>
     <td th:text="${member.introduction}"></td>
     <td><img th:src="@{|/upload/${member.memberImgName}|}" width="100" height="100"></td>
+    <td><input type="button" th:value="삭제" th:onclick="memberDelete([[${member.id}]])"></td>
+
   </tr>
 </table>
+<script>
+  function memberDelete(id){
+    location.href="/admin/member-delete/"+id;
+
+  }
+</script>
 </body>
 </html>

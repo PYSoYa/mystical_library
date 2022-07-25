@@ -60,6 +60,12 @@ public class AdminController {
        model.addAttribute("memberList",memberDTOList);
        return "admin/memberList";
     }
+    @GetMapping("/member-delete/{id}")
+    public String memberDelete(@PathVariable("id")Long id){
+        memberService.memberDelete(id);
+        return "redirect:/admin/member-list";
+    }
+
 
 
 

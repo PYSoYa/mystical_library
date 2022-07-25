@@ -72,4 +72,8 @@ public class MemberService {
         }
        return memberDTOList;
     }
+
+    public void memberDelete(Long id) {
+        memberRepository.deleteById(id);
+    }
 }
