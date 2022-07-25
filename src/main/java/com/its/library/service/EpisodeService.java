@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +25,14 @@ public class EpisodeService {
            episodeDTOList.add(episodeDTO);
         }
         return episodeDTOList;
+    }
+
+    public void episodeAgree(Long id) {
+       Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
+       if (optionalEpisodeEntity.isPresent()){
+           EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+           episodeEntity.setWriterRole(2);
+           episodeRepository.save(episodeEntity);
+       }
     }
 }

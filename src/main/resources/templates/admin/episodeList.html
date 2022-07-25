@@ -22,7 +22,7 @@
   </tr>
 
   <tr th:each="episode:${episodeList}">
-    <div th:if="${episode.writerRole}==0">
+    <div th:if="${episode.writerRole}!=2">
       <td th:text="${episode.id}"></td>
       <td th:text="${episode.bookId}"></td>
       <td th:text="${episode.episodeTitle}"></td>
@@ -32,10 +32,19 @@
       <td th:text="${episode.episodeHits}"></td>
       <td th:text="${episode.writerRole}"></td>
 
-      <td><input type="button" th:value="승인" th:onclick="bookAgree([[${episode.id}]])"></td>
-      <td><input type="button" th:value="거절" th:onclick="bookFalse([[${episode.id}]])"></td>
+      <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${episode.id}]])"></td>
+      <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${episode.id}]])"></td>
     </div>
   </tr>
 </table>
+<script>
+  function episodeAgree(id){
+    location.href="/admin/episode-agree/"+id;
+
+  }
+  function episodeDelete(id){
+    location.href="/admin/episode-delete/"+id;
+  }
+</script>
 </body>
 </html>
