@@ -1,0 +1,37 @@
+.save-form-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0;}
+.save-form-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.save-form-div {justify-content: center; padding: 0.625rem; --item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%;}
+
+/* save-form */
+.save-form {width: 75%; padding: 0 5rem;}
+.save-form .form-to-save > div:not(:last-child) {margin-bottom: 2.5rem;}
+.save-form input {-webkit-appearance: none; appearance: none; background: transparent; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; caret-color: #1e9eff; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 100%; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
+.save-form textarea {appearance: none; background: transparent; background-color: #fff; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; border-width: 1px; caret-color: #1e9eff; color: #4a5469; line-height: 1.5; outline: none; text-decoration: none; padding: 0.75rem 1.875rem 0.75rem 0.625rem; width: 100%; height: 12rem; overflow: hidden; word-break: keep-all; resize: none;}
+.save-form input:focus,
+.save-form .select-input:focus,
+.save-form .intro:focus {border-color: #667390;}
+.save-form input:hover,
+.save-form .select-input:hover,
+.save-form .intro:hover {border-color: #667390;}
+.save-form label {font-size: 1.25rem; font-weight: 500; font-family: inherit;}
+/* select */
+.save-form .select-input {border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 10rem; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
+.save-form .select-list-wrap {position: relative; display: flex; flex-direction: row;}
+.save-form .select-list-wrap > div:not(:last-child) {padding-right: 4rem;}
+.save-form .select-list-wrap > div:last-child {position: relative; margin-left: auto;}
+/* input */
+.save-form .title-wrap,
+.save-form .intro-wrap,
+.save-form .file-and-btn-wrap {display: flex; width: 100%;}
+.save-form .title-wrap .input-wrap,
+.save-form .intro-wrap .input-wrap {width: 100%;}
+.save-form .title-wrap .title-wrapper,
+.save-form .intro-wrap .intro-wrapper,
+.save-form .file-and-btn-wrap .title-wrap {width: 6.88rem; padding: 0.688rem;}
+.save-form .input-wrap {margin-left: 4rem;}
+.save-form .file-and-btn-wrap .file-wrap {display: flex; flex-direction: row;}
+.save-form .file-and-btn-wrap .file-wrap .input-wrap {margin-left: 3rem;}
+.save-form .btn-wrap {display: flex; flex-direction: row;}
+.save-form .btn-wrap .btn-wrapper {margin-left: auto;}
+.save-form .btn-wrap button {position: relative; margin-left: 0.62rem; border: none; outline: none; border-radius: 0.188rem; width: 8.465rem; height: 3rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.save-form .btn-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
