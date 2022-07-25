@@ -106,4 +106,12 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryUse";
     }
+
+    // 보관함-열람 내역 페이지 이동 (수정필요)
+    @GetMapping("/box/recent/{id}")
+    public String boxRecent(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/boxRecent";
+    }
 }
