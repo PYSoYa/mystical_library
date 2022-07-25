@@ -289,13 +289,33 @@ public class BookService {
     }
 
     public List<BookDTO> findAll() {
-       List<BookEntity> bookEntityList = bookRepository.findAll();
-       List<BookDTO> bookDTOList = new ArrayList<>();
-        for (BookEntity bookList: bookEntityList) {
+        List<BookEntity> bookEntityList = bookRepository.findAll();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity bookList : bookEntityList) {
             BookEntity bookEntity = bookList;
-           BookDTO bookDTO= BookDTO.findDTO(bookEntity);
-           bookDTOList.add(bookDTO);
+            BookDTO bookDTO = BookDTO.findDTO(bookEntity);
+            bookDTOList.add(bookDTO);
         }
         return bookDTOList;
+    }
+
+
+    public void bookAgree(BookDTO bookDTO)  {
+
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(bookDTO.getMemberName());
+        Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(bookDTO.getGenreId());
+        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(bookDTO.getCategoryId());
+
+        if (optionalMemberEntity.isPresent() && optionalCategoryEntity.isPresent() && optionalGenreEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            CategoryEntity categoryEntity = optionalCategoryEntity.get();
+            GenreEntity genreEntity = optionalGenreEntity.get();
+
+            BookEntity bookEntity = BookEntity.bookAgree(bookDTO, memberEntity, categoryEntity, genreEntity);
+             bookRepository.save(bookEntity);
+
+
+        }
     }
 }
