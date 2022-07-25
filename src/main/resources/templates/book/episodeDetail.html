@@ -18,10 +18,10 @@
 </select>
 <input type="button" onclick="saveStar()" value="버튼">
 <h3></h3>
-<input type="hidden" name="memberId" th:value="${session.id}">
-<input type="hidden" name="episodeId" th:value="${episode.id}">
-<input type="hidden" name="memberName" th:value="${session.name}">
-<textarea type="text" name="contents"></textarea>
+<input type="hidden" id="memberId" name="memberId" th:value="${session.id}">
+<input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
+<input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
+<textarea type="text" id="contents" name="contents"></textarea>
 <input type="button" onclick="saveComment()" value="댓글 작성">
 <div id="test">
     <table th:each="comment:${commentList}">
@@ -51,12 +51,12 @@
     const updateComment = (id, memberName, contents) => {
         const contentsUpdate = document.getElementById("contentsUpdate");
         // const inputContents = document.getElementById("contents").value = contents;
-        var output = "<input type='text' id='contents' name='contents'>" +
+        var output = "<input type='text' id='updateContents' name='contents'>" +
             "<input type='button' onclick='update(" + id + "," + memberName + ")' value='수정완료'>";
         contentsUpdate.innerHTML = output;
     }
     const update = (id, memberName) => {
-        const contents = document.getElementById("contents").value;
+        const contents = document.getElementById("updateContents").value;
         const episodeId = [[${episode.id}]];
         const memberId = [[${session.id}]];
         const div = document.getElementById("test")
