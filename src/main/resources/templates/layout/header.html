@@ -101,7 +101,7 @@
                 <label class="label-id">아이디</label>
               </div>
               <div class="input-id-wrap">
-                <input type="text" name="loginId" class="input-id" placeholder="아이디123">
+                <input type="text" id="input-id" name="loginId" class="input-id" placeholder="아이디123">
               </div>
               <div class="result-id-wrap">
                 <span class="span-id" id="result-id-login">잘 좀 입력하세요</span>
@@ -396,6 +396,10 @@
         $('form').each(function () {
           this.reset();
         });
+      });
+      $('#exampleModal1').on('shown.bs.modal', function () {
+        const input = document.getElementById('input-id');
+        input.focus();
       });
     });
   </script>

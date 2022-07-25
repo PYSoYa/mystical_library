@@ -3,7 +3,6 @@ package com.its.library.entity;
 import com.its.library.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ValueGenerationType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class MemberEntity {
     private List<StarEntity> starEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<WishlistEntity> wishlistEntityList = new ArrayList<>();
+    private List<WishEntity> wishlistEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DebutEpisodeEntity> debutEpisodeEntityList = new ArrayList<>();

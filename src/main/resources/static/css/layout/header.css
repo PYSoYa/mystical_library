@@ -70,7 +70,7 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .modal-body .find-wrap span:hover,
 .modal-body .sign-in-btn-wrap .btn-wrap:hover,
 .modal-footer .social-login-wrap button:hover,
-.modal-body .input-wrap .input-email-wrap .request-auth:hover {opacity: 0.5; transition: 0.2s ease;}
+.modal-body .input-wrap .input-email-wrap .request-auth:hover {cursor: pointer; opacity: 0.5; transition: 0.2s ease;}
 .modal-body .find-wrap div:not(:last-child)::after {content: ''; border: 1px solid #e5e5e5; display: inline-block; width: 0; height: 1rem; margin: 0.125rem 0.25rem 0 0.5rem; vertical-align: text-top; position: absolute; top: 16.45rem;}
 .modal-body .find-wrap {display: flex; justify-content: center; margin-bottom: 1.25rem;}
 .login-form > .input-wrap:not(:last-child) {margin-bottom: 1.25rem;}
