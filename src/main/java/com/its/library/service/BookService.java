@@ -130,7 +130,7 @@ public class BookService {
                         episode.getEpisodeImgName(),
                         episode.getPayment(),
                         episode.getEpisodeHits(),
-                        episode.getHidden(),
+                        episode.getWriterRole(),
                         episode.getCreatedDateTime()
                 ));
 
@@ -229,7 +229,7 @@ public class BookService {
                         book.getIntroduce(),
                         book.getBookImgName(),
                         book.getStatus(),
-                        book.getHidden(),
+                        book.getWriterRole(),
                         book.getStar()
                 ));
 
