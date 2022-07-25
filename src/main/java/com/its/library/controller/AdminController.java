@@ -90,6 +90,12 @@ public class AdminController {
        bookService.bookAgree(bookDTO);
        return "redirect:/admin/book-list";
     }
+    @GetMapping("/book-delete/{id}")
+    public String bookDelete(@PathVariable("id")Long id){
+        bookService.bookDelete(id);
+        return "redirect:/admin/book-list";
+    }
+
     //회차 승인 리스트
     @GetMapping("/episode-list")
     public String episodeList(Model model){
