@@ -91,6 +91,7 @@ public class MemberEntity {
         memberEntity.setMemberPoint(500);
         memberEntity.setIntroduction(memberDTO.getIntroduction());
         memberEntity.setMemberImgName(memberDTO.getMemberImgName());
+        memberEntity.setRole("일반회원");
         return memberEntity;
     }
 }

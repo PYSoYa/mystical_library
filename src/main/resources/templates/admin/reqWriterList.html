@@ -7,6 +7,29 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<table>
+  <tr>
+    <td>회차번호</td>
+    <td>책번호</td>
+    <td>에피소드 제목</td>
+    <td>에피소드 내용</td>
+    <td>에피소드 표지</td>
+    <td>에피소드 가격 </td>
+    <td>에피소드 조회수</td>
+    <td>에피소드 권한</td>
+    <td>승인</td>
+    <td>거절</td>
+  </tr>
 
+  <tr th:each="member:${memberList}">
+    <div th:if="${member.role}=='신청'">
+      <td th:text="${member.id}"></td>
+
+
+      <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${member.id}]])"></td>
+      <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${member.id}]])"></td>
+    </div>
+  </tr>
+</table>
 </body>
 </html>
