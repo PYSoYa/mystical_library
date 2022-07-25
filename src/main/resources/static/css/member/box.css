@@ -32,5 +32,6 @@
 .list-author-container .list-author-wrap:not(:last-child) {margin-bottom: 2rem;}
 .list-author-container .list-author-wrap .author-wrap:not(:last-child) {padding-right: 8.5rem;}
 .list-author-container .list-author-wrap .author-wrap .img-wrap .img {width: 8rem; height: 8rem; border-radius: 50%;}
+.list-author-container .list-author-wrap .author-wrap .img-wrap .img:hover {opacity: 0.5; transition: 0.2s ease;}
 .list-author-container .list-author-wrap .author-wrap .detail-wrap {text-align: center; padding-top: 1.5rem;}
 .list-author-container .list-author-wrap .author-wrap .detail-wrap .title {font-weight: 600; font-size: 1.125rem; font-family: inherit; position: relative;}
