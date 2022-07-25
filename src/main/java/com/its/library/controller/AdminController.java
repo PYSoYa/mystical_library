@@ -1,13 +1,8 @@
 package com.its.library.controller;
 
-import com.its.library.dto.BookDTO;
-import com.its.library.dto.EpisodeDTO;
-import com.its.library.dto.MemberDTO;
-import com.its.library.dto.ReqReportDTO;
-import com.its.library.service.BookService;
-import com.its.library.service.EpisodeService;
-import com.its.library.service.MemberService;
-import com.its.library.service.ReqReportService;
+import com.its.library.dto.*;
+import com.its.library.entity.ReqWriterEntity;
+import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +21,7 @@ public class AdminController {
     private final MemberService memberService;
     private final BookService bookService;
     private final EpisodeService episodeService;
+    private final ReqWriterService reqWriterService;
 
     //댓글 신고 내역 리스트
     @GetMapping("/req-report-list")
@@ -109,6 +105,18 @@ public class AdminController {
     public String episodeAgree(@PathVariable("id")Long id){
         episodeService.episodeAgree(id);
         return "redirect:/admin/episode-list";
+    }
+    @GetMapping("/episode-delete/{id}")
+    public String episodeDelete(@PathVariable("id")Long id){
+        episodeService.episodeDelete(id);
+        return "redirect:/admin/episode-list";
+    }
+    @GetMapping("/req-writer-list")
+    public String reqWriterList(Model model){
+       List<ReqWriterDTO> reqWriterEntityList = reqWriterService.findAll();
+       model.addAttribute("memberList",reqWriterEntityList);
+       return "admin/reqWriterList";
+
     }
 
 
