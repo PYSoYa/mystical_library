@@ -287,4 +287,15 @@ public class BookService {
             return null;
         }
     }
+
+    public List<BookDTO> findAll() {
+       List<BookEntity> bookEntityList = bookRepository.findAll();
+       List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity bookList: bookEntityList) {
+            BookEntity bookEntity = bookList;
+           BookDTO bookDTO= BookDTO.findDTO(bookEntity);
+           bookDTOList.add(bookDTO);
+        }
+        return bookDTOList;
+    }
 }
