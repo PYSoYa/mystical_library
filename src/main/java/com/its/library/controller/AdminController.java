@@ -6,9 +6,7 @@ import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -116,6 +114,12 @@ public class AdminController {
        List<ReqWriterDTO> reqWriterEntityList = reqWriterService.findAll();
        model.addAttribute("memberList",reqWriterEntityList);
        return "admin/reqWriterList";
+
+    }
+    @PostMapping("/req--writer-save")
+    public @ResponseBody String reqWriterSave(@RequestParam("id")Long id){
+      String result =  reqWriterService.save(id);
+        return result;
 
     }
 

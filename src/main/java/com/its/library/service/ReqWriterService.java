@@ -38,4 +38,19 @@ public class ReqWriterService {
         }
         return null;
     }
+
+    public String save(Long id) {
+       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+       if (optionalMemberEntity.isPresent()){
+           MemberEntity memberEntity =optionalMemberEntity.get();
+          ReqWriterEntity reqWriterEntity= ReqWriterEntity.save(memberEntity);
+          ReqWriterEntity result = reqWriterRepository.save(reqWriterEntity);
+            if (result!=null){
+                return "ok";
+            }else {
+                return "no";
+            }
+       }
+    return null;
+    }
 }
