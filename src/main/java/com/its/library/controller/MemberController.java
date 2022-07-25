@@ -114,4 +114,11 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/boxRecent";
     }
+
+    @GetMapping("/box/bought/{id}")
+    public String boxBought(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/boxBought";
+    }
 }
