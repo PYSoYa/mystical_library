@@ -36,6 +36,8 @@ public class EpisodeEntity extends BaseEntity {
     @Column
     private int writerRole;
     @Column
+    private int price;
+    @Column
     private double star;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,7 +60,12 @@ public class EpisodeEntity extends BaseEntity {
         episodeEntity.setEpisodeTitle(episodeDTO.getEpisodeTitle());
         episodeEntity.setEpisodeContents(episodeDTO.getEpisodeContents());
         episodeEntity.setEpisodeImgName(episodeDTO.getEpisodeImgName());
-        episodeEntity.setPayment(episodeDTO.getPayment());
+        if (episodeDTO.getPayment() == 1){
+            episodeEntity.setPayment(episodeDTO.getPayment());
+            episodeEntity.setPrice(100);
+        } else if (episodeDTO.getPayment() == 0) {
+            episodeEntity.setPrice(0);
+        }
         episodeEntity.setEpisodeHits(0);
         episodeEntity.setWriterRole(0);
         episodeEntity.setStar(0.0);
