@@ -45,6 +45,18 @@ public class CommentEntity extends BaseEntity{
         commentEntity.setBookId(episodeEntity.getBookEntity().getId());
         commentEntity.setMemberName(memberEntity.getMemberName());
         commentEntity.setContents(commentDTO.getContents());
+        commentEntity.setCommentReport(false);
+        return commentEntity;
+    }
+    public static CommentEntity updateEntity(CommentDTO commentDTO, MemberEntity memberEntity, EpisodeEntity episodeEntity) {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setId(commentDTO.getId());
+        commentEntity.setMemberEntity(memberEntity);
+        commentEntity.setEpisodeEntity(episodeEntity);
+        commentEntity.setBookId(episodeEntity.getBookEntity().getId());
+        commentEntity.setMemberName(memberEntity.getMemberName());
+        commentEntity.setContents(commentDTO.getContents());
+        commentEntity.setCommentReport(false);
         return commentEntity;
     }
 

@@ -18,13 +18,13 @@ public class CommentController {
 
     // 회차 댓글 저장처리
     @PostMapping("/save")
-    public @ResponseBody List<CommentDTO> commentSave(@ModelAttribute CommentDTO commentDTO){
-       List<CommentDTO> result = commentService.commentSave(commentDTO);
+    public @ResponseBody List<CommentDTO> commentSave(@ModelAttribute CommentDTO commentDTO) {
+        List<CommentDTO> result = commentService.commentSave(commentDTO);
         return result;
     }
 
     // 회차 댓글 삭제처리
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public @ResponseBody List<CommentDTO> commentDelete(@PathVariable("id") Long id,
                                                         @RequestParam("episodeId") Long episodeId,
                                                         Model model) {
@@ -39,4 +39,13 @@ public class CommentController {
         String result = commentService.reportSave(id, loginId);
         return result;
     }
+
+    // 회차 댓글 내용수정
+    @PutMapping("/update")
+    public @ResponseBody List<CommentDTO> update(@ModelAttribute CommentDTO commentDTO) {
+        System.out.println("commentDTO = " + commentDTO);
+        List<CommentDTO> result = commentService.update(commentDTO);
+        return result;
+    }
+
 }

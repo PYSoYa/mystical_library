@@ -47,7 +47,7 @@ public class CommentService {
     public List<CommentDTO> bookCommentList(Long id) {
         List<CommentEntity> commentEntityList = commentRepository.findByBookId(id);
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        for (CommentEntity comment: commentEntityList) {
+        for (CommentEntity comment : commentEntityList) {
             commentDTOList.add(CommentDTO.findDTO(comment));
         }
         return commentDTOList;
@@ -105,13 +105,36 @@ public class CommentService {
         if (optionalCommentEntity.isPresent() && optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             commentEntity = optionalCommentEntity.get();
-            reqReportRepository.save(ReqReportEntity.saveEntity(memberEntity ,commentEntity));
+            reqReportRepository.save(ReqReportEntity.saveEntity(memberEntity, commentEntity));
             commentDTO = CommentDTO.findDTO(commentEntity);
-            if(commentDTO != null){
+            if (commentDTO != null) {
                 return "ok";
             } else {
                 return "no";
             }
+        } else {
+            return null;
+        }
+    }
+
+    public List<CommentDTO> update(CommentDTO commentDTO) {
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(commentDTO.getId());
+        CommentEntity commentEntity = new CommentEntity();
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        if (optionalCommentEntity.isPresent()) {
+            commentEntity = optionalCommentEntity.get();
+            commentEntity.setContents(commentDTO.getContents());
+            commentRepository.save(commentEntity);
+            Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(commentDTO.getEpisodeId());
+            if (optionalCommentEntity.isPresent()) {
+                EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+                List<CommentEntity> commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
+                for (CommentEntity comment : commentEntityList) {
+                    commentDTOList.add(CommentDTO.findDTO(comment));
+                }
+            }
+
+            return commentDTOList;
         } else {
             return null;
         }
