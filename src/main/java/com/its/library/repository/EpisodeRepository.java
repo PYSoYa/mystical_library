@@ -15,4 +15,5 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
     Page<EpisodeEntity> findByBookEntity(Pageable pageable, BookEntity bookEntity);
 
     List<EpisodeEntity> findByBookEntity(BookEntity bookEntity);
+
 }
