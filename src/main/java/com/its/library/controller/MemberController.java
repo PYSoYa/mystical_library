@@ -106,4 +106,28 @@ public class MemberController {
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryUse";
     }
+
+    // 보관함-열람 내역 페이지 이동 (수정필요)
+    @GetMapping("/box/recent/{id}")
+    public String boxRecent(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/boxRecent";
+    }
+
+    // 보관함-소장중인 책 목록 페이지 이동 (수정필요)
+    @GetMapping("/box/bought/{id}")
+    public String boxBought(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/boxBought";
+    }
+
+    // 위시리스트-관심 책 목록 페이지 이동 (수정필요)
+    @GetMapping("/wishlist/book/{id}")
+    public String wishlistBook(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "member/wishlistBook";
+    }
 }

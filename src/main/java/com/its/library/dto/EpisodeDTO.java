@@ -21,10 +21,10 @@ public class EpisodeDTO {
     private String episodeImgName;
     private int payment;
     private int episodeHits;
-    private int hidden;
+    private int writerRole;
     private LocalDateTime createdTime;
 
-    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int hidden, LocalDateTime createdTime) {
+    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int writerRole, LocalDateTime createdTime) {
         this.id = id;
         this.bookId = bookId;
         this.episodeTitle = episodeTitle;
@@ -32,7 +32,7 @@ public class EpisodeDTO {
         this.episodeImgName = episodeImgName;
         this.payment = payment;
         this.episodeHits = episodeHits;
-        this.hidden = hidden;
+        this.writerRole = writerRole;
         this.createdTime = createdTime;
     }
 
@@ -45,7 +45,7 @@ public class EpisodeDTO {
         episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
         episodeDTO.setPayment(episodeEntity.getPayment());
         episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
-        episodeDTO.setHidden(episodeEntity.getHidden());
+        episodeDTO.setWriterRole(episodeEntity.getWriterRole());
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
     }
