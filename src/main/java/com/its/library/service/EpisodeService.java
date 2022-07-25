@@ -35,4 +35,8 @@ public class EpisodeService {
            episodeRepository.save(episodeEntity);
        }
     }
+
+    public void episodeDelete(Long id) {
+        episodeRepository.deleteById(id);
+    }
 }
