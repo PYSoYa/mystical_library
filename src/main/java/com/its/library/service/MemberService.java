@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +60,16 @@ public class MemberService {
         } else {
             return null;
         }
+    }
+
+    public List<MemberDTO> findAll() {
+       List<MemberEntity> memberEntityList = memberRepository.findAll();
+       List<MemberDTO> memberDTOList = new ArrayList<>();
+        for (MemberEntity listParameter: memberEntityList) {
+            MemberEntity memberEntity = listParameter;
+           MemberDTO memberDTO = MemberDTO.findDTO(memberEntity);
+            memberDTOList.add(memberDTO);
+        }
+       return memberDTOList;
     }
 }

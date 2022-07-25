@@ -7,6 +7,27 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-
+<table>
+  <tr>
+    <td>회원번호</td>
+    <td>로그인아이디</td>
+    <td>이메일</td>
+    <td>비밀번호</td>
+    <td>이름</td>
+    <td>보유포인트</td>
+    <td>소개글</td>
+    <td>프로필사진</td>
+  </tr>
+  <tr th:each="member:${memberList}">
+    <td th:text="${member.id}"></td>
+    <td th:text="${member.loginId}"></td>
+    <td th:text="${member.memberEmail}"></td>
+    <td th:text="${member.memberPassword}"></td>
+    <td th:text="${member.memberName}"></td>
+    <td th:text="${member.memberPoint}"></td>
+    <td th:text="${member.introduction}"></td>
+    <td><img th:src="@{|/upload/${member.memberImgName}|}" width="100" height="100"></td>
+  </tr>
+</table>
 </body>
 </html>
