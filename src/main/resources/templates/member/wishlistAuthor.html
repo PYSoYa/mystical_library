@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +9,11 @@
   <link rel="stylesheet" th:href="@{/css/member/box.css}">
 </head>
 <body>
+<table th:each="member:${memberList}">
+  <tr>
+    <td th:text="${member.memberName}"></td>
+  </tr>
+</table>
 <th:block th:replace="layout/header :: header"></th:block>
 
 <main class="main-container">
