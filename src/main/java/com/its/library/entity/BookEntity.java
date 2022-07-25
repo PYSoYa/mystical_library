@@ -44,9 +44,10 @@ public class BookEntity {
     @Column(name = "status", length = 10)
     private String status;
     @Column
-    private int hidden;
+    private int writerRole;
     @Column
     private double star;
+
 
 
     @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -70,7 +71,7 @@ public class BookEntity {
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus("연재");
-        bookEntity.setHidden(0);
+        bookEntity.setWriterRole(1);
         bookEntity.setStar(0.0);
         return  bookEntity;
     }
@@ -86,7 +87,7 @@ public class BookEntity {
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
-        bookEntity.setHidden(0);
+        bookEntity.setWriterRole(1);
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
     }

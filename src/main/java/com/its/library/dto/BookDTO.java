@@ -22,10 +22,10 @@ public class BookDTO {
     private MultipartFile bookImg;
     private String bookImgName;
     private String status;
-    private int hidden;
+    private int writerRole;
     private double star;
 
-    public BookDTO(Long id, Long categoryId, Long genreId, Long memberId, String memberName, String feat, String bookTitle, String introduce, String bookImgName, String status, int hidden, double star) {
+    public BookDTO(Long id, Long categoryId, Long genreId, Long memberId, String memberName, String feat, String bookTitle, String introduce, String bookImgName, String status, int writerRole, double star) {
         this.id = id;
         this.categoryId = categoryId;
         this.genreId = genreId;
@@ -36,7 +36,7 @@ public class BookDTO {
         this.introduce = introduce;
         this.bookImgName = bookImgName;
         this.status = status;
-        this.hidden = hidden;
+        this.writerRole = writerRole;
         this.star = star;
     }
 
@@ -52,7 +52,7 @@ public class BookDTO {
         bookDTO.setIntroduce(bookEntity.getIntroduce());
         bookDTO.setBookImgName(bookEntity.getBookImgName());
         bookDTO.setStatus(bookEntity.getStatus());
-        bookDTO.setHidden(bookEntity.getHidden());
+        bookDTO.setWriterRole(bookEntity.getWriterRole());
         bookDTO.setStar(bookEntity.getStar());
         return bookDTO;
     }

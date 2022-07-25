@@ -26,7 +26,7 @@ public class HistoryEntity extends BaseEntity{
     private Long episodeId;
     @Column(name = "lastTime",nullable = false,updatable = false)
     private LocalDateTime lastTime;
-    @Column(name = "hidden",columnDefinition = "int default 0")
+    @Column(name = "",columnDefinition = "int default 0")
     private int hidden;
 
     @OneToMany(mappedBy = "historyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
