@@ -1,7 +1,9 @@
 package com.its.library.controller;
 
+import com.its.library.dto.BookDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.ReqReportDTO;
+import com.its.library.service.BookService;
 import com.its.library.service.MemberService;
 import com.its.library.service.ReqReportService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AdminController {
     private final ReqReportService reqReportService;
     private final MemberService memberService;
+    private final BookService bookService;
 
     //댓글 신고 내역 리스트
     @GetMapping("/req-report-list")
@@ -54,16 +57,26 @@ public class AdminController {
         reqReportService.reportDelete(id);
         return "redirect:/admin/req-report-list";
     }
+    //회원 목록조회
     @GetMapping("/member-list")
     public String memberList(Model model){
        List<MemberDTO> memberDTOList = memberService.findAll();
        model.addAttribute("memberList",memberDTOList);
        return "admin/memberList";
     }
+    //회원 목록 삭제 기능
     @GetMapping("/member-delete/{id}")
     public String memberDelete(@PathVariable("id")Long id){
         memberService.memberDelete(id);
         return "redirect:/admin/member-list";
+    }
+    //작가글 승인 리스트
+    @GetMapping("/book-list")
+    public String bookList(Model model){
+       List<BookDTO> bookList = bookService.findAll();
+       model.addAttribute(bookList);
+        return "admin/bookList";
+
     }
 
 

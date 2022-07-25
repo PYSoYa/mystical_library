@@ -34,7 +34,7 @@ public class EpisodeEntity extends BaseEntity {
     @Column
     private int episodeHits;
     @Column
-    private int hidden;
+    private int writerRole;
     @Column
     private double star;
 
@@ -60,7 +60,7 @@ public class EpisodeEntity extends BaseEntity {
         episodeEntity.setEpisodeImgName(episodeDTO.getEpisodeImgName());
         episodeEntity.setPayment(episodeDTO.getPayment());
         episodeEntity.setEpisodeHits(0);
-        episodeEntity.setHidden(0);
+        episodeEntity.setWriterRole(0);
         episodeEntity.setStar(0.0);
         return episodeEntity;
     }
