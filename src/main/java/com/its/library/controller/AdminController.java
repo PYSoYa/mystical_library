@@ -90,6 +90,7 @@ public class AdminController {
        bookService.bookAgree(bookDTO);
        return "redirect:/admin/book-list";
     }
+    //작가글 거절 처리
     @GetMapping("/book-delete/{id}")
     public String bookDelete(@PathVariable("id")Long id){
         bookService.bookDelete(id);
@@ -104,6 +105,12 @@ public class AdminController {
         return "admin/episodeList";
 
     }
+    @GetMapping("/episode-agree/{id}")
+    public String episodeAgree(@PathVariable("id")Long id){
+        episodeService.episodeAgree(id);
+        return "redirect:/admin/episode-list";
+    }
+
 
 
 
