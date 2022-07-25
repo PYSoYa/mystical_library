@@ -17,6 +17,12 @@ public class ReqWriterEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private MemberEntity memberEntity;
+
+    public static ReqWriterEntity save(MemberEntity memberEntity) {
+        ReqWriterEntity reqWriterEntity = new ReqWriterEntity();
+        reqWriterEntity.setMemberEntity(memberEntity);
+        return reqWriterEntity;
+    }
     //작가승인 - 멤버 manyToOne ㅇ
 
 }
