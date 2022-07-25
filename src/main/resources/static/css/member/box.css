@@ -1,0 +1,28 @@
+.list-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
+.list-wrap {display: -webkit-box; width: 100%; overflow: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.list-div {padding: 0.625rem; --item-width: 370; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); transform: translate(0px, 0px); --current-x-pos: 0; -webkit-transition: -webkit-transform 0.3s ease; transition: transform 0.3s ease; display: flex; width: 100%; border-top: 1px solid #e5e5e5;}
+
+/* nav */
+.list-nav-container {position: relative; width: 100%;}
+.list-nav {justify-content: space-between; width: 100%; display: flex; height: 3rem; padding: 0.625rem 6.125rem; margin-bottom: 2.5rem;}
+.list-nav .nav-item:hover {opacity: 0.5; transition: 0.2s ease;}
+.list-nav > .nav-item:not(:last-child) {margin-right: 3.75rem;}
+.list-nav .nav-item a {font-size: 1rem; text-decoration: none; text-align: center; color: #141414; font-weight: 600;}
+.list-nav .selected-item a {color: #1e9eff;}
+
+/* list */
+.list-detail-container {display: block; padding: 2rem 0.625rem 0.625rem;}
+.star-symbol {margin: 0.188rem 0.125rem 0.125rem 0; color: #dc3232; font-size: 0.688rem;}
+.content-container {display: flex; padding: 0 1rem; justify-content: center;}
+.content-container > div:not(:last-child) {margin-bottom: 2.5rem;}
+.content-container .img-wrap {margin-right: 2.5rem;}
+.content-container .img-wrap:hover {opacity: 0.5; transition: 0.2s ease;}
+.content-container .img-wrap img {position: relative; width: 8.5rem; height: 12rem; border: none; border-radius: 0.188rem;}
+.content-container .detail-wrap {display: flex; flex-direction: column; position: relative; padding: 0;}
+.content-container .detail-wrap .item:not(:last-child) {margin-bottom: 1.25rem;}
+.content-container .detail-wrap .title-wrap {display: flex; flex-direction: row; justify-content: space-between;}
+.content-container .detail-wrap .title-wrap .title {font-size: 1.125rem; font-weight: 600; font-family: inherit;}
+.content-container .detail-wrap .title-wrap svg:hover {opacity: 0.5; transition: 0.2s ease;}
+.content-container .detail-wrap .intro-wrap {height: 6rem; width: 50rem; word-break: keep-all;}
+.content-container .detail-wrap .intro-wrap .intro {font-size: 1rem; font-weight: 500; font-family: inherit;}
+.content-container .detail-wrap .hide-btn {width: 24px; height: 24px; padding: 0.285rem; color: #dc3232;}

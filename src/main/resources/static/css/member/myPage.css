@@ -40,5 +40,5 @@
 .post-container .detail-wrap {display: flex; flex-direction: column; position: relative; padding: 0;}
 .post-container .detail-wrap .item:not(:last-child) {margin-bottom: 1.25rem;}
 .post-container .detail-wrap .title-wrap .title {font-size: 1.125rem; font-weight: 600; font-family: inherit;}
-.post-container .detail-wrap .intro-wrap {height: 5rem; width: 50rem; word-break: keep-all;}
+.post-container .detail-wrap .intro-wrap {height: 6rem; width: 50rem; word-break: keep-all;}
 .post-container .detail-wrap .intro-wrap .intro {font-size: 1rem; font-weight: 500; font-family: inherit;}
