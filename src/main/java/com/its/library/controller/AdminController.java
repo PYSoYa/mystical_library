@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class AdminController {
     }
     @GetMapping("/req-writer-list")
     public String reqWriterList(Model model){
-       List<ReqWriterDTO> reqWriterEntityList = reqWriterService.findAll();
+       List<MemberDTO> reqWriterEntityList = reqWriterService.findAll();
        model.addAttribute("memberList",reqWriterEntityList);
        return "admin/reqWriterList";
 
@@ -122,6 +123,13 @@ public class AdminController {
         return result;
 
     }
+    @GetMapping("/req-writer-agree/{id}")
+    public String reqWriterAgree(@PathVariable("id")Long id){
+        reqWriterService.reqWriterAgree(id);
+
+       return "redirect:/admin/req-writer-list";
+    }
+
 
 
 

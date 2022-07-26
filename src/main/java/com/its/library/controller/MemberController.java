@@ -140,4 +140,5 @@ public class MemberController {
         System.out.println("memberDTOList = " + memberDTOList);
         return "member/wishlistAuthor";
     }
+
 }
