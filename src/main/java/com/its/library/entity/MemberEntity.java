@@ -95,7 +95,9 @@ public class MemberEntity {
         return memberEntity;
     }
 
-    public static MemberEntity reqWriterAgree(MemberEntity memberEntity) {
+
+
+    public static MemberEntity roleChange(MemberEntity memberEntity) {
         memberEntity.setId(memberEntity.getId());
         memberEntity.setLoginId(memberEntity.getLoginId());
         memberEntity.setMemberEmail(memberEntity.getMemberEmail());

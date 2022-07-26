@@ -53,11 +53,11 @@ public class ReqWriterService {
     }
 
     @Transactional
-    public void reqWriterAgree(Long id) {
+    public void roleChange(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
-            MemberEntity member = MemberEntity.reqWriterAgree(memberEntity);
+            MemberEntity member = MemberEntity.roleChange(memberEntity);
             MemberEntity memberEntity1 = memberRepository.save(member);
             reqWriterListDelete(memberEntity1);
         }

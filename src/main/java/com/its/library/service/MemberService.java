@@ -2,12 +2,15 @@ package com.its.library.service;
 
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.MemberDTO;
+import com.its.library.dto.PointDTO;
 import com.its.library.dto.WishlistDTO;
 import com.its.library.entity.BookEntity;
 import com.its.library.entity.MemberEntity;
+import com.its.library.entity.PointEntity;
 import com.its.library.entity.WishEntity;
 import com.its.library.repository.BookRepository;
 import com.its.library.repository.MemberRepository;
+import com.its.library.repository.PointRepository;
 import com.its.library.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final WishRepository wishRepository;
     private final BookRepository bookRepository;
+    private final PointRepository pointRepository;
 
     // 회원가입+사진 저장처리
     public Long save(MemberDTO memberDTO) throws IOException {
@@ -117,5 +121,36 @@ public class MemberService {
     }
 
 
+    public String pointAdd(Long id, int memberPoint) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            memberEntity.setMemberPoint(memberEntity.getMemberPoint() + memberPoint);
+            System.out.println("memberEntity = " + memberEntity);
+            memberRepository.save(memberEntity);
 
+            return "ok";
+        } else {
+            return "no";
+        }
+
+    }
+
+
+    public String pointHistorySave(Long memberId, int memberPoint) {
+        PointDTO pointDTO = new PointDTO();
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            pointDTO.setMemberId(memberEntity.getId());
+            pointDTO.setPlusPoint(memberPoint);
+            PointEntity pointEntity = PointEntity.save(pointDTO, memberEntity);
+            pointRepository.save(pointEntity);
+            return "yes";
+        } else {
+            return "no";
+        }
+
+
+    }
 }
