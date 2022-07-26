@@ -129,7 +129,12 @@ public class AdminController {
 
        return "redirect:/admin/req-writer-list";
     }
+    @GetMapping("/req-writer-delete/{id}")
+    public String reqWriterDelete(@PathVariable("id")Long memberId){
+        reqWriterService.reqWriterDelete(memberId);
 
+        return "redirect:/admin/req-writer-list";
+    }
 
 
 
