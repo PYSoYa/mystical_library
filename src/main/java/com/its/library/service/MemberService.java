@@ -115,4 +115,7 @@ public class MemberService {
     public void memberDelete(Long id) {
         memberRepository.deleteById(id);
     }
+
+
+
 }
