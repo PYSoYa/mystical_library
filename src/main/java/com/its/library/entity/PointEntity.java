@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.PointDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,13 @@ public class PointEntity extends BaseEntity  {
     @Column(name = "totalPoint")
     private  int totalPoint;
 
+    public static PointEntity save(PointDTO pointDTO,MemberEntity memberEntity) {
+        PointEntity pointEntity = new PointEntity();
+        pointEntity.setPlusPoint(pointDTO.getPlusPoint());
+        pointEntity.setMemberEntity(memberEntity);
+        pointEntity.setTotalPoint(memberEntity.getMemberPoint());
+        return pointEntity;
+    }
 
 
     //포인트(결제) - 맴버 manyToOne ㅇ

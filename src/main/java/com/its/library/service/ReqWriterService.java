@@ -1,5 +1,6 @@
 package com.its.library.service;
 
+import com.its.library.dto.MemberDTO;
 import com.its.library.dto.ReqReportDTO;
 import com.its.library.dto.ReqWriterDTO;
 import com.its.library.entity.MemberEntity;
@@ -8,7 +9,9 @@ import com.its.library.repository.MemberRepository;
 import com.its.library.repository.ReqReportRepository;
 import com.its.library.repository.ReqWriterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,37 +23,56 @@ public class ReqWriterService {
     private final ReqWriterRepository reqWriterRepository;
     private final MemberRepository memberRepository;
 
-    public List<ReqWriterDTO> findAll() {
-       List<ReqWriterEntity> reqWriterEntityList = reqWriterRepository.findAll();
-       List<ReqWriterDTO> reqWriterDTOList = new ArrayList<>();
-        for (ReqWriterEntity reqWriterEntity:reqWriterEntityList) {
-            ReqWriterEntity reqWriterEntity1 = reqWriterEntity;
-           Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(reqWriterEntity1.getMemberEntity().getId());
-           if(optionalMemberEntity.isPresent()){
-               MemberEntity memberEntity= optionalMemberEntity.get();
-              ReqWriterDTO reqWriterDTO= ReqWriterDTO.findDTO(reqWriterEntity1,memberEntity);
-               reqWriterDTOList.add(reqWriterDTO);
-               return reqWriterDTOList;
-           }else {
-               return null;
-           }
+    public List<MemberDTO> findAll() {
+        List<ReqWriterEntity> reqWriterEntityList = reqWriterRepository.findAll();
+        List<MemberDTO> reqWriterDTOList = new ArrayList<>();
+        for (ReqWriterEntity reqWriterEntity : reqWriterEntityList) {
+            Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(reqWriterEntity.getMemberEntity().getId());
+            if (optionalMemberEntity.isPresent()) {
+                MemberEntity memberEntity = optionalMemberEntity.get();
+                reqWriterDTOList.add(MemberDTO.findDTO(memberEntity));
+            }
 
+        }
+        return reqWriterDTOList;
+    }
+
+    public String save(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            ReqWriterEntity reqWriterEntity = ReqWriterEntity.save(memberEntity);
+            ReqWriterEntity result = reqWriterRepository.save(reqWriterEntity);
+            if (result != null) {
+                return "ok";
+            } else {
+                return "no";
+            }
         }
         return null;
     }
 
-    public String save(Long id) {
-       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-       if (optionalMemberEntity.isPresent()){
-           MemberEntity memberEntity =optionalMemberEntity.get();
-          ReqWriterEntity reqWriterEntity= ReqWriterEntity.save(memberEntity);
-          ReqWriterEntity result = reqWriterRepository.save(reqWriterEntity);
-            if (result!=null){
-                return "ok";
-            }else {
-                return "no";
-            }
-       }
-    return null;
+    @Transactional
+    public void roleChange(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            MemberEntity member = MemberEntity.roleChange(memberEntity);
+            MemberEntity memberEntity1 = memberRepository.save(member);
+            reqWriterListDelete(memberEntity1);
+        }
+    }
+
+    @Transactional
+    public void reqWriterListDelete(MemberEntity memberEntity) {
+        reqWriterRepository.deleteByMemberEntity(memberEntity);
+    }
+    @Transactional
+    public void reqWriterDelete(Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            reqWriterRepository.deleteByMemberEntity(memberEntity);
+        }
     }
 }

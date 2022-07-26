@@ -9,27 +9,28 @@
 <body>
 <table>
   <tr>
-    <td>회차번호</td>
-    <td>책번호</td>
-    <td>에피소드 제목</td>
-    <td>에피소드 내용</td>
-    <td>에피소드 표지</td>
-    <td>에피소드 가격 </td>
-    <td>에피소드 조회수</td>
-    <td>에피소드 권한</td>
+    <td>회원번호</td>
+    <td>작가이름</td>
+    <td>소개글</td>
     <td>승인</td>
     <td>거절</td>
   </tr>
 
   <tr th:each="member:${memberList}">
-    <div th:if="${member.role}=='신청'">
       <td th:text="${member.id}"></td>
-
-
-      <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${member.id}]])"></td>
-      <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${member.id}]])"></td>
-    </div>
+      <td th:text="${member.memberName}"></td>
+      <td th:text="${member.introduction}"></td>
+      <td><input type="button" th:value="승인" th:onclick="reqWriterAgree([[${member.id}]])"></td>
+      <td><input type="button" th:value="거절" th:onclick="reqWriterDelete([[${member.id}]])"></td>
   </tr>
 </table>
+<script>
+    function reqWriterAgree(id){
+        location.href="/admin/role-change/"+id;
+    }
+    function reqWriterDelete(id){
+        location.href="/admin/req-writer-delete/"+id;
+    }
+</script>
 </body>
 </html>
