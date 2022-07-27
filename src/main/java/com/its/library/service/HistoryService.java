@@ -43,6 +43,7 @@ public class HistoryService {
     public List<BookDTO> list(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         MemberEntity memberEntity = new MemberEntity();
+        EpisodeEntity episodeEntity = new EpisodeEntity();
         if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
         }
@@ -57,11 +58,17 @@ public class HistoryService {
                     }
                 }
             }
-        for (int j = 1; j < bookDTOList.size(); j++){
-            if (bookDTOList.get(j).getId().equals(optionalBookEntity.get().getId())) {
-                bookDTOList.remove(j);
+        for (int j = 0; j < bookDTOList.size(); j++){
+            for (int e = 1; e < bookDTOList.size(); e++){
+                if (bookDTOList.get(j).getId().equals(bookDTOList.get(e).getId())) {
+                    bookDTOList.remove(e);
+                }
             }
         }
         return bookDTOList;
     }
+
+//    public String hidden(HistoryDTO historyDTO) {
+//
+//    }
 }

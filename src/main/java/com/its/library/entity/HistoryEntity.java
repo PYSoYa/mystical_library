@@ -29,6 +29,9 @@ public class HistoryEntity extends BaseEntity{
     private EpisodeEntity episodeEntity;
 
     @Column
+    private Long booKId;
+
+    @Column
     private int hidden;
 
     @OneToMany(mappedBy = "historyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -38,6 +41,7 @@ public class HistoryEntity extends BaseEntity{
         HistoryEntity historyEntity = new HistoryEntity();
         historyEntity.setMemberEntity(memberEntity);
         historyEntity.setEpisodeEntity(episodeEntity);
+        historyEntity.setBooKId(episodeEntity.getBookEntity().getId());
         historyEntity.setHidden(0);
         return historyEntity;
     }

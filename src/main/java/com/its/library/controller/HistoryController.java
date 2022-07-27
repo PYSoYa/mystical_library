@@ -8,9 +8,7 @@ import com.its.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,7 @@ public class HistoryController {
     private final HistoryService historyService;
     private final MemberService memberService;
 
+    // 열람내역 출력
     @GetMapping("/{id}")
     public String list(@PathVariable("id") Long id, Model model) {
         List<BookDTO> bookDTOList =  historyService.list(id);
@@ -29,4 +28,11 @@ public class HistoryController {
         model.addAttribute("member", memberDTO);
         return "member/boxRecent";
     }
+
+    // 열람내역 숨기기
+//    @PutMapping("/hidden")
+//    public @ResponseBody String hidden(@ModelAttribute HistoryDTO historyDTO) {
+//        String result = historyService.hidden(historyDTO);
+//        return result;
+//    }
 }

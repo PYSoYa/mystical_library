@@ -13,6 +13,7 @@
 <table th:each="history:${historyList}">
   <tr>
     <td th:text="${history.bookTitle}"></td>
+    <td><input type="button" th:onclick="historyHidden([[${history.id}]], [[${history.memberId}]], [[${history.episodeId}]])">숨기기</td>
   </tr>
 </table>
 
@@ -22,10 +23,10 @@
       <div class="list-div">
         <div class="list-nav-container">
           <div class="list-nav">
-            <div class="nav-item">
+            <div class="nav-item selected-item">
               <a th:href="@{|/history/${member.id}|}">열람 내역</a>
             </div>
-            <div class="nav-item selected-item">
+            <div class="nav-item">
               <a th:href="@{|/box/${member.id}|}">소장중인 책</a>
             </div>
             <div class="nav-item">
@@ -120,4 +121,28 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script>
+  const historyHidden = (id, memberId, episodeId) => {
+    const hidden = 1;
+
+    $.ajax({
+      type: "put",
+      url: "/history/hidden",
+      data: {
+        "id": id,
+        "hidden": hidden,
+        "memberId": memberId,
+        "episodeId": episodeId
+      },
+      dataType: "text",
+      success: function (result) {
+        if (result == "ok") {
+          alert("숨겼다")
+        } else {
+          alert("실패");
+        }
+      }
+    })
+  }
+</script>
 </html>

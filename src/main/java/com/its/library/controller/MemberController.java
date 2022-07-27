@@ -115,5 +115,10 @@ public class MemberController {
         String result = memberService.pointHistorySave(memberId, memberPoint);
         return result;
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
 
 }
