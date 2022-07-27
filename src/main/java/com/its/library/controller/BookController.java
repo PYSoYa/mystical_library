@@ -161,14 +161,6 @@ public class BookController {
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        System.out.println("boardEntities.getContent() = " + episodeDTOList.getContent()); // 요청페이지에 들어있는 데이터
-        System.out.println("boardEntities.getTotalElements() = " + episodeDTOList.getTotalElements()); // 전체 글갯수
-        System.out.println("boardEntities.getNumber() = " + episodeDTOList.getNumber()); // 요청페이지(jpa 기준)
-        System.out.println("boardEntities.getTotalPages() = " + episodeDTOList.getTotalPages()); // 전체 페이지 갯수
-        System.out.println("boardEntities.getSize() = " + episodeDTOList.getSize()); // 한페이지에 보여지는 글갯수
-        System.out.println("boardEntities.hasPrevious() = " + episodeDTOList.hasPrevious()); // 이전페이지 존재 여부
-        System.out.println("boardEntities.isFirst() = " + episodeDTOList.isFirst()); // 첫페이지인지 여부
-        System.out.println("boardEntities.isLast() = " + episodeDTOList.isLast()); // 마지막페이지인지 여부
         return "book/detail";
     }
 

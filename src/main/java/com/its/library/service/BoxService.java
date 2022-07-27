@@ -17,17 +17,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BoxService {
-    private BoxRepository boxRepository;
-    private MemberRepository memberRepository;
-    private EpisodeRepository episodeRepository;
-    private BookRepository bookRepository;
+    private final BoxRepository boxRepository;
+    private final MemberRepository memberRepository;
+    private final EpisodeRepository episodeRepository;
+    private final BookRepository bookRepository;
 
     public String pointCheck(Long memberId, Long episodeId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
         MemberEntity memberEntity = new MemberEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
-        if (optionalMemberEntity.isPresent() && optionalMemberEntity.isPresent()) {
+        if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
             if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) {
