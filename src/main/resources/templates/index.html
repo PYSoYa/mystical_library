@@ -57,7 +57,7 @@
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <button id="move-slider" class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden"></span>
         </button>
@@ -652,4 +652,12 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  window.onload = function () {
+    const slideClick =  () => {
+      document.getElementById('move-slider').click();
+    }
+    setTimeout(slideClick, 5000);
+  }
+</script>
 </html>
