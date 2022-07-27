@@ -7,6 +7,8 @@
   <title>신비한 서재입니다.</title>
 
   <link rel="stylesheet" th:href="@{/css/book/save-form.css}">
+  <link rel="stylesheet" th:href="@{/css/book/update.css}">
+  <script th:src="@{/js/bookUpdate.js}"></script>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
@@ -23,29 +25,29 @@
             <input type="hidden" name="star" th:value="${book.star}">
             <div class="select-list-wrap">
               <div class="category-list-wrap">
-                <select name="categoryId" class="select-input" th:value="${book.categoryId}">
+                <select id="category" name="categoryId" class="select-input" th:value="${book.categoryId}">
                   <option value="">카테고리</option>
-                  <option value="1">시</option>
-                  <option value="2">에세이</option>
-                  <option value="3">웹소설</option>
+                  <option id="c1" value="1">시</option>
+                  <option id="c2" value="2">에세이</option>
+                  <option id="c3" value="3">웹소설</option>
                 </select>
               </div>
               <div class="genre-list-wrap">
-                <select name="genreId" class="select-input" th:value="${book.genreId}">
+                <select id="genre" name="genreId" class="select-input" th:value="${book.genreId}">
                   <option value="">장르</option>
-                  <option value="1">판타지</option>
-                  <option value="2">현대판타지</option>
-                  <option value="3">로맨스</option>
-                  <option value="4">로맨스판타지</option>
-                  <option value="5">무협</option>
+                  <option id="g1" value="1">판타지</option>
+                  <option id="g2" value="2">현대판타지</option>
+                  <option id="g3" value="3">로맨스</option>
+                  <option id="g4" value="4">로맨스판타지</option>
+                  <option id="g5" value="5">무협</option>
                 </select>
               </div>
               <div class="status-wrap">
-                <select name="status" class="select-input" th:value="${book.status}">
+                <select id="status" name="status" class="select-input" th:value="${book.status}">
                   <option value="" selected>연재상태</option>
-                  <option value="연재">연재</option>
-                  <option value="완결">완결</option>
-                  <option value="휴재">휴재</option>
+                  <option id="s1" value="연재">연재</option>
+                  <option id="s2" value="완결">완결</option>
+                  <option id="s3" value="휴재">휴재</option>
                 </select>
               </div>
               <div class="feat-wrap">
@@ -80,11 +82,16 @@
             </div>
             <div class="send-wrap">
               <input type="hidden" name="toAddress" value="pysoya@naver.com">
-              <div class="from-wrap">
-                <input type="text" name="fromAddress" placeholder="작가님의 이메일을 입력해주세요.">
+              <div class="title-wrap">
+                <label class="title">이메일</label>
               </div>
-              <div class="mail-title-wrap">
-                <input type="text" name="mailTitle" placeholder="메일의 제목을 입력해주세요.">
+              <div class="input-wrap">
+                <div class="from-wrap">
+                  <input type="text" name="fromAddress" placeholder="작가님의 이메일을 입력해주세요.">
+                </div>
+                <div class="mail-title-wrap">
+                  <input type="text" name="mailTitle" placeholder="메일의 제목을 입력해주세요.">
+                </div>
               </div>
             </div>
             <div class="btn-wrap">
@@ -102,9 +109,8 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-  const resize = (obj) => {
-    obj.style.height = '11.3rem';
-    obj.style.height = (12 + obj.scrollHeight) + 'px';
-  }
+  const category = [[${book.categoryId}]];
+  const genre = [[${book.genreId}]];
+  const status = [[${book.status}]];
 </script>
 </html>
