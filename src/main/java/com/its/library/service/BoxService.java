@@ -21,6 +21,7 @@ public class BoxService {
     private final MemberRepository memberRepository;
     private final EpisodeRepository episodeRepository;
     private final BookRepository bookRepository;
+    private final HistoryService historyService;
 
     public String pointCheck(Long memberId, Long episodeId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
@@ -30,6 +31,9 @@ public class BoxService {
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
+            if (episodeEntity.getPrice() == 0) {
+//                historyService.save()
+            }
             if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) {
                 return "ok";
             } else {
