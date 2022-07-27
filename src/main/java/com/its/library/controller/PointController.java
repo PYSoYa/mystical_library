@@ -49,4 +49,10 @@ public class PointController {
         String result = memberService.pointHistorySave(memberId, memberPoint);
         return result;
     }
+    //진행중인 구매버튼 
+//    @GetMapping("/pay/{id}")
+//    public @ResponseBody String pointPay(@PathVariable("id")Long memberId,@RequestParam("episodeId")Long episodeId,@RequestParam("bookId")Long bookId){
+//      String result = pointService.pointPay(memberId,episodeId,bookId);
+//        return result;
+//    }
 }

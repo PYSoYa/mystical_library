@@ -4,10 +4,7 @@ import com.its.library.dto.BookDTO;
 import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.PointDTO;
-import com.its.library.entity.BaseEntity;
-import com.its.library.entity.BookEntity;
-import com.its.library.entity.EpisodeEntity;
-import com.its.library.entity.PointEntity;
+import com.its.library.entity.*;
 import com.its.library.repository.BookRepository;
 import com.its.library.repository.EpisodeRepository;
 import com.its.library.repository.MemberRepository;
@@ -26,6 +23,7 @@ public class PointService {
     private final PointRepository pointRepository;
     private final EpisodeRepository episodeRepository;
     private final BookRepository bookRepository;
+    private final MemberRepository memberRepository;
 
 
     public List<PointDTO> pointHistory() {
@@ -70,7 +68,17 @@ public class PointService {
         return pointDTOList;
     }
 
-
-
-
+//구매버튼 잘봐
+//    public String pointPay(Long memberId, Long episodeId, Long bookId) {
+//       Optional<PointEntity> optionalPointEntity= pointRepository.findById(memberId);
+//       if (optionalPointEntity.isPresent()){
+//           PointEntity pointEntity = optionalPointEntity.get();
+//          Optional<MemberEntity>optionalMemberEntity = memberRepository.findById(memberId);
+//          if (optionalMemberEntity.isPresent()){
+//
+//          }
+//           PointEntity.update(pointEntity);
+//       }
+//
+//    }
 }

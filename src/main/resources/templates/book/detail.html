@@ -1,163 +1,174 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>신비한 서재입니다.</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신비한 서재입니다.</title>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 <table th:each="episode:${episodeList}">
-  <tr>
-    <td th:text="${episode.episodeTitle}"></td>
-    <td><input type="button" th:onclick="priceMoney([[${episode.id}]])" value="버튼"></td>
-  </tr>
+    <tr>
+        <td th:text="${episode.episodeTitle}"></td>
+        <td><input type="button" th:onclick="priceMoney([[${episode.id}]])" value="버튼"></td>
+    </tr>
 </table>
 
 <div class="profile-heart-wrap">
-  <div class="heart">
-    <a id="loveChange" th:onclick="bookLove()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-heart empty-heart" viewBox="0 0 16 16">
-        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-      </svg>
-      <!--          꽉찬하트 <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-heart-fill full-heart" viewBox="0 0 16 16">-->
-      <!--                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
-      <!--              </svg>-->
-    </a>
-  </div>
+    <div class="heart">
+        <a id="loveChange" th:onclick="bookLove()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor"
+                 class="bi bi-heart empty-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+            </svg>
+            <!--          꽉찬하트 <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-heart-fill full-heart" viewBox="0 0 16 16">-->
+            <!--                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+            <!--              </svg>-->
+        </a>
+    </div>
 </div>
 
 <div id="test">
-  <table th:each="comment:${commentList}">
-    <tr>
-      <th>작성자</th>
-      <th>댓글 내용</th>
-      <th>작성시간</th>
-    </tr>
-    <tr>
-      <td th:text="${comment.memberName}"></td>
-      <td th:text="${comment.contents}"></td>
-      <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      <td th:if="${session.name == comment.memberName}">
-        <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
-      </td>
-    </tr>
-  </table>
+    <table th:each="comment:${commentList}">
+        <tr>
+            <th>작성자</th>
+            <th>댓글 내용</th>
+            <th>작성시간</th>
+        </tr>
+        <tr>
+            <td th:text="${comment.memberName}"></td>
+            <td th:text="${comment.contents}"></td>
+            <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:if="${session.name == comment.memberName}">
+                <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
+            </td>
+        </tr>
+    </table>
 </div>
 <th:block th:replace="layout/footer :: footer"></th:block>
 
 </body>
 <script th:inline="javascript">
-  const priceMoney = (episodeId) => {
-    const memberId = [[${session.id}]];
-    const bookId = [[${book.id}]];
+    const priceMoney = (episodeId) => {
+        const memberId = [[${session.id}]];
+        const bookId = [[${book.id}]];
 
-    $.ajax({
-      type: "post",
-      url: "/box/pointCheck",
-      data: {
-        "memberId": memberId,
-        "episodeId": episodeId,
-        "bookId": bookId
-      },
-      dataType: "text",
-      success: function (result) {
-          if (result === "ok") {
-            alert("보유하신 포인트가 부족합니다");
-          } else {
-            $.ajax({
-              type: "post",
-              url: "/box/save",
-              data: {
-                "memberId": memberId,
-                "bookId": bookId
-              },
-              dataType: "text",
-              success: function (result) {
-                if (result == "ok") {
-                  alert("성공");
-                }
-              }
-            })
-          }
-      }
-    })
-  }
-  const bookLove = () => {
-    const loveChange = document.getElementById("loveChange");
-    const bookId = [[${book.id}]];
-    const memberName = [[${session.name}]];
-
-    $.ajax({
-      type: "post",
-      url: "/wish/check",
-      data: {
-        "bookId": bookId,
-        "memberName": memberName
-      },
-      dataType: "text",
-      success: function (result) {
-        if (result === "ok") {
-          $.ajax({
-            type: "delete",
-            url: "/wish/delete",
-            data: {
-              "bookId" : bookId,
-              "memberName" : memberName
-            },
-            dataType: "text",
-            success: function (result) {
-              if (result == "ok"){
-                var output ="<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart empty-heart\" viewBox=\"0 0 16 16\">" +
-                        "<path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>" +
-                        "</svg>";
-                loveChange.innerHTML = output;
-                Swal.fire({
-                  icon: 'success',
-                  text: '관심 목록에서 삭제했어요.',
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-              } else {
-                alert("실패");
-              }
-            }
-          })
-        } else {
-          $.ajax({
+        $.ajax({
             type: "post",
-            url: "/wish/save-writer",
+            url: "/box/pointCheck",
             data: {
-              "bookId": bookId,
-              "memberName": memberName
+                "memberId": memberId,
+                "episodeId": episodeId,
+                "bookId": bookId
             },
             dataType: "text",
             success: function (result) {
-              if (result == "ok") {
+                if (result === "ok") {
+                    alert("보유하신 포인트가 부족합니다");
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/box/save",
+                        data: {
+                            "memberId": memberId,
+                            "bookId": bookId
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == "ok") {
+                                alert("성공");
+                            }
+                        }
+                    })
+                }
+            }
+        })
 
-                var output = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart-fill full-heart\" viewBox=\"0 0 16 16\">" +
-                        "<path fill-rule=\"evenodd\" d=\"M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z\"/>" +
-                        "</svg>";
-                loveChange.innerHTML = output;
-                Swal.fire({
-                  icon: 'success',
-                  text: '관심 목록에 해당 책을 등록했어요.',
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-              } else {
-                alert("실패");
-              }
+        $.ajax({
+          type:"get",
+          url:"point/pay/"+memberId,
+          data:{"episodeId":episodeId,"bookId":bookId},
+          dataType:"text",
+          success:function (){
 
+          }
+        });
+    }
+    const bookLove = () => {
+        const loveChange = document.getElementById("loveChange");
+        const bookId = [[${book.id}]];
+        const memberName = [[${session.name}]];
+
+        $.ajax({
+            type: "post",
+            url: "/wish/check",
+            data: {
+                "bookId": bookId,
+                "memberName": memberName
             },
+            dataType: "text",
+            success: function (result) {
+                if (result === "ok") {
+                    $.ajax({
+                        type: "delete",
+                        url: "/wish/delete",
+                        data: {
+                            "bookId": bookId,
+                            "memberName": memberName
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == "ok") {
+                                var output = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart empty-heart\" viewBox=\"0 0 16 16\">" +
+                                    "<path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>" +
+                                    "</svg>";
+                                loveChange.innerHTML = output;
+                                Swal.fire({
+                                    icon: 'success',
+                                    text: '관심 목록에서 삭제했어요.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            } else {
+                                alert("실패");
+                            }
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/wish/save-writer",
+                        data: {
+                            "bookId": bookId,
+                            "memberName": memberName
+                        },
+                        dataType: "text",
+                        success: function (result) {
+                            if (result == "ok") {
 
-          })
-        }
-      }
-    })
+                                var output = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart-fill full-heart\" viewBox=\"0 0 16 16\">" +
+                                    "<path fill-rule=\"evenodd\" d=\"M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z\"/>" +
+                                    "</svg>";
+                                loveChange.innerHTML = output;
+                                Swal.fire({
+                                    icon: 'success',
+                                    text: '관심 목록에 해당 책을 등록했어요.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            } else {
+                                alert("실패");
+                            }
+
+                        },
+
+                    })
+                }
+            }
+        })
 
 
-  }
+    }
 </script>
 </html>
