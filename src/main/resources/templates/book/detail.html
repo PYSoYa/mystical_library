@@ -10,7 +10,8 @@
 <th:block th:replace="layout/header :: header"></th:block>
 <table th:each="episode:${episodeList}">
   <tr>
-    <td><a th:onclick="priceMoney()" th:text="${episode.episodeTitle}"></a></td>
+    <td th:text="${episode.episodeTitle}"></td>
+    <td><input type="button" th:onclick="priceMoney([[${episode.id}]])" value="버튼"></td>
   </tr>
 </table>
 
@@ -48,17 +49,17 @@
 
 </body>
 <script th:inline="javascript">
-  const priceMoney = () => {
+  const priceMoney = (episodeId) => {
     const memberId = [[${session.id}]];
     const bookId = [[${book.id}]];
-    const episodeId = [[${episode.id}]];
 
     $.ajax({
       type: "post",
       url: "/box/pointCheck",
       data: {
         "memberId": memberId,
-        "episodeId": episodeId
+        "episodeId": episodeId,
+        "bookId": bookId
       },
       dataType: "text",
       success: function (result) {
@@ -74,7 +75,9 @@
               },
               dataType: "text",
               success: function (result) {
-                alert("성공");
+                if (result == "ok") {
+                  alert("성공");
+                }
               }
             })
           }
