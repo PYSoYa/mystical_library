@@ -1,11 +1,15 @@
 package com.its.library.controller;
 
 import com.its.library.dto.MemberDTO;
+import com.its.library.dto.PointDTO;
 import com.its.library.service.MemberService;
+import com.its.library.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class PointController {
     //포인트 충전 내역 페이지 이동
     private final MemberService memberService;
+    private final PointService pointService;
     @GetMapping("/point-history/purchase/{id}")
     public String purchaseHistory(@PathVariable("id") Long id, Model model) {
         MemberDTO memberDTO = memberService.myPage(id);
+        List<PointDTO> pointDTOList= pointService.findById(memberDTO);
+        model.addAttribute("plusPointList",pointDTOList);
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryPurchase";
     }

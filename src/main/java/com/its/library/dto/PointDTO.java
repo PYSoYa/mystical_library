@@ -37,4 +37,12 @@ public class PointDTO {
 
 
     }
+
+    public static PointDTO plusPointList(PointEntity pointEntity1) {
+        PointDTO pointDTO = new PointDTO();
+        pointDTO.setId(pointEntity1.getId());
+        pointDTO.setPlusPoint(pointEntity1.getPlusPoint());
+        pointDTO.setPointTime(pointEntity1.getCreatedDateTime());
+        return pointDTO;
+    }
 }
