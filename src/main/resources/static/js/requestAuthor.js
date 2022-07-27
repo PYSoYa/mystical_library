@@ -1,5 +1,4 @@
 const requestAuthor = () => {
-  const id = [[${member.id}]]
   Swal.fire({
     title: '작가 신청을 할까요?',
     showDenyButton: true,
