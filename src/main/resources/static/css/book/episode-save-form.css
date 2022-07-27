@@ -30,6 +30,7 @@
 .save-form .input-wrap {margin-left: 3.25rem;}
 .save-form .editor-wrap {margin: 1.25rem auto; padding: 0; width: 100%;}
 .save-form .editor-wrap .ck-editor__editable[role="textbox"] {min-height: 25rem;}
+.save-form .editor-wrap .ck-editor__editable[role="textbox"]:hover {border-color: #667390;}
 .save-form .file-and-btn-wrap .file-wrap {display: flex; flex-direction: row;}
 .save-form .file-and-btn-wrap .file-wrap .input-wrap {margin-left: 2rem;}
 .save-form .btn-wrap {display: flex; flex-direction: row;}
