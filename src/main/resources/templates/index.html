@@ -11,23 +11,56 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
+<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
+<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
+<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
+<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
+
 <div class="category-div">
   <div class="category-container">
-    <ul class="category-ul">
+    <ul class="category-ul dropdown">
       <li class="category-wrap">
-        <a href="/" class="category-focus">홈</a>
+        <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="/book/book-save-form" class="category">웹소설</a>
+        <a href="/book/book-save-form" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">판타지</a></li>
+          <li><a href="#" class="dropdown-item">현대판타지</a></li>
+          <li><a href="#" class="dropdown-item">로맨스</a></li>
+          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
+          <li><a href="#" class="dropdown-item">무협</a></li>
+        </ul>
       </li>
       <li class="category-wrap">
-        <a href="#" class="category">시</a>
+        <a href="/book/category" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">판타지</a></li>
+          <li><a href="#" class="dropdown-item">현대판타지</a></li>
+          <li><a href="#" class="dropdown-item">로맨스</a></li>
+          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
+          <li><a href="#" class="dropdown-item">무협</a></li>
+        </ul>
       </li>
       <li class="category-wrap">
-        <a href="#" class="category">에세이</a>
+        <a href="#" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">판타지</a></li>
+          <li><a href="#" class="dropdown-item">현대판타지</a></li>
+          <li><a href="#" class="dropdown-item">로맨스</a></li>
+          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
+          <li><a href="#" class="dropdown-item">무협</a></li>
+        </ul>
       </li>
       <li class="category-wrap">
-        <a href="/debut/save-form" class="category">데뷔글</a>
+        <a href="/debut/save-form" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">판타지</a></li>
+          <li><a href="#" class="dropdown-item">현대판타지</a></li>
+          <li><a href="#" class="dropdown-item">로맨스</a></li>
+          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
+          <li><a href="#" class="dropdown-item">무협</a></li>
+        </ul>
       </li>
     </ul>
   </div>
