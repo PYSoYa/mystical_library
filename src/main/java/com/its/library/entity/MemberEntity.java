@@ -109,4 +109,5 @@ public class MemberEntity {
         memberEntity.setRole("작가");
         return memberEntity;
     }
+
 }

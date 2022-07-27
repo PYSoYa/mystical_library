@@ -39,6 +39,8 @@ public class PointEntity extends BaseEntity  {
     }
 
 
+
+
     //포인트(결제) - 맴버 manyToOne ㅇ
     //포인트(결제) - 회차 manyToOne ㅇ
 }
