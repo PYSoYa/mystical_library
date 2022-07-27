@@ -141,16 +141,14 @@ public class MemberController {
         return "member/wishlistAuthor";
     }
     @GetMapping("/kkoPay")
-    public @ResponseBody String kkoPay(@RequestParam("id")Long id,@RequestParam("cash")int memberPoint){
-        System.out.println("id = " + id + ", memberPoint = " + memberPoint);
-    String result =memberService.pointAdd(id,memberPoint);
-    return result;
-
+    public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
+        String result = memberService.pointAdd(id, memberPoint);
+        return result;
     }
     @GetMapping("/point-history-save")
-    public @ResponseBody String pointHistorySave(@RequestParam("id")Long memberId,@RequestParam("cash")int memberPoint){
-       String result = memberService.pointHistorySave(memberId,memberPoint);
-       return result;
+    public @ResponseBody String pointHistorySave(@RequestParam("id") Long memberId, @RequestParam("cash") int memberPoint){
+        String result = memberService.pointHistorySave(memberId, memberPoint);
+        return result;
     }
 
 }
