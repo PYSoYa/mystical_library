@@ -89,20 +89,7 @@ public class MemberController {
     }
 
     // 포인트 충전내역 페이지 이동 (수정필요)
-    @GetMapping("/point-history/purchase/{id}")
-    public String purchaseHistory(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/pointHistoryPurchase";
-    }
 
-    // 포인트 이용내역 페이지 이동 (수정필요)
-    @GetMapping("/point-history/use/{id}")
-    public String useHistory(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/pointHistoryUse";
-    }
 
     // 보관함-열람 내역 페이지 이동 (수정필요)
     @GetMapping("/box/recent/{id}")
@@ -140,15 +127,12 @@ public class MemberController {
         System.out.println("memberDTOList = " + memberDTOList);
         return "member/wishlistAuthor";
     }
+    //카카오페이 test API
     @GetMapping("/kkoPay")
     public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
-    @GetMapping("/point-history-save")
-    public @ResponseBody String pointHistorySave(@RequestParam("id") Long memberId, @RequestParam("cash") int memberPoint){
-        String result = memberService.pointHistorySave(memberId, memberPoint);
-        return result;
-    }
+
 
 }
