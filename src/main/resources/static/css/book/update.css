@@ -1,0 +1,5 @@
+.send-wrap {display: flex;}
+.send-wrap .title-wrap {width: 6.88rem; padding: 0.688rem;}
+.send-wrap .input-wrap {display: flex; margin-left: 2.8rem;}
+.send-wrap .input-wrap input {width: 18rem;}
+.send-wrap .input-wrap > div:not(:last-child) {padding-right: 3rem;}

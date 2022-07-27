@@ -30,7 +30,7 @@
 .save-form .file-and-btn-wrap .title-wrap {width: 6.88rem; padding: 0.688rem;}
 .save-form .input-wrap {margin-left: 4rem;}
 .save-form .file-and-btn-wrap .file-wrap {display: flex; flex-direction: row;}
-.save-form .file-and-btn-wrap .file-wrap .input-wrap {margin-left: 3rem;}
+.save-form .file-and-btn-wrap .file-wrap .input-wrap {margin-left: 2.8rem;}
 .save-form .btn-wrap {display: flex; flex-direction: row;}
 .save-form .btn-wrap .btn-wrapper {margin-left: auto;}
 .save-form .btn-wrap button {position: relative; margin-left: 0.62rem; border: none; outline: none; border-radius: 0.188rem; width: 8.465rem; height: 3rem; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
