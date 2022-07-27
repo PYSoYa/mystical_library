@@ -8,4 +8,6 @@ import java.util.List;
 public interface PointRepository extends JpaRepository<PointEntity,Long> {
 
     List<PointEntity> findByMemberEntity_Id(Long id);
+
+
 }
