@@ -108,4 +108,7 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const id = [[${member.id}]];
+</script>
 </html>
