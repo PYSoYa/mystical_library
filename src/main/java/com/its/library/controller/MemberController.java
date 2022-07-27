@@ -110,11 +110,7 @@ public class MemberController {
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
-    @GetMapping("/point-history-save")
-    public @ResponseBody String pointHistorySave(@RequestParam("id") Long memberId, @RequestParam("cash") int memberPoint){
-        String result = memberService.pointHistorySave(memberId, memberPoint);
-        return result;
-    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();

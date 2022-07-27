@@ -39,7 +39,7 @@ const requestPay = (id) => {
       //포인트 충전내역에 해당 기록 save
       $.ajax({
         type: "get",
-        url: "/member/point-history-save",
+        url: "/point/point-history-save",
         data: {"id": id, "cash": cash},
         dataType: "text",
         success: function (result) {
@@ -47,7 +47,7 @@ const requestPay = (id) => {
         }
       });
 
-      location.href = '/member/purchase-point/' + id;
+      location.reload();
     }
   });
 }

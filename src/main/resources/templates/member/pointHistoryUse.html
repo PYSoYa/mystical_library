@@ -34,12 +34,12 @@
             </a>
           </div>
           <div class="point-purchase-history">
-            <a th:href="@{|/member/point-history/purchase/${member.id}|}">
+            <a th:href="@{|/point/point-history/purchase/${member.id}|}">
               <span class="item">포인트 충전내역</span>
             </a>
           </div>
           <div class="point-history">
-            <a th:href="@{|/member/point-history/use/${member.id}|}">
+            <a th:href="@{|/point/point-history/use/${member.id}|}">
               <span class="item selected-item">포인트 이용내역</span>
             </a>
           </div>
@@ -65,36 +65,25 @@
                   <tr>
                     <th>#</th>
                     <th>책 제목</th>
-                    <th>회차 제목</th>
-                    <th>구매일자</th>
-                    <th>구매 가격</th>
+                    <th>에피소드 제목</th>
+                    <th>구매 시간</th>
+                    <th>가격</th>
+
+
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>물휴지</td>
-                    <td>물휴지 1화</td>
-                    <td>2022-05-05</td>
-                    <td>100 포인트</td>
+                  <tr th:each="point:${minusPointList}">
+                    <td th:text="${point.id}"></td>
+                    <td th:text="${point.bookTitle}"></td>
+                    <td th:text="${point.episodeTitle}"></td>
+                    <td th:text="*{#temporals.format(point.pointTime, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${point.minusPoint}" class="minusPoint"></td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>비와 구름</td>
-                    <td>비와 구름 10화</td>
-                    <td>2022-03-24</td>
-                    <td>100 포인트</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>문제가 산적</td>
-                    <td>문제가 산적 276화</td>
-                    <td>2021-11-17</td>
-                    <td>100 포인트</td>
                   </tr>
                 </table>
               </div>
               <div class="total-amount">
                 <div class="title">총 구매 금액</div>
-                <div class="detail history-detail-amount">300 포인트</div>
+                <div id="count" class="detail history-detail-amount">300 포인트</div>
               </div>
             </div>
           </div>
@@ -106,4 +95,20 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const id = [[${member.id}]];
+
+  window.onload = () =>{
+    let minusPoint = [];
+    minusPoint = document.getElementsByClassName("minusPoint");
+    const count = document.getElementById("count");
+    let sum =0;
+    for (let i =0; i<minusPoint.length;i++){
+      console.log(minusPoint[i]);
+      sum += parseInt(minusPoint[i].innerHTML);
+    }
+    count.innerHTML =String(sum);
+
+  }
+</script>
 </html>

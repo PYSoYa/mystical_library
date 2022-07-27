@@ -29,6 +29,10 @@ public class PointEntity extends BaseEntity  {
     private int minusPoint;
     @Column(name = "totalPoint")
     private  int totalPoint;
+    @Column(name = "bookTitle")
+    private String bookTitle;
+    @Column(name = "episodeTitle")
+    private String episodeTitle;
 
     public static PointEntity save(PointDTO pointDTO,MemberEntity memberEntity) {
         PointEntity pointEntity = new PointEntity();
@@ -37,6 +41,8 @@ public class PointEntity extends BaseEntity  {
         pointEntity.setTotalPoint(memberEntity.getMemberPoint());
         return pointEntity;
     }
+
+
 
 
     //포인트(결제) - 맴버 manyToOne ㅇ

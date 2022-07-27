@@ -7,6 +7,40 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<table>
+  <tr>
+    <div>포인트 번호</div>
+    <th>회원번호</th>
+    <th>충전시간</th>
+    <th>충전 금액</th>
 
+  </tr>
+  <tr th:each="point:${pointList}">
+
+    <td th:text="${point.id}"></td>
+    <td th:text="${point.memberId}"></td>
+    <td th:text="${point.pointTime}"></td>
+    <td><p th:text="${point.plusPoint}" class="plus-Point"></p></td>
+
+
+  </tr>
+
+</table>
+결산금액:<p id="plusTotalPoint"></p>
+<script>
+  window.onload = () =>{
+    let plusPoint = [];
+     plusPoint = document.getElementsByClassName("plus-Point");
+    const plusTotalPoint = document.getElementById("plusTotalPoint");
+    let sum =0;
+    for (let i =0; i<plusPoint.length;i++){
+      console.log(plusPoint[i]);
+    sum += parseInt(plusPoint[i].innerHTML);
+    }
+    plusTotalPoint.innerHTML =String(sum);
+
+    }
+
+</script>
 </body>
 </html>

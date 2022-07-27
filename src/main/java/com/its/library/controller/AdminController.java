@@ -1,15 +1,12 @@
 package com.its.library.controller;
 
 import com.its.library.dto.*;
-import com.its.library.entity.ReqWriterEntity;
 import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -21,6 +18,7 @@ public class AdminController {
     private final BookService bookService;
     private final EpisodeService episodeService;
     private final ReqWriterService reqWriterService;
+    private final PointService pointService;
 
     //댓글 신고 내역 리스트
     @GetMapping("/req-report-list")
@@ -138,8 +136,7 @@ public class AdminController {
     }
 
     @GetMapping("/req-role-change/{id}")
-    public String roleChange
-            (@PathVariable("id") Long id) {
+    public String roleChange(@PathVariable("id") Long id) {
         reqWriterService.roleChange(id);
 
         return "redirect:/admin/req-writer-list";
@@ -152,7 +149,10 @@ public class AdminController {
         return "redirect:/admin/req-writer-list";
     }
 
-
-
-
+    @GetMapping("/point-history")
+    public String pointHistory(Model model){
+       List<PointDTO> pointDTOList = pointService.pointHistory();
+        model.addAttribute("pointList",pointDTOList);
+        return "admin/pointHistory";
+    }
 }
