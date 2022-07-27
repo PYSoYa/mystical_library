@@ -1,7 +1,9 @@
 package com.its.library.entity;
 
+import com.its.library.dto.HistoryDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -22,15 +24,23 @@ public class HistoryEntity extends BaseEntity{
     @JoinColumn(name = "memberId")
     private MemberEntity memberEntity;
 
-    @Column(name = "episodeId")
-    private Long episodeId;
-    @Column(name = "lastTime",nullable = false,updatable = false)
-    private LocalDateTime lastTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "episodeId")
+    private EpisodeEntity episodeEntity;
+
     @Column
     private int hidden;
 
     @OneToMany(mappedBy = "historyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+
+    public static HistoryEntity saveEntity(HistoryDTO historyDTO, MemberEntity memberEntity, EpisodeEntity episodeEntity) {
+        HistoryEntity historyEntity = new HistoryEntity();
+        historyEntity.setMemberEntity(memberEntity);
+        historyEntity.setEpisodeEntity(episodeEntity);
+        historyEntity.setHidden(0);
+        return historyEntity;
+    }
 
 
     //열람내역 - 맴버 manyToOne ㅇ

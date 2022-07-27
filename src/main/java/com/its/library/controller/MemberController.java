@@ -104,42 +104,7 @@ public class MemberController {
         return "member/pointHistoryUse";
     }
 
-    // 보관함-열람 내역 페이지 이동 (수정필요)
-    @GetMapping("/box/recent/{id}")
-    public String boxRecent(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/boxRecent";
-    }
 
-    // 보관함-소장중인 책 목록 페이지 이동 (수정필요)
-    @GetMapping("/box/bought/{id}")
-    public String boxBought(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/boxBought";
-    }
-
-    // 위시리스트-관심 책 목록 페이지 이동 (수정필요)
-    @GetMapping("/wishlist/book/{id}")
-    public String wishlistBook(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        List<BookDTO> bookDTOList = memberService.wishlist(id);
-        model.addAttribute("member", memberDTO);
-        model.addAttribute("bookList", bookDTOList);
-        return "member/wishlistBook";
-    }
-
-    // 위시리스트-관심 작가 목록 페이지 이동 (수정필요)
-    @GetMapping("/wishlist/author/{id}")
-    public String wishlistAuthor(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        List<MemberDTO> memberDTOList = memberService.memberWishlist(id);
-        model.addAttribute("member", memberDTO);
-        model.addAttribute("memberList", memberDTOList);
-        System.out.println("memberDTOList = " + memberDTOList);
-        return "member/wishlistAuthor";
-    }
     @GetMapping("/kkoPay")
     public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
         String result = memberService.pointAdd(id, memberPoint);
