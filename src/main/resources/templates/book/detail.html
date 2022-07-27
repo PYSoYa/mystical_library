@@ -8,6 +8,12 @@
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+<table th:each="episode:${episodeList}">
+  <tr>
+    <td th:text="${episode.episodeTitle}"></td>
+    <td><input type="button" th:onclick="priceMoney([[${episode.id}]])" value="버튼"></td>
+  </tr>
+</table>
 
 <div class="profile-heart-wrap">
   <div class="heart">
@@ -21,6 +27,7 @@
     </a>
   </div>
 </div>
+
 <div id="test">
   <table th:each="comment:${commentList}">
     <tr>
@@ -42,6 +49,41 @@
 
 </body>
 <script th:inline="javascript">
+  const priceMoney = (episodeId) => {
+    const memberId = [[${session.id}]];
+    const bookId = [[${book.id}]];
+
+    $.ajax({
+      type: "post",
+      url: "/box/pointCheck",
+      data: {
+        "memberId": memberId,
+        "episodeId": episodeId,
+        "bookId": bookId
+      },
+      dataType: "text",
+      success: function (result) {
+          if (result === "ok") {
+            alert("보유하신 포인트가 부족합니다");
+          } else {
+            $.ajax({
+              type: "post",
+              url: "/box/save",
+              data: {
+                "memberId": memberId,
+                "bookId": bookId
+              },
+              dataType: "text",
+              success: function (result) {
+                if (result == "ok") {
+                  alert("성공");
+                }
+              }
+            })
+          }
+      }
+    })
+  }
   const bookLove = () => {
     const loveChange = document.getElementById("loveChange");
     const bookId = [[${book.id}]];

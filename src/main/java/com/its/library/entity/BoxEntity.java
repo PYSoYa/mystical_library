@@ -1,5 +1,6 @@
 package com.its.library.entity;
 
+import com.its.library.dto.BoxDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,13 @@ public class BoxEntity {
 
     @OneToMany(mappedBy = "boxEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BookEntity> bookEntityList = new ArrayList<>();
+
+    public BoxEntity saveEntity(BoxDTO boxDTO, MemberEntity memberEntity) {
+        BoxEntity boxEntity = new BoxEntity();
+        boxEntity.setMemberEntity(memberEntity);
+        boxEntity.setBookId(boxDTO.getBookId());
+        return boxEntity;
+    }
 
     //보관함 - 맴버 manyToOne ㅇ
     //보관함 - 책 oneToMany ㅇ

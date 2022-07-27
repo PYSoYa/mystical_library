@@ -1,47 +1,110 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신비한 서재입니다.</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/save-form.css}">
 </head>
 <body>
-<form action="/book/req-book-update" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" th:value="${book.id}">
-    <select name="categoryId">
-        <option value="1">시</option>
-        <option value="2">에세이</option>
-        <option value="3">웹소설</option>
-    </select>
-    <select name="genreId">
-        <option value="1">판타지</option>
-        <option value="2">현판</option>
-        <option value="3">로맨스</option>
-        <option value="4">로판</option>
-        <option value="5">무협</option>
-        <option value="6">BL</option>
-        <option value="7">단행본</option>
-    </select>
-    <select name="status">
+<th:block th:replace="layout/header :: header"></th:block>
 
-        <option value="연재">연재</option>
-        <option value="완결">완결</option>
-        <option value="휴재">휴재</option>
-    </select><br>
-    <input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
-    <input type="text" id="feat" name="feat" th:value="${book.feat}"><br>
-    <input type="text" id="bookTitle" name="bookTitle" th:value="${book.bookTitle}"><br>
-    <textarea id="introduce" name="introduce" th:text="${book.introduce}"></textarea><br>
-    <img th:src="@{|/upload/${book.bookImgName}|}" width="130" height="200"><br>
-    <input type="file" id="bookImg" name="bookImg"><br>
-    <input type="hidden" name="bookImgName" th:value="${book.bookImgName}">
-    <input type="hidden" name="hidden" th:value="${book.hidden}">
-    <input type="hidden" name="star" th:value="${book.star}">
-    <input type="text" name="fromAddress" placeholder="본인 이메일" required><br>
-    <input type="text" name="mailTitle" placeholder="메일 제목" required><br>
-    <input type="hidden" name="toAddress" value="pysoya@naver.com">
-    <input type="submit" th:value="전송">
-</form>
+<main class="main-container">
+  <div class="save-form-container">
+    <div class="save-form-wrap">
+      <div class="save-form-div">
+        <div class="save-form">
+          <form class="form-to-save" action="/book/req-book-update" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="memberName" th:value="${session.name}">
+            <input type="hidden" name="bookImgName" th:value="${book.bookImgName}">
+            <input type="hidden" name="writerRole" th:value="${book.writerRole}">
+            <input type="hidden" name="star" th:value="${book.star}">
+            <div class="select-list-wrap">
+              <div class="category-list-wrap">
+                <select name="categoryId" class="select-input" th:value="${book.categoryId}">
+                  <option value="">카테고리</option>
+                  <option value="1">시</option>
+                  <option value="2">에세이</option>
+                  <option value="3">웹소설</option>
+                </select>
+              </div>
+              <div class="genre-list-wrap">
+                <select name="genreId" class="select-input" th:value="${book.genreId}">
+                  <option value="">장르</option>
+                  <option value="1">판타지</option>
+                  <option value="2">현대판타지</option>
+                  <option value="3">로맨스</option>
+                  <option value="4">로맨스판타지</option>
+                  <option value="5">무협</option>
+                </select>
+              </div>
+              <div class="status-wrap">
+                <select name="status" class="select-input" th:value="${book.status}">
+                  <option value="" selected>연재상태</option>
+                  <option value="연재">연재</option>
+                  <option value="완결">완결</option>
+                  <option value="휴재">휴재</option>
+                </select>
+              </div>
+              <div class="feat-wrap">
+                <input type="text" name="feat" th:value="${book.feat}" class="feat" placeholder="공동작업 작가(필요 시)">
+              </div>
+            </div>
+            <div class="title-wrap">
+              <div class="title-wrapper">
+                <label class="title">도서명</label>
+              </div>
+              <div class="input-wrap">
+                <input type="text" name="bookTitle" th:value="${book.bookTitle}" class="title" placeholder="도서명을 입력해주세요.">
+              </div>
+            </div>
+            <div class="intro-wrap">
+              <div class="intro-wrapper">
+                <label class="intro">소개글</label>
+              </div>
+              <div class="input-wrap">
+                <textarea maxlength="500" onkeyup="resize(this)" th:text="${book.introduce}" class="intro" name="introduce" placeholder="소개글을 입력해주세요."></textarea>
+              </div>
+            </div>
+            <div class="file-and-btn-wrap">
+              <div class="file-wrap">
+                <div class="title-wrap">
+                  <label class="title">표지 사진</label>
+                </div>
+                <div class="input-wrap">
+                  <input type="file" name="bookImg">
+                </div>
+              </div>
+            </div>
+            <div class="send-wrap">
+              <input type="hidden" name="toAddress" value="pysoya@naver.com">
+              <div class="from-wrap">
+                <input type="text" name="fromAddress" placeholder="작가님의 이메일을 입력해주세요.">
+              </div>
+              <div class="mail-title-wrap">
+                <input type="text" name="mailTitle" placeholder="메일의 제목을 입력해주세요.">
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <div class="btn-wrapper">
+                <button type="submit" class="submit-btn">수정 요청</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const resize = (obj) => {
+    obj.style.height = '11.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+</script>
 </html>
