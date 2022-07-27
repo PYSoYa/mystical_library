@@ -17,6 +17,7 @@ public class EpisodeDTO {
     private Long bookId;
     private String episodeTitle;
     private String episodeContents;
+    private String updateContents;
     private MultipartFile episodeImg;
     private String episodeImgName;
     private int payment;

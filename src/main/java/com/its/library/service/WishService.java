@@ -1,5 +1,7 @@
 package com.its.library.service;
 
+import com.its.library.dto.BookDTO;
+import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishlistDTO;
 import com.its.library.entity.BookEntity;
 import com.its.library.entity.MemberEntity;
@@ -12,6 +14,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -119,6 +123,35 @@ public class WishService {
             }
         }
 
+    }
+    public List<MemberDTO> memberWishlist(Long id) {
+        List<WishEntity> wishEntityList = new ArrayList<>();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        wishEntityList = wishlistRepository.findAll();
+        for (int i = 0; i < wishEntityList.size(); i++) {
+            if (wishEntityList.get(i).getBookEntity() == null) {
+                Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
+                if (optionalMemberEntity.isPresent()) {
+                    memberDTOList.add(MemberDTO.findDTO(optionalMemberEntity.get()));
+
+                }
+            }
+        }
+        return memberDTOList;
+    }
+    public List<BookDTO> wishlist(Long id) {
+        List<WishEntity> wishEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        wishEntityList = wishlistRepository.findAll();
+        for (int i = 0; i < wishEntityList.size(); i++) {
+            if (wishEntityList.get(i).getMemberEntity() == null) {
+                Optional<BookEntity> optionalBookEntity = bookRepository.findById(wishEntityList.get(i).getBookEntity().getId());
+                if (optionalBookEntity.isPresent()) {
+                    bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
+                }
+            }
+        }
+        return bookDTOList;
     }
 
 }

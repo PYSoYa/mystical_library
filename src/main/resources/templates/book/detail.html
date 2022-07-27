@@ -65,7 +65,7 @@
       success: function (result) {
           if (result === "ok") {
             alert("보유하신 포인트가 부족합니다");
-          } else {
+          } else if (result === "no"){
             $.ajax({
               type: "post",
               url: "/box/save",
@@ -80,6 +80,8 @@
                 }
               }
             })
+          } else {
+            alert("무료");
           }
       }
     })

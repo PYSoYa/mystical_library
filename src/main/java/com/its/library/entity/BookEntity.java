@@ -55,6 +55,7 @@ public class BookEntity {
     @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private  List<WishEntity> wishlistEntityList = new ArrayList<>();
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boxId")
     private BoxEntity boxEntity;

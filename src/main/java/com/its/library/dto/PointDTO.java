@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.BookEntity;
 import com.its.library.entity.EpisodeEntity;
 import com.its.library.entity.PointEntity;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,11 @@ public class PointDTO {
     private int minusPoint;
     private int totalPoint;
     private LocalDateTime pointTime;
+    private String bookTitle;
+    private String episodeTitle;
 
 
-    public static PointDTO findDTO(PointEntity pointEntity1, EpisodeEntity episodeEntity) {
+    public static PointDTO findDTO(PointEntity pointEntity1, EpisodeEntity episodeEntity, BookEntity bookEntity) {
         PointDTO pointDTO = new PointDTO();
         pointDTO.setId(pointEntity1.getId());
         pointDTO.setMemberId(pointDTO.getMemberId());
@@ -31,10 +34,15 @@ public class PointDTO {
         pointDTO.setMinusPoint(pointEntity1.getMinusPoint());
         pointDTO.setTotalPoint(pointEntity1.getTotalPoint());
         pointDTO.setPointTime(pointEntity1.getCreatedDateTime());
+        pointDTO.setEpisodeTitle(episodeEntity.getEpisodeTitle());
+        pointDTO.setBookTitle(bookEntity.getBookTitle());
+
         return pointDTO;
 
 
 
 
     }
+
+
 }
