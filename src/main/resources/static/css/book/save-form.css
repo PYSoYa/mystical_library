@@ -6,7 +6,7 @@
 .save-form {width: 75%; padding: 0 5rem;}
 .save-form .form-to-save > div:not(:last-child) {margin-bottom: 2.5rem;}
 .save-form input {-webkit-appearance: none; appearance: none; background: transparent; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; caret-color: #1e9eff; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 100%; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
-.save-form textarea {appearance: none; background: transparent; background-color: #fff; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; border-width: 1px; caret-color: #1e9eff; color: #4a5469; line-height: 1.5; outline: none; text-decoration: none; padding: 0.75rem 1.875rem 0.75rem 0.625rem; width: 100%; height: 12rem; overflow: hidden; word-break: keep-all; resize: none;}
+.save-form textarea {appearance: none; background-color: #fff; border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; border-width: 1px; caret-color: #1e9eff; color: #4a5469; line-height: 1.5; outline: none; text-decoration: none; padding: 0.75rem 1.875rem 0.75rem 0.625rem; width: 100%; height: 12rem; overflow: hidden; word-break: keep-all; resize: none;}
 .save-form input:focus,
 .save-form .select-input:focus,
 .save-form .intro:focus {border-color: #667390;}
@@ -17,7 +17,7 @@
 /* select */
 .save-form .select-input {border-color: #d1d5d9; border-radius: 0.188rem; border-style: solid; box-sizing: border-box; color: #4a5469; display: block; line-height: 1.5; outline: none; text-decoration: none; width: 10rem; padding: 0.75rem 1.875rem 0.75rem 0.625rem; border-width: 1px;}
 .save-form .select-list-wrap {position: relative; display: flex; flex-direction: row;}
-.save-form .select-list-wrap > div:not(:last-child) {padding-right: 4rem;}
+.save-form .select-list-wrap > div:not(:last-child) {padding-right: 3rem;}
 .save-form .select-list-wrap > div:last-child {position: relative; margin-left: auto;}
 /* input */
 .save-form .title-wrap,
