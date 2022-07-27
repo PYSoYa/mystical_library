@@ -1,12 +1,15 @@
 package com.its.library.service;
 
+import com.its.library.dto.MemberDTO;
 import com.its.library.dto.PointDTO;
 import com.its.library.entity.EpisodeEntity;
 import com.its.library.entity.PointEntity;
 import com.its.library.repository.EpisodeRepository;
+import com.its.library.repository.MemberRepository;
 import com.its.library.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class PointService {
     private final PointRepository pointRepository;
     private final EpisodeRepository episodeRepository;
+
 
     public List<PointDTO> pointHistory() {
        List<PointEntity> pointEntityList = pointRepository.findAll();
@@ -30,6 +34,17 @@ public class PointService {
 
             }
 
+        }
+        return pointDTOList;
+    }
+
+    @Transactional
+    public List<PointDTO> findById(MemberDTO memberDTO) {
+      List<PointEntity> pointEntityList = pointRepository.findByMemberEntity_Id(memberDTO.getId());
+      List<PointDTO> pointDTOList = new ArrayList<>();
+        for (PointEntity pointEntity:pointEntityList) {
+            PointEntity pointEntity1= pointEntity;
+            pointDTOList.add(PointDTO.plusPointList(pointEntity1));
         }
         return pointDTOList;
     }

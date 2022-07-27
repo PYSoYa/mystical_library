@@ -67,36 +67,16 @@
                     <th>충전일자</th>
                     <th>충전 금액</th>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>1981-04-02 23:15:57</td>
-                    <td>2000 원</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>1981-04-02 23:15:57</td>
-                    <td>2000 원</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>1981-04-02 23:15:57</td>
-                    <td>2000 원</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>1981-04-02 23:15:57</td>
-                    <td>2000 원</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>1981-04-02 23:15:57</td>
-                    <td>12000 원</td>
+                  <tr th:each="point:${plusPointList}">
+                    <td th:text="${point.id}"></td>
+                    <td th:text="*{#temporals.format(point.pointTime, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${point.plusPoint}" class="plusPoint"></td>
                   </tr>
                 </table>
               </div>
               <div class="total-amount">
                 <div class="title">총 충전 금액</div>
-                <div class="detail">20000 원</div>
+                <div id="count" class="detail"></div>
               </div>
             </div>
           </div>
@@ -110,5 +90,18 @@
 </body>
 <script th:inline="javascript">
   const id = [[${member.id}]];
+
+  window.onload = () =>{
+    let plusPoint = [];
+    plusPoint = document.getElementsByClassName("plusPoint");
+    const count = document.getElementById("count");
+    let sum =0;
+    for (let i =0; i<plusPoint.length;i++){
+      console.log(plusPoint[i]);
+      sum += parseInt(plusPoint[i].innerHTML);
+    }
+    count.innerHTML =String(sum);
+
+  }
 </script>
 </html>
