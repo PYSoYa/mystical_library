@@ -67,8 +67,10 @@ public class DebutEpisodeEntity extends BaseEntity {
         debutEpisodeEntity.setDebutContents(debutEpisodeDTO.getDebutContents());
         debutEpisodeEntity.setIntroduce(debutEpisodeDTO.getIntroduce());
         debutEpisodeEntity.setLove(debutEpisodeDTO.getLove());
+        debutEpisodeEntity.setDebutHits(debutEpisodeDTO.getDebutHits());
         return debutEpisodeEntity;
     }
+
 
 
 }
