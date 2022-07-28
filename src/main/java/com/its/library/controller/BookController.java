@@ -193,4 +193,9 @@ public class BookController {
         return "book/search";
     }
 
+    // 장르 목록 조회
+    @GetMapping("/genre")
+    public String genreList() {
+        return "book/genre";
+    }
 }

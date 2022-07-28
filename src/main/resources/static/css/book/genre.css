@@ -1,0 +1,49 @@
+.category-div {margin-top: 1.25rem}
+.category-ul {margin-left: -9.375rem; display: flex; padding: 0 1.875rem 0 1.125rem; justify-content: center;}
+.category-wrap {margin-left: 9.375rem; display: inline-flex; line-height: initial;}
+.category, .category-focus {display: inline-flex; -webkit-box-pack: center; justify-content: center; align-items: center; padding: 0.875rem 0.75rem 1.063rem; font-weight: 600; font-size: 1.625rem; line-height: 1.813rem; letter-spacing: -0.01em; color: #141414; transition: opacity 0.2s ease;}
+.category:hover {color: #141414; opacity: 0.5; transition: 0.2s ease;}
+.category-focus {color: #1e9eff; cursor: default;}
+.category-container {border-bottom: 1px solid #e5e5e5;}
+
+/* 카테고리 드롭다운 */
+.dropdown-toggle::after {display: none !important; border: none !important;}
+.dropdown-menu > li {font-size: 16px; font-weight: 500; font-family: inherit; position: relative; display: block; height: 3rem;}
+
+.genre-list-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
+.genre-list-wrap {margin-top: 1.25rem; position: relative;}
+.genre-list-title-container {display: flex; height: 3rem; padding-top: 0.375rem; padding-bottom: 1rem; -webkit-box-pack: justify; justify-content: space-between;}
+.genre-list-title-wrap {width: 100%; height: 100%; display: flex;}
+.genre-list-title-text {align-items: center; width: 82%;}
+.genre-list-title {font-size: 1.5rem; font-weight: 600; line-height: 1.625rem; letter-spacing: -0.01em; display: inline-block; flex-shrink: 1; -webkit-box-flex: 0; flex-grow: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.order-btn-wrap {width: 15%;}
+.order-btn-wrap a {font-size: 1.5rem; color: inherit;}
+.order-btn-wrap a:not(:last-child) {margin-right: 0.825rem;}
+.order-btn-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.order-btn-wrap .order-btn {color: #666; font-size: 1.05rem; font-family: inherit; font-weight: 400;}
+
+.book-list-container {padding: 1rem; margin-top: 1.25rem;}
+.book-list-container .series-list {display: flex; flex-wrap: wrap; margin: 0 0.625rem; justify-content: flex-start;}
+.book-list-container .series-list .book-wrap:not(:last-child) {margin-bottom: 4rem;}
+.book-wrap {width: 38rem; display: flex; flex-direction: row; padding: 0.25rem;}
+.book-wrap .img-wrap .img {width: 9rem; height: 13rem; border-radius: 4px;}
+.book-wrap .img-wrap .img:hover {opacity: 0.5; transition: 0.2s ease;}
+.book-wrap .detail-wrap {padding: 0.5rem; margin-left: 3rem; display: flex; flex-direction: column;}
+.book-wrap .detail-wrap .title-wrap {margin-bottom: 0.325rem;}
+.book-wrap .detail-wrap .title-wrap h5 {font-size: 1.625rem; font-weight: 600; font-family: inherit; position: relative;}
+.book-wrap .detail-wrap .author-wrap {display: flex; flex-direction: row; margin-bottom: 1.25rem;}
+.book-wrap .detail-wrap .author-wrap > a, span:not(:last-child) {margin-right: 1.5rem;}
+.book-wrap .detail-wrap .author-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.book-wrap .detail-wrap .author-wrap > span:not(:first-child) {opacity: 0.6;}
+.book-wrap .detail-wrap .author-wrap .author {color: #1e9eff; font-weight: 600;}
+.book-wrap .detail-wrap .author-wrap .eye-icon {padding-top: 0.225rem; opacity: 0.8;}
+.book-wrap .detail-wrap .author-wrap .heart-icon {padding-top: 0.25rem; opacity: 0.8;}
+.book-wrap .detail-wrap .author-wrap span {font-size: 1rem; font-weight: 500; font-family: inherit; position: relative;}
+.book-wrap .detail-wrap .intro-wrap {height: 4rem; display: block; opacity: 0.6;}
+.book-wrap .detail-wrap .intro-wrap span {display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 1.125rem; overflow: hidden; text-overflow: ellipsis; position: relative;}
+.book-wrap .detail-wrap .tag-wrap {height: 100%; padding-top: 1.5rem;}
+.book-wrap .detail-wrap .tag-wrap > span:not(:last-child) {margin-right: 1rem;}
+.book-wrap .detail-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.book-wrap .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
+.book-wrap .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
+.book-wrap .detail-wrap .tag-wrap .essay {background-color: #ff702a;}
