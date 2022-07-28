@@ -120,8 +120,8 @@ public class BookController {
 
     // 카테고리 목록 조회
     @GetMapping("/category")
-    public String categoryList(@RequestParam("id") Long id) {
-        return null;
+    public String categoryList() {
+        return "book/category";
     }
 
     // 책 목록 조회 + 페이징
