@@ -14,6 +14,7 @@ public class HistoryDTO {
     private Long id;
     private Long memberId;
     private Long episodeId;
+    private Long bookId;
     private LocalDateTime createdTime;
     private int hidden;
 
