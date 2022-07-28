@@ -47,6 +47,8 @@ public class HistoryEntity extends BaseEntity{
     }
 
 
+
+
     //열람내역 - 맴버 manyToOne ㅇ
     //열람내역 - 회차 oneToMany ㅇ
 }
