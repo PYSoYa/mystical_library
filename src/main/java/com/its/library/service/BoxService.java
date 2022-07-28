@@ -6,6 +6,7 @@ import com.its.library.dto.HistoryDTO;
 import com.its.library.entity.*;
 import com.its.library.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,10 +26,20 @@ public class BoxService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
         MemberEntity memberEntity = new MemberEntity();
+        HistoryEntity historyEntity = new HistoryEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
+             Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByBooKIdAndMemberEntity(boxDTO.getBookId(), memberEntity);
+             if (optionalHistoryEntity.isPresent()) {
+                 historyEntity = optionalHistoryEntity.get();
+                 if (historyEntity.getHidden() == 1){
+                     historyEntity.setHidden(0);
+                     historyRepository.save(historyEntity);
+                     return "보여줘";
+                 }
+             }
             if (episodeEntity.getPrice() == 0) {
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "무료";

@@ -13,7 +13,7 @@
 <table th:each="book:${bookList}">
   <tr>
     <td th:text="${book.bookTitle}"></td>
-    <td><button type="button" th:onclick="historyHidden([[${book.id}]], [[${book.memberId}]], [[${book.episodeId}]])">숨기기</button></td>
+    <td><button type="button" th:onclick="historyHidden([[${book.id}]], [[${book.memberId}]])">숨기기</button></td>
   </tr>
 </table>
 
@@ -122,7 +122,7 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script>
-  const historyHidden = (bookId, memberId, episodeId) => {
+  const historyHidden = (bookId, memberId) => {
     const hidden = 1;
 
     $.ajax({
@@ -132,12 +132,11 @@
         "bookId": bookId,
         "hidden": hidden,
         "memberId": memberId,
-        "episodeId": episodeId
       },
       dataType: "text",
       success: function (result) {
         if (result == "숨기기") {
-          alert("숨겼다")
+          location.reload();
         } else {
           alert("실패");
         }

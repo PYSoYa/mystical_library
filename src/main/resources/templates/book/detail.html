@@ -64,8 +64,13 @@
       dataType: "text",
       success: function (result) {
           if (result === "ok") {
-            alert("보유하신 포인트가 부족합니다");
-          } else {
+            Swal.fire({
+              icon: 'success',
+              text: '보유하신 포인트가 부족합니다.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else if (result === "no") {
             $.ajax({
               type: "post",
               url: "/box/save",
@@ -75,11 +80,15 @@
               },
               dataType: "text",
               success: function (result) {
-                if (result == "ok") {
-                  alert("성공");
+                if (result === "ok") {
+                  location.href = "/book/episode?bookId=" + bookId + "?id=" + episodeId;
                 }
               }
             })
+          } else if (result === "보여줘") {
+            alert("보여줘");
+          } else if (result === "무료") {
+            location.href = "/book/episode?bookId=" + bookId + "?id=" + episodeId;
           }
       }
     })
