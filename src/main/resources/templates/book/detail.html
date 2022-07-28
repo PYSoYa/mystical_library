@@ -85,7 +85,7 @@
     })
     $.ajax({
       type:"get",
-      url:"point/pay/"+memberId,
+      url:"/point/pay/"+memberId,
       data:{"episodeId":episodeId,"bookId":bookId},
       dataType:"text",
       success:function (){
