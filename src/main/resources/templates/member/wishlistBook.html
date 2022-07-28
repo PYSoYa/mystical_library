@@ -23,16 +23,16 @@
         <div class="list-nav-container">
           <div class="list-nav">
             <div class="nav-item">
-              <a th:href="@{|/member/box/recent/${member.id}|}">열람 내역</a>
+              <a th:href="@{|/history/${member.id}|}">열람 내역</a>
             </div>
             <div class="nav-item">
-              <a th:href="@{|/member/box/bought/${member.id}|}">소장중인 책</a>
+              <a th:href="@{|/box/${member.id}|}">소장중인 책</a>
             </div>
             <div class="nav-item">
-              <a th:href="@{|/member/wishlist/author/${member.id}|}">관심 작가</a>
+              <a th:href="@{|/wish/wishlist/author/${member.id}|}">관심 작가</a>
             </div>
             <div class="nav-item selected-item">
-              <a th:href="@{|/member/wishlist/book/${member.id}|}">관심 책</a>
+              <a th:href="@{|/wish/wishlist/book/${member.id}|}">관심 책</a>
             </div>
           </div>
           <div class="list-detail-container">

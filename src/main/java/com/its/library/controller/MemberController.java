@@ -89,50 +89,32 @@ public class MemberController {
     }
 
     // 포인트 충전내역 페이지 이동 (수정필요)
-
-
-    // 보관함-열람 내역 페이지 이동 (수정필요)
-    @GetMapping("/box/recent/{id}")
-    public String boxRecent(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/point-history/purchase/{id}")
+    public String purchaseHistory(@PathVariable("id") Long id, Model model) {
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
-        return "member/boxRecent";
+        return "member/pointHistoryPurchase";
     }
 
-    // 보관함-소장중인 책 목록 페이지 이동 (수정필요)
-    @GetMapping("/box/bought/{id}")
-    public String boxBought(@PathVariable("id") Long id, Model model) {
+    // 포인트 이용내역 페이지 이동 (수정필요)
+    @GetMapping("/point-history/use/{id}")
+    public String useHistory(@PathVariable("id") Long id, Model model) {
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
-        return "member/boxBought";
+        return "member/pointHistoryUse";
     }
 
-    // 위시리스트-관심 책 목록 페이지 이동 (수정필요)
-    @GetMapping("/wishlist/book/{id}")
-    public String wishlistBook(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        List<BookDTO> bookDTOList = memberService.wishlist(id);
-        model.addAttribute("member", memberDTO);
-        model.addAttribute("bookList", bookDTOList);
-        return "member/wishlistBook";
-    }
 
-    // 위시리스트-관심 작가 목록 페이지 이동 (수정필요)
-    @GetMapping("/wishlist/author/{id}")
-    public String wishlistAuthor(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
-        List<MemberDTO> memberDTOList = memberService.memberWishlist(id);
-        model.addAttribute("member", memberDTO);
-        model.addAttribute("memberList", memberDTOList);
-        System.out.println("memberDTOList = " + memberDTOList);
-        return "member/wishlistAuthor";
-    }
-    //카카오페이 test API
     @GetMapping("/kkoPay")
     public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
 
 }

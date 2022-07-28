@@ -42,15 +42,16 @@ public class PointEntity extends BaseEntity  {
         return pointEntity;
     }
 
-    public static PointEntity update(PointEntity pointEntity) {
+    public static PointEntity update(PointEntity pointEntity,EpisodeEntity episodeEntity,MemberEntity memberEntity,BookEntity bookEntity) {
         PointEntity pointEntity1 = new PointEntity();
-        pointEntity1.setId(pointEntity.getId());
-        pointEntity1.setBookTitle(pointEntity.getBookTitle());
-        pointEntity1.setEpisodeTitle(pointEntity.getEpisodeTitle());
+        pointEntity1.setBookTitle(bookEntity.getBookTitle());
+        pointEntity1.setEpisodeTitle(episodeEntity.getEpisodeTitle());
         pointEntity.setPlusPoint(pointEntity.getPlusPoint());
-        pointEntity1.setMinusPoint(pointEntity.getMinusPoint());
-        pointEntity1.setTotalPoint(pointEntity.getTotalPoint());
-        pointEntity1.set
+        pointEntity1.setMinusPoint(episodeEntity.getPrice());
+        pointEntity1.setTotalPoint(pointEntity.getTotalPoint()- episodeEntity.getPrice());
+        pointEntity1.setMemberEntity(memberEntity);
+        pointEntity1.setEpisodeEntity(episodeEntity);
+        return pointEntity1;
     }
 
 
