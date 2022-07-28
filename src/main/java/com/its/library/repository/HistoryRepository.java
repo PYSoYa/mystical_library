@@ -15,6 +15,7 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
 //    List<HistoryEntity> findByEpisodeEntity(EpisodeEntity episodeEntity);
 
 //    Optional<HistoryEntity> findByBookId(Long bookId);
+    Optional<HistoryEntity> findByBooKIdAndMemberEntity(Long bookId, MemberEntity memberEntity);
 
     List<HistoryEntity> findByBooKId(Long bookId);
 
