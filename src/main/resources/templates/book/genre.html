@@ -10,6 +10,11 @@
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+<table th:each="book:${bookList}">
+  <tr>
+    <td th:text="${book.bookTitle}"></td>
+  </tr>
+</table>
 
 <div class="category-div">
   <div class="category-container">
