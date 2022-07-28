@@ -107,19 +107,19 @@ public class AdminController {
         return "admin/episodeList";
 
     }
-
+    //회차 승인 처리
     @GetMapping("/episode-agree/{id}")
     public String episodeAgree(@PathVariable("id") Long id) {
         episodeService.episodeAgree(id);
         return "redirect:/admin/episode-list";
     }
-
+    //회차 승인 거절 처리
     @GetMapping("/episode-delete/{id}")
     public String episodeDelete(@PathVariable("id") Long id) {
         episodeService.episodeDelete(id);
         return "redirect:/admin/episode-list";
     }
-
+    //작가 승인 리스트
     @GetMapping("/req-writer-list")
     public String reqWriterList(Model model) {
         List<MemberDTO> reqWriterEntityList = reqWriterService.findAll();
@@ -127,28 +127,28 @@ public class AdminController {
         return "admin/reqWriterList";
 
     }
-
+    //작가 승인 처리
     @PostMapping("/req-writer-save")
     public @ResponseBody String reqWriterSave(@RequestParam("id") Long id) {
         String result = reqWriterService.save(id);
         return result;
 
     }
-
+    //작가 승인시 권환 변경
     @GetMapping("/req-role-change/{id}")
     public String roleChange(@PathVariable("id") Long id) {
         reqWriterService.roleChange(id);
 
         return "redirect:/admin/req-writer-list";
     }
-
+    //작가 승인 거절 처리
     @GetMapping("/req-writer-delete/{id}")
     public String reqWriterDelete(@PathVariable("id") Long memberId) {
         reqWriterService.reqWriterDelete(memberId);
 
         return "redirect:/admin/req-writer-list";
     }
-
+    //회원 충전 리스트
     @GetMapping("/point-history")
     public String pointHistory(Model model){
        List<PointDTO> pointDTOList = pointService.pointHistory();

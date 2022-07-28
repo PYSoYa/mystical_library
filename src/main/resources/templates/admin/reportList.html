@@ -5,49 +5,82 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+  <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
-<table>
-  <tr>
-    <div>데뷔글 댓글 신고내역</div>
-    <th>신고번호</th>
-    <th>회원번호</th>
-    <th>신고데뷔글 댓글 번호</th>
-    <th>신고 승인</th>
-    <th>신고 거절</th>
+<th:block th:replace="layout/header :: header"></th:block>
 
-  </tr>
-  <tr th:each="debut:${debutReportList}">
+<main class="main-container">
+  <div class="history-container">
+    <div class="history-wrap">
+      <div class="history-div">
+        <div class="menu-list-container">
+          <div class="my-page">
+            <a th:href="@{|/admin/book-list/|}">
+              <span class="item  ">책 승인 목록</span>
+            </a>
+          </div>
+          <div class="update-form">
+            <a th:href="@{|/admin/episode-list/|}">
+              <span class="item ">회차 승인 목록</span>
+            </a>
+          </div>
+          <div class="get-point">
+            <a th:href="@{|/admin/member-list/|}">
+              <span class="item">회원 목록</span>
+            </a>
+          </div>
+          <div class="point-purchase-history">
+            <a th:href="@{|/admin/point-history/|}">
+              <span class="item">회원 포인트 내역</span>
+            </a>
+          </div>
+          <div class="point-history">
+            <a th:href="@{|/admin/req-report-list|}">
+              <span class="item selected-item">댓글 신고내역</span>
+            </a>
+          </div>
+          <div class="request-author">
+            <a th:href="@{|/admin/req-writer-list|}">
+              <span class="item">작가 등업 신청 내역</span>
+            </a>
+          </div>
+        </div>
+        <div class="history-detail-container">
+          <div class="history-title-wrap">
+            <h5 class="title">댓글 신고내역</h5>
+          </div>
+          <div class="history-detail-wrap">
+            <div class="history-detail-wrapper">
+              <div class="table-wrap">
+                <table class="history-table">
+                  <tr>
+                    <th>신고번호</th>
+                    <th>회원번호</th>
+                    <th>신고작가글 댓글 번호</th>
+                    <th>신고 승인</th>
+                    <th>신고 거절</th>
+                  </tr>
+                  <tr th:each="report:${reportList}">
 
-    <td th:text="${debut.id}"></td>
-    <td th:text="${debut.memberId}"></td>
-    <td th:text="${debut.debutCommentId}"></td>
-    <td><input type="button" th:value="승인" th:onclick="debutReportTrue([[${debut.id}]])"></td>
-    <td><input type="button" th:value="거절" th:onclick="debutReportFalse([[${debut.id}]])"></td>
-  </tr>
+                    <td th:text="${report.id}"></td>
+                    <td th:text="${report.memberId}"></td>
+                    <td th:text="${report.commentId}"></td>
+                    <td><input type="button" th:value="승인" th:onclick="reportTrue([[${report.id}]])"></td>
+                    <td><input type="button" th:value="거절" th:onclick="reportFalse([[${report.id}]])"></td>
+                  </tr>
 
-</table>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 
-<table>
-  <tr>
-    <div>작가글 댓글 신고내역</div>
-    <th>신고번호</th>
-    <th>회원번호</th>
-    <th>신고작가글 댓글 번호</th>
-    <th>신고 승인</th>
-    <th>신고 거절</th>
-  </tr>
-  <tr th:each="report:${reportList}">
-
-    <td th:text="${report.id}"></td>
-    <td th:text="${report.memberId}"></td>
-    <td th:text="${report.commentId}"></td>
-    <td><input type="button" th:value="승인" th:onclick="reportTrue([[${report.id}]])"></td>
-    <td><input type="button" th:value="거절" th:onclick="reportFalse([[${report.id}]])"></td>
-  </tr>
-
-</table>
 <script>
   function debutReportTrue(id){
     location.href="/admin/debutComment-delete/"+id;
@@ -62,5 +95,6 @@
     location.href="/admin/book-reqReport-delete/"+id;
   }
 </script>
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>
