@@ -120,7 +120,8 @@ public class BookController {
 
     // 카테고리 목록 조회
     @GetMapping("/category")
-    public String categoryList() {
+    public String categoryList(@RequestParam("categoryId") Long categoryId) {
+        List<BookDTO> bookDTOList = bookService.categoryList(categoryId);
         return "book/category";
     }
 
@@ -144,6 +145,14 @@ public class BookController {
         System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
         System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
         return "book/book";
+    }
+
+    // 장르 목록 조회
+    @GetMapping("/genre")
+    public String genreList(@RequestParam("genreId") Long genreId, Model model) {
+        List<BookDTO> bookDTOList = bookService.genreList(genreId);
+        model.addAttribute("bookList", bookDTOList);
+        return "book/genre";
     }
 
 
@@ -193,9 +202,5 @@ public class BookController {
         return "book/search";
     }
 
-    // 장르 목록 조회
-    @GetMapping("/genre")
-    public String genreList() {
-        return "book/genre";
-    }
+
 }

@@ -322,4 +322,35 @@ public class BookService {
     public void bookDelete(Long id) {
         bookRepository.deleteById(id);
     }
+
+    public List<BookDTO> genreList(Long genreId) {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        GenreEntity genreEntity = new GenreEntity();
+        Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(genreId);
+        if (optionalGenreEntity.isPresent()) {
+            genreEntity = optionalGenreEntity.get();
+        }
+        bookEntityList = bookRepository.findByGenreEntity(genreEntity);
+        for (BookEntity book: bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
+        }
+        return bookDTOList;
+    }
+
+    public List<BookDTO> categoryList(Long categoryId) {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        CategoryEntity categoryEntity = new CategoryEntity();
+        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(categoryId);
+        if (optionalCategoryEntity.isPresent()) {
+            categoryEntity = optionalCategoryEntity.get();
+            bookEntityList = bookRepository.findByCategoryEntity(categoryEntity);
+            bookEntityList = bookRepository.findByGenreEntity(bookEntityList.get(0).getGenreEntity());
+            for (BookEntity book: bookEntityList) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+        }
+        return bookDTOList;
+    }
 }
