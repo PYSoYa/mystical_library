@@ -110,4 +110,16 @@ public class MemberEntity {
         return memberEntity;
     }
 
+    public static MemberEntity pointPay(MemberEntity memberEntity, PointEntity pointEntity1) {
+        memberEntity.setId(memberEntity.getId());
+        memberEntity.setLoginId(memberEntity.getLoginId());
+        memberEntity.setMemberEmail(memberEntity.getMemberEmail());
+        memberEntity.setMemberPassword(memberEntity.getMemberPassword());
+        memberEntity.setMemberName(memberEntity.getMemberName());
+        memberEntity.setMemberPoint(pointEntity1.getTotalPoint());
+        memberEntity.setIntroduction(memberEntity.getIntroduction());
+        memberEntity.setMemberImgName(memberEntity.getMemberImgName());
+        memberEntity.setRole("작가");
+        return memberEntity;
+    }
 }
