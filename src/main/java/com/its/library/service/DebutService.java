@@ -54,11 +54,14 @@ public class DebutService {
     }
 
     //데뷔글 상세조회
+    @Transactional
     public DebutEpisodeDTO detail(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
         if (optionalDebutEpisodeEntity.isPresent()) {
             DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+            debutRepository.hitsAdd(debutEpisodeEntity.getId());
             DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity);
+
             return debutEpisodeDTO;
         } else {
             return null;
