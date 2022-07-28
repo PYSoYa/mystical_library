@@ -54,7 +54,7 @@ public class PointEntity extends BaseEntity  {
         return pointEntity1;
     }
 
-
+    //커밋
     //포인트(결제) - 맴버 manyToOne ㅇ
     //포인트(결제) - 회차 manyToOne ㅇ
 }
