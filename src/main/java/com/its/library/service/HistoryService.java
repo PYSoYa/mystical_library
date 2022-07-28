@@ -58,7 +58,7 @@ public class HistoryService {
                 historyEntityList = historyRepository.findByBooKId(bookEntity.getId());
                 historyDTOList.add(HistoryDTO.findDTO(historyEntityList.get(0)));
             }
-            if (optionalBookEntity.isPresent() && historyDTOList.get(i).getHidden() == 0) {
+            if (historyDTOList.get(i).getHidden() == 0) {
                 bookDTOList.add(BookDTO.findDTO(bookEntity));
             }
         }
