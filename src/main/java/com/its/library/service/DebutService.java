@@ -19,9 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Pageable;
 
 
-
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,12 +52,16 @@ public class DebutService {
         }
 
     }
+
     //데뷔글 상세조회
+    @Transactional
     public DebutEpisodeDTO detail(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
         if (optionalDebutEpisodeEntity.isPresent()) {
             DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+            debutRepository.hitsAdd(debutEpisodeEntity.getId());
             DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity);
+
             return debutEpisodeDTO;
         } else {
             return null;
@@ -64,6 +69,7 @@ public class DebutService {
 
 
     }
+
     //데뷔글 업데이트 화면 처리
     public DebutEpisodeDTO updateForm(Long id) {
         Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(id);
@@ -76,6 +82,7 @@ public class DebutService {
         }
 
     }
+
     // 데뷔글 업데이트 처리
     public void update(DebutEpisodeDTO debutEpisodeDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutEpisodeDTO.getMemberId());
@@ -91,6 +98,7 @@ public class DebutService {
         }
 
     }
+
     //데뷔글 삭제 처리
     public void delete(Long id) {
         debutRepository.deleteById(id);
@@ -112,19 +120,19 @@ public class DebutService {
             } else {
                 loveRepository.save(loveEntity);
                 int loveNum = loveRepository.countByDebutId(debutId);
-               Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
-               if (optionalDebutEpisodeEntity.isPresent()){
-                   DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
-                   Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
-                   if(optionalDebutCategoryEntity.isPresent()){
-                       DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
-                       debutEpisodeEntity.setMemberEntity(memberEntity);
-                       debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
-                       debutEpisodeEntity.setLove(loveNum);
-                       debutRepository.save(debutEpisodeEntity);
+                Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
+                if (optionalDebutEpisodeEntity.isPresent()) {
+                    DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+                    Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
+                    if (optionalDebutCategoryEntity.isPresent()) {
+                        DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+                        debutEpisodeEntity.setMemberEntity(memberEntity);
+                        debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
+                        debutEpisodeEntity.setLove(loveNum);
+                        debutRepository.save(debutEpisodeEntity);
 
-                   }
-               }
+                    }
+                }
                 return loveNum;
             }
 
@@ -133,6 +141,7 @@ public class DebutService {
             return 0;
         }
     }
+
     //좋아요 삭제 기능
     @Transactional
     public int loveDelete(Long debutId, Long memberId) {
@@ -145,10 +154,10 @@ public class DebutService {
             loveRepository.deleteByDebutIdAndMemberEntity(debutId, memberEntity);
             int loveNum = loveRepository.countByDebutId(debutId);
             Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
-            if (optionalDebutEpisodeEntity.isPresent()){
+            if (optionalDebutEpisodeEntity.isPresent()) {
                 DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
                 Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
-                if(optionalDebutCategoryEntity.isPresent()){
+                if (optionalDebutCategoryEntity.isPresent()) {
                     DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
                     debutEpisodeEntity.setMemberEntity(memberEntity);
                     debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
@@ -165,17 +174,17 @@ public class DebutService {
     }
 
     @Transactional
-    public Page<DebutEpisodeDTO> list(Long categoryId,Pageable pageable) {
-        Optional<DebutCategoryEntity> optionalCategoryEntity =debutCategoryRepository.findById(categoryId);
+    public Page<DebutEpisodeDTO> list(Long categoryId, Pageable pageable) {
+        Optional<DebutCategoryEntity> optionalCategoryEntity = debutCategoryRepository.findById(categoryId);
         DebutCategoryEntity debutCategoryEntity = new DebutCategoryEntity();
-        if (optionalCategoryEntity.isPresent()){
+        if (optionalCategoryEntity.isPresent()) {
             debutCategoryEntity = optionalCategoryEntity.get();
         }
 
         int page = pageable.getPageNumber();
-        page =(page == 1)? 0: (page-1);
+        page = (page == 1) ? 0 : (page - 1);
 
-        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findByDebutCategoryEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC,"id")),debutCategoryEntity);
+        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findByDebutCategoryEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), debutCategoryEntity);
         Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutEpisodeEntityPage.map(
                 debutEpisode -> new DebutEpisodeDTO(
                         debutEpisode.getId(),
@@ -186,7 +195,26 @@ public class DebutService {
                         debutEpisode.getIntroduce(),
                         debutEpisode.getDebutHits(),
                         debutEpisode.getDebutImgName()
-        ));
-        return  debutEpisodeDTOPage;
+                ));
+        return debutEpisodeDTOPage;
     }
+
+    @Transactional
+    public List<DebutEpisodeDTO> essayList(Long categoryId) {
+        Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(categoryId);
+        if (optionalDebutCategoryEntity.isPresent()) {
+            DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+            List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByDebutCategoryEntity(debutCategoryEntity);
+            List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+            for (DebutEpisodeEntity debutEpisodeEntity:debutEpisodeEntityList){
+                DebutEpisodeEntity debutEpisodeEntity1 =debutEpisodeEntity;
+               DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+               debutEpisodeDTOS.add(debutEpisodeDTO);
+                System.out.println("debutEpisodeDTO = " + debutEpisodeDTO);
+            }
+            return debutEpisodeDTOS;
+        }
+        return null;
+    }
+
 }

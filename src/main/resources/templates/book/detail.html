@@ -65,7 +65,7 @@
       success: function (result) {
           if (result === "ok") {
             alert("보유하신 포인트가 부족합니다");
-          } else if (result === "no"){
+          } else {
             $.ajax({
               type: "post",
               url: "/box/save",
@@ -80,11 +80,18 @@
                 }
               }
             })
-          } else {
-            alert("무료");
           }
       }
     })
+    $.ajax({
+      type:"get",
+      url:"/point/pay/"+memberId,
+      data:{"episodeId":episodeId,"bookId":bookId},
+      dataType:"text",
+      success:function (){
+
+      }
+    });
   }
   const bookLove = () => {
     const loveChange = document.getElementById("loveChange");

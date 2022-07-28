@@ -42,9 +42,19 @@ public class PointEntity extends BaseEntity  {
         return pointEntity;
     }
 
+    public static PointEntity update(PointEntity pointEntity,EpisodeEntity episodeEntity,MemberEntity memberEntity,BookEntity bookEntity) {
+        PointEntity pointEntity1 = new PointEntity();
+        pointEntity1.setBookTitle(bookEntity.getBookTitle());
+        pointEntity1.setEpisodeTitle(episodeEntity.getEpisodeTitle());
+        pointEntity.setPlusPoint(pointEntity.getPlusPoint());
+        pointEntity1.setMinusPoint(episodeEntity.getPrice());
+        pointEntity1.setTotalPoint(pointEntity.getTotalPoint()- episodeEntity.getPrice());
+        pointEntity1.setMemberEntity(memberEntity);
+        pointEntity1.setEpisodeEntity(episodeEntity);
+        return pointEntity1;
+    }
 
-
-
+    //커밋
     //포인트(결제) - 맴버 manyToOne ㅇ
     //포인트(결제) - 회차 manyToOne ㅇ
 }

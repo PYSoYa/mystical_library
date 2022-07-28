@@ -85,8 +85,8 @@ public class DebutController {
 
     //데뷔글 페이징 리스트
     //
-    @GetMapping("/category/{category}")
-    public String list(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
+    @GetMapping("/poem/{category}")
+    public String poemList(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.list(categoryId,pageable);
         model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
@@ -95,6 +95,18 @@ public class DebutController {
         model.addAttribute("endPage", endPage);
         return "debut/list";
     }
+    @GetMapping("/essay/{category}")
+    public String essayList(@PathVariable("category")Long categoryId,Model model) {
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);
+        model.addAttribute("essayList", debutEpisodeDTOList);
+        return "debut/essayList";
 
+    }
+    @GetMapping("/web/{category}")
+    public String webList(@PathVariable("category")Long categoryId,Model model) {
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);
+        model.addAttribute("webList", debutEpisodeDTOList);
+        return "debut/webList";
 
+    }
 }

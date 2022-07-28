@@ -11,11 +11,6 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
-<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
-<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
-<!-- 카테고리 a 태그 안먹는거 수정하세요.. -->
-
 <div class="category-div">
   <div class="category-container">
     <ul class="category-ul dropdown">
@@ -23,8 +18,9 @@
         <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="/book/book-save-form" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">웹소설 메인</a></li>
           <li><a href="#" class="dropdown-item">판타지</a></li>
           <li><a href="#" class="dropdown-item">현대판타지</a></li>
           <li><a href="#" class="dropdown-item">로맨스</a></li>
@@ -33,8 +29,9 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="/book/category" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
+        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">시 메인</a></li>
           <li><a href="#" class="dropdown-item">판타지</a></li>
           <li><a href="#" class="dropdown-item">현대판타지</a></li>
           <li><a href="#" class="dropdown-item">로맨스</a></li>
@@ -43,8 +40,9 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="#" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
+        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">에세이 메인</a></li>
           <li><a href="#" class="dropdown-item">판타지</a></li>
           <li><a href="#" class="dropdown-item">현대판타지</a></li>
           <li><a href="#" class="dropdown-item">로맨스</a></li>
@@ -53,8 +51,9 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="/debut/save-form" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
+        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
+          <li><a href="#" class="dropdown-item">데뷔글 메인</a></li>
           <li><a href="#" class="dropdown-item">판타지</a></li>
           <li><a href="#" class="dropdown-item">현대판타지</a></li>
           <li><a href="#" class="dropdown-item">로맨스</a></li>
@@ -114,7 +113,9 @@
               <span class="rank">1</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목1</div>
@@ -132,7 +133,9 @@
               <span class="rank">2</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목2</div>
@@ -150,7 +153,9 @@
               <span class="rank">3</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_3.jpg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_3.jpg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목3</div>
@@ -170,7 +175,9 @@
               <span class="rank">4</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_3.jpg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_3.jpg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목4</div>
@@ -188,7 +195,9 @@
               <span class="rank">5</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목5</div>
@@ -206,7 +215,9 @@
               <span class="rank">6</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목6</div>
@@ -239,7 +250,9 @@
             <li class="recent-debut-post-li">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목1</span>
@@ -256,7 +269,9 @@
             <li class="recent-debut-post-li">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목2</span>
@@ -273,7 +288,9 @@
             <li class="recent-debut-post-li">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목3</span>
@@ -290,7 +307,9 @@
             <li class="recent-debut-post-li">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목4</span>
@@ -307,7 +326,9 @@
             <li class="recent-debut-post-li">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목5</span>
@@ -342,7 +363,9 @@
             <li class="recent-completion-li">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목2</span>
@@ -359,7 +382,9 @@
             <li class="recent-completion-li">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목1</span>
@@ -376,7 +401,9 @@
             <li class="recent-completion-li">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목3</span>
@@ -393,7 +420,9 @@
             <li class="recent-completion-li">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목4</span>
@@ -410,7 +439,9 @@
             <li class="recent-completion-li">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="title">제목5</span>
@@ -446,7 +477,9 @@
               <span class="rank">1</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_3.jpg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_3.jpg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목1</div>
@@ -464,7 +497,9 @@
               <span class="rank">2</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목2</div>
@@ -482,7 +517,9 @@
               <span class="rank">3</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목3</div>
@@ -502,7 +539,9 @@
               <span class="rank">4</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_2.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목4</div>
@@ -520,7 +559,9 @@
               <span class="rank">5</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목5</div>
@@ -538,7 +579,9 @@
               <span class="rank">6</span>
             </div>
             <div class="img-wrap">
-              <img th:src="@{/img/book_img_3.jpg}" alt="">
+              <a href="#">
+                <img th:src="@{/img/book_img_3.jpg}" alt="">
+              </a>
             </div>
             <div class="detail-wrap">
               <div class="title">제목6</div>
@@ -571,7 +614,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이1</span>
@@ -581,7 +626,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이2</span>
@@ -591,7 +638,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이3</span>
@@ -601,7 +650,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이4</span>
@@ -611,7 +662,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이5</span>
@@ -629,7 +682,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이6</span>
@@ -639,7 +694,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이7</span>
@@ -649,7 +706,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이8</span>
@@ -659,7 +718,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이9</span>
@@ -669,7 +730,9 @@
             <li class="new-author-li">
               <div class="new-author">
                 <div class="img-wrap">
-                  <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  <a href="#">
+                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
+                  </a>
                 </div>
                 <div class="detail-wrap">
                   <span class="author">톰보이10</span>

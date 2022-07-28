@@ -20,6 +20,7 @@
         <th>제목</th>
         <th>작성시간</th>
         <th>내용</th>
+        <th>조회수</th>
         <th>수정</th>
         <th>삭제</th>
         <th>좋아요</th>
@@ -30,6 +31,7 @@
         <td th:text="${debut.debutTitle}"></td>
         <td th:text="${debut.createdTime}"></td>
         <td th:text="${debut.debutContents}"></td>
+        <td th:text="${debut.debutHits}"></td>
         <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
         <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
         <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
