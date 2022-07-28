@@ -95,6 +95,7 @@ public class DebutController {
         model.addAttribute("endPage", endPage);
         return "debut/list";
     }
+    //데뷔글 에세이 리스트
     @GetMapping("/essay/{category}")
     public String essayList(@PathVariable("category")Long categoryId,Model model) {
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);
@@ -102,6 +103,7 @@ public class DebutController {
         return "debut/essayList";
 
     }
+    //데뷔글 웹소설 리스트
     @GetMapping("/web/{category}")
     public String webList(@PathVariable("category")Long categoryId,Model model) {
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);

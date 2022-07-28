@@ -7,6 +7,6 @@
 .w-100 {height: 25rem !important;}
 
 /* 목록 */
-.more-see-btn-wrap {width: 6%;}
-.more-see-btn-wrap a {font-size: 1.5rem; color: inherit;}
-.more-see-btn-wrap ::after {content: '+'; color: #1e9eff; margin-left: 0.5rem; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;}
+/*.more-see-btn-wrap {width: 6%;}*/
+/*.more-see-btn-wrap a {font-size: 1.5rem; color: inherit;}*/
+/*.more-see-btn-wrap ::after {content: '+'; color: #1e9eff; margin-left: 0.5rem; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;}*/
