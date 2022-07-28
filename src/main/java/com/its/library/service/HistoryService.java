@@ -41,41 +41,33 @@ public class HistoryService {
     }
 
     public List<BookDTO> list(Long id) {
+        List<HistoryEntity> historyEntityList = new ArrayList<>();
+        BookEntity bookEntity= new BookEntity();
+        List<HistoryDTO> historyDTOList = new ArrayList<>();
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         MemberEntity memberEntity = new MemberEntity();
         if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
         }
-        List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntity(memberEntity);
         List<BookDTO> bookDTOList = new ArrayList<>();
-
-
-        for (int i = 0; i < historyEntityList.size(); i++) {
-            if (historyEntityList.get(i).getHidden() == 0) {
-                Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyEntityList.get(i).getEpisodeEntity().getId());
-                if (optionalEpisodeEntity.isPresent()) {
-                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(optionalEpisodeEntity.get().getBookEntity().getId());
-                    if (optionalBookEntity.isPresent()) {
-                        bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
-                    }
-                }
-
-                for (int j = 0; j < bookDTOList.size(); j++) {
-                    for (int e = 1; e < bookDTOList.size(); e++) {
-                        if (bookDTOList.get(j).getId().equals(bookDTOList.get(e).getId())) {
-                            bookDTOList.remove(e);
-                        }
-                    }
-                }
+        List<Long> list = historyRepository.findByMemberId(memberEntity.getId());
+        for (int i = 0; i < list.size(); i++) {
+            Optional<BookEntity> optionalBookEntity = bookRepository.findById(list.get(i));
+            if (optionalBookEntity.isPresent()) {
+                bookEntity = optionalBookEntity.get();
+                historyEntityList = historyRepository.findByBooKId(bookEntity.getId());
+                historyDTOList.add(HistoryDTO.findDTO(historyEntityList.get(0)));
+            }
+            if (historyDTOList.get(i).getHidden() == 0) {
+                bookDTOList.add(BookDTO.findDTO(bookEntity));
             }
         }
-
         return bookDTOList;
     }
 
     public String hidden(HistoryDTO historyDTO) {
         List<HistoryEntity> historyEntityList = historyRepository.findByBooKId(historyDTO.getBookId());
-        for (int i = 0; i < historyEntityList.size(); i++){
+        for (int i = 0; i < historyEntityList.size(); i++) {
             historyEntityList.get(i).setHidden(historyDTO.getHidden());
             historyRepository.save(historyEntityList.get(i));
         }
