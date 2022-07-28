@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table class="table table-hover">
+
+    <tr>
+        <th scope="col">조회수</th>
+        <th scope="col">제목</th>
+        <th scope="col">소개글</th>
+        <th scope="col">작가명</th>
+        <th scope="col">함께하는작가</th>
+        <th scope="col">이미지</th>
+
+    </tr>
+    <tr th:each="web: ${webList}">
+        <td th:text="${web.id}" hidden></td>
+        <td th:text="${web.debutHits}"></td>
+        <td th:text="${web.debutTitle}"></td>
+        <td th:text="${web.introduce}"></td>
+        <td th:text="${web.memberName}"></td>
+        <td th:text="${web.feat}"></td>
+        <td><img th:src="@{|/upload/${web.debutImgName}|}" width="100" height="100"></td>
+    </tr>
+</table>
+</body>
+</html>
