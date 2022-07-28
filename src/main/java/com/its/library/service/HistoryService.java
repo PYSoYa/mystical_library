@@ -43,32 +43,42 @@ public class HistoryService {
     public List<BookDTO> list(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         MemberEntity memberEntity = new MemberEntity();
-        EpisodeEntity episodeEntity = new EpisodeEntity();
         if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
         }
         List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntity(memberEntity);
         List<BookDTO> bookDTOList = new ArrayList<>();
+
+
         for (int i = 0; i < historyEntityList.size(); i++) {
-            Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyEntityList.get(i).getEpisodeEntity().getId());
-            if (optionalEpisodeEntity.isPresent()) {
-                Optional<BookEntity> optionalBookEntity = bookRepository.findById(optionalEpisodeEntity.get().getBookEntity().getId());
-                if (optionalBookEntity.isPresent()) {
-                    bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
+            if (historyEntityList.get(i).getHidden() == 0) {
+                Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyEntityList.get(i).getEpisodeEntity().getId());
+                if (optionalEpisodeEntity.isPresent()) {
+                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(optionalEpisodeEntity.get().getBookEntity().getId());
+                    if (optionalBookEntity.isPresent()) {
+                        bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
+                    }
+                }
+
+                for (int j = 0; j < bookDTOList.size(); j++) {
+                    for (int e = 1; e < bookDTOList.size(); e++) {
+                        if (bookDTOList.get(j).getId().equals(bookDTOList.get(e).getId())) {
+                            bookDTOList.remove(e);
+                        }
                     }
                 }
             }
-        for (int j = 0; j < bookDTOList.size(); j++){
-            for (int e = 1; e < bookDTOList.size(); e++){
-                if (bookDTOList.get(j).getId().equals(bookDTOList.get(e).getId())) {
-                    bookDTOList.remove(e);
-                }
-            }
         }
+
         return bookDTOList;
     }
 
-//    public String hidden(HistoryDTO historyDTO) {
-//
-//    }
+    public String hidden(HistoryDTO historyDTO) {
+        List<HistoryEntity> historyEntityList = historyRepository.findByBooKId(historyDTO.getBookId());
+        for (int i = 0; i < historyEntityList.size(); i++){
+            historyEntityList.get(i).setHidden(historyDTO.getHidden());
+            historyRepository.save(historyEntityList.get(i));
+        }
+        return "숨기기";
+    }
 }

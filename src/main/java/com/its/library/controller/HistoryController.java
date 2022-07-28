@@ -24,15 +24,15 @@ public class HistoryController {
     public String list(@PathVariable("id") Long id, Model model) {
         List<BookDTO> bookDTOList =  historyService.list(id);
         MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("historyList", bookDTOList);
+        model.addAttribute("bookList", bookDTOList);
         model.addAttribute("member", memberDTO);
         return "member/boxRecent";
     }
 
     // 열람내역 숨기기
-//    @PutMapping("/hidden")
-//    public @ResponseBody String hidden(@ModelAttribute HistoryDTO historyDTO) {
-//        String result = historyService.hidden(historyDTO);
-//        return result;
-//    }
+    @PutMapping("/hidden")
+    public @ResponseBody String hidden(@ModelAttribute HistoryDTO historyDTO) {
+        String result = historyService.hidden(historyDTO);
+        return result;
+    }
 }
