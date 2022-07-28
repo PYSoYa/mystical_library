@@ -104,12 +104,13 @@ public class MemberController {
         return "member/pointHistoryUse";
     }
 
-
+    // 카카오페이
     @GetMapping("/kkoPay")
     public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
