@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
     List<HistoryEntity> findByMemberEntity(MemberEntity memberEntity);
 
     List<HistoryEntity> findByEpisodeEntity(EpisodeEntity episodeEntity);
+
+    List<HistoryEntity> findByBooKId(Long bookId);
 }
