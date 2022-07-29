@@ -169,8 +169,8 @@
         })
     }
     const saveStar = () => {
-        const memberId = 1;
-        const episodeId = 2;
+        const memberId = [[${session.id}]];
+        const episodeId = [[${episode.id}]];
         const star = document.getElementById("star").value;
 
         $.ajax({
