@@ -53,7 +53,7 @@ public class BookController {
     public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
         Long id = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
-        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + id;
+        return "redirect:/book/book/" + episodeDTO.getBookId();
     }
 
     // 책 수정 페이지 출력
