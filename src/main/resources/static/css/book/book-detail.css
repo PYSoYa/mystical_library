@@ -158,10 +158,10 @@
 
 .book-detail-wrap .more-detail-wrap {
   display: flex;
-  width: 30rem;
+  width: 27rem;
   margin-left: 3.825rem;
   text-align: center;
-  justify-content: center;
+  justify-content: right;
 }
 .book-detail-wrap .more-detail-wrap > div {
   padding: 0 2rem;
