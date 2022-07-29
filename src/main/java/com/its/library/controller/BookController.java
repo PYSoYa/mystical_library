@@ -120,8 +120,22 @@ public class BookController {
 
     // 카테고리 목록 조회
     @GetMapping("/category")
-    public String categoryList(@RequestParam("categoryId") Long categoryId) {
-        List<BookDTO> bookDTOList = bookService.categoryList(categoryId);
+    public String categoryList(@RequestParam("categoryId") Long categoryId, Model model) {
+        if (categoryId == 1) {
+            List<BookDTO> bookDTOList1 = bookService.categoryList1(categoryId);
+            List<BookDTO> bookDTOList2 = bookService.categoryList2(categoryId);
+            List<BookDTO> bookDTOList3 = bookService.categoryList3(categoryId);
+            List<BookDTO> bookDTOList4 = bookService.categoryList4(categoryId);
+            List<BookDTO> bookDTOList5 = bookService.categoryList5(categoryId);
+            model.addAttribute("bookList1", bookDTOList1);
+            model.addAttribute("bookList2", bookDTOList2);
+            model.addAttribute("bookList3", bookDTOList3);
+            model.addAttribute("bookList4", bookDTOList4);
+            model.addAttribute("bookList5", bookDTOList5);
+        } else if (categoryId == 2) {
+
+        }
+
         return "book/category";
     }
 
