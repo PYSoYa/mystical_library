@@ -5,44 +5,99 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+  <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
-<table>
-  <tr>
-    <td>책번호</td>
-    <td>카테고리</td>
-    <td>장르</td>
-    <td>작가번호</td>
-    <td>작가명</td>
-    <td>제목</td>
-    <td>소개글</td>
-    <td>책표지</td>
-    <td>연재상태</td>
-    <td>글권한</td>
-    <td>별점</td>
-    <td>승인</td>
-    <td>거절</td>
+<th:block th:replace="layout/header :: header"></th:block>
+<main class="main-container">
+  <div class="history-container">
+    <div class="history-wrap">
+      <div class="history-div">
+        <div class="menu-list-container">
+          <div class="my-page">
+            <a th:href="@{|/admin/book-list/|}">
+              <span class="item  selected-item">책 승인 목록</span>
+            </a>
+          </div>
+          <div class="update-form">
+            <a th:href="@{|/admin/episode-list/|}">
+              <span class="item">회차 승인 목록</span>
+            </a>
+          </div>
+          <div class="get-point">
+            <a th:href="@{|/admin/member-list/|}">
+              <span class="item">회원 목록</span>
+            </a>
+          </div>
+          <div class="point-purchase-history">
+            <a th:href="@{|/admin/point-history/|}">
+              <span class="item">회원 포인트 내역</span>
+            </a>
+          </div>
+          <div class="point-history">
+            <a th:href="@{|/admin/req-report-list|}">
+              <span class="item">댓글 신고내역</span>
+            </a>
+          </div>
+          <div class="request-author">
+            <a th:href="@{|/admin/req-writer-list|}">
+              <span class="item">작가 등업 신청 내역</span>
+            </a>
+          </div>
+        </div>
+        <div class="history-detail-container">
+          <div class="history-title-wrap">
+            <h5 class="title">책 승인 목록</h5>
+          </div>
+          <div class="history-detail-wrap">
+            <div class="history-detail-wrapper">
+              <div class="table-wrap">
+                <table class="history-table">
+                <tr>
+                  <th>책번호</th>
+                  <th>카테고리</th>
+                  <th>장르</th>
+                  <th>작가번호</th>
+                  <th>작가명</th>
+                  <th>제목</th>
+                  <th>소개글</th>
+                  <th>책표지</th>
+                  <th>연재상태</th>
+                  <th>글권한</th>
+                  <th>별점</th>
+                  <th>승인</th>
+                  <th>거절</th>
 
-  </tr>
+                </tr>
 
-  <tr th:each="book:${bookDTOList}">
-    <div th:if="${book.writerRole}==1">
-    <td th:text="${book.id}"></td>
-    <td th:text="${book.categoryId}"></td>
-    <td th:text="${book.genreId}"></td>
-    <td th:text="${book.memberId}"></td>
-    <td th:text="${book.memberName}"></td>
-    <td th:text="${book.bookTitle}"></td>
-    <td th:text="${book.introduce}"></td>
-    <td><img th:src="@{|/upload/${book.bookImgName}|}" width="100" height="100"></td>
-    <td th:text="${book.status}"></td>
-    <td th:text="${book.writerRole}"></td>
-    <td th:text="${book.star}"></td>
-    <td><input type="button" th:value="승인" th:onclick="bookAgree([[${book.id}]])"></td>
-    <td><input type="button" th:value="거절" th:onclick="bookDelete([[${book.id}]])"></td>
+                <tr th:each="book:${bookDTOList}">
+                  <div th:if="${book.writerRole}==1">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.categoryId}"></td>
+                    <td th:text="${book.genreId}"></td>
+                    <td th:text="${book.memberId}"></td>
+                    <td th:text="${book.memberName}"></td>
+                    <td th:text="${book.bookTitle}"></td>
+                    <td th:text="${book.introduce}"></td>
+                    <td><img th:src="@{|/upload/${book.bookImgName}|}" width="100" height="100"></td>
+                    <td th:text="${book.status}"></td>
+                    <td th:text="${book.writerRole}"></td>
+                    <td th:text="${book.star}"></td>
+                    <td><input type="button" th:value="승인" th:onclick="bookAgree([[${book.id}]])"></td>
+                    <td><input type="button" th:value="거절" th:onclick="bookDelete([[${book.id}]])"></td>
+                  </div>
+                </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </tr>
-</table>
+  </div>
+</main>
+<table class="history-table">
+
 <script>
 function bookAgree(id){
 location.href="/admin/book-agree/"+id;
@@ -52,5 +107,6 @@ function bookDelete(id){
   location.href="/admin/book-delete/"+id;
 }
 </script>
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>

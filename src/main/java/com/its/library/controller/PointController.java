@@ -32,7 +32,7 @@ public class PointController {
         return "member/pointHistoryPurchase";
     }
 
-    // 포인트 이용내역 페이지 이동 (수정필요)
+    // 포인트 이용내역 페이지 이동
     @GetMapping("/point-history/use/{id}")
     public String useHistory(@PathVariable("id") Long id, Model model) {
         MemberDTO memberDTO = memberService.myPage(id);
@@ -44,12 +44,13 @@ public class PointController {
 
 
     }
+    //회원 포인트 변경 처리
     @GetMapping("/point-history-save")
     public @ResponseBody String pointHistorySave(@RequestParam("id") Long memberId, @RequestParam("cash") int memberPoint){
         String result = memberService.pointHistorySave(memberId, memberPoint);
         return result;
     }
-    //진행중인 구매버튼
+    //회차 구매 처리
     @GetMapping("/pay/{id}")
     public @ResponseBody String pointPay(@PathVariable("id")Long memberId,@RequestParam("episodeId")Long episodeId,@RequestParam("bookId")Long bookId){
       String result = pointService.pointPay(memberId,episodeId,bookId);
