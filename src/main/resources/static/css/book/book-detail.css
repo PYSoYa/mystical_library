@@ -35,8 +35,7 @@
 }
 .book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap {
   margin-left: auto;
-  padding: 0.125rem;
-  padding-right: 1.325rem;
+  padding: 0.125rem 1.325rem 0.125rem 0.125rem;
 }
 .book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button {
   position: relative;
@@ -71,13 +70,17 @@
 .book-detail-wrap .detail-wrap .author-wrap a {
   color: #212529;
 }
+.book-detail-wrap .detail-wrap .author-wrap a:hover {
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
 .book-detail-wrap .detail-wrap .author-wrap a::after,
 .book-detail-wrap .detail-wrap .author-wrap > div > span::after {
   content: "·";
   margin-left: 1rem;
   margin-right: 1rem;
 }
-.book-detail-wrap .detail-wrap .author-wrap div .status::after {
+.book-detail-wrap .detail-wrap .author-wrap > div > .status::after {
   content: '';
   width: 0;
   height: 0;
@@ -155,7 +158,8 @@
 
 .book-detail-wrap .more-detail-wrap {
   display: flex;
-  margin-left: 10rem;
+  width: 30rem;
+  margin-left: 3.825rem;
   text-align: center;
   justify-content: center;
 }
@@ -167,4 +171,15 @@
 }
 .book-detail-wrap .more-detail-wrap .desc-wrap {
   padding-top: 0.25rem;
+}
+.book-detail-wrap .more-detail-wrap .star-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.book-detail-wrap .more-detail-wrap .star-wrap .star-symbol {
+  margin: 0;
+  padding: 0;
+  width: 1.5em;
+  height: 1.5em;
+  color: #212529;
 }
