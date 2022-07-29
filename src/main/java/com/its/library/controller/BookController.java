@@ -122,11 +122,11 @@ public class BookController {
     @GetMapping("/category")
     public String categoryList(@RequestParam("categoryId") Long categoryId, Model model) {
         if (categoryId == 1) {
-            List<BookDTO> bookDTOList1 = bookService.categoryList1(categoryId);
-            List<BookDTO> bookDTOList2 = bookService.categoryList2(categoryId);
-            List<BookDTO> bookDTOList3 = bookService.categoryList3(categoryId);
-            List<BookDTO> bookDTOList4 = bookService.categoryList4(categoryId);
-            List<BookDTO> bookDTOList5 = bookService.categoryList5(categoryId);
+            List<BookDTO> bookDTOList1 = bookService.categoryList1();
+            List<BookDTO> bookDTOList2 = bookService.categoryList2();
+            List<BookDTO> bookDTOList3 = bookService.categoryList3();
+            List<BookDTO> bookDTOList4 = bookService.categoryList4();
+            List<BookDTO> bookDTOList5 = bookService.categoryList5();
             model.addAttribute("bookList1", bookDTOList1);
             model.addAttribute("bookList2", bookDTOList2);
             model.addAttribute("bookList3", bookDTOList3);
