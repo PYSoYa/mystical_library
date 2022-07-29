@@ -25,16 +25,17 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .logo-container .logo-wrap {margin-right: 0.75rem;}
 
 /* 검색 */
-.search-form {display: flex; align-items: flex-start; width: 16.25rem; margin-right: 0.5rem;}
+.search-form {display: flex; align-items: flex-start; width: 20rem; margin-right: 1rem;}
 .search-container {min-width: 0; flex: 1;}
 .search-wrap {background: #f0f0f0; border: 1px solid rgba(0, 0, 0, 0.5%); border-radius: 0.375rem; display: flex; align-items: center; padding: 0 0.688rem; height: 2.5rem;}
+.search-wrap .search-input-select {margin-right: 0.5rem; border: 1px solid #e5e5e5; outline: none; font-size: 0.938rem; font-weight: 400; padding: 0.3rem 0.6rem 0.3rem 0.3rem; line-height: 1.5; text-decoration: none; color: #4a5469; caret-color: #1e9eff;}
 .search-wrap .search-icon {flex: none; color: #787878; font-size: 1rem; margin-right: 0.75rem; opacity: 1;}
 .search-wrap .search-input {flex: 1; min-width: 0; height: 100%; font-size: 0.938rem; line-height: 1.125rem; letter-spacing: -0.01em; color: #141414; caret-color: #1E9EFF;}
 .search-wrap .search-input:focus {border: 0; outline: none;}
 
 /* 메뉴 */
 .menu-container {display: flex; -webkit-box-align: center; align-items: center; position: relative;}
-.menu-wrap-div {max-width: 1170px; padding: 0 1.875rem; margin: 0 auto; display: flex;}
+.menu-wrap-div {max-width: 1170px; margin: 0 auto; display: flex;}
 .menu-wrap-ul {display: flex; flex: 0 0 auto;}
 /* 메뉴-로그인 안 된 상태 */
 .sign-up-wrap, .sign-in-wrap {display: inline-flex; justify-content: center; -webkit-box-align: center; align-items: center; padding-top: 0.825rem;}
@@ -47,8 +48,8 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .menu-icon-container a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
 .menu-icon-container a:link {color: #666;}
 .menu-icon-wrap {display: inline-flex; font-size: 1.75rem; margin: 0 0.375rem; color: #141414;}
-.notification, .wishlist, .box, .my-page {position: relative; display: inline-flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; border: none; background: transparent; padding: 0.438rem 0.375rem 0.313rem;}
-.icon-notification, .icon-wishlist, .icon-box, .icon-my-page {color: #141414; font-size: 2.225rem;}
+.notification, .wishlist, .box, .my-page, .log-out {position: relative; display: inline-flex; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; border: none; background: transparent; padding: 0.438rem 0.375rem 0.313rem;}
+.icon-notification, .icon-wishlist, .icon-box, .icon-my-page, .icon-log-out {color: #141414; font-size: 2.225rem;}
 
 /* modal */
 /* modal-로그인 */
