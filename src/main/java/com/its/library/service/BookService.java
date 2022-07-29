@@ -255,10 +255,10 @@ public class BookService {
                 episodeRepository.save(episodeEntity);
                 BookEntity bookEntity = optionalBookEntity.get();
                 double bookStarAvg = bookRepository.starAvg(bookEntity.getId());
-                bookEntity.setStar(bookStarAvg);
+                bookEntity.setStar(Math.round(bookStarAvg * 100) / 100.0);
                 bookRepository.save(bookEntity);
             }
-            return starAvg;
+            return Math.round(starAvg * 100) / 100.0;
         } else {
             return 0.0;
         }
