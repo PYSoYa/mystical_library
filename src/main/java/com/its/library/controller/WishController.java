@@ -42,10 +42,9 @@ public class WishController {
     @GetMapping("/wishlist/author/{id}")
     public String wishlistAuthor(@PathVariable("id") Long id, Model model) {
         MemberDTO memberDTO = memberService.myPage(id);
-        List<MemberDTO> memberDTOList = wishService.memberWishlist(id);
+        List<MemberDTO> memberDTOList = wishService.memberWishlist(memberDTO.getId());
         model.addAttribute("member", memberDTO);
         model.addAttribute("memberList", memberDTOList);
-        System.out.println("memberDTOList = " + memberDTOList);
         return "member/wishlistAuthor";
     }
 
