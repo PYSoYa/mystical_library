@@ -118,4 +118,10 @@ public class MemberController {
         return "redirect:/";
     }
 
+    // 비밀번호 설정 페이지 요청
+    @GetMapping("/set-password")
+    public String setPassword() {
+        return "member/setPassword";
+    }
+
 }
