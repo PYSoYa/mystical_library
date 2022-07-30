@@ -1,5 +1,6 @@
 package com.its.library.dto;
 
+import com.its.library.entity.CommentEntity;
 import com.its.library.entity.DebutCommentEntity;
 import com.its.library.entity.MemberEntity;
 import com.its.library.entity.ReqReportEntity;
@@ -16,21 +17,30 @@ public class ReqReportDTO {
     private Long memberId;
     private Long commentId;
     private Long debutCommentId;
+    private String debutContents;
+    private String writerContents;
 
 
-    public static ReqReportDTO toDebutReportDTO(ReqReportEntity reqReportEntity1) {
+
+
+
+    public static ReqReportDTO debutReportList(ReqReportEntity reqReport1) {
         ReqReportDTO reqReportDTO = new ReqReportDTO();
-        reqReportDTO.setId(reqReportEntity1.getId());
-        reqReportDTO.setDebutCommentId(reqReportEntity1.getDebutCommentEntity().getId());
-        reqReportDTO.setMemberId(reqReportEntity1.getMemberEntity().getId());
+        reqReportDTO.setId(reqReport1.getId());
+        reqReportDTO.setMemberId(reqReport1.getMemberEntity().getId());
+        reqReportDTO.setDebutCommentId(reqReport1.getDebutCommentEntity().getId());
+        reqReportDTO.setDebutContents(reqReport1.getDebutContents());
+
+
         return reqReportDTO;
     }
 
-    public static  ReqReportDTO toReportDTO(ReqReportEntity reqReportEntity1) {
+    public static ReqReportDTO writerReportList(ReqReportEntity reqReport1) {
         ReqReportDTO reqReportDTO = new ReqReportDTO();
-        reqReportDTO.setId(reqReportEntity1.getId());
-        reqReportDTO.setDebutCommentId(reqReportEntity1.getCommentEntity().getId());
-        reqReportDTO.setMemberId(reqReportEntity1.getMemberEntity().getId());
+        reqReportDTO.setId(reqReport1.getId());
+        reqReportDTO.setMemberId(reqReport1.getMemberEntity().getId());
+        reqReportDTO.setCommentId(reqReport1.getCommentEntity().getId());
+        reqReportDTO.setWriterContents(reqReport1.getWriterContents());
         return reqReportDTO;
     }
 }
