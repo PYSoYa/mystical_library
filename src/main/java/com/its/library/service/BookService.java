@@ -97,11 +97,19 @@ public class BookService {
     }
 
     public EpisodeDTO episodeFindById(Long id) {
+        BookEntity bookEntity = new BookEntity();
+        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+        episodeRepository.episodeHits(id);
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
         if (optionalEpisodeEntity.isPresent()) {
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+            Optional<BookEntity> optionalBookEntity =  bookRepository.findById(episodeEntity.getBookEntity().getId());
+            bookEntity = optionalBookEntity.get();
+            episodeEntityList = episodeRepository.findByBookEntity(bookEntity);
+            int hits = bookRepository.hitsSum(episodeEntityList.get(0).getBookEntity().getId());
+            bookEntity.setHits(hits);
+            bookRepository.save(bookEntity);
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
-            System.out.println("episodeDTO = " + episodeDTO);
             return episodeDTO;
         } else {
             return null;
@@ -129,7 +137,7 @@ public class BookService {
                         episode.getEpisodeContents(),
                         episode.getEpisodeImgName(),
                         episode.getPayment(),
-                        episode.getEpisodeHits(),
+                        episode.getHits(),
                         episode.getWriterRole(),
                         episode.getCreatedDateTime()
                 ));
@@ -230,6 +238,7 @@ public class BookService {
                         book.getBookImgName(),
                         book.getStatus(),
                         book.getWriterRole(),
+                        book.getHits(),
                         book.getStar()
                 ));
 
@@ -301,8 +310,6 @@ public class BookService {
 
 
     public void bookAgree(BookDTO bookDTO)  {
-
-
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(bookDTO.getMemberName());
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(bookDTO.getGenreId());
         Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(bookDTO.getCategoryId());
@@ -314,8 +321,6 @@ public class BookService {
 
             BookEntity bookEntity = BookEntity.bookAgree(bookDTO, memberEntity, categoryEntity, genreEntity);
              bookRepository.save(bookEntity);
-
-
         }
     }
 
@@ -323,7 +328,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public List<BookDTO> genreList(Long genreId) {
+    public List<BookDTO> genreList(Long genreId, Long alignmentId) {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
         GenreEntity genreEntity = new GenreEntity();
@@ -331,9 +336,16 @@ public class BookService {
         if (optionalGenreEntity.isPresent()) {
             genreEntity = optionalGenreEntity.get();
         }
-        bookEntityList = bookRepository.findByGenreEntity(genreEntity);
-        for (BookEntity book: bookEntityList) {
-            bookDTOList.add(BookDTO.findDTO(book));
+        if (alignmentId == 0) {
+            bookEntityList = bookRepository.findByGenreEntity(genreEntity);
+            for (BookEntity book: bookEntityList) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+        } else if (alignmentId == 2) {
+            bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
+            for (BookEntity book: bookEntityList) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
         }
         return bookDTOList;
     }
@@ -402,4 +414,5 @@ public class BookService {
         }
         return bookDTOList5;
     }
+
 }

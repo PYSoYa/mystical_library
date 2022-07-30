@@ -8,7 +8,7 @@
 </head>
 <body>
   <div th:each="book:${bookList}">
-    <p th:text="${book}"></p>
+    <p th:text="${book.memberName}"></p>
   </div>
 </body>
 </html>

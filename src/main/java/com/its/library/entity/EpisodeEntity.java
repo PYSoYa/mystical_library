@@ -32,7 +32,7 @@ public class EpisodeEntity extends BaseEntity {
     @Column(name = "payment", nullable = false)
     private int payment;
     @Column
-    private int episodeHits;
+    private int hits;
     @Column
     private int writerRole;
     @Column
@@ -66,7 +66,7 @@ public class EpisodeEntity extends BaseEntity {
         } else if (episodeDTO.getPayment() == 0) {
             episodeEntity.setPrice(0);
         }
-        episodeEntity.setEpisodeHits(0);
+        episodeEntity.setHits(0);
         episodeEntity.setWriterRole(0);
         episodeEntity.setStar(0.0);
         return episodeEntity;
