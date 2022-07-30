@@ -1,0 +1,185 @@
+.book-episode-comment-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
+.book-detail-container {
+  font-size: 15px;
+  line-height: 20px;
+  min-height: 316px;
+  position: relative;
+  margin-top: 1.25rem;
+  display: flex;
+  padding: 0.625rem;
+}
+.book-detail-container .book-img-wrap {
+  width: 216px;
+  height: 316px;
+  margin-right: 4rem;
+}
+.book-detail-container .book-img-wrap .img {
+  width: 216px;
+  height: 316px;
+  padding: 0;
+  border-radius: 4px;
+}
+
+
+.book-detail-wrap {
+  width: 100%;
+}
+.book-detail-wrap .detail-wrap .title-wrap {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.book-detail-wrap .detail-wrap .title-wrap h2 {
+  font-size: 2.225rem;
+  font-weight: 600;
+}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap {
+  margin-left: auto;
+  padding: 0.125rem 1.325rem 0.125rem 0.125rem;
+}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button {
+  position: relative;
+  border: none;
+  outline: none;
+  border-radius: 0.188rem;
+  width: 8rem;
+  height: 100%;
+  color: #faf7eb;
+  background-color: #1e9eff;
+  font-size: 1.125rem;
+  letter-spacing: 0.013rem;
+  box-shadow: 0 0.125rem 0.313rem #00000026;
+}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button:hover {
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
+
+
+.book-detail-wrap .detail-wrap .author-wrap {
+  display: flex;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  line-height: 1.125rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.book-detail-wrap .detail-wrap .author-wrap > div:not(:last-child) {
+  margin-right: 0;
+}
+.book-detail-wrap .detail-wrap .author-wrap a {
+  color: #212529;
+}
+.book-detail-wrap .detail-wrap .author-wrap a:hover {
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
+.book-detail-wrap .detail-wrap .author-wrap a::after,
+.book-detail-wrap .detail-wrap .author-wrap > div > span::after {
+  content: "·";
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.book-detail-wrap .detail-wrap .author-wrap > div > .status::after {
+  content: '';
+  width: 0;
+  height: 0;
+}
+
+.book-detail-wrap .detail-wrap .intro-wrap {
+  padding-top: 1.5rem;
+  word-break: keep-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  font-size: 1.125rem;
+  line-height: 2rem;
+  min-height: 100px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.471);
+}
+.book-detail-wrap .detail-wrap .tag-wrap {
+  padding-top: 1.5rem;
+}
+.book-detail-wrap .detail-wrap .tag-wrap > span:not(:last-child) {
+  margin-right: 1rem;
+}
+.book-detail-wrap .detail-wrap .tag-wrap .tag {
+  padding: 4px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+}
+.book-detail-wrap .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
+.book-detail-wrap .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
+.book-detail-wrap .detail-wrap .tag-wrap .essay {background-color: #ff702a;}
+
+
+.book-detail-wrap .action-wrap {
+  padding-top: 2.5rem;
+  display: flex;
+  height: 6rem;
+}
+.book-detail-wrap .action-wrap button:hover {
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
+.book-detail-wrap .action-wrap .first-btn {
+  position: relative;
+  border: none;
+  outline: none;
+  border-radius: 0.188rem;
+  width: 13rem;
+  height: 90%;
+  color: #faf7eb;
+  background-color: #1e9eff;
+  font-size: 1.125rem;
+  letter-spacing: 0.013rem;
+  box-shadow: 0 0.125rem 0.313rem #00000026;
+  margin-right: 4rem;
+}
+.book-detail-wrap .action-wrap .continue-btn {
+  position: relative;
+  border: 1px solid #1e9eff;
+  outline: none;
+  border-radius: 0.188rem;
+  width: 13rem;
+  height: 90%;
+  color: #1e9eff;
+  background-color: #fff;
+  font-size: 1.125rem;
+  letter-spacing: 0.013rem;
+  box-shadow: 0 0.125rem 0.313rem #00000026;
+}
+
+
+.book-detail-wrap .more-detail-wrap {
+  display: flex;
+  width: 27rem;
+  margin-left: 3.825rem;
+  text-align: center;
+  justify-content: right;
+}
+.book-detail-wrap .more-detail-wrap > div {
+  padding: 0 2rem;
+}
+.book-detail-wrap .more-detail-wrap > div:not(:last-child) {
+  border-right: 1px solid #e5e5e5;
+}
+.book-detail-wrap .more-detail-wrap .desc-wrap {
+  padding-top: 0.25rem;
+}
+.book-detail-wrap .more-detail-wrap .star-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.book-detail-wrap .more-detail-wrap .star-wrap .star-symbol {
+  margin: 0;
+  padding: 0;
+  width: 1.5em;
+  height: 1.5em;
+  color: #212529;
+}

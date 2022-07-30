@@ -53,7 +53,7 @@ public class BookController {
     public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
         Long id = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
-        return "redirect:/book?category=" + bookDTO.getCategoryId() + "/book/" + id;
+        return "redirect:/book/book/" + episodeDTO.getBookId();
     }
 
     // 책 수정 페이지 출력
@@ -120,7 +120,22 @@ public class BookController {
 
     // 카테고리 목록 조회
     @GetMapping("/category")
-    public String categoryList() {
+    public String categoryList(@RequestParam("categoryId") Long categoryId, Model model) {
+        if (categoryId == 1) {
+            List<BookDTO> bookDTOList1 = bookService.categoryList1();
+            List<BookDTO> bookDTOList2 = bookService.categoryList2();
+            List<BookDTO> bookDTOList3 = bookService.categoryList3();
+            List<BookDTO> bookDTOList4 = bookService.categoryList4();
+            List<BookDTO> bookDTOList5 = bookService.categoryList5();
+            model.addAttribute("bookList1", bookDTOList1);
+            model.addAttribute("bookList2", bookDTOList2);
+            model.addAttribute("bookList3", bookDTOList3);
+            model.addAttribute("bookList4", bookDTOList4);
+            model.addAttribute("bookList5", bookDTOList5);
+        } else if (categoryId == 2) {
+
+        }
+
         return "book/category";
     }
 
@@ -144,6 +159,14 @@ public class BookController {
         System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
         System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
         return "book/book";
+    }
+
+    // 장르 목록 조회
+    @GetMapping("/genre")
+    public String genreList(@RequestParam("genreId") Long genreId, Model model) {
+        List<BookDTO> bookDTOList = bookService.genreList(genreId);
+        model.addAttribute("bookList", bookDTOList);
+        return "book/genre";
     }
 
 
@@ -193,9 +216,5 @@ public class BookController {
         return "book/search";
     }
 
-    // 장르 목록 조회
-    @GetMapping("/genre")
-    public String genreList() {
-        return "book/genre";
-    }
+
 }

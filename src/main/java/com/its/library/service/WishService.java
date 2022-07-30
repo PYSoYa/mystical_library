@@ -129,7 +129,7 @@ public class WishService {
         List<MemberDTO> memberDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
-            if (wishEntityList.get(i).getBookEntity() == null) {
+            if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberEntity().getId().equals(id)) {
                 Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
                 if (optionalMemberEntity.isPresent()) {
                     memberDTOList.add(MemberDTO.findDTO(optionalMemberEntity.get()));
@@ -144,7 +144,7 @@ public class WishService {
         List<BookDTO> bookDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
-            if (wishEntityList.get(i).getMemberEntity() == null) {
+            if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getBookEntity().getMemberEntity().getId().equals(id)) {
                 Optional<BookEntity> optionalBookEntity = bookRepository.findById(wishEntityList.get(i).getBookEntity().getId());
                 if (optionalBookEntity.isPresent()) {
                     bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
