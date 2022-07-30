@@ -3,7 +3,6 @@ package com.its.library.controller;
 import com.its.library.common.PagingConst;
 import com.its.library.dto.DebutCommentDTO;
 import com.its.library.dto.DebutEpisodeDTO;
-import com.its.library.dto.LoveDTO;
 import com.its.library.service.DebutCommentService;
 import com.its.library.service.DebutService;
 import lombok.RequiredArgsConstructor;
@@ -87,18 +86,18 @@ public class DebutController {
     //
     @GetMapping("/poem/{category}")
     public String poemList(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
-        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.list(categoryId,pageable);
+        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.poemList(categoryId,pageable);
         model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "debut/list";
+        return "debut/poemList";
     }
     //데뷔글 에세이 리스트
     @GetMapping("/essay/{category}")
     public String essayList(@PathVariable("category")Long categoryId,Model model) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
         model.addAttribute("essayList", debutEpisodeDTOList);
         return "debut/essayList";
 
@@ -106,9 +105,19 @@ public class DebutController {
     //데뷔글 웹소설 리스트
     @GetMapping("/web/{category}")
     public String webList(@PathVariable("category")Long categoryId,Model model) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.essayList(categoryId);
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
         model.addAttribute("webList", debutEpisodeDTOList);
         return "debut/webList";
 
+    }
+    @GetMapping("/main")
+    public String mainPage(Model model){
+       List<DebutEpisodeDTO> poemList = debutService.categoryList(1L);
+        List<DebutEpisodeDTO> essayList = debutService.categoryList(2L);
+        List<DebutEpisodeDTO> webList = debutService.categoryList(3L);
+        model.addAttribute("poemList",poemList);
+        model.addAttribute("essayList",essayList);
+        model.addAttribute("webList",webList);
+        return "debut/main";
     }
 }

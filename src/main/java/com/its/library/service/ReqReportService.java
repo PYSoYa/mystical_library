@@ -1,14 +1,17 @@
 package com.its.library.service;
 
+import com.its.library.dto.DebutCommentDTO;
 import com.its.library.dto.ReqReportDTO;
 import com.its.library.entity.CommentEntity;
 import com.its.library.entity.DebutCommentEntity;
+import com.its.library.entity.MemberEntity;
 import com.its.library.entity.ReqReportEntity;
 import com.its.library.repository.CommentRepository;
 import com.its.library.repository.DebutCommentRepository;
 import com.its.library.repository.ReqReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,61 +24,58 @@ public class ReqReportService {
     private final DebutCommentRepository debutCommentRepository;
     private final CommentRepository commentRepository;
     //데뷔글 신고 내역
-    public List<ReqReportDTO> debutReportList() {
-        List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAll();
-        List<ReqReportDTO> debutReport = new ArrayList<>();
-        for (ReqReportEntity reqReportEntity : reqReportEntityList) {
-            ReqReportEntity reqReportEntity1 = reqReportEntity;
-            ReqReportDTO debutReportResult = ReqReportDTO.toDebutReportDTO(reqReportEntity1);
-            if(debutReportResult.getDebutCommentId()!=null){
-                debutReport.add(debutReportResult);
-            }else {
-                return null;
-            }
 
-            }
-                return debutReport;
-}
     //작가글 신고내역
-    public List<ReqReportDTO> reportList() {
-        List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAll();;
-        List<ReqReportDTO> report = new ArrayList<>();
 
-        for (ReqReportEntity reqReportEntity : reqReportEntityList) {
-            ReqReportEntity reqReportEntity1 = reqReportEntity;
-            ReqReportDTO debutReportResult = ReqReportDTO.toDebutReportDTO(reqReportEntity1);
+    @Transactional
+    public List<ReqReportDTO> debutReportList() {
+       List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAllByDebutCommentEntityIsNotNull();
+       List<ReqReportDTO> reqReportDTOList = new ArrayList<>();
+        for (ReqReportEntity reqReport :reqReportEntityList) {
+            ReqReportEntity reqReport1 = reqReport;
+           ReqReportDTO reqReportDTO = ReqReportDTO.debutReportList(reqReport1);
+           reqReportDTOList.add(reqReportDTO);
+        }
+        return reqReportDTOList;
+    }
 
-            if(debutReportResult.getCommentId()!=null){
-                ReqReportDTO reportResult = ReqReportDTO.toReportDTO(reqReportEntity1);
-                report.add(reportResult);
-                return report;
+    //작가글 신고내역
+    @Transactional
+    public List<ReqReportDTO> writerReportList() {
+        List<ReqReportEntity> reqReportEntityList = reqReportRepository.findAllByCommentEntityIsNotNull();
+        List<ReqReportDTO> reqReportDTOList = new ArrayList<>();
+        for (ReqReportEntity reqReport:reqReportEntityList) {
+            ReqReportEntity reqReport1 = reqReport;
+            ReqReportDTO reqReportDTO = ReqReportDTO.writerReportList(reqReport1);
+            reqReportDTOList.add(reqReportDTO);
+
+        }
+        return reqReportDTOList;
+    }
+
+    //댓글 신고 승인 처리
+    public void debutCommentDelete(Long id) {
+        Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
+        if (reqReportEntity.isPresent()) {
+            ReqReportEntity reqReportEntity1 = reqReportEntity.get();
+            Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(reqReportEntity1.getDebutCommentEntity().getId());
+            if (optionalDebutCommentEntity.isPresent()) {
+                DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
+                DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutComment);
+                debutCommentRepository.save(debutCommentEntity);
+                reqReportRepository.deleteById(id);
 
             }
-
-        }
-        return null;
-    }
-
-    public void debutCommentDelete(Long id) {
-       Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
-        if(reqReportEntity.isPresent()){
-            ReqReportEntity reqReportEntity1 =reqReportEntity.get();
-           Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(reqReportEntity1.getDebutCommentEntity().getId());
-           if(optionalDebutCommentEntity.isPresent()){
-               DebutCommentEntity debutComment =optionalDebutCommentEntity.get();
-              DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutComment);
-              debutCommentRepository.save(debutCommentEntity);
-              reqReportRepository.deleteById(id);
-
-           }
         }
 
     }
 
+    //댓글 신고 거절 기능
     public void debutReportDelete(Long id) {
         reqReportRepository.deleteById(id);
 
     }
+
     public void commentDelete(Long id) {
         Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
         if (reqReportEntity.isPresent()) {
@@ -90,9 +90,11 @@ public class ReqReportService {
             }
         }
     }
+
     public void reportDelete(Long id) {
         reqReportRepository.deleteById(id);
     }
+
 
 
 }

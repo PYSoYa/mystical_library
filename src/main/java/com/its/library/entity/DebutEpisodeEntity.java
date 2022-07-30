@@ -32,7 +32,7 @@ public class DebutEpisodeEntity extends BaseEntity {
     @Column(name = "debutContents",nullable = false,length = 6000)
     private String debutContents;
 
-    @Column(name = "debutHits",columnDefinition = "int default 0")
+    @Column(name = "debutHits")
     private int debutHits;
     @Column(name = "debutImgName",length = 200)
     private String debutImgName;
