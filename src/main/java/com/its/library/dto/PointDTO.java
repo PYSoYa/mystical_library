@@ -29,7 +29,7 @@ public class PointDTO {
     public static PointDTO findDTO(PointEntity pointEntity1, EpisodeEntity episodeEntity, BookEntity bookEntity) {
         PointDTO pointDTO = new PointDTO();
         pointDTO.setId(pointEntity1.getId());
-        pointDTO.setMemberId(pointDTO.getMemberId());
+        pointDTO.setMemberId(pointEntity1.getMemberEntity().getId());
         pointDTO.setEpisodeId(episodeEntity.getId());
         pointDTO.setPlusPoint(pointEntity1.getPlusPoint());
         pointDTO.setMinusPoint(pointEntity1.getMinusPoint());
