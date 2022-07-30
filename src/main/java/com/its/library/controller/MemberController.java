@@ -130,4 +130,10 @@ public class MemberController {
         return "member/findMemberId";
     }
 
+    // 비밀번호 찾기 페이지 요청
+    @GetMapping("/find/password")
+    public String findMemberPassword() {
+        return "member/findMemberPassword";
+    }
+
 }
