@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/set-password.css}">
+<body>
+<th:block th:replace="layout/header :: header"></th:block>
+
+<main class="main-container">
+  <div class="content-container">
+    <div class="title-wrap">
+      <h5 class="title">아이디 찾기</h5>
+    </div>
+    <div class="input-wrap">
+      <div class="label-email-wrap">
+        <label class="label-email">이메일</label>
+      </div>
+      <div class="input-email-wrap">
+        <input type="text" name="memberEmail" class="input-email" placeholder="example@example.com">
+        <button type="button" class="request-auth">인증번호 받기</button>
+      </div>
+      <div class="result-email-wrap">
+        <span class="span-email" id="result-email">이메일 입력하세요</span>
+      </div>
+    </div>
+    <div class="input-wrap">
+      <div class="label-auth-wrap">
+      </div>
+      <div class="input-auth-wrap">
+        <input type="text" class="input-auth" placeholder="인증번호 입력">
+        <button type="button" class="check-auth">인증하기</button>
+      </div>
+      <div class="result-auth-wrap">
+        <span class="span-auth" id="result-auth">인증번호가 달라요</span>
+      </div>
+    </div>
+    <div class="btn-wrap">
+      <button type="button" class="submit-btn">아이디 찾기</button>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+</body>
+</html>
