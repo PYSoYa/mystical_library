@@ -45,7 +45,7 @@ public class EpisodeDTO {
         episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
         episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
         episodeDTO.setPayment(episodeEntity.getPayment());
-        episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
+        episodeDTO.setEpisodeHits(episodeEntity.getHits());
         episodeDTO.setWriterRole(episodeEntity.getWriterRole());
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
@@ -58,7 +58,7 @@ public class EpisodeDTO {
         episodeDTO.setEpisodeContents(episodeEntity.getEpisodeContents());
         episodeDTO.setEpisodeImgName(episodeEntity.getEpisodeImgName());
         episodeDTO.setPayment(episodeEntity.getPayment());
-        episodeDTO.setEpisodeHits(episodeEntity.getEpisodeHits());
+        episodeDTO.setEpisodeHits(episodeEntity.getHits());
         episodeDTO.setWriterRole(episodeEntity.getWriterRole());
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;

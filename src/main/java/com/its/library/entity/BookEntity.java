@@ -45,6 +45,8 @@ public class BookEntity {
     @Column
     private int writerRole;
     @Column
+    private int hits;
+    @Column
     private double star;
 
 
@@ -72,6 +74,7 @@ public class BookEntity {
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus("연재");
         bookEntity.setWriterRole(1);
+        bookEntity.setHits(0);
         bookEntity.setStar(0.0);
         return  bookEntity;
     }
@@ -88,6 +91,7 @@ public class BookEntity {
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
         bookEntity.setWriterRole(1);
+        bookEntity.setHits(bookDTO.getHits());
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
     }

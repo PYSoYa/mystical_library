@@ -149,7 +149,6 @@ public class BookController {
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < bookDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : bookDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        System.out.println(" = " + "sdfsdf");
         System.out.println("boardEntities.getContent() = " + bookDTOList.getContent()); // 요청페이지에 들어있는 데이터
         System.out.println("boardEntities.getTotalElements() = " + bookDTOList.getTotalElements()); // 전체 글갯수
         System.out.println("boardEntities.getNumber() = " + bookDTOList.getNumber()); // 요청페이지(jpa 기준)
@@ -158,17 +157,18 @@ public class BookController {
         System.out.println("boardEntities.hasPrevious() = " + bookDTOList.hasPrevious()); // 이전페이지 존재 여부
         System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
         System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
-        return "book/book";
+        return "redirect:/book/categoryId?categoryId=" + categoryId;
     }
 
-    // 장르 목록 조회
+    // 장르 목록 조회 + 조회순 / 별점순 정렬
     @GetMapping("/genre")
-    public String genreList(@RequestParam("genreId") Long genreId, Model model) {
-        List<BookDTO> bookDTOList = bookService.genreList(genreId);
+    public String genreList(@RequestParam("genreId") Long genreId,
+                            @RequestParam("alignmentId") Long alignmentId, Model model) {
+        List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
         model.addAttribute("bookList", bookDTOList);
+        model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
         return "book/genre";
     }
-
 
     // 책 상세조회 + 회차목록 페이징
     @GetMapping("/book/{id}")
@@ -186,7 +186,6 @@ public class BookController {
         model.addAttribute("endPage", endPage);
         return "book/detail";
     }
-
 
     // 회차 상세조회
     @GetMapping("/episode")

@@ -21,12 +21,12 @@
       <li class="category-wrap">
         <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">웹소설 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
+          <li><a th:href="@{/book/genre?genreId=1}" class="dropdown-item">판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=2}" class="dropdown-item">현대판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=3}" class="dropdown-item">로맨스</a></li>
+          <li><a th:href="@{/book/genre?genreId=4}" class="dropdown-item">로맨스판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=5}" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
@@ -123,7 +123,7 @@
                     <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                     </svg>
-                    <span class="star" th:text="(${book.star})"></span>
+                    <span class="star" th:text="${book.star}"></span>
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@
             <li class="recent-completion-li" th:each="book:${bookList3}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a href="#">
+                  <a th:href="@{|/book/book/${book.id}|}">
                     <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>

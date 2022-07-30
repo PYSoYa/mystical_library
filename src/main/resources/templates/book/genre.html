@@ -10,11 +10,6 @@
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
-<table th:each="book:${bookList}">
-  <tr>
-    <td th:text="${book.bookTitle}"></td>
-  </tr>
-</table>
 
 <div class="category-div">
   <div class="category-container">
@@ -25,12 +20,12 @@
       <li class="category-wrap">
         <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">웹소설 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
+          <li><a th:href="@{/book/genre?genreId=1}" class="dropdown-item">판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=2}" class="dropdown-item">현대판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=3}" class="dropdown-item">로맨스</a></li>
+          <li><a th:href="@{/book/genre?genreId=4}" class="dropdown-item">로맨스판타지</a></li>
+          <li><a th:href="@{/book/genre?genreId=5}" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
@@ -78,27 +73,27 @@
           <span class="genre-list-title">로맨스</span>
         </div>
         <div class="order-btn-wrap">
-          <a href="#" class="order-btn">조회순</a>
-          <a href="#" class="order-btn">평점순</a>
-          <a href="#" class="order-btn">최신순</a>
+          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=1|}" class="order-btn">조회순</a>
+          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=2|}" class="order-btn">평점순</a>
+          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=3|}" class="order-btn">최신순</a>
         </div>
       </div>
     </div>
     <div class="book-list-container">
       <div class="series-list">
-        <div class="book-wrap">
+        <div class="book-wrap" th:each="book:${bookList}">
           <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+            <a th:href="@{|/book/book/${book.id}|}">
+              <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
             </a>
           </div>
           <div class="detail-wrap">
             <div class="title-wrap">
-              <h5 class="title">타이틀</h5>
+              <h5 class="title" th:text="${book.bookTitle}"></h5>
             </div>
             <div class="author-wrap">
               <a href="#" class="author-link">
-                <span class="author">작가</span>
+                <span class="author" th:text="${book.memberName}">작가</span>
               </a>
               <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -111,7 +106,7 @@
               <span class="heart">234</span>
             </div>
             <div class="intro-wrap">
-              <span class="intro">소개글 쓰는거 제일 귀찮다 집 가고 싶다 안녕히계세요 바이바이~~~~ 우리 같이 집에 가버려용~~~~~ 얼마나 써야해</span>
+              <span class="intro" th:text="${book.introduce}"></span>
             </div>
             <div class="tag-wrap">
               <span class="tag novel">웹소설</span>
