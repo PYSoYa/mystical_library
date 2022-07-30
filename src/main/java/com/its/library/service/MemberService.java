@@ -44,6 +44,13 @@ public class MemberService {
 
         MemberEntity memberEntity = MemberEntity.saveEntity(memberDTO);
         Long id = memberRepository.save(memberEntity).getId();
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            PointDTO pointDTO = PointDTO.memberDTO(memberEntity);
+            PointEntity pointEntity = PointEntity.memberSave(pointDTO, memberEntity);
+            pointRepository.save(pointEntity);
+        }
         return id;
     }
 
