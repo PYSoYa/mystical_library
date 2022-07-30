@@ -174,7 +174,7 @@ public class DebutService {
     }
 
     @Transactional
-    public Page<DebutEpisodeDTO> list(Long categoryId, Pageable pageable) {
+    public Page<DebutEpisodeDTO> poemList(Long categoryId, Pageable pageable) {
         Optional<DebutCategoryEntity> optionalCategoryEntity = debutCategoryRepository.findById(categoryId);
         DebutCategoryEntity debutCategoryEntity = new DebutCategoryEntity();
         if (optionalCategoryEntity.isPresent()) {
@@ -200,7 +200,7 @@ public class DebutService {
     }
 
     @Transactional
-    public List<DebutEpisodeDTO> essayList(Long categoryId) {
+    public List<DebutEpisodeDTO> categoryList(Long categoryId) {
         Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(categoryId);
         if (optionalDebutCategoryEntity.isPresent()) {
             DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();

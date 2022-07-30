@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신비한 서재입니다.</title>
+    <link rel="stylesheet" th:href="@{/css/book/category.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+<th:block th:replace="layout/header :: header"></th:block>
+<main class="main-container">
+    <div class="slider-div">
+        <div class="slider-container">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img th:src="@{/img/slider_img_1.svg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/img/slider_img_2.svg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/img/slider_img_3.svg}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden"></span>
+                </button>
+                <button class="carousel-control-next" id="move-slider" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="recent-debut-post-container">
+        <div class="recent-debut-post-title-container">
+            <div class="recent-debut-post-title-wrap">
+                <div class="recent-debut-post-title-text">
+                    <span class="recent-debut-post-title">시</span>
+                </div>
+            </div>
+        </div>
+        <div class="recent-debut-post-list-container">
+            <div class="recent-debut-post-list-wrap">
+                <div class="recent-debut-post-div">
+                    <ul class="recent-debut-post-ul">
+                        <li class="recent-debut-post-li" th:each="poem:${poemList}">
+                            <div class="recent-debut-post">
+                                <div class="img-wrap">
+                                    <a th:href="@{|/debut/poem/${poem.id}|}">
+                                        <img th:src="@{|/upload/${poem.debutImgName}|}" class="img" alt="">
+                                    </a>
+                                </div>
+                                <div class="detail-wrap">
+                                    <span class="title" th:text="${poem.debutTitle}"></span>
+                                    <span class="author" th:text="${poem.memberName}"></span>
+                                    <span class="author" th:text="${poem.feat}"></span>
+                                    <div class="star-wrap">
+                                        <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
+                                        </svg>
+                                        <span class="star" th:text="(${poem.love})"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recent-completion-container">
+        <div class="recent-completion-title-container">
+            <div class="recent-completion-title-wrap">
+                <div class="recent-completion-title-text">
+                    <span class="recent-completion-title">에세이</span>
+                </div>
+            </div>
+        </div>
+        <div class="recent-completion-list-container">
+            <div class="recent-completion-list-wrap">
+                <div class="recent-completion-div">
+                    <ul class="recent-completion-ul">
+                        <li class="recent-completion-li" th:each="essay:${essayList}">
+                            <div class="recent-completion">
+                                <div class="img-wrap">
+                                    <a th:href="@{|/debut/essay/${essay.id}|}">
+                                        <img th:src="@{|/upload/${essay.debutImgName}|}" class="img" alt="">
+                                    </a>
+                                </div>
+                                <div class="detail-wrap">
+                                    <span class="title" th:text="${essay.debutTitle}"></span>
+                                    <span class="author" th:text="${essay.memberName}"></span>
+                                    <div class="star-wrap">
+                                        <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
+                                        </svg>
+                                        <span class="star" th:text="${essay.love}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="recent-completion-container">
+        <div class="recent-completion-title-container">
+            <div class="recent-completion-title-wrap">
+                <div class="recent-completion-title-text">
+                    <span class="recent-completion-title">웹소설</span>
+                </div>
+            </div>
+        </div>
+        <div class="recent-completion-list-container">
+            <div class="recent-completion-list-wrap">
+                <div class="recent-completion-div">
+                    <ul class="recent-completion-ul">
+                        <li class="recent-completion-li" th:each="web:${webList}">
+                            <div class="recent-completion">
+                                <div class="img-wrap">
+                                    <a th:href="@{|/debut/web/${web.id}|}">
+                                        <img th:src="@{|/upload/${web.debutImgName}|}" class="img" alt="">
+                                    </a>
+                                </div>
+                                <div class="detail-wrap">
+                                    <span class="title" th:text="${web.debutTitle}"></span>
+                                    <span class="author" th:text="${web.memberName}"></span>
+                                    <div class="star-wrap">
+                                        <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
+                                        </svg>
+                                        <span class="star" th:text="${web.love}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+</body>
+</html>
