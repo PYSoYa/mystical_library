@@ -12,4 +12,6 @@ public interface PointRepository extends JpaRepository<PointEntity,Long> {
 
 
     List<PointEntity> findByMemberEntity_IdOrderByIdDesc(Long memberId);
+
+
 }
