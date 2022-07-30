@@ -124,4 +124,10 @@ public class MemberController {
         return "member/setPassword";
     }
 
+    // 아이디 찾기 페이지 요청
+    @GetMapping("/find/id")
+    public String findMemberId() {
+        return "member/findMemberId";
+    }
+
 }
