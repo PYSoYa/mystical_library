@@ -128,10 +128,10 @@
             </div>
             <div class="find-wrap">
               <div class="find-id-wrap">
-                <span class="label-find-id">아이디 찾기</span>
+                <span class="label-find-id" id="find-id">아이디 찾기</span>
               </div>
               <div class="find-pw-wrap">
-                <span class="label-find-pw">비밀번호 찾기</span>
+                <span class="label-find-pw" id="find-pw">비밀번호 찾기</span>
               </div>
             </div>
             <div class="sign-in-btn-wrap">
@@ -400,14 +400,26 @@
           this.reset();
         });
       });
+
       $('#exampleModal1').on('hidden.bs.modal', function () {
         $('form').each(function () {
           this.reset();
         });
       });
+
       $('#exampleModal1').on('shown.bs.modal', function () {
         const input = document.getElementById('input-id');
         input.focus();
+      });
+
+      const findId = document.getElementById('find-id');
+      const findPw = document.getElementById('find-pw');
+
+      findId.addEventListener('click', () => {
+          location.href = '/member/find/id';
+      });
+      findPw.addEventListener('click', () => {
+          location.href = '/member/find/password';
       });
     });
   </script>
