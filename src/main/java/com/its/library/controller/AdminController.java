@@ -23,10 +23,10 @@ public class AdminController {
     //댓글 신고 내역 리스트
     @GetMapping("/req-report-list")
     public String reportList(Model model) {
-        List<ReqReportDTO> debutReportList = reqReportService.debutReportList();
-        List<ReqReportDTO> reportList = reqReportService.reportList();
-        model.addAttribute("debutReportList", debutReportList);
-        model.addAttribute("reportList", reportList);
+        List<ReqReportDTO> reqReportDTOList = reqReportService.debutReportList();
+        List<ReqReportDTO> reportWriterList = reqReportService.writerReportList();
+        model.addAttribute("debutList", reqReportDTOList);
+        model.addAttribute("writerList", reportWriterList);
         return "admin/reportList";
 
     }

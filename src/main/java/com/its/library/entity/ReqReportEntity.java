@@ -25,11 +25,16 @@ public class ReqReportEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "debutCommentId")
     private DebutCommentEntity debutCommentEntity;
+    private String debutContents;
+    private String writerContents;
+
+
 
     public static ReqReportEntity toSave(MemberEntity memberEntity, DebutCommentEntity debutComment) {
         ReqReportEntity reqReportEntity = new ReqReportEntity();
         reqReportEntity.setDebutCommentEntity(debutComment);
         reqReportEntity.setMemberEntity(memberEntity);
+        reqReportEntity.setDebutContents(debutComment.getContents());
         return reqReportEntity;
     }
 
@@ -37,6 +42,7 @@ public class ReqReportEntity {
         ReqReportEntity reqReportEntity = new ReqReportEntity();
         reqReportEntity.setMemberEntity(memberEntity);
         reqReportEntity.setCommentEntity(commentEntity);
+        reqReportEntity.setWriterContents(commentEntity.getContents());
         return reqReportEntity;
     }
 
