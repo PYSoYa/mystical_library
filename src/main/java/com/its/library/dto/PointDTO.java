@@ -2,6 +2,7 @@ package com.its.library.dto;
 
 import com.its.library.entity.BookEntity;
 import com.its.library.entity.EpisodeEntity;
+import com.its.library.entity.MemberEntity;
 import com.its.library.entity.PointEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,9 +40,14 @@ public class PointDTO {
 
         return pointDTO;
 
+    }
 
-
-
+    public static PointDTO memberDTO(MemberEntity memberEntity) {
+        PointDTO pointDTO = new PointDTO();
+        pointDTO.setMemberId(memberEntity.getId());
+        pointDTO.setPlusPoint(memberEntity.getMemberPoint());
+        pointDTO.setTotalPoint(memberEntity.getMemberPoint());
+        return pointDTO;
     }
 
 

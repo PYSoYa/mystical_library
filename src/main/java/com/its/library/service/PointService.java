@@ -40,7 +40,6 @@ public class PointService {
                     pointDTOList.add(PointDTO.findDTO(pointEntity1, episodeEntity, bookEntity));
                 }
 
-
             }
 
         }

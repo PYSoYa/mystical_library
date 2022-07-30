@@ -34,6 +34,13 @@ public class PointEntity extends BaseEntity  {
     @Column(name = "episodeTitle")
     private String episodeTitle;
 
+    public static PointEntity memberSave(PointDTO pointDTO, MemberEntity memberEntity) {
+        PointEntity pointEntity = new PointEntity();
+        pointEntity.setPlusPoint(pointDTO.getPlusPoint());
+        pointEntity.setMemberEntity(memberEntity);
+        pointEntity.setTotalPoint(memberEntity.getMemberPoint());
+        return pointEntity;
+    }
     public static PointEntity save(PointDTO pointDTO,MemberEntity memberEntity) {
         PointEntity pointEntity = new PointEntity();
         pointEntity.setPlusPoint(pointDTO.getPlusPoint());

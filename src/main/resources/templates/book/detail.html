@@ -183,26 +183,25 @@
               dataType: "text",
               success: function (result) {
                 if (result === "ok") {
-                  location.href = "/book/episode?bookId=" + bookId + "?id=" + episodeId;
+                  $.ajax({
+                    type:"get",
+                    url:"/point/pay/"+memberId,
+                    data:{"episodeId":episodeId,"bookId":bookId},
+                    dataType:"text",
+                    success:function (){
+                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                    }
+                  });
                 }
               }
             })
           } else if (result === "보여줘") {
             alert("보여줘");
           } else if (result === "무료") {
-            location.href = "/book/episode?bookId=" + bookId + "?id=" + episodeId;
+            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           }
       }
     })
-    $.ajax({
-      type:"get",
-      url:"/point/pay/"+memberId,
-      data:{"episodeId":episodeId,"bookId":bookId},
-      dataType:"text",
-      success:function (){
-
-      }
-    });
   }
   const bookLove = () => {
     const loveChange = document.getElementById("loveChange");
