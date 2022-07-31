@@ -105,8 +105,8 @@ public class BookService {
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
             Optional<BookEntity> optionalBookEntity =  bookRepository.findById(episodeEntity.getBookEntity().getId());
             bookEntity = optionalBookEntity.get();
-            episodeEntityList = episodeRepository.findByBookEntity(bookEntity);
-            int hits = bookRepository.hitsSum(episodeEntityList.get(0).getBookEntity().getId());
+            List<BookEntity> bookEntityList = bookRepository.findByEpisodeEntityList(episodeEntityList.get(0));
+            int hits = bookRepository.hitsSum(bookEntityList.get(0).getId());
             bookEntity.setHits(hits);
             bookRepository.save(bookEntity);
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
@@ -136,6 +136,7 @@ public class BookService {
                         episode.getEpisodeTitle(),
                         episode.getEpisodeContents(),
                         episode.getEpisodeImgName(),
+
                         episode.getPayment(),
                         episode.getHits(),
                         episode.getWriterRole(),
