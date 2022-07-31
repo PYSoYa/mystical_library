@@ -34,6 +34,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findByGenreEntity(GenreEntity genreEntity);
 
     List<BookEntity> findByGenreEntityOrderByStarDesc(GenreEntity genreEntity);
+
+    List<BookEntity> findByEpisodeEntityList(EpisodeEntity episodeEntity);
     List<BookEntity> findByCategoryEntity(CategoryEntity categoryEntity);
 
 //    @Transactional
