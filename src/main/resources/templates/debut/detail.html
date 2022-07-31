@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-    <!-- CSS only -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <!-- CSS only -->
 
-    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script th:src="@{/js/jquery.js}"></script>
-    <title>신비한 서재입니다.</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/jquery.js}"></script>
+  <title>신비한 서재입니다.</title>
 </head>
 <body>
 <table>
-    <tr>
-        <th>사진</th>
-        <th>글번호</th>
-        <th>제목</th>
-        <th>작성시간</th>
-        <th>내용</th>
-        <th>조회수</th>
-        <th>수정</th>
-        <th>삭제</th>
-        <th>좋아요</th>
-    </tr>
-    <tr>
-        <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"></td>
-        <td th:text="${debut.id}"></td>
-        <td th:text="${debut.debutTitle}"></td>
-        <td th:text="${debut.createdTime}"></td>
-        <td th:text="${debut.debutContents}"></td>
-        <td th:text="${debut.debutHits}"></td>
-        <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
-        <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
-        <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
-        <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
-    </tr>
+  <tr>
+    <th>사진</th>
+    <th>글번호</th>
+    <th>제목</th>
+    <th>작성시간</th>
+    <th>내용</th>
+    <th>조회수</th>
+    <th>수정</th>
+    <th>삭제</th>
+    <th>좋아요</th>
+  </tr>
+  <tr>
+    <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"></td>
+    <td th:text="${debut.id}"></td>
+    <td th:text="${debut.debutTitle}"></td>
+    <td th:text="${debut.createdTime}"></td>
+    <td th:text="${debut.debutContents}"></td>
+    <td th:text="${debut.debutHits}"></td>
+    <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
+    <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
+    <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
+    <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
+  </tr>
 
 </table>
 
@@ -48,38 +47,38 @@
 <input type="text" id="contents">
 <input type="button" onclick="commentSave()" value="댓글작성">
 <div id="commentList">
-    <table>
-        <tr>
+  <table>
+    <tr>
 
-            <th>작성자</th>
-            <th>내용</th>
-            <th>작성시간</th>
-            <th>수정</th>
-            <th>삭제</th>
-            <th>댓글신고</th>
-
-
+      <th>작성자</th>
+      <th>내용</th>
+      <th>작성시간</th>
+      <th>수정</th>
+      <th>삭제</th>
+      <th>댓글신고</th>
 
 
-        </tr>
 
 
-        <tr th:each="comment: ${commentList}">
-            <td th:id="'id_'+ ${comment.id}" th:text="${comment.id}" hidden></td>
-            <td th:id="'memberName_'+${comment.id}" th:text="${comment.memberName}"></td>
-            <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
-            <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
-            <div th:if="${comment.memberName}==${session.name}">
-                <div th:if="${comment.report}==false">
-                <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
-                <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
-                </div>
-            </div>
-            <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
+    </tr>
 
 
-        </tr>
-    </table>
+    <tr th:each="comment: ${commentList}">
+      <td th:id="'id_'+ ${comment.id}" th:text="${comment.id}" hidden></td>
+      <td th:id="'memberName_'+${comment.id}" th:text="${comment.memberName}"></td>
+      <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
+      <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
+      <div th:if="${comment.memberName}==${session.name}">
+        <div th:if="${comment.report}==false">
+          <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
+          <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
+        </div>
+      </div>
+      <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
+
+
+    </tr>
+  </table>
 </div>
 
 
@@ -196,7 +195,7 @@
                         "    <td>" + result[i].memberName + "</td>\n" +
                         "    <td>" + result[i].contents + "</td>\n" +
                         "    <td>" + result[i].createdTime + "</td>\n";
-                        console.log(result[i].createdTime);
+                    console.log(result[i].createdTime);
                     if (result[i].memberName == memberName) {
                         output += "<div>\n" +
                             "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
@@ -254,7 +253,7 @@
 
 
 
-        }
+    }
     function commentReport(id) {
         const memberId = [[${debut.memberId}]];
         $.ajax({

@@ -7,6 +7,8 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
+<th:block th:replace="layout/header :: header"></th:block>
+
 <form action="/debut/save" method="post" enctype="multipart/form-data">
   <select name="categoryId">
     <option value="1">시</option><br>
@@ -20,5 +22,7 @@
     <input type="submit" value="글저장">
   </select>
 </form>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>

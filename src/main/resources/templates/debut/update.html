@@ -7,8 +7,9 @@
   <title>신비한 서재입니다.</title>
 </head>
 <body>
-<form action="/debut/update" method="post" enctype="multipart/form-data">
+<th:block th:replace="layout/header :: header"></th:block>
 
+<form action="/debut/update" method="post" enctype="multipart/form-data">
   <select name="categoryId" th:value="${debut.categoryId}">
     <option value="1">시</option><br>
     <option value="2">에세이</option><br>
@@ -22,9 +23,10 @@
     <input type="text" name="feat" th:value="${debut.feat}"><br>
     <input type="file" name="debutImg"><br>
     <input type="text" name="love" th:value="${debut.love}"hidden><br>
-
     <input type="submit" value="글저장">
   </select>
 </form>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 </html>
