@@ -277,6 +277,7 @@ public class DebutService {
                     return debutEpisodeDTOS;
 
                 }
+                break;
         }
         return null;
     }
