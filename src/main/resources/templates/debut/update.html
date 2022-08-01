@@ -5,28 +5,91 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/episode-update-form.css}">
+  <link rel="stylesheet" th:href="@{/css/book/episode-save-form.css}">
+  <script th:src="@{/js/debutUpdate.js}"></script>
+  <script th:src="@{/js/ckeditor.js}"></script>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<form action="/debut/update" method="post" enctype="multipart/form-data">
-  <select name="categoryId" th:value="${debut.categoryId}">
-    <option value="1">시</option><br>
-    <option value="2">에세이</option><br>
-    <option value="3">웹소설</option><br>
-    <input type="text" name="id" th:value="${debut.id}" hidden><br>
-    <input type="text" name="memberId" th:value="${debut.memberId}" hidden><br>
-    <input type="text" name="memberName" th:value="${debut.memberName}" hidden>
-    <input type="text" name="debutTitle" th:value="${debut.debutTitle}"><br>
-    <textarea th:text="${debut.debutContents}" name="debutContents"  cols="30" rows="10"></textarea><br>
-    <textarea th:text="${debut.introduce}" name="introduce"  cols="30" rows="10"></textarea><br>
-    <input type="text" name="feat" th:value="${debut.feat}"><br>
-    <input type="file" name="debutImg"><br>
-    <input type="text" name="love" th:value="${debut.love}"hidden><br>
-    <input type="submit" value="글저장">
-  </select>
-</form>
+<main class="main-container">
+  <div class="save-form-container">
+    <div class="save-form-wrap">
+      <div class="save-form-div">
+        <div class="save-form">
+          <form class="form-to-save" action="/debut/update" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="debutHits" th:value="${debut.debutHits}">
+            <input type="hidden" name="id" th:value="${debut.id}">
+            <input type="hidden" name="memberId" th:value="${debut.memberId}">
+            <input type="hidden" name="memberName" th:value="${debut.memberName}">
+            <input type="hidden" name="love" th:value="${debut.love}">
+            <input type="hidden" name="feat" th:value="${debut.feat}">
+            <input type="hidden" name="debutImgName" th:value="${debut.debutImgName}">
+            <div class="select-list-wrap">
+              <div class="category-list-wrap">
+                <select name="categoryId" class="select-input" th:value="${debut.categoryId}">
+                  <option value="" selected>카테고리</option>
+                  <option id="c1" value="1">웹소설</option>
+                  <option id="c2" value="2">시</option>
+                  <option id="c3" value="3">에세이</option>
+                </select>
+              </div>
+              <div class="alert-content">
+                <span class="alert">내용은 최대 6000자 까지 입력 가능합니다.</span>
+              </div>
+            </div>
+            <div class="title-wrap">
+              <div class="title-wrapper">
+                <label class="title">회차 제목</label>
+              </div>
+              <div class="input-wrap">
+                <input type="text" th:value="${debut.debutTitle}" name="debutTitle" class="title" placeholder="도서명을 입력해주세요.">
+              </div>
+            </div>
+            <div class="intro-wrap">
+              <div class="intro-wrapper">
+                <label class="title">소개글</label>
+              </div>
+              <div class="input-wrap">
+                <textarea maxlength="500" th:text="${debut.introduce}" onkeyup="resize(this)" class="intro" name="introduce" placeholder="소개글을 입력해주세요."></textarea>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <textarea id="editor" th:text="${debut.debutContents}" name="debutContents" placeholder="내용을 입력해주세요."></textarea>
+            </div>
+            <div class="file-and-btn-wrap">
+              <div class="file-wrap">
+                <div class="title-wrap">
+                  <label class="title">표지 사진</label>
+                </div>
+                <div class="input-wrap">
+                  <input type="file" name="debutImg">
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <div class="btn-wrapper">
+                <button type="submit" class="submit-btn">수정</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const category = [[${debut.categoryId}]];
+
+  ClassicEditor
+      .create(document.getElementById('editor'))
+      .catch(err => {
+        console.error('error');
+      });
+</script>
 </html>

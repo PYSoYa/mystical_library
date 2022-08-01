@@ -341,13 +341,21 @@ public class BookService {
         }
         if (alignmentId == 0) { // 장르별 조회순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
-            for (BookEntity book: bookEntityList) {
+            for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
         } else if (alignmentId == 1) { // 장르별 최신순 정렬
-            bookRepository.findByGenreEntity(genreEntity);
-        }
-        else if (alignmentId == 2) { // 장르별 별점순 정렬
+            bookEntityList = bookRepository.findByGenreEntity(genreEntity);
+            for (BookEntity book : bookEntityList) {
+                episodeEntityList = episodeRepository.findByBookEntityOrderByCreatedDateTimeDesc(book);
+                for (EpisodeEntity episode : episodeEntityList) {
+                    episodeDTOList.add(EpisodeDTO.findDTO(episode));
+                }
+            }
+//            for (int i = 0; i < episodeDTOList.size(); i++) {
+//                bookDTOList.add(EpisodeDTO.findDTO(episodeDTOList.get(i)));
+//            }
+        } else if (alignmentId == 2) { // 장르별 별점순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
