@@ -103,10 +103,10 @@ public class BookService {
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
         if (optionalEpisodeEntity.isPresent()) {
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-            Optional<BookEntity> optionalBookEntity =  bookRepository.findById(episodeEntity.getBookEntity().getId());
+            Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
             bookEntity = optionalBookEntity.get();
-            List<BookEntity> bookEntityList = bookRepository.findByEpisodeEntityList(episodeEntityList.get(0));
-            int hits = bookRepository.hitsSum(bookEntityList.get(0).getId());
+            episodeEntityList = episodeRepository.findByBookEntity(bookEntity);
+            int hits = bookRepository.hitsSum(episodeEntityList.get(0).getId());
             bookEntity.setHits(hits);
             bookRepository.save(bookEntity);
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
@@ -136,7 +136,6 @@ public class BookService {
                         episode.getEpisodeTitle(),
                         episode.getEpisodeContents(),
                         episode.getEpisodeImgName(),
-
                         episode.getPayment(),
                         episode.getHits(),
                         episode.getWriterRole(),
@@ -310,7 +309,7 @@ public class BookService {
     }
 
 
-    public void bookAgree(BookDTO bookDTO)  {
+    public void bookAgree(BookDTO bookDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(bookDTO.getMemberName());
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(bookDTO.getGenreId());
         Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(bookDTO.getCategoryId());
@@ -321,7 +320,7 @@ public class BookService {
             GenreEntity genreEntity = optionalGenreEntity.get();
 
             BookEntity bookEntity = BookEntity.bookAgree(bookDTO, memberEntity, categoryEntity, genreEntity);
-             bookRepository.save(bookEntity);
+            bookRepository.save(bookEntity);
         }
     }
 
@@ -331,20 +330,26 @@ public class BookService {
 
     public List<BookDTO> genreList(Long genreId, Long alignmentId) {
         List<BookEntity> bookEntityList = new ArrayList<>();
+        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
+        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
         GenreEntity genreEntity = new GenreEntity();
+        BookEntity bookEntity = new BookEntity();
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(genreId);
         if (optionalGenreEntity.isPresent()) {
             genreEntity = optionalGenreEntity.get();
         }
-        if (alignmentId == 0) {
-            bookEntityList = bookRepository.findByGenreEntity(genreEntity);
+        if (alignmentId == 0) { // 장르별 조회순 정렬
+            bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book: bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
-        } else if (alignmentId == 2) {
+        } else if (alignmentId == 1) { // 장르별 최신순 정렬
+            bookRepository.findByGenreEntity(genreEntity);
+        }
+        else if (alignmentId == 2) { // 장르별 별점순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
-            for (BookEntity book: bookEntityList) {
+            for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
         }
@@ -356,7 +361,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList1 = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList){
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 1) {
                 bookDTOList1.add(BookDTO.findDTO(book));
             }
@@ -369,7 +374,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList2 = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList){
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 2) {
                 bookDTOList2.add(BookDTO.findDTO(book));
             }
@@ -382,11 +387,11 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList3 = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-            for (BookEntity book: bookEntityList){
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
-                        bookDTOList3.add(BookDTO.findDTO(book));
-                }
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
+                bookDTOList3.add(BookDTO.findDTO(book));
             }
+        }
         return bookDTOList3;
     }
 
@@ -395,7 +400,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList4 = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList){
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 4) {
                 bookDTOList4.add(BookDTO.findDTO(book));
             }
@@ -408,7 +413,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList5 = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList){
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 5) {
                 bookDTOList5.add(BookDTO.findDTO(book));
             }

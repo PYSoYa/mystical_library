@@ -9,11 +9,6 @@
   <link rel="stylesheet" th:href="@{/css/member/box.css}">
 </head>
 <body>
-<table th:each="member:${memberList}">
-  <tr>
-    <td th:text="${member.memberName}"></td>
-  </tr>
-</table>
 <th:block th:replace="layout/header :: header"></th:block>
 
 <main class="main-container">
@@ -37,15 +32,15 @@
           </div>
           <div class="list-author-container">
             <div class="list-author-wrap">
-              <div class="author-wrap">
+              <div class="author-wrap" th:each="member:${memberList}">
                 <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a th:href="@{|/member/mypage/${member.id}|}">
+                    <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
                   </a>
                 </div>
                 <div class="detail-wrap">
                   <div class="title-wrap">
-                    <h5 class="title">톰보이1</h5>
+                    <h5 class="title" th:text="${member.memberName}"></h5>
                   </div>
                 </div>
               </div>

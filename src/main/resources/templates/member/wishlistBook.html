@@ -9,11 +9,6 @@
   <link rel="stylesheet" th:href="@{/css/member/box.css}">
 </head>
 <body>
-<table th:each="book:${bookList}">
-  <tr>
-    <td th:text="${book.bookTitle}"></td>
-  </tr>
-</table>
 <th:block th:replace="layout/header :: header"></th:block>
 
 <main class="main-container">
@@ -36,28 +31,28 @@
             </div>
           </div>
           <div class="list-detail-container">
-            <div class="content-container">
+            <div class="content-container" th:each="book:${bookList}">
               <div class="img-wrap">
-                <a href="#">
-                  <img th:src="@{/img/book_img_2.jpeg}" alt="">
+                <a th:href="@{|/book/book/${book.id}|}">
+                  <img th:src="@{|/upload/${book.bookImgName}|}" alt="">
                 </a>
               </div>
               <div class="detail-wrap">
                 <div class="title-wrap item">
-                  <span class="title">물휴지</span>
+                  <span class="title" th:text="${book.bookTitle}"></span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-x-circle hide-btn" viewBox="0 0 2em 2em">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                   </svg>
                 </div>
                 <div class="intro-wrap item">
-                  <span class="intro">물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트</span>
+                  <span class="intro" th:text="${book.introduce}"></span>
                 </div>
                 <div class="star-wrap item">
                   <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                   </svg>
-                  <span class="star">9.2</span>
+                  <span class="star" th:text="${book.star}"></span>
                 </div>
               </div>
             </div>
