@@ -56,6 +56,7 @@ public class DebutEpisodeDTO{
         debutEpisodeDTO.setCategoryId(debutEpisodeEntity.getDebutCategoryEntity().getId());
         debutEpisodeDTO.setIntroduce(debutEpisodeEntity.getIntroduce());
         debutEpisodeDTO.setDebutHits(debutEpisodeEntity.getDebutHits());
+        debutEpisodeDTO.setLove(debutEpisodeEntity.getLove());
         return debutEpisodeDTO;
     }
 }
