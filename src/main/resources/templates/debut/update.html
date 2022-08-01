@@ -5,6 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/episode-update-form.css}">
+  <link rel="stylesheet" th:href="@{/css/book/episode-save-form.css}">
+  <script th:src="@{/js/episodeUpdate.js}"></script>
+  <script th:src="@{/js/ckeditor.js}"></script>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
@@ -26,6 +31,81 @@
     <input type="submit" value="글저장">
   </select>
 </form>
+
+<main class="main-container">
+  <div class="save-form-container">
+    <div class="save-form-wrap">
+      <div class="save-form-div">
+        <div class="save-form">
+          <form class="form-to-save" action="/book/req-episode-update" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="bookId" name="bookId" th:value="${episode.bookId}">
+            <input type="hidden" name="episodeImgName" th:value="${episode.episodeImgName}">
+            <div class="select-list-wrap">
+              <div class="category-list-wrap">
+                <select id="payment" name="payment" class="select-input" th:value="${episode.payment}">
+                  <option value="" selected>무료/유료</option>
+                  <option id="p0" value="0">무료</option>
+                  <option id="p1" value="1">유료</option>
+                </select>
+              </div>
+              <div class="alert-content">
+                <span class="alert">회차 내용은 최대 6000자 까지 입력 가능합니다.</span>
+              </div>
+            </div>
+            <div class="title-wrap">
+              <div class="title-wrapper">
+                <label class="title">회차 제목</label>
+              </div>
+              <div class="input-wrap">
+                <input type="text" th:value="${episode.episodeTitle}" name="episodeTitle" class="title" placeholder="도서명을 입력해주세요.">
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <textarea id="editor" th:text="${episode.episodeContents}" name="episodeContents" placeholder="회차 내용을 입력해주세요."></textarea>
+            </div>
+            <div class="file-and-btn-wrap">
+              <div class="file-wrap">
+                <div class="title-wrap">
+                  <label class="title">표지 사진</label>
+                </div>
+                <div class="input-wrap">
+                  <input type="file" name="episodeImg">
+                </div>
+              </div>
+            </div>
+            <div class="edit-content-wrap">
+              <div class="title-wrap">
+                <label class="title">수정 내용</label>
+              </div>
+              <div class="input-wrap">
+                <textarea class="edit-content" name="updateContents" placeholder="수정하신 내용을 입력해주세요."></textarea>
+              </div>
+            </div>
+            <div class="send-wrap">
+              <input type="hidden" name="toAddress" value="pysoya@naver.com">
+              <div class="title-wrap">
+                <label class="title">이메일</label>
+              </div>
+              <div class="input-wrap send-input-wrap">
+                <div class="from-wrap">
+                  <input type="text" name="fromAddress" placeholder="작가님의 이메일을 입력해주세요.">
+                </div>
+                <div class="mail-title-wrap">
+                  <input type="text" name="mailTitle" placeholder="메일의 제목을 입력해주세요.">
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <div class="btn-wrapper">
+                <button type="submit" class="submit-btn">수정 요청</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
