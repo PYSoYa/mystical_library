@@ -30,15 +30,15 @@ public interface DebutRepository extends JpaRepository<DebutEpisodeEntity,Long> 
 
 
     @Modifying
-    @Query("select d from DebutEpisodeEntity d where d.debutCategoryEntity.id =:id order by d.id asc ")
+    @Query(value = "select * from debut_episode d where category_id =:id order by id asc",nativeQuery = true)
     List<DebutEpisodeEntity> oderByNew(Long id);
 
     @Modifying
-    @Query("select d from DebutEpisodeEntity d where d.debutCategoryEntity.id =:id order by d.debutHits desc ")
+    @Query(value = "select * from debut_episode d  where category_id =:id order by debut_hits desc",nativeQuery = true)
     List<DebutEpisodeEntity> orderByHits(Long id);
 
     @Modifying
-    @Query("select d from DebutEpisodeEntity d where d.debutCategoryEntity.id =:id order by d.love desc ")
+    @Query(value = "select * from debut_episode  where category_id =:id order by love desc",nativeQuery = true)
     List<DebutEpisodeEntity> orderByLove(Long id);
 }
 

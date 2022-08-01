@@ -99,6 +99,7 @@ public class DebutController {
 
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("poemList", debutEpisodeDTOList);
+        System.out.println("poemList = " + debutEpisodeDTOList);
         return "debut/poemList";
 
     }
@@ -107,6 +108,7 @@ public class DebutController {
     public String essayList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("essayList", debutEpisodeDTOList);
+        System.out.println("essayList = " + debutEpisodeDTOList);
         return "debut/essayList";
 
     }
@@ -115,6 +117,7 @@ public class DebutController {
     public String webList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("webList", debutEpisodeDTOList);
+        System.out.println("webList = " + debutEpisodeDTOList);
         return "debut/webList";
 
     }
