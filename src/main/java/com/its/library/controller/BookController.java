@@ -165,6 +165,7 @@ public class BookController {
     public String genreList(@RequestParam("genreId") Long genreId,
                             @RequestParam("alignmentId") Long alignmentId, Model model) {
         List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
+        System.out.println("bookDTOList = " + bookDTOList);
         model.addAttribute("bookList", bookDTOList);
         model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
         return "book/genre";
