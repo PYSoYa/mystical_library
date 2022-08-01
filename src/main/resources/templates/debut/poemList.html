@@ -67,7 +67,7 @@
               <li class="recent-completion-li" th:each="poem:${poemList}">
                 <div class="recent-completion">
                   <div class="img-wrap">
-                    <a th:href="@{|/debut/poem/${poem.id}|}">
+                    <a th:href="@{|/debut/detail/${poem.id}|}">
                       <img th:src="@{|/upload/${poem.debutImgName}|}" class="img" alt="">
                     </a>
                   </div>

@@ -84,15 +84,26 @@ public class DebutService {
     }
 
     // 데뷔글 업데이트 처리
-    public void update(DebutEpisodeDTO debutEpisodeDTO) {
+    public void update(DebutEpisodeDTO debutEpisodeDTO) throws IOException {
+
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutEpisodeDTO.getMemberId());
         Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
+            MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
+            String debutImgName = debutImg.getOriginalFilename();
+            debutImgName = System.currentTimeMillis() + "_" + debutImgName;
+            String savePath = "C:\\springboot_img\\" + debutImgName;
+            if (!debutImg.isEmpty()) {
+                debutImg.transferTo(new File(savePath));
+                debutEpisodeDTO.setDebutImgName(debutImgName);
+            }
             if (optionalDebutCategoryEntity.isPresent()) {
                 DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
                 DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutCategoryEntity, debutEpisodeDTO, memberEntity);
+                System.out.println("debutEpisodeEntity = " + debutEpisodeEntity);
                 debutRepository.save(debutEpisodeEntity);
+                
             }
 
         }
@@ -200,18 +211,26 @@ public class DebutService {
 //    }
 
     @Transactional
-    public List<DebutEpisodeDTO> categoryList(Long categoryId) {
-        Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(categoryId);
-        if (optionalDebutCategoryEntity.isPresent()) {
-            DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
-            List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByDebutCategoryEntity(debutCategoryEntity);
-            List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
-            for (DebutEpisodeEntity debutEpisodeEntity:debutEpisodeEntityList){
-                DebutEpisodeEntity debutEpisodeEntity1 =debutEpisodeEntity;
-               DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
-               debutEpisodeDTOS.add(debutEpisodeDTO);
-            }
-            return debutEpisodeDTOS;
+    public List<DebutEpisodeDTO> categoryList(Long categoryId, int addressId) {
+        switch (addressId) {
+            case 0:
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(categoryId);
+                if (optionalDebutCategoryEntity.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+                    List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByDebutCategoryEntity(debutCategoryEntity);
+                    List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+                    for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
+                        DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+                        DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+                        debutEpisodeDTOS.add(debutEpisodeDTO);
+                        return debutEpisodeDTOS;
+
+                    }
+
+                }
+            case 1:
+
+
         }
         return null;
     }
