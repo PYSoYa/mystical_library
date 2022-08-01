@@ -24,7 +24,7 @@
 
 .book-list-container {padding: 1rem; margin-top: 1.25rem;}
 .book-list-container .series-list {display: flex; flex-wrap: wrap; margin: 0 0.625rem; justify-content: flex-start;}
-.book-list-container .series-list .book-wrap:not(:last-child) {margin-bottom: 4rem;}
+.book-list-container .series-list .book-wrap {margin-bottom: 4rem;}
 .book-wrap {width: 38rem; display: flex; flex-direction: row; padding: 0.25rem;}
 .book-wrap .img-wrap .img {width: 9rem; height: 13rem; border-radius: 4px;}
 .book-wrap .img-wrap .img:hover {opacity: 0.5; transition: 0.2s ease;}
