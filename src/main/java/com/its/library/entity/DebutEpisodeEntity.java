@@ -1,8 +1,10 @@
 package com.its.library.entity;
 
 import com.its.library.dto.DebutEpisodeDTO;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class DebutEpisodeEntity extends BaseEntity {
     private String introduce;
     @Column(name = "debutContents",nullable = false,length = 6000)
     private String debutContents;
-
     @Column(name = "debutHits")
     private int debutHits;
     @Column(name = "debutImgName",length = 200)

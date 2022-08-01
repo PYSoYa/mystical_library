@@ -84,15 +84,22 @@ public class DebutController {
 
     //데뷔글 페이징 리스트
     //
+//    @GetMapping("/poem/{category}")
+//    public String poemPageingList(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
+//        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.poemList(categoryId,pageable);
+//        model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
+//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+//        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//        return "debut/poemPagingList";
+//    }
     @GetMapping("/poem/{category}")
-    public String poemList(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
-        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.poemList(categoryId,pageable);
-        model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+    public String poemList(@PathVariable("category")Long categoryId,Model model) {
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
+        model.addAttribute("poemList", debutEpisodeDTOList);
         return "debut/poemList";
+
     }
     //데뷔글 에세이 리스트
     @GetMapping("/essay/{category}")

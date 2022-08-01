@@ -11,63 +11,127 @@
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+<main class="main-container">
+  <div class="slider-div">
+    <div class="slider-container">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img th:src="@{/img/slider_img_1.svg}" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img th:src="@{/img/slider_img_2.svg}" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img th:src="@{/img/slider_img_3.svg}" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden"></span>
+        </button>
+        <button class="carousel-control-next" id="move-slider" type="button"
+                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="recent-debut-post-container">
+    <div class="recent-debut-post-title-container">
+      <div class="recent-debut-post-title-wrap">
+        <div class="recent-debut-post-title-text">
+          <span class="recent-debut-post-title">시</span>
+        </div>
+      </div>
+    </div>
+    <div class="recent-completion-container">
+      <div class="recent-completion-title-container">
+        <div class="recent-completion-title-wrap">
+          <div class="recent-completion-title-text">
+            <span class="recent-completion-title">에세이</span>
+          </div>
+        </div>
+      </div>
+      <div class="recent-completion-list-container">
+        <div class="recent-completion-list-wrap">
+          <div class="recent-completion-div">
+            <ul class="recent-completion-ul">
+              <li class="recent-completion-li" th:each="poem:${poemList}">
+                <div class="recent-completion">
+                  <div class="img-wrap">
+                    <a th:href="@{|/debut/poem/${poem.id}|}">
+                      <img th:src="@{|/upload/${poem.debutImgName}|}" class="img" alt="">
+                    </a>
+                  </div>
+                  <div class="detail-wrap">
+                    <span class="title" th:text="${poem.debutTitle}"></span>
+                    <span class="author" th:text="${poem.memberName}"></span>
+                    <div class="star-wrap">
+                      <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none"
+                           xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점"
+                           class="star-symbol">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z"
+                              fill="currentColor"></path>
+                      </svg>
+                      <span class="star" th:text="${poem.love}"></span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-<table class="table table-hover">
-  <tr>
-    <th scope="col">조회수</th>
-    <th scope="col">제목</th>
-    <th scope="col">소개글</th>
-    <th scope="col">작가명</th>
-    <th scope="col">함께하는작가</th>
-    <th scope="col">이미지</th>
-  </tr>
-  <tr th:each="debut: ${debutEpisodePage}">
-    <td th:text="${debut.id}" hidden></td>
-    <td th:text="${debut.debutHits}"></td>
-    <td th:text="${debut.debutTitle}"></td>
-    <td th:text="${debut.introduce}"></td>
-    <td th:text="${debut.memberName}"></td>
-    <td th:text="${debut.feat}"></td>
-    <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"></td>
-  </tr>
-</table>
 
-<div class="container">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
+<!--<div class="container">-->
+<!--  <ul class="pagination justify-content-center">-->
+<!--    <li class="page-item">-->
 
-      <a class="page-link" th:href="@{/debut(page=1)}">
-        <span>First</span>
-      </a>
-    </li>
+<!--      <a class="page-link" th:href="@{/debut(page=1)}">-->
+<!--        <span>First</span>-->
+<!--      </a>-->
+<!--    </li>-->
 
-    <li th:class="${debutEpisodePage.first} ? 'disabled'" class="page-item">
+<!--    <li th:class="${debutEpisodePage.first} ? 'disabled'" class="page-item">-->
 
-      <a class="page-link" th:href="${debutEpisodePage.first} ? '#' : @{/debut(page=${debutEpisodePage.number})}">
-        <span><</span> <!-- < -->
-      </a>
-    </li>
+<!--      <a class="page-link" th:href="${debutEpisodePage.first} ? '#' : @{/debut(page=${debutEpisodePage.number})}">-->
+<!--        <span><</span> &lt;!&ndash; < &ndash;&gt;-->
+<!--      </a>-->
+<!--    </li>-->
 
 
-    <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
-        th:class="${page == debutEpisodePage.number + 1} ? 'page-item active'" class="page-item">
-      <a class="page-link" th:text="${page}" th:href="@{/debut(page=${page})}"></a>
-    </li>
+<!--    <li th:each="page: ${#numbers.sequence(startPage, endPage)}"-->
+<!--        th:class="${page == debutEpisodePage.number + 1} ? 'page-item active'" class="page-item">-->
+<!--      <a class="page-link" th:text="${page}" th:href="@{/debut(page=${page})}"></a>-->
+<!--    </li>-->
 
 
-    <li th:class="${debutEpisodePage.last} ? 'disabled'">
-      <a class="page-link" th:href="${debutEpisodePage.last} ? '#' : @{/debut(page=${debutEpisodePage.number + 2})}">
-        <span>&gt;</span>
-      </a>
-    </li>
+<!--    <li th:class="${debutEpisodePage.last} ? 'disabled'">-->
+<!--      <a class="page-link" th:href="${debutEpisodePage.last} ? '#' : @{/debut(page=${debutEpisodePage.number + 2})}">-->
+<!--        <span>&gt;</span>-->
+<!--      </a>-->
+<!--    </li>-->
 
-    <li class="page-item">
-      <a class="page-link" th:href="@{/debut(page=${debutEpisodePage.totalPages})}">
-        <span>Last</span>
-      </a>
-    </li>
-  </ul>
-</div>
+<!--    <li class="page-item">-->
+<!--      <a class="page-link" th:href="@{/debut(page=${debutEpisodePage.totalPages})}">-->
+<!--        <span>Last</span>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
