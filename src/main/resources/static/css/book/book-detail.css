@@ -51,11 +51,15 @@
 .episode-detail-container .episode-list-wrap {padding: 1.35rem 0.625rem;}
 .episode-detail-container .episode-list-wrap .img-wrap {padding-right: 3rem;}
 .episode-detail-container .episode-list-wrap .img-wrap img {width: 6rem; height: 8.75rem; border-radius: 4px;}
+.episode-detail-container .episode-list-wrap .img-wrap img:hover {opacity: 0.5; transition: 0.2s ease;}
 .episode-detail-container .episode-list-wrap .detail-wrap {padding: 2.5rem 0.625rem; display: flex; flex-direction: column; justify-content: space-between;}
 .episode-detail-container .episode-list-wrap .detail-wrap .title-wrap {display: flex;}
 .episode-detail-container .episode-list-wrap .detail-wrap .title-wrap .badge-wrap {padding-right: 0.5rem;}
 .episode-detail-container .episode-list-wrap .detail-wrap .title-wrap .badge-wrap .badge-img {width: 2.25rem; height: 1.5rem; padding-top: 0.2rem;}
 .episode-detail-container .episode-list-wrap .detail-wrap .title-wrap h5 {font-size: 1.4rem; font-weight: 500; position: relative;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a {color: #212529;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a:link {color: #212529;}
 .episode-detail-container .episode-list-wrap .detail-wrap .date-wrap {display: flex;}
 .episode-detail-container .episode-list-wrap .detail-wrap .date-wrap .date {padding-right: 2rem;}
 .episode-detail-container .episode-list-wrap .detail-wrap .date-wrap span {font-size: 1.125rem; opacity: 0.6; font-weight: 400;}
