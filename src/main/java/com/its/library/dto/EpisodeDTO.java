@@ -50,6 +50,7 @@ public class EpisodeDTO {
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
     }
+
     public static EpisodeDTO agreeList(EpisodeEntity episodeEntity) {
         EpisodeDTO episodeDTO = new EpisodeDTO();
         episodeDTO.setId(episodeEntity.getId());
