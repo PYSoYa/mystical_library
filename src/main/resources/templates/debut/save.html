@@ -5,24 +5,86 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/save-form.css}">
+
+  <script th:src="@{/js/ckeditor.js}"></script>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<form action="/debut/save" method="post" enctype="multipart/form-data">
-  <select name="categoryId">
-    <option value="1">시</option><br>
-    <option value="2">에세이</option><br>
-    <option value="3">웹소설</option><br>
-    <input type="text" name="debutTitle" placeholder="제목"><br>
-    <textarea name="debutContents"  cols="30" rows="10"></textarea><br>
-    <textarea name="introduce"  cols="30" rows="10"></textarea><br>
-    <input type="text" name="feat" placeholder="함께하는 작가"><br>
-    <input type="file" name="debutImg"><br>
-    <input type="submit" value="글저장">
-  </select>
-</form>
+<main class="main-container">
+  <div class="save-form-container">
+    <div class="save-form-wrap">
+      <div class="save-form-div">
+        <div class="save-form">
+          <form class="form-to-save" action="/debut/save" method="post" enctype="multipart/form-data">
+            <div class="select-list-wrap">
+              <div class="category-list-wrap">
+                <select name="categoryId" class="select-input">
+                  <option value="" selected>카테고리</option>
+                  <option value="1">웹소설</option>
+                  <option value="2">시</option>
+                  <option value="3">에세이</option>
+                </select>
+              </div>
+              <div class="feat-wrap">
+                <input type="text" name="feat" class="feat" placeholder="공동작업 작가(필요 시)">
+              </div>
+            </div>
+            <div class="title-wrap">
+              <div class="title-wrapper">
+                <label class="title">도서명</label>
+              </div>
+              <div class="input-wrap">
+                <input type="text" name="debutTitle" class="title" placeholder="도서명을 입력해주세요.">
+              </div>
+            </div>
+            <div class="intro-wrap">
+              <div class="intro-wrapper">
+                <label class="intro">소개글</label>
+              </div>
+              <div class="input-wrap">
+                <textarea maxlength="500" onkeyup="resize(this)" class="intro" name="introduce" placeholder="소개글을 입력해주세요."></textarea>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <textarea id="editor" name="debutContents" placeholder="내용을 입력해주세요."></textarea>
+            </div>
+            <div class="file-and-btn-wrap">
+              <div class="file-wrap">
+                <div class="title-wrap">
+                  <label class="title">표지 사진</label>
+                </div>
+                <div class="input-wrap">
+                  <input type="file" name="debutImg">
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrap debut-btn">
+              <div class="btn-wrapper">
+                <button type="submit" class="submit-btn">저장 요청</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  ClassicEditor
+      .create(document.getElementById('editor'))
+      .catch(err => {
+        console.error('error');
+      });
+
+  const resize = (obj) => {
+    obj.style.height = '11.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+</script>
 </html>
