@@ -18,14 +18,14 @@
         <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <a href="javascript:;" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
-          <li><a th:href="@{/book/genre?genreId=1}" class="dropdown-item">판타지</a></li>
-          <li><a th:href="@{/book/genre?genreId=2}" class="dropdown-item">현대판타지</a></li>
-          <li><a th:href="@{/book/genre?genreId=3}" class="dropdown-item">로맨스</a></li>
-          <li><a th:href="@{/book/genre?genreId=4}" class="dropdown-item">로맨스판타지</a></li>
-          <li><a th:href="@{/book/genre?genreId=5}" class="dropdown-item">무협</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">현대판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">로맨스</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">로맨스판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
@@ -73,9 +73,8 @@
           <span class="genre-list-title">로맨스</span>
         </div>
         <div class="order-btn-wrap">
-          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=1|}" class="order-btn">조회순</a>
-          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=2|}" class="order-btn">평점순</a>
-          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=3|}" class="order-btn">최신순</a>
+          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=1|}" class="order-btn">최신순</a>
+          <a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=2|}" class="order-btn">별점순</a>
         </div>
       </div>
     </div>

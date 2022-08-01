@@ -35,11 +35,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     List<BookEntity> findByGenreEntityOrderByStarDesc(GenreEntity genreEntity);
 
+    List<BookEntity> findByGenreEntityOrderByHitsDesc(GenreEntity genreEntity);
+
     List<BookEntity> findByEpisodeEntityList(EpisodeEntity episodeEntity);
     List<BookEntity> findByCategoryEntity(CategoryEntity categoryEntity);
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "update BookEntity b set b.hits = b.hits + 1 where ")
-//    void bookHits(EpisodeEntity episodeEntity);
 }
