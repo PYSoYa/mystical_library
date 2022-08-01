@@ -173,31 +173,31 @@ public class DebutService {
         }
     }
 
-    @Transactional
-    public Page<DebutEpisodeDTO> poemList(Long categoryId, Pageable pageable) {
-        Optional<DebutCategoryEntity> optionalCategoryEntity = debutCategoryRepository.findById(categoryId);
-        DebutCategoryEntity debutCategoryEntity = new DebutCategoryEntity();
-        if (optionalCategoryEntity.isPresent()) {
-            debutCategoryEntity = optionalCategoryEntity.get();
-        }
-
-        int page = pageable.getPageNumber();
-        page = (page == 1) ? 0 : (page - 1);
-
-        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findByDebutCategoryEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), debutCategoryEntity);
-        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutEpisodeEntityPage.map(
-                debutEpisode -> new DebutEpisodeDTO(
-                        debutEpisode.getId(),
-                        debutEpisode.getDebutCategoryEntity().getId(),
-                        debutEpisode.getDebutTitle(),
-                        debutEpisode.getMemberEntity().getMemberName(),
-                        debutEpisode.getFeat(),
-                        debutEpisode.getIntroduce(),
-                        debutEpisode.getDebutHits(),
-                        debutEpisode.getDebutImgName()
-                ));
-        return debutEpisodeDTOPage;
-    }
+//    @Transactional
+//    public Page<DebutEpisodeDTO> poemList(Long categoryId, Pageable pageable) {
+//        Optional<DebutCategoryEntity> optionalCategoryEntity = debutCategoryRepository.findById(categoryId);
+//        DebutCategoryEntity debutCategoryEntity = new DebutCategoryEntity();
+//        if (optionalCategoryEntity.isPresent()) {
+//            debutCategoryEntity = optionalCategoryEntity.get();
+//        }
+//
+//        int page = pageable.getPageNumber();
+//        page = (page == 1) ? 0 : (page - 1);
+//
+//        Page<DebutEpisodeEntity> debutEpisodeEntityPage = debutRepository.findByDebutCategoryEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), debutCategoryEntity);
+//        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutEpisodeEntityPage.map(
+//                debutEpisode -> new DebutEpisodeDTO(
+//                        debutEpisode.getId(),
+//                        debutEpisode.getDebutCategoryEntity().getId(),
+//                        debutEpisode.getDebutTitle(),
+//                        debutEpisode.getMemberEntity().getMemberName(),
+//                        debutEpisode.getFeat(),
+//                        debutEpisode.getIntroduce(),
+//                        debutEpisode.getDebutHits(),
+//                        debutEpisode.getDebutImgName()
+//                ));
+//        return debutEpisodeDTOPage;
+//    }
 
     @Transactional
     public List<DebutEpisodeDTO> categoryList(Long categoryId) {
@@ -210,7 +210,6 @@ public class DebutService {
                 DebutEpisodeEntity debutEpisodeEntity1 =debutEpisodeEntity;
                DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
                debutEpisodeDTOS.add(debutEpisodeDTO);
-                System.out.println("debutEpisodeDTO = " + debutEpisodeDTO);
             }
             return debutEpisodeDTOS;
         }
