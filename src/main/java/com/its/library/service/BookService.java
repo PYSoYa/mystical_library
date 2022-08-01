@@ -348,13 +348,17 @@ public class BookService {
             bookEntityList = bookRepository.findByGenreEntity(genreEntity);
             for (BookEntity book : bookEntityList) {
                 episodeEntityList = episodeRepository.findByBookEntityOrderByCreatedDateTimeDesc(book);
-                for (EpisodeEntity episode : episodeEntityList) {
-                    episodeDTOList.add(EpisodeDTO.findDTO(episode));
-                }
             }
-//            for (int i = 0; i < episodeDTOList.size(); i++) {
-//                bookDTOList.add(EpisodeDTO.findDTO(episodeDTOList.get(i)));
-//            }
+            for (EpisodeEntity episode : episodeEntityList) {
+                episodeDTOList.add(EpisodeDTO.findDTO(episode));
+            }
+                for (int i = 0; i < episodeDTOList.size(); i++) {
+                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTOList.get(i).getBookId());
+                    if (optionalBookEntity.isPresent()) {
+                        bookEntity = optionalBookEntity.get();
+                        bookDTOList.add(BookDTO.findDTO(bookEntity));
+                    }
+                }
         } else if (alignmentId == 2) { // 장르별 별점순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
             for (BookEntity book : bookEntityList) {

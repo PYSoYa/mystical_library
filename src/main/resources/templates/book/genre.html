@@ -21,11 +21,11 @@
         <a href="javascript:;" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
-          <li><a th:href="@{|/book/genre?genreId=1&alignmentId=0|}" class="dropdown-item">판타지</a></li>
-          <li><a th:href="@{|/book/genre?genreId=2&alignmentId=0|}" class="dropdown-item">현대판타지</a></li>
-          <li><a th:href="@{|/book/genre?genreId=3&alignmentId=0|}" class="dropdown-item">로맨스</a></li>
-          <li><a th:href="@{|/book/genre?genreId=4&alignmentId=0|}" class="dropdown-item">로맨스판타지</a></li>
-          <li><a th:href="@{|/book/genre?genreId=5&alignmentId=0|}" class="dropdown-item">무협</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">현대판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">로맨스</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">로맨스판타지</a></li>
+          <li><a th:href="@{|/book/genre?genreId=${genreId}&alignmentId=0|}" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
