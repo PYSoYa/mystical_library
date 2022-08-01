@@ -30,4 +30,6 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
     @Modifying
     @Query(value = "select e from EpisodeEntity e where e.bookEntity.id = :bookId order by e.createdDateTime desc")
     List<EpisodeEntity> findByBookEntityId(@Param("bookId") Long bookId);
+
+    List<EpisodeEntity> findByBookEntityOrderByCreatedDateTimeDesc(BookEntity bookEntity);
 }
