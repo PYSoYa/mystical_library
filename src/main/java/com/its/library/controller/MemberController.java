@@ -1,8 +1,6 @@
 package com.its.library.controller;
 
-import com.its.library.dto.BookDTO;
 import com.its.library.dto.MemberDTO;
-import com.its.library.dto.WishlistDTO;
 import com.its.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

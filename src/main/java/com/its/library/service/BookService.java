@@ -142,6 +142,7 @@ public class BookService {
                         episode.getPayment(),
                         episode.getHits(),
                         episode.getWriterRole(),
+                        episode.getStar(),
                         episode.getCreatedDateTime()
                 ));
 

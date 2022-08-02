@@ -23,9 +23,10 @@ public class EpisodeDTO {
     private int payment;
     private int episodeHits;
     private int writerRole;
+    private double star;
     private LocalDateTime createdTime;
 
-    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int writerRole, LocalDateTime createdTime) {
+    public EpisodeDTO(Long id, Long bookId, String episodeTitle, String episodeContents, String episodeImgName, int payment, int episodeHits, int writerRole, double star, LocalDateTime createdTime) {
         this.id = id;
         this.bookId = bookId;
         this.episodeTitle = episodeTitle;
@@ -34,6 +35,7 @@ public class EpisodeDTO {
         this.payment = payment;
         this.episodeHits = episodeHits;
         this.writerRole = writerRole;
+        this.star = star;
         this.createdTime = createdTime;
     }
 

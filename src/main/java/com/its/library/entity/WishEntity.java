@@ -1,6 +1,6 @@
 package com.its.library.entity;
 
-import com.its.library.dto.WishlistDTO;
+import com.its.library.dto.WishDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,17 +26,17 @@ public class WishEntity {
     @Column(name = "memberName",length = 20)
     private String memberName;
 
-    public static WishEntity saveWriterEntity(WishlistDTO wishlistDTO, MemberEntity memberEntity) {
+    public static WishEntity saveWriterEntity(WishDTO wishDTO, MemberEntity memberEntity) {
         WishEntity wishEntity = new WishEntity();
         wishEntity.setMemberEntity(memberEntity);
-        wishEntity.setMemberName(wishlistDTO.getMemberName());
+        wishEntity.setMemberName(wishDTO.getMemberName());
         return wishEntity;
     }
 
-    public static WishEntity saveBookEntity(WishlistDTO wishlistDTO, BookEntity bookEntity) {
+    public static WishEntity saveBookEntity(WishDTO wishDTO, BookEntity bookEntity) {
         WishEntity wishEntity = new WishEntity();
         wishEntity.setBookEntity(bookEntity);
-        wishEntity.setMemberName(wishlistDTO.getMemberName());
+        wishEntity.setMemberName(wishDTO.getMemberName());
         return wishEntity;
     }
 

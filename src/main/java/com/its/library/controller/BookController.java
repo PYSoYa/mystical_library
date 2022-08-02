@@ -2,8 +2,7 @@ package com.its.library.controller;
 
 import com.its.library.common.PagingConst;
 import com.its.library.dto.*;
-import com.its.library.service.BookService;
-import com.its.library.service.CommentService;
+import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,8 +22,10 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-
     private final CommentService commentService;
+    private final HistoryService historyService;
+    private final WishService wishService;
+    private final MemberService memberService;
 
     // 책 저장페이지 요청
     @GetMapping("/book-save-form")
@@ -174,13 +176,18 @@ public class BookController {
     // 책 상세조회 + 회차목록 페이징
     @GetMapping("/book/{id}")
     public String bookDetail(@PageableDefault(page = 1) Pageable pageable,
-                             @PathVariable("id") Long id, Model model) {
+                             @PathVariable("id") Long id, Model model, HttpSession session) {
         BookDTO bookDTO = bookService.findById(id);
         model.addAttribute("book", bookDTO);
         List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
         model.addAttribute("commentList", commentDTOList);
         Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
         model.addAttribute("episodeList", episodeDTOList);
+        String sessionName = (String) session.getAttribute("name");
+        MemberDTO memberDTO = memberService.findByMemberName(sessionName);
+        List<WishDTO> wishDTOList = wishService.findByMemberName(memberDTO.getMemberName(), id);
+            model.addAttribute("wishlist", wishDTOList);
+
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);
