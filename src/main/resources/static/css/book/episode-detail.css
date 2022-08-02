@@ -171,6 +171,16 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
   position: relative;
   cursor: default;
 }
+.inner-wrap::-webkit-scrollbar {
+  height: 380px;
+  background-color: #f5f5f5;
+  position: relative;
+}
+.inner-wrap::-webkit-scrollbar-thumb {
+  height: 42px;
+  background-color: #ddd;
+  cursor: pointer;
+}
 .quick-list-nav .outer .inner .inner-wrap .inner-content {
   padding: 0;
   width: 804px;
