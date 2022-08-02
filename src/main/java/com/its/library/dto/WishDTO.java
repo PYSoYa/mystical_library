@@ -8,17 +8,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishlistDTO {
+public class WishDTO {
 
     private Long id;
     private Long memberId;
     private Long bookId;
     private String memberName;
 
-    public static WishlistDTO findBookDTO(WishEntity wishEntity) {
-        WishlistDTO wishlistDTO = new WishlistDTO();
-        wishlistDTO.setBookId(wishEntity.getBookEntity().getId());
-        wishlistDTO.setMemberName(wishEntity.getMemberName());
-        return wishlistDTO;
+    public static WishDTO findBookDTO(WishEntity wishEntity) {
+        WishDTO wishDTO = new WishDTO();
+        wishDTO.setBookId(wishEntity.getBookEntity().getId());
+        wishDTO.setMemberName(wishEntity.getMemberName());
+        return wishDTO;
     }
 }

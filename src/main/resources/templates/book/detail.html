@@ -11,26 +11,6 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<table th:each="episode:${episodeList}">
-  <tr>
-    <td th:text="${episode.episodeTitle}"></td>
-    <td><input type="button" th:onclick="priceMoney([[${episode.id}]])" value="버튼"></td>
-  </tr>
-</table>
-
-<div class="profile-heart-wrap">
-  <div class="heart">
-    <a id="loveChange" th:onclick="bookLove()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-heart empty-heart" viewBox="0 0 16 16">
-        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-      </svg>
-      <!--          꽉찬하트 <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-heart-fill full-heart" viewBox="0 0 16 16">-->
-      <!--                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
-      <!--              </svg>-->
-    </a>
-  </div>
-</div>
-
 <div id="test">
   <table th:each="comment:${commentList}">
     <tr>
@@ -59,8 +39,11 @@
         <div class="detail-wrap">
           <div class="title-wrap">
             <h2 class="title" th:text="${book.bookTitle}"></h2>
-            <div class="wishlist-wrap">
-              <button type="button" class="wishlist-btn">+ 관심</button>
+            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == session.name}">
+              <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
+            </div>
+            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != session.name}">
+              <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
             </div>
           </div>
           <div class="author-wrap">
@@ -90,7 +73,7 @@
             <button type="button" class="first-btn">첫 화 보기</button>
           </div>
           <div class="continue-btn-wrap">
-            <button type="button" class="continue-btn">이어보기</button>
+            <button type="button" class="continue-btn" th:onclick="">이어보기</button>
           </div>
           <div class="more-detail-wrap">
             <div class="hits-wrap">
@@ -144,28 +127,28 @@
       <div class="quantity-episode-wrap">
         <span class="quantity-episode">전체 (92)</span>
       </div>
-      <div class="episode-list-wrap">
+      <div class="episode-list-wrap" th:each="episode:${episodeList}">
         <div class="img-wrap">
-          <a href="#" class="img-link">
-            <img th:src="@{/img/book_img_1.jpeg}" alt="">
+          <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="img-link">
+            <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
           </a>
         </div>
         <div class="detail-wrap">
           <div class="title-wrap">
-            <div class="badge-wrap">
+            <div class="badge-wrap" th:if="${episode.payment==0}">
               <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
             </div>
-            <a href="#" class="title-link">
-              <h5 class="title">제목 제목 제목 제목 제목</h5>
+            <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="title-link">
+              <h5 class="title" th:text="${episode.episodeTitle}"></h5>
             </a>
           </div>
           <div class="date-wrap">
-            <span class="date">2022. 08. 01</span>
+            <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
             <div class="star-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
               </svg>
-              <span class="star">7.56</span>
+              <span class="star" th:text="${episode.star}">7.56</span>
             </div>
           </div>
         </div>
@@ -306,14 +289,14 @@
       },
       dataType: "text",
       success: function (result) {
-          if (result === "ok") {
+          if (result === "잔고부족") {
             Swal.fire({
               icon: 'success',
               text: '보유하신 포인트가 부족합니다.',
               showConfirmButton: false,
               timer: 1500
             });
-          } else if (result === "no") {
+          } else if (result === "결제") {
             $.ajax({
               type: "post",
               url: "/box/save",
@@ -348,7 +331,6 @@
     const loveChange = document.getElementById("loveChange");
     const bookId = [[${book.id}]];
     const memberName = [[${session.name}]];
-
     $.ajax({
       type: "post",
       url: "/wish/check",
@@ -368,17 +350,15 @@
             },
             dataType: "text",
             success: function (result) {
+              const wishlist = document.querySelector(".wishlist-btn");
               if (result == "ok"){
-                var output ="<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart empty-heart\" viewBox=\"0 0 16 16\">" +
-                        "<path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>" +
-                        "</svg>";
-                loveChange.innerHTML = output;
                 Swal.fire({
                   icon: 'success',
                   text: '관심 목록에서 삭제했어요.',
                   showConfirmButton: false,
                   timer: 1500
                 });
+                wishlist.className = "wishlist-btn1";
               } else {
                 alert("실패");
               }
@@ -394,18 +374,15 @@
             },
             dataType: "text",
             success: function (result) {
+              const wishlist = document.querySelector(".wishlist-btn1");
               if (result == "ok") {
-
-                var output = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart-fill full-heart\" viewBox=\"0 0 16 16\">" +
-                        "<path fill-rule=\"evenodd\" d=\"M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z\"/>" +
-                        "</svg>";
-                loveChange.innerHTML = output;
                 Swal.fire({
                   icon: 'success',
                   text: '관심 목록에 해당 책을 등록했어요.',
                   showConfirmButton: false,
                   timer: 1500
                 });
+                wishlist.className = "wishlist-btn";
               } else {
                 alert("실패");
               }

@@ -58,6 +58,8 @@ public class HistoryService {
                 historyEntityList = historyRepository.findByBooKId(bookEntity.getId());
                 historyDTOList.add(HistoryDTO.findDTO(historyEntityList.get(0)));
             }
+        }
+        for (int i = 0; i < historyDTOList.size(); i++) {
             if (historyDTOList.get(i).getHidden() == 0) {
                 bookDTOList.add(BookDTO.findDTO(bookEntity));
             }
@@ -72,5 +74,9 @@ public class HistoryService {
             historyRepository.save(historyEntityList.get(i));
         }
         return "숨기기";
+    }
+
+    public void findByWishListBook(Long id) {
+
     }
 }

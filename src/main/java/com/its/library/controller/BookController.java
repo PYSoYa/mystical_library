@@ -24,8 +24,10 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-
     private final CommentService commentService;
+    private final HistoryService historyService;
+    private final WishService wishService;
+    private final MemberService memberService;
     private final NoticeService noticeService;
 
     // 책 저장페이지 요청
@@ -181,13 +183,18 @@ public class BookController {
     // 책 상세조회 + 회차목록 페이징
     @GetMapping("/book/{id}")
     public String bookDetail(@PageableDefault(page = 1) Pageable pageable,
-                             @PathVariable("id") Long id, Model model) {
+                             @PathVariable("id") Long id, Model model, HttpSession session) {
         BookDTO bookDTO = bookService.findById(id);
         model.addAttribute("book", bookDTO);
         List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
         model.addAttribute("commentList", commentDTOList);
         Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
         model.addAttribute("episodeList", episodeDTOList);
+        String sessionName = (String) session.getAttribute("name");
+        MemberDTO memberDTO = memberService.findByMemberName(sessionName);
+        List<WishDTO> wishDTOList = wishService.findByMemberName(memberDTO.getMemberName(), id);
+            model.addAttribute("wishlist", wishDTOList);
+
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
         model.addAttribute("startPage", startPage);

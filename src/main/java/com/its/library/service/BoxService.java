@@ -25,6 +25,8 @@ public class BoxService {
     public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
+        List<HistoryEntity> historyEntityList = new ArrayList<>();
+        List<Long> list = new ArrayList<>();
         MemberEntity memberEntity = new MemberEntity();
         HistoryEntity historyEntity = new HistoryEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
@@ -33,29 +35,51 @@ public class BoxService {
             episodeEntity = optionalEpisodeEntity.get();
 
             if (episodeEntity.getPrice() == 0) {
-                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                return "무료";
-            } else if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) {
-                return "ok";
-            } else {
-                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                return "no";
-            }
+                list = historyRepository.findByMemberId(memberEntity.getId());
+                if (list.size() == 0) {
+                    historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                    return "무료";
+                } else if (list.size() != 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!episodeId.equals(list.get(i))) { // 히스토리에 있는 회차와 들고온 회차가 같을때
+                            historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                            return "무료";
+                        } else {
+                            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByBooKIdAndMemberEntity(boxDTO.getBookId(), memberEntity);
+                            if (optionalHistoryEntity.isPresent()) {
+                                historyEntity = optionalHistoryEntity.get();
+                                if (historyEntity.getHidden() == 1) {
+                                    historyEntity.setHidden(0);
+                                    historyRepository.save(historyEntity);
+                                    return "무료";
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) { // 사용자 돈이 부족할때
+                return "잔고부족";
+            } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) { // 사용자 돈이 부족하지 않을때
+                list = historyRepository.findByMemberId(memberEntity.getId());
+                if (list.size() == 0) {
+                    historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                    return "결제";
+                } else if (list.size() != 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!episodeId.equals(list.get(i))) {
+                            historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                            return "결제";
+                        }
+                    }
+                }
 
-        }
-        Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByBooKIdAndMemberEntity(boxDTO.getBookId(), memberEntity);
-        if (optionalHistoryEntity.isPresent()) {
-            historyEntity = optionalHistoryEntity.get();
-            if (historyEntity.getHidden() == 1) {
-                historyEntity.setHidden(0);
-                historyRepository.save(historyEntity);
-                return "보여줘";
             } else {
                 return null;
             }
         } else {
             return null;
         }
+        return null;
     }
 
     public String save(BoxDTO boxDTO) {
