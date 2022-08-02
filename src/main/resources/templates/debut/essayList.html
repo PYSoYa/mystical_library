@@ -17,7 +17,7 @@
         <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <a href="javascript:;" class="category  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
           <li><a th:href="@{|/book/genre?genreId=1&alignmentId=0|}" class="dropdown-item">판타지</a></li>
@@ -50,7 +50,7 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
+        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/debut/main/0}" class="dropdown-item">데뷔글 메인</a></li>
           <li><a th:href="@{/debut/poem/1/0}" class="dropdown-item">시</a></li>
@@ -66,7 +66,7 @@
     <div class="genre-list-title-container">
       <div class="genre-list-title-wrap">
         <div class="genre-list-title-text">
-          <span class="genre-list-title">로맨스</span>
+          <span class="genre-list-title">에세이</span>
         </div>
         <div class="order-btn-wrap">
           <a th:href="@{/debut/essay/2/1}" class="order-btn">최신순</a>
@@ -106,8 +106,6 @@
               <span class="intro" th:text="${essay.introduce}"></span>
             </div>
             <div class="tag-wrap">
-              <span class="tag novel">웹소설</span>
-              <span class="tag poem">시</span>
               <span class="tag essay">에세이</span>
             </div>
           </div>
