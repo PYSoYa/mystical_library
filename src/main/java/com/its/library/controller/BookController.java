@@ -4,6 +4,7 @@ import com.its.library.common.PagingConst;
 import com.its.library.dto.*;
 import com.its.library.service.BookService;
 import com.its.library.service.CommentService;
+import com.its.library.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class BookController {
     private final BookService bookService;
 
     private final CommentService commentService;
+    private final NoticeService noticeService;
 
     // 책 저장페이지 요청
     @GetMapping("/book-save-form")
@@ -50,9 +53,12 @@ public class BookController {
 
     // 회차 저장처리
     @PostMapping("/req-episode-save")
-    public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
+    public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO, HttpSession session) throws IOException {
+
         Long id = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
+        noticeService.save(episodeDTO, Long.valueOf(session.getId()));
+
         return "redirect:/book/book/" + episodeDTO.getBookId();
     }
 

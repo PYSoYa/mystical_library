@@ -14,4 +14,8 @@ public interface WishRepository extends JpaRepository<WishEntity, Long> {
     Optional<WishEntity> findByBookEntityAndMemberName(BookEntity bookEntity, String memberName);
 
     List<WishEntity> findByMemberName(String memberName);
+
+
+
+    Optional<WishEntity> findByMemberEntity_IdAndBookEntity_Id(MemberEntity memberEntity, BookEntity bookEntity);
 }
