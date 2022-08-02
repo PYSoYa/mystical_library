@@ -31,13 +31,13 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     @Query(value = "select b from BookEntity b where b.bookTitle like %:q%")
     List<BookEntity> findByBookTitleContaining(@Param("q") String q);
 
-    List<BookEntity> findByGenreEntity(GenreEntity genreEntity);
+    @Transactional
+    @Query(value = "select * from book where genre_id = :genreId order by episode_update_time desc", nativeQuery = true)
+    List<BookEntity> findByGenreEntity(Long genreId);
 
     List<BookEntity> findByGenreEntityOrderByStarDesc(GenreEntity genreEntity);
 
     List<BookEntity> findByGenreEntityOrderByHitsDesc(GenreEntity genreEntity);
 
-    List<BookEntity> findByEpisodeEntityList(EpisodeEntity episodeEntity);
-    List<BookEntity> findByCategoryEntity(CategoryEntity categoryEntity);
 
 }

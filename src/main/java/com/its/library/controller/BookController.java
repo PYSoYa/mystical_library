@@ -167,6 +167,7 @@ public class BookController {
         List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
         System.out.println("bookDTOList = " + bookDTOList);
         model.addAttribute("bookList", bookDTOList);
+        model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
         return "book/genre";
     }
 
