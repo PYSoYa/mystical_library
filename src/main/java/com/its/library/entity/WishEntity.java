@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter@Getter
@@ -25,6 +27,8 @@ public class WishEntity {
 
     @Column(name = "memberName",length = 20)
     private String memberName;
+    @OneToMany(mappedBy = "wishEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 
     public static WishEntity saveWriterEntity(WishDTO wishDTO, MemberEntity memberEntity) {
         WishEntity wishEntity = new WishEntity();

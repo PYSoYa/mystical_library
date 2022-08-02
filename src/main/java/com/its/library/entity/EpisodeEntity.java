@@ -53,6 +53,8 @@ public class EpisodeEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "episodeEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<StarEntity> starEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "episodeEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 
     public static EpisodeEntity saveEntity(EpisodeDTO episodeDTO, BookEntity bookEntity) {
         EpisodeEntity episodeEntity = new EpisodeEntity();

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter@Setter
@@ -21,6 +23,8 @@ public class LoveEntity {
     private Long debutId;
     @Column(name = "love")
     private int love;
+
+
 
     public static LoveEntity toSave(LoveDTO loveDTO, MemberEntity memberEntity) {
         LoveEntity loveEntity = new LoveEntity();

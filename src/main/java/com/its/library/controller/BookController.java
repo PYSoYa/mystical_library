@@ -2,7 +2,9 @@ package com.its.library.controller;
 
 import com.its.library.common.PagingConst;
 import com.its.library.dto.*;
-import com.its.library.service.*;
+import com.its.library.service.BookService;
+import com.its.library.service.CommentService;
+import com.its.library.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,7 @@ public class BookController {
     private final HistoryService historyService;
     private final WishService wishService;
     private final MemberService memberService;
+    private final NoticeService noticeService;
 
     // 책 저장페이지 요청
     @GetMapping("/book-save-form")
@@ -52,9 +55,13 @@ public class BookController {
 
     // 회차 저장처리
     @PostMapping("/req-episode-save")
-    public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
-        Long id = bookService.reqEpisodeSave(episodeDTO);
+    public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO, HttpSession session) throws IOException {
+
+        EpisodeDTO episodeDTO1= bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
+        Long memberId = (Long) session.getAttribute("id");
+        noticeService.save(episodeDTO1,memberId);
+
         return "redirect:/book/book/" + episodeDTO.getBookId();
     }
 
