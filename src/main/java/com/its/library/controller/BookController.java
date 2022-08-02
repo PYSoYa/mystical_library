@@ -55,9 +55,10 @@ public class BookController {
     @PostMapping("/req-episode-save")
     public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO, HttpSession session) throws IOException {
 
-        Long id = bookService.reqEpisodeSave(episodeDTO);
+        EpisodeDTO episodeDTO1= bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
-        noticeService.save(episodeDTO, Long.valueOf(session.getId()));
+        Long memberId = (Long) session.getAttribute("id");
+        noticeService.save(episodeDTO1,memberId);
 
         return "redirect:/book/book/" + episodeDTO.getBookId();
     }

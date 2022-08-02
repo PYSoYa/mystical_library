@@ -72,7 +72,7 @@ public class BookService {
         }
     }
 
-    public Long reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
+    public EpisodeDTO reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
         MultipartFile episodeImg = episodeDTO.getEpisodeImg();
         String episodeImgName = episodeImg.getOriginalFilename();
         episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
@@ -87,11 +87,12 @@ public class BookService {
             BookEntity bookEntity = optionalBookEntity.get();
 
             EpisodeEntity episodeEntity = EpisodeEntity.saveEntity(episodeDTO, bookEntity);
-            Long id = episodeRepository.save(episodeEntity).getId();
+            EpisodeEntity episodeEntity1 =  episodeRepository.save(episodeEntity);
+            EpisodeDTO episodeDTO1 = EpisodeDTO.findDTO(episodeEntity1);
             bookEntity.setEpisodeUpdateTime(episodeEntity.getCreatedDateTime());
             bookRepository.save(bookEntity);
 
-            return id;
+            return episodeDTO1;
         } else {
             return null;
         }

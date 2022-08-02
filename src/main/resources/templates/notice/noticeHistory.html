@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<table>
+    <tr>
+        <td>알림번호</td>
+        <td>회원번호</td>
+        <td>회차제목</td>
+        <td>시간</td>
+        <td>에피소드번호</td>
+        <td>위시리트스번호</td>
+
+    </tr>
+    <tr th:each="noitce:${noticeList}">
+        <td th:text="${noitce.id}"></td>
+        <td th:text="${noitce.memberId}"></td>
+        <td th:text="${noitce.episodeTitle}"></td>
+        <td th:text="${noitce.createdTime}"></td>
+        <td th:text="${noitce.episodeId}"></td>
+        <td th:text="${noitce.wishId}"></td>
+        <td th:text="${noitce.read}" hidden></td>
+
+
+    </tr>
+
+</table>
+</body>
+</html>
