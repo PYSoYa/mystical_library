@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
-
+  <link rel="stylesheet" th:href="@{/css/book/genre.css}">
   <link rel="stylesheet" th:href="@{/css/book/category.css}">
   <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
@@ -19,7 +19,7 @@
         <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <a href="javascript:void(0)" class="category  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
           <li><a th:href="@{/book/genre?genreId=1}" class="dropdown-item">판타지</a></li>
@@ -52,14 +52,12 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
+        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">데뷔글 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a th:href="@{/debut/main/0}" class="dropdown-item">데뷔글 메인</a></li>
+          <li><a th:href="@{/debut/poem/1/0}" class="dropdown-item">시</a></li>
+          <li><a th:href="@{/debut/essay/2/0}" class="dropdown-item">에세이</a></li>
+          <li><a th:href="@{/debut/web/3/0}" class="dropdown-item">웹소설</a></li>
         </ul>
       </li>
     </ul>
@@ -125,6 +123,11 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                     </svg>
                     <span class="star" th:text="(${poem.love})"></span>
+                    <div class="tag-wrap">
+                      <span th:if="${poem.categoryId eq 1}" class="tag poem">시</span>
+                      <span th:if="${poem.categoryId eq 2}" class="tag essay">에세이</span>
+                      <span th:if="${poem.categoryId eq 3}" class="tag novel">웹소설</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -138,7 +141,7 @@
     <div class="recent-completion-title-container">
       <div class="recent-completion-title-wrap">
         <div class="recent-completion-title-text">
-          <span class="recent-completion-title">에세이</span>
+          <span class="recent-completion-title">데뷔글</span>
         </div>
       </div>
     </div>
@@ -160,7 +163,12 @@
                     <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                     </svg>
-                    <span class="star" th:text="${essay.love}"></span>
+                    <span class="heart" th:text="${essay.love}"></span>
+                    <div class="tag-wrap">
+                      <span th:if="${essay.categoryId eq 1}" class="tag poem">시</span>
+                      <span th:if="${essay.categoryId eq 2}" class="tag essay">에세이</span>
+                      <span th:if="${essay.categoryId eq 3}" class="tag novel">웹소설</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -197,6 +205,11 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                     </svg>
                     <span class="star" th:text="${web.love}"></span>
+                    <div class="tag-wrap">
+                      <span th:if="${web.categoryId eq 1}" class="tag poem">시</span>
+                      <span th:if="${web.categoryId eq 2}" class="tag essay">에세이</span>
+                      <span th:if="${web.categoryId eq 3}" class="tag novel">웹소설</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -210,4 +223,12 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  window.onload = function () {
+    const slideClick =  () => {
+      document.getElementById('move-slider').click();
+    }
+    setTimeout(slideClick, 5000);
+  }
+</script>
 </html>

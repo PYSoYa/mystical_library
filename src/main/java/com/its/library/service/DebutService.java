@@ -84,15 +84,26 @@ public class DebutService {
     }
 
     // 데뷔글 업데이트 처리
-    public void update(DebutEpisodeDTO debutEpisodeDTO) {
+    public void update(DebutEpisodeDTO debutEpisodeDTO) throws IOException {
+
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutEpisodeDTO.getMemberId());
         Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
+            MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
+            String debutImgName = debutImg.getOriginalFilename();
+            debutImgName = System.currentTimeMillis() + "_" + debutImgName;
+            String savePath = "C:\\springboot_img\\" + debutImgName;
+            if (!debutImg.isEmpty()) {
+                debutImg.transferTo(new File(savePath));
+                debutEpisodeDTO.setDebutImgName(debutImgName);
+            }
             if (optionalDebutCategoryEntity.isPresent()) {
                 DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
                 DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutCategoryEntity, debutEpisodeDTO, memberEntity);
+                System.out.println("debutEpisodeEntity = " + debutEpisodeEntity);
                 debutRepository.save(debutEpisodeEntity);
+                
             }
 
         }
@@ -200,20 +211,76 @@ public class DebutService {
 //    }
 
     @Transactional
-    public List<DebutEpisodeDTO> categoryList(Long categoryId) {
-        Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(categoryId);
-        if (optionalDebutCategoryEntity.isPresent()) {
-            DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
-            List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByDebutCategoryEntity(debutCategoryEntity);
-            List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
-            for (DebutEpisodeEntity debutEpisodeEntity:debutEpisodeEntityList){
-                DebutEpisodeEntity debutEpisodeEntity1 =debutEpisodeEntity;
-               DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
-               debutEpisodeDTOS.add(debutEpisodeDTO);
-            }
-            return debutEpisodeDTOS;
+    public List<DebutEpisodeDTO> categoryList(Long categoryId, int addressId) {
+        switch (addressId) {
+            case 0:
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity0 = debutCategoryRepository.findById(categoryId);
+                if (optionalDebutCategoryEntity0.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity0.get();
+                    List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByDebutCategoryEntity(debutCategoryEntity);
+                    List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+                    for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
+                        DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+                        DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+                        debutEpisodeDTOS.add(debutEpisodeDTO);
+
+
+                    }
+                    return debutEpisodeDTOS;
+
+                }
+            case 1:
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity1 = debutCategoryRepository.findById(categoryId);
+                if (optionalDebutCategoryEntity1.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity1.get();
+                    List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.oderByNew(debutCategoryEntity.getId());
+                    List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+                    for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
+                        DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+                        DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+                        debutEpisodeDTOS.add(debutEpisodeDTO);
+
+
+                    }
+                    return debutEpisodeDTOS;
+
+                }
+            case 2:
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity2 = debutCategoryRepository.findById(categoryId);
+                if (optionalDebutCategoryEntity2.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity2.get();
+                    List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.orderByHits(debutCategoryEntity.getId());
+                    List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+                    for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
+                        DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+                        DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+                        debutEpisodeDTOS.add(debutEpisodeDTO);
+
+
+                    }
+                    return debutEpisodeDTOS;
+
+                }
+            case 3:
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity3 = debutCategoryRepository.findById(categoryId);
+                if (optionalDebutCategoryEntity3.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity3.get();
+                    List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.orderByLove(debutCategoryEntity.getId());
+                    List<DebutEpisodeDTO> debutEpisodeDTOS = new ArrayList<>();
+                    for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
+                        DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+                        DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
+                        debutEpisodeDTOS.add(debutEpisodeDTO);
+
+
+                    }
+                    return debutEpisodeDTOS;
+
+                }
+                break;
         }
         return null;
     }
+
 
 }

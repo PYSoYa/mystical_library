@@ -58,7 +58,7 @@ public class DebutController {
 
     //데뷔글 업데이트 처리
     @PostMapping("/update")
-    public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO) {
+    public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO) throws IOException {
         debutService.update(debutEpisodeDTO);
         return "index";
     }
@@ -94,34 +94,39 @@ public class DebutController {
 //        model.addAttribute("endPage", endPage);
 //        return "debut/poemPagingList";
 //    }
-    @GetMapping("/poem/{category}")
-    public String poemList(@PathVariable("category")Long categoryId,Model model) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
+    @GetMapping("/poem/{category}/{addressId}")
+    public String poemList(@PathVariable("category")Long categoryId,Model model,@PathVariable("addressId")int addressId) {
+
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("poemList", debutEpisodeDTOList);
+        System.out.println("poemList = " + debutEpisodeDTOList);
         return "debut/poemList";
 
     }
     //데뷔글 에세이 리스트
-    @GetMapping("/essay/{category}")
-    public String essayList(@PathVariable("category")Long categoryId,Model model) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
+    @GetMapping("/essay/{category}/{addressId}")
+    public String essayList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("essayList", debutEpisodeDTOList);
+        System.out.println("essayList = " + debutEpisodeDTOList);
         return "debut/essayList";
 
     }
     //데뷔글 웹소설 리스트
-    @GetMapping("/web/{category}")
-    public String webList(@PathVariable("category")Long categoryId,Model model) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId);
+    @GetMapping("/web/{category}/{addressId}")
+    public String webList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
         model.addAttribute("webList", debutEpisodeDTOList);
+        System.out.println("webList = " + debutEpisodeDTOList);
         return "debut/webList";
 
     }
-    @GetMapping("/main")
-    public String mainPage(Model model){
-       List<DebutEpisodeDTO> poemList = debutService.categoryList(1L);
-        List<DebutEpisodeDTO> essayList = debutService.categoryList(2L);
-        List<DebutEpisodeDTO> webList = debutService.categoryList(3L);
+    //데뷔글 매인 addressId=0 기본
+    @GetMapping("/main/{addressId}")
+    public String mainPage(Model model ,@PathVariable("addressId")int addressId){
+       List<DebutEpisodeDTO> poemList = debutService.categoryList(1L,addressId);
+        List<DebutEpisodeDTO> essayList = debutService.categoryList(2L,addressId);
+        List<DebutEpisodeDTO> webList = debutService.categoryList(3L,addressId);
         model.addAttribute("poemList",poemList);
         model.addAttribute("essayList",essayList);
         model.addAttribute("webList",webList);
