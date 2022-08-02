@@ -1,185 +1,93 @@
 .book-episode-comment-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
-.book-detail-container {
-  font-size: 15px;
-  line-height: 20px;
-  min-height: 316px;
-  position: relative;
-  margin-top: 1.25rem;
-  display: flex;
-  padding: 0.625rem;
-}
-.book-detail-container .book-img-wrap {
-  width: 216px;
-  height: 316px;
-  margin-right: 4rem;
-}
-.book-detail-container .book-img-wrap .img {
-  width: 216px;
-  height: 316px;
-  padding: 0;
-  border-radius: 4px;
-}
+.book-episode-comment-container > div:not(:last-child) {margin-bottom: 2rem;}
+.book-detail-container {font-size: 0.938rem; line-height: 1.25rem; min-height: 316px; position: relative; margin-top: 1.25rem; display: flex; padding: 0.625rem;}
+.book-detail-container .book-img-wrap {width: 13.5rem; height: 19.75rem; margin-right: 4rem;}
+.book-detail-container .book-img-wrap .img {width: 15.5rem; height: 22.6rem; padding: 0; border-radius: 4px;}
 
+.book-detail-wrap {width: 100%;}
+.book-detail-wrap .detail-wrap .title-wrap {width: 100%; display: flex; position: relative;}
+.book-detail-wrap .detail-wrap .title-wrap h2 {font-size: 2.225rem; font-weight: 600;}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap {margin-left: auto; padding: 0.125rem 4.25rem 0.125rem 0.125rem;}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button {position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 100%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
 
-.book-detail-wrap {
-  width: 100%;
-}
-.book-detail-wrap .detail-wrap .title-wrap {
-  width: 100%;
-  display: flex;
-  position: relative;
-}
-.book-detail-wrap .detail-wrap .title-wrap h2 {
-  font-size: 2.225rem;
-  font-weight: 600;
-}
-.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap {
-  margin-left: auto;
-  padding: 0.125rem 1.325rem 0.125rem 0.125rem;
-}
-.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button {
-  position: relative;
-  border: none;
-  outline: none;
-  border-radius: 0.188rem;
-  width: 8rem;
-  height: 100%;
-  color: #faf7eb;
-  background-color: #1e9eff;
-  font-size: 1.125rem;
-  letter-spacing: 0.013rem;
-  box-shadow: 0 0.125rem 0.313rem #00000026;
-}
-.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button:hover {
-  opacity: 0.5;
-  transition: 0.2s ease;
-}
-
-
-.book-detail-wrap .detail-wrap .author-wrap {
-  display: flex;
-  padding: 1rem 0;
-  font-size: 1.1rem;
-  line-height: 1.125rem;
-  font-weight: 400;
-  white-space: nowrap;
-}
-.book-detail-wrap .detail-wrap .author-wrap > div:not(:last-child) {
-  margin-right: 0;
-}
-.book-detail-wrap .detail-wrap .author-wrap a {
-  color: #212529;
-}
-.book-detail-wrap .detail-wrap .author-wrap a:hover {
-  opacity: 0.5;
-  transition: 0.2s ease;
-}
+.book-detail-wrap .detail-wrap .author-wrap {display: flex; padding: 1rem 0; font-size: 1.1rem; line-height: 1.125rem; font-weight: 400; white-space: nowrap;}
+.book-detail-wrap .detail-wrap .author-wrap > div:not(:last-child) {margin-right: 0;}
+.book-detail-wrap .detail-wrap .author-wrap a {color: #212529;}
+.book-detail-wrap .detail-wrap .author-wrap a:hover {opacity: 0.5; transition: 0.2s ease;}
 .book-detail-wrap .detail-wrap .author-wrap a::after,
-.book-detail-wrap .detail-wrap .author-wrap > div > span::after {
-  content: "·";
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-.book-detail-wrap .detail-wrap .author-wrap > div > .status::after {
-  content: '';
-  width: 0;
-  height: 0;
-}
+.book-detail-wrap .detail-wrap .author-wrap > div > span::after {content: "·"; margin-left: 1rem; margin-right: 1rem;}
+.book-detail-wrap .detail-wrap .author-wrap > div > .status::after {content: ''; width: 0; height: 0;}
 
-.book-detail-wrap .detail-wrap .intro-wrap {
-  padding-top: 1.5rem;
-  word-break: keep-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  font-size: 1.125rem;
-  line-height: 2rem;
-  min-height: 100px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.471);
-}
-.book-detail-wrap .detail-wrap .tag-wrap {
-  padding-top: 1.5rem;
-}
-.book-detail-wrap .detail-wrap .tag-wrap > span:not(:last-child) {
-  margin-right: 1rem;
-}
-.book-detail-wrap .detail-wrap .tag-wrap .tag {
-  padding: 4px;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 1rem;
-}
+.book-detail-wrap .detail-wrap .intro-wrap {padding-right: 4rem; padding-top: 1.5rem; word-break: keep-all; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; position: relative; font-size: 1.125rem; line-height: 2rem; min-height: 100px; font-weight: 400; color: rgba(0, 0, 0, 0.471);}
+.book-detail-wrap .detail-wrap .tag-wrap {padding-top: 1.5rem;}
+.book-detail-wrap .detail-wrap .tag-wrap > span:not(:last-child) {margin-right: 1rem;}
+.book-detail-wrap .detail-wrap .tag-wrap .tag {padding: 0.25REM; border-radius: 4px; color: #fff; font-size: 1rem;}
 .book-detail-wrap .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
 .book-detail-wrap .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
 .book-detail-wrap .detail-wrap .tag-wrap .essay {background-color: #ff702a;}
 
+.book-detail-wrap .action-wrap {padding-top: 2.5rem; display: flex; height: 6rem;}
+.book-detail-wrap .action-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
+.book-detail-wrap .action-wrap .first-btn {position: relative; border: none; outline: none; border-radius: 0.188rem; width: 13rem; height: 90%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026; margin-right: 4rem;}
+.book-detail-wrap .action-wrap .continue-btn {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 13rem; height: 90%; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 
-.book-detail-wrap .action-wrap {
-  padding-top: 2.5rem;
-  display: flex;
-  height: 6rem;
-}
-.book-detail-wrap .action-wrap button:hover {
-  opacity: 0.5;
-  transition: 0.2s ease;
-}
-.book-detail-wrap .action-wrap .first-btn {
-  position: relative;
-  border: none;
-  outline: none;
-  border-radius: 0.188rem;
-  width: 13rem;
-  height: 90%;
-  color: #faf7eb;
-  background-color: #1e9eff;
-  font-size: 1.125rem;
-  letter-spacing: 0.013rem;
-  box-shadow: 0 0.125rem 0.313rem #00000026;
-  margin-right: 4rem;
-}
-.book-detail-wrap .action-wrap .continue-btn {
-  position: relative;
-  border: 1px solid #1e9eff;
-  outline: none;
-  border-radius: 0.188rem;
-  width: 13rem;
-  height: 90%;
-  color: #1e9eff;
-  background-color: #fff;
-  font-size: 1.125rem;
-  letter-spacing: 0.013rem;
-  box-shadow: 0 0.125rem 0.313rem #00000026;
-}
+.book-detail-wrap .more-detail-wrap {display: flex; width: 30rem; margin-left: 3.825rem; text-align: center; justify-content: center;}
+.book-detail-wrap .more-detail-wrap > div {padding: 0 2rem;}
+.book-detail-wrap .more-detail-wrap > div:not(:last-child) {border-right: 1px solid #e5e5e5;}
+.book-detail-wrap .more-detail-wrap .desc-wrap {padding-top: 0.25rem;}
+.book-detail-wrap .more-detail-wrap .star-wrap {display: flex; flex-direction: column;}
+.book-detail-wrap .more-detail-wrap .star-wrap .star-symbol {margin: 0; padding: 0; width: 1.5em; height: 1.5em; color: #212529;}
 
+.episode-detail-container,
+.comment-detail-container {padding: 0.625rem 6rem 0.625rem 5rem;}
+.episode-detail-container .quantity-episode-wrap,
+.comment-detail-container .comment-header-wrap {border-bottom: 1px solid #aaa; padding: 0.625rem;}
+.episode-detail-container .quantity-episode-wrap span,
+.comment-detail-container .comment-header-wrap span {font-size: 1.5rem; font-weight: 500; font-family: inherit; position: relative; letter-spacing: 0.05rem;}
+.episode-detail-container .episode-list-wrap {display: flex;}
+.episode-detail-container .episode-list-wrap:not(:last-child) {border-bottom: 1px solid #e5e5e5;}
+.episode-detail-container .last-list-wrap {border-bottom: 1px solid #aaa !important;}
+.episode-detail-container .episode-list-wrap {padding: 1.35rem 0.625rem;}
+.episode-detail-container .episode-list-wrap .img-wrap {padding-right: 3rem;}
+.episode-detail-container .episode-list-wrap .img-wrap img {width: 6rem; height: 8.75rem; border-radius: 4px;}
+.episode-detail-container .episode-list-wrap .img-wrap img:hover {opacity: 0.5; transition: 0.2s ease;}
+.episode-detail-container .episode-list-wrap .detail-wrap {padding: 2.5rem 0.625rem; display: flex; flex-direction: column; justify-content: space-between;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap {display: flex;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap .badge-wrap {padding-right: 0.5rem;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap .badge-wrap .badge-img {width: 2.25rem; height: 1.5rem; padding-top: 0.2rem;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap h5 {font-size: 1.4rem; font-weight: 500; position: relative;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a {color: #212529;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.episode-detail-container .episode-list-wrap .detail-wrap .title-wrap a:link {color: #212529;}
+.episode-detail-container .episode-list-wrap .detail-wrap .date-wrap {display: flex;}
+.episode-detail-container .episode-list-wrap .detail-wrap .date-wrap .date {padding-right: 2rem;}
+.episode-detail-container .episode-list-wrap .detail-wrap .date-wrap span {font-size: 1.125rem; opacity: 0.6; font-weight: 400;}
+.episode-detail-container .episode-list-wrap .detail-wrap .date-wrap .star-wrap .star-icon {color: #dd2424; padding: 0; margin: 0;}
 
-.book-detail-wrap .more-detail-wrap {
-  display: flex;
-  width: 27rem;
-  margin-left: 3.825rem;
-  text-align: center;
-  justify-content: right;
-}
-.book-detail-wrap .more-detail-wrap > div {
-  padding: 0 2rem;
-}
-.book-detail-wrap .more-detail-wrap > div:not(:last-child) {
-  border-right: 1px solid #e5e5e5;
-}
-.book-detail-wrap .more-detail-wrap .desc-wrap {
-  padding-top: 0.25rem;
-}
-.book-detail-wrap .more-detail-wrap .star-wrap {
-  display: flex;
-  flex-direction: column;
-}
-.book-detail-wrap .more-detail-wrap .star-wrap .star-symbol {
-  margin: 0;
-  padding: 0;
-  width: 1.5em;
-  height: 1.5em;
-  color: #212529;
-}
+.episode-detail-container .pagination-wrap {width: 100%; align-items: center; margin-top: 1.25rem;}
+.episode-detail-container .pagination-wrap .pagination {justify-content: center;}
+
+.comment-detail-container .comment-detail-wrap {padding: 2rem 0.625rem 0.625rem; display: flex; flex-direction: row; width: 100%; border-bottom: 1px solid #e5e5e5;}
+.comment-detail-container .last-detail-wrap {border-bottom: 1px solid #aaa;}
+.comment-detail-container .comment-detail-wrap .img-wrap {padding-right: 3rem;}
+.comment-detail-container .comment-detail-wrap .img-wrap a:hover {opacity: 0.5; transition: 0.2s ease;}
+.comment-detail-container .comment-detail-wrap .img-wrap img {width: 6rem; height: 6rem; border-radius: 50%;}
+
+.comment-detail-container .comment-detail-wrap .detail-wrap {width: 100%; padding: 0.25rem;}
+.comment-detail-container .comment-detail-wrap .detail-wrap > div:not(:last-child) {margin-bottom: 0.5rem;}
+.comment-detail-container .comment-detail-wrap .header-wrap {display: flex;}
+.comment-detail-container .comment-detail-wrap .header-wrap > div:not(:last-child) {margin-right: 1rem;}
+.comment-detail-container .comment-detail-wrap .header-wrap > div:last-child {margin-left: auto;}
+.comment-detail-container .comment-detail-wrap .header-wrap .writer-wrap .writer {font-size: 1.25rem; font-weight: 600; overflow: hidden;}
+.comment-detail-container .comment-detail-wrap .header-wrap .writer-wrap a {color: #212529;}
+.comment-detail-container .comment-detail-wrap .header-wrap .writer-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.comment-detail-container .comment-detail-wrap .header-wrap .writer-wrap a:link {color: #212529;}
+.comment-detail-container .comment-detail-wrap .header-wrap .date-wrap {display: flex;}
+.comment-detail-container .comment-detail-wrap .header-wrap .date-wrap .date {font-size: 1rem; font-weight: 400; overflow: hidden; letter-spacing: 0.03rem; color:rgb(153, 153, 153);}
+.comment-detail-container .comment-detail-wrap .header-wrap .date-wrap .symbol {font-size: 1.125rem; padding: 0 1rem; margin-left: -1rem; color: rgb(153, 153, 153);}
+.comment-detail-container .comment-detail-wrap .header-wrap .report-wrap .report {margin: 0; cursor: pointer; font-size: 0.938rem; color: rgb(153, 153, 153); display: inline-flex;}
+.comment-detail-container .comment-detail-wrap .header-wrap .report-wrap .report:hover {color: #1e9eff; opacity: 0.7; transition: 0.2s ease;}
+.comment-detail-container .comment-detail-wrap .content-wrap .content {margin: 0.5rem 0 0; word-break: break-word; overflow-wrap: break-word; width: 100%; white-space: pre-wrap; font-size: 1.125rem; font-weight: 500; line-height: 2rem;}
+.comment-detail-container .comment-detail-wrap .comment-episode-wrap .comment-episode {margin: 0.688rem 0 0; word-break: break-all; font-size: 0.875rem; color: rgb(153, 153, 153);}
+
