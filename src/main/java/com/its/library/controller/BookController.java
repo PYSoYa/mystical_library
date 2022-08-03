@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -189,7 +190,7 @@ public class BookController {
         model.addAttribute("episodeList", episodeDTOList);
         String sessionName = (String) session.getAttribute("name");
         MemberDTO memberDTO = memberService.findByMemberName(sessionName);
-        List<WishDTO> wishDTOList = wishService.findByMemberName(memberDTO.getMemberName());
+        List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
             model.addAttribute("wishlist", wishDTOList);
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();

@@ -156,9 +156,20 @@ public class WishService {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findByMemberName(memberName);
-        for (WishEntity wish: wishEntityList) {
-            wishDTOList.add(WishDTO.findMemberDTO(wish));
-        }
+            for (WishEntity wish: wishEntityList) {
+                wishDTOList.add(WishDTO.findMemberDTO(wish));
+            }
+        System.out.println("wishDTOList = " + wishDTOList);
+        return wishDTOList;
+    }
+
+    public List<WishDTO> findByBook(String memberName) {
+        List<WishEntity> wishEntityList = new ArrayList<>();
+        List<WishDTO> wishDTOList = new ArrayList<>();
+        wishEntityList = wishlistRepository.findByMemberName(memberName);
+            for (WishEntity wish: wishEntityList) {
+                wishDTOList.add(WishDTO.findBookDTO(wish));
+            }
         System.out.println("wishDTOList = " + wishDTOList);
         return wishDTOList;
     }
