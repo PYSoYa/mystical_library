@@ -227,5 +227,12 @@ public class BookController {
         return "book/search";
     }
 
+    // 첫화보기
+    @GetMapping("/first")
+    public String first(@RequestParam("bookId") Long bookId) {
+        String result = bookService.first(bookId);
+        return result;
+    }
+
 
 }

@@ -436,4 +436,16 @@ public class BookService {
             return bookDTOList5;
         }
 
+    public String first(Long bookId) {
+        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        BookEntity bookEntity = new BookEntity();
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookId);
+        if (optionalBookEntity.isPresent()) {
+            bookEntity = optionalBookEntity.get();
+            episodeEntityList = episodeRepository.findByBookId(bookEntity.getId());
+            for ()
+        }
+
     }
+}
