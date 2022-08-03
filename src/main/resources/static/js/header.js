@@ -1,3 +1,27 @@
+window.onload = function (){
+  console.log("실행");
+  let header = $("meta[name='_csrf_header']").attr('content');
+  let token = $("meta[name='_csrf']").attr('content');
+
+  $.ajax({
+    type: "get",
+    url: "/notice/readCount",
+    dataType: "boolean",
+    beforeSend: function(xhr){
+      xhr.setRequestHeader(header, token);
+    },
+    success: function (result) {
+      if (result == true) {
+        const icon = document.querySelector('.notification');
+        icon.className += 'new-notice';
+      } else {
+        const icon = document.querySelector('.notification');
+        icon.className += 'notification';
+      }
+    }
+  });
+}
+
 const checkClick = () => {
   const checkbox = document.querySelector('.isChecked');
 

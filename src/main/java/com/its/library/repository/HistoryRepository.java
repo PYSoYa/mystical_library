@@ -1,5 +1,6 @@
 package com.its.library.repository;
 
+import com.its.library.entity.BookEntity;
 import com.its.library.entity.EpisodeEntity;
 import com.its.library.entity.HistoryEntity;
 import com.its.library.entity.MemberEntity;
@@ -28,4 +29,6 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
     List<Long> findByEpisodeId(@Param("bookId") Long bookId);
 
     Optional<HistoryEntity> findByMemberEntityAndEpisodeEntity(MemberEntity memberEntity, EpisodeEntity episodeEntity);
+
+    List<HistoryEntity> findByMemberEntityAndBooKId(MemberEntity memberEntity, Long bookId);
 }
