@@ -152,20 +152,12 @@ public class WishService {
         return bookDTOList;
     }
 
-    public List<WishDTO> findByMemberName(String memberName, Long bookId) {
+    public List<WishDTO> findByMemberName(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
-//        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(memberName);
-//        Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookId);
-//        MemberEntity memberEntity = new MemberEntity();
-//        BookEntity bookEntity = new BookEntity();
         List<WishDTO> wishDTOList = new ArrayList<>();
-//        if (optionalMemberEntity.isPresent() && optionalBookEntity.isPresent()) {
-//            memberEntity = optionalMemberEntity.get();
-//            bookEntity = optionalBookEntity.get();
-//        }
         wishEntityList = wishlistRepository.findByMemberName(memberName);
         for (WishEntity wish: wishEntityList) {
-            wishDTOList.add(WishDTO.findBookDTO(wish));
+            wishDTOList.add(WishDTO.findMemberDTO(wish));
         }
         System.out.println("wishDTOList = " + wishDTOList);
         return wishDTOList;

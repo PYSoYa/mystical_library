@@ -21,4 +21,10 @@ public class WishDTO {
         wishDTO.setMemberName(wishEntity.getMemberName());
         return wishDTO;
     }
+    public static WishDTO findMemberDTO(WishEntity wishEntity) {
+        WishDTO wishDTO = new WishDTO();
+        wishDTO.setMemberId(wishEntity.getMemberEntity().getId());
+        wishDTO.setMemberName(wishEntity.getMemberName());
+        return wishDTO;
+    }
 }

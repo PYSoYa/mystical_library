@@ -33,51 +33,15 @@ public class BoxService {
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
-
             if (episodeEntity.getPrice() == 0) {
-                list = historyRepository.findByMemberId(memberEntity.getId());
-                if (list.size() == 0) {
-                    historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                    return "무료";
-                } else if (list.size() != 0) {
-                    for (int i = 0; i < list.size(); i++) {
-                        if (!episodeId.equals(list.get(i))) { // 히스토리에 있는 회차와 들고온 회차가 같을때
-                            historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                            return "무료";
-                        } else {
-                            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByBooKIdAndMemberEntity(boxDTO.getBookId(), memberEntity);
-                            if (optionalHistoryEntity.isPresent()) {
-                                historyEntity = optionalHistoryEntity.get();
-                                if (historyEntity.getHidden() == 1) {
-                                    historyEntity.setHidden(0);
-                                    historyRepository.save(historyEntity);
-                                    return "무료";
-                                }
-                            }
-                        }
-                    }
-                }
-            } else if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) { // 사용자 돈이 부족할때
-                return "잔고부족";
-            } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) { // 사용자 돈이 부족하지 않을때
-                list = historyRepository.findByMemberId(memberEntity.getId());
-                if (list.size() == 0) {
-                    historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                    return "결제";
-                } else if (list.size() != 0) {
-                    for (int i = 0; i < list.size(); i++) {
-                        if (!episodeId.equals(list.get(i))) {
-                            historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                            return "결제";
-                        }
-                    }
-                }
-
+                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                return "무료저장";
+            } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) {
+                return "유료저장";
             } else {
-                return null;
+                return "잔고부족";
             }
-        } else {
-            return null;
+
         }
         return null;
     }
