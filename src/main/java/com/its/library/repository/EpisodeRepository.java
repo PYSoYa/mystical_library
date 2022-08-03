@@ -19,7 +19,10 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
     Page<EpisodeEntity> findByBookEntity(Pageable pageable, BookEntity bookEntity);
 
-    List<EpisodeEntity> findByBookEntity(BookEntity bookEntity);
+    List<EpisodeEntity> findByBookEntity_Id(Long bookId);
+    @Transactional
+    @Query(value = "select * from episode where book_id = :bookId order by created_date_time asc", nativeQuery = true)
+    List<EpisodeEntity> findByBookId(Long bookId);
 
     @Transactional
     @Modifying
