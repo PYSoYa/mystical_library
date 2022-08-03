@@ -39,10 +39,10 @@
         <div class="detail-wrap">
           <div class="title-wrap">
             <h2 class="title" th:text="${book.bookTitle}"></h2>
-            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == session.name}">
+            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == authentication.memberName}">
               <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
             </div>
-            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != session.name}">
+            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != authentication.memberName}">
               <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
             </div>
           </div>
@@ -256,6 +256,9 @@
     const memberId = [[${authentication.id}]];
     const bookId = [[${book.id}]];
 
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     $.ajax({
       type: "get",
       url: "/book/first",
@@ -263,6 +266,9 @@
         "bookId": bookId
       },
       dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
       success: function (result) {
         if (result === "첫화보기") {
           location.href = "/book/episode?bookId=" + bookId + "&id=" + result;
