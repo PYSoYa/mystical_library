@@ -2,7 +2,9 @@ package com.its.library.service;
 
 import com.its.library.dto.EpisodeDTO;
 import com.its.library.entity.EpisodeEntity;
+import com.its.library.entity.WishEntity;
 import com.its.library.repository.EpisodeRepository;
+import com.its.library.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EpisodeService {
     private final EpisodeRepository episodeRepository;
+    private final NoticeService noticeService;
+    private final WishRepository wishRepository;
 
 
     public List<EpisodeDTO> findAll() {
@@ -33,6 +37,7 @@ public class EpisodeService {
            EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
            episodeEntity.setWriterRole(2);
            episodeRepository.save(episodeEntity);
+           noticeService.save(id);
        }
     }
 

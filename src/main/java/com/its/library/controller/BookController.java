@@ -57,8 +57,7 @@ public class BookController {
 
         EpisodeDTO episodeDTO1= bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
-        Long memberId = (Long) session.getAttribute("id");
-        noticeService.save(episodeDTO1,memberId);
+
 
         return "redirect:/book/book/" + episodeDTO.getBookId();
     }
