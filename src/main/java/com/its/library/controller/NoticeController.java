@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -20,8 +21,12 @@ public class NoticeController {
     public String noticeHistory(@PathVariable("id")Long memberId, Model model){
        List<NoticeDTO> noticeDTOList = noticeService.noticeHistory(memberId);
         model.addAttribute("noticeList",noticeDTOList);
-       boolean result = noticeService.readFalseCount(memberId);
-       model.addAttribute("readCount",result);
         return "notice/noticeHistory";
+    }
+    @GetMapping("/readCount/{id}")
+    public @ResponseBody boolean noticeReadCount(@PathVariable("id")Long id){
+       boolean result = noticeService.readFalseCount(id);
+       return result;
+
     }
 }

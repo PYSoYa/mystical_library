@@ -4,30 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신비한 서재입니다.</title>
+    <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
-<table>
-    <tr>
-        <td>알림번호</td>
-        <td>회원번호</td>
-        <td>회차제목</td>
-        <td>시간</td>
-        <td>에피소드번호</td>
-        <td>위시리트스번호</td>
+<th:block th:replace="layout/header :: header"></th:block>
 
-    </tr>
-    <tr th:each="noitce:${noticeList}">
-        <td th:text="${noitce.id}"></td>
-        <td th:text="${noitce.memberId}"></td>
-        <td th:text="${noitce.episodeTitle}"></td>
-        <td th:text="${noitce.createdTime}"></td>
-        <td th:text="${noitce.episodeId}"></td>
-        <td th:text="${noitce.wishId}"></td>
-        <td th:text="${noitce.read}" hidden></td>
+<main class="main-container">
+    <table class="history-table">
+        <tr>
+            <th>알림</th>
+            <th>시간</th>
+
+        </tr>
+        <tr th:each="noitce:${noticeList}">
+            <td th:text="${noitce.id}" hidden></td>
+            <td th:text="${noitce.memberId}" hidden></td>
+            <td th:text="${noitce.episodeTitle}"></td>
+            <td th:text="*{#temporals.format(noitce.createdTime, 'yyyy-MM-dd')}"></td>
+            <td th:text="${noitce.episodeId}"hidden></td>
+            <td th:text="${noitce.wishId}"hidden></td>
+            <td th:text="${noitce.read}" hidden></td>
 
 
-    </tr>
+        </tr>
 
-</table>
+    </table>
+    </main>
+
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+
 </body>
 </html>

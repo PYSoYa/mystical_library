@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -26,16 +28,10 @@ public class NoticeEntity extends BaseEntity {
     @Column(name = "episodeTitle")
     private String episodeTitle;
     @Column(name = "noticeRead")
-    private  boolean noticeRead;
+    private boolean noticeRead;
 
 
-    public static NoticeEntity save(MemberEntity memberEntity, EpisodeEntity episodeEntity, WishEntity wishEntity) {
-        NoticeEntity noticeEntity = new NoticeEntity();
-        noticeEntity.setEpisodeEntity(episodeEntity);
-        noticeEntity.setMemberEntity(memberEntity);
-        noticeEntity.setWishEntity(wishEntity);
-        noticeEntity.setEpisodeTitle(episodeEntity.getEpisodeTitle());
-        noticeEntity.setNoticeRead(false);
-        return noticeEntity;
-    }
 }
+
+
+
