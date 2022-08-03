@@ -70,10 +70,10 @@
         </div>
         <div class="action-wrap">
           <div class="first-btn-wrap">
-            <button type="button" class="first-btn" th:onclick="first(${book.id})">첫 화 보기</button>
+            <button type="button" class="first-btn" th:onclick="first()">첫 화 보기</button>
           </div>
           <div class="continue-btn-wrap">
-            <button type="button" class="continue-btn" th:onclick="again(${book.id})">이어보기</button>
+            <button type="button" class="continue-btn" th:onclick="again()">이어보기</button>
           </div>
           <div class="more-detail-wrap">
             <div class="hits-wrap">
@@ -125,7 +125,9 @@
 
     <div class="episode-detail-container">
       <div class="quantity-episode-wrap">
-        <span class="quantity-episode">전체 (92)</span>
+        <span class="quantity-episode">전체 (</span>
+        <span class="quantity-episode" th:text="${episodeList.size}"></span>
+        <span class="quantity-episode">)</span>
       </div>
       <div class="episode-list-wrap" th:each="episode:${episodeList}">
         <div class="img-wrap">
@@ -153,32 +155,7 @@
           </div>
         </div>
       </div>
-      <div class="episode-list-wrap last-list-wrap">
-        <div class="img-wrap">
-          <a href="#" class="img-link">
-            <img th:src="@{/img/book_img_1.jpeg}" alt="">
-          </a>
-        </div>
-        <div class="detail-wrap">
-          <div class="title-wrap">
-            <div class="badge-wrap">
-              <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
-            </div>
-            <a href="#" class="title-link">
-              <h5 class="title">제목 제목 제목 제목 제목</h5>
-            </a>
-          </div>
-          <div class="date-wrap">
-            <span class="date">2022. 08. 01</span>
-            <div class="star-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
-                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-              <span class="star">7.56</span>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div class="pagination-wrap">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
@@ -275,8 +252,12 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-  const first = (bookId) => {
-    const memberId = [[${session.id}]];
+  const first = () => {
+    const memberId = [[${authentication.id}]];
+    const bookId = [[${book.id}]];
+
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
     $.ajax({
       type: "get",
@@ -285,9 +266,12 @@
         "bookId": bookId
       },
       dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
       success: function (result) {
         if (result === "첫화보기") {
-
+          location.href = "/book/episode?bookId=" + bookId + "&id=" + result;
         }
       }
     })

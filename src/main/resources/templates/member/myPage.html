@@ -145,7 +145,11 @@
 <script th:inline="javascript">
   const love = () => {
     const memberId = [[${member.id}]];
-    const memberName = [[${session.name}]];
+    const memberName = [[${authentication.memberName}]];
+
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     console.log(memberId);
     $.ajax({
       type: "post",
@@ -155,6 +159,9 @@
         "memberName": memberName
       },
       dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
       success: function (result) {
         if (result === "ok") {
           $.ajax({
@@ -165,6 +172,9 @@
               "memberName" : memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const loveChange1 = document.getElementById("loveChange1");
               if (result == "ok"){
@@ -197,6 +207,9 @@
               "memberName": memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const loveChange2 = document.getElementById("loveChange2");
               if (result == "ok") {

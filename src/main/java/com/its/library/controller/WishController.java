@@ -67,7 +67,7 @@ public class WishController {
         model.addAttribute("authentication", findDTO);
 
         MemberDTO memberDTO = memberService.myPage(id);
-        List<BookDTO> bookDTOList = wishService.wishlist(id);
+        List<BookDTO> bookDTOList = wishService.wishlist(memberDTO.getMemberName());
         model.addAttribute("member", memberDTO);
         model.addAttribute("bookList", bookDTOList);
         return "member/wishlistBook";

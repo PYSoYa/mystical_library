@@ -31,15 +31,21 @@ public class PointService {
         List<PointDTO> pointDTOList = new ArrayList<>();
         for (PointEntity pointEntity : pointEntityList) {
             PointEntity pointEntity1 = pointEntity;
-            Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(pointEntity1.getEpisodeEntity().getId());
-            if (optionalEpisodeEntity.isPresent()) {
-                EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-                Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
-                if (optionalBookEntity.isPresent()) {
-                    BookEntity bookEntity = optionalBookEntity.get();
-                    pointDTOList.add(PointDTO.findDTO(pointEntity1, episodeEntity, bookEntity));
+            try {
+                Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(pointEntity1.getEpisodeEntity().getId());
+                if (optionalEpisodeEntity.isPresent()) {
+                    EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
+                    if (optionalBookEntity.isPresent()) {
+                        BookEntity bookEntity = optionalBookEntity.get();
+                        pointDTOList.add(PointDTO.findDTO(pointEntity1, episodeEntity, bookEntity));
+                    }
+
                 }
 
+            }catch (NullPointerException e){
+                System.out.println("PointService.pointHistory");
+                System.out.println("포인트이셉션");
             }
 
         }
