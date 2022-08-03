@@ -137,18 +137,19 @@ public class WishService {
         }
         return memberDTOList;
     }
-    public List<BookDTO> wishlist(Long id) {
+    public List<BookDTO> wishlist(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
-            if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getBookEntity().getMemberEntity().getId().equals(id)) {
+            if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getMemberName().equals(memberName)) {
                 Optional<BookEntity> optionalBookEntity = bookRepository.findById(wishEntityList.get(i).getBookEntity().getId());
                 if (optionalBookEntity.isPresent()) {
                     bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
                 }
             }
         }
+        System.out.println("bookDTOList = " + bookDTOList);
         return bookDTOList;
     }
 
