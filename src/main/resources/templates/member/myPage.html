@@ -65,7 +65,7 @@
         <div class="profile-heart-detail-wrap">
           <span class="detail">234234명이 좋아해요</span>
         </div>
-        <div th:if="${member.id.equals(session.id)}" class="edit-btn-wrap">
+        <div th:if="${member.id.equals(authentication.id)}" class="edit-btn-wrap">
           <span id="memberIdForUpdate" th:text="${member.id}" hidden></span>
           <button type="button" onclick="reqUpdate()">정보수정</button>
         </div>
@@ -230,47 +230,59 @@
   }
 
   const reqUpdate = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     const id = document.getElementById('memberIdForUpdate').innerHTML;
     const loginId = [[${member.loginId}]];
+    const provider = [[${authentication.provider}]];
 
     // 비밀번호 입력 후 이동 해야 함
-
-    Swal.fire({
-      title: '비밀번호를 입력해주세요.',
-      input: 'password',
-      inputAttributes: {autocapitalize: 'off'},
-      showCancelButton: true,
-      confirmButtonText: '확인',
-      cancelButtonText: '취소',
-      showLoaderOnConfirm: true,
-      preConfirm: (pw) => {
-        $.ajax({
-          type: 'post',
-          url: '/member/check-password',
-          data: {"loginId" : loginId, "memberPassword" : pw},
-          dataType: 'text',
-          success: function (result) {
-            if (result !== 'no') {
-              Swal.fire({
-                icon: 'success',
-                title: '비밀번호가 일치해요.',
-                showConfirmButton: false,
-                timer: 1500
-              });
-              setTimeout( () => {location.href = '/member/update-form/' + id}, 2000)
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: '비밀번호가 달라요.'
-              })
+    if (loginId == 'admin' || provider != null) {
+      location.href = '/member/update-form/' + id;
+    } else {
+      Swal.fire({
+        title: '비밀번호를 입력해주세요.',
+        input: 'password',
+        inputAttributes: {autocapitalize: 'off'},
+        showCancelButton: true,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        showLoaderOnConfirm: true,
+        preConfirm: (pw) => {
+          $.ajax({
+            type: 'post',
+            url: '/member/check-password',
+            data: {"loginId": loginId, "memberPassword": pw},
+            dataType: 'text',
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+              if (result !== 'no') {
+                Swal.fire({
+                  icon: 'success',
+                  title: '비밀번호가 일치해요.',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                setTimeout(() => {
+                  location.href = '/member/update-form/' + id
+                }, 2000)
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: '비밀번호가 달라요.'
+                })
+              }
+            },
+            err: function () {
+              alert('에러, 관리자에게 문의하세요.');
             }
-          },
-          err: function () {
-            alert('에러, 관리자에게 문의하세요.');
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    }
   }
 </script>
 </html>
