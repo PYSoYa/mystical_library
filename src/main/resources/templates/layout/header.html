@@ -499,10 +499,10 @@
         success:function (result){
           if (result==true){
             const icon= document.querySelector('.notification');
-            icon.className +='new-notice';
+            icon.classList.add('new-notice');
           }else {
             const icon= document.querySelector('.notification');
-            icon.className +='notification';
+            icon.className = 'notification';
           }
         }
     });
