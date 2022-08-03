@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -259,7 +260,7 @@ public class BookController {
             model.addAttribute("episodeList", episodeDTOList);
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
-            List<WishDTO> wishDTOList = wishService.findByMemberName(memberDTO.getMemberName());
+            List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
             model.addAttribute("wishlist", wishDTOList);
 
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
