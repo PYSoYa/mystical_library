@@ -116,11 +116,71 @@
           </a>
         </div>
         <div class="view-option-wrap">
-          <a href="#" class="view-option">
+          <a href="javascript:;" class="view-option">
               <span class="icon">
                 <img th:src="@{/img/icon_view_option.png}" class="option-icon" alt="">
               </span>
             <span class="view-option-desc">보기설정</span>
+            <div id="view-option-panel" class="option-panel">
+              <div class="outer">
+                <form class="option-form" id action method="post">
+                  <fieldset>
+                    <legend>보기설정</legend>
+                    <dl class="items">
+                      <dt>폰트 설정</dt>
+                      <dd class="font-family">
+                        <label id="fnt-01" class="opt-button type01 active" onclick="fnt01()">
+                          <span>기본</span>
+                        </label>
+                        <label id="fnt-02" class="opt-button type02" onclick="fnt02()">
+                          <span>명조</span>
+                        </label>
+                        <label id="fnt-03" class="opt-button type03" onclick="fnt03()">
+                          <span>고운바탕</span>
+                        </label>
+                        <label id="fnt-04" class="opt-button type04" onclick="fnt04()">
+                          <span>나눔고딕</span>
+                        </label>
+                      </dd>
+                    </dl>
+                    <dl class="items">
+                      <dt>글자 크기</dt>
+                      <dd class="font-size">
+                        <label id="fnt-s-01" class="opt-button size01" onclick="size01()">
+                          <span>12px</span>
+                        </label>
+                        <label id="fnt-s-02" class="opt-button size02" onclick="size02()">
+                          <span>14px</span>
+                        </label>
+                        <label id="fnt-s-03" class="opt-button size03 active" onclick="size03()">
+                          <span>16px</span>
+                        </label>
+                        <label id="fnt-s-04" class="opt-button size04" onclick="size04()">
+                          <span>18px</span>
+                        </label>
+                        <label id="fnt-s-05" class="opt-button size05" onclick="size05()">
+                          <span>20px</span>
+                        </label>
+                      </dd>
+                    </dl>
+                    <dl class="items">
+                      <dt>줄 간격</dt>
+                      <dd class="line-height">
+                        <label id="fnt-h-01" class="opt-button height01" onclick="height01()">
+                          <span>0.5</span>
+                        </label>
+                        <label id="fnt-h-02" class="opt-button height02 active" onclick="height02()">
+                          <span>1.0</span>
+                        </label>
+                        <label id="fnt-h-03" class="opt-button height03" onclick="height03()">
+                          <span>1.5</span>
+                        </label>
+                      </dd>
+                    </dl>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
           </a>
         </div>
       </div>
@@ -293,7 +353,7 @@
                   <input type="radio" name="star" value="2" id="rate4"><label for="rate4">⭐</label>
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
-                <button type="button" class="star-btn">평가하기</button>
+                <button type="button" class="star-btn">별점주기</button>
               </div>
             </div>
             <div class="attention-wrap">
@@ -467,6 +527,122 @@
 
             }
         )
+    }
+
+
+    const content = document.querySelector('.content');
+    const label01 = document.getElementById('fnt-01');
+    const label02 = document.getElementById('fnt-02');
+    const label03 = document.getElementById('fnt-03');
+    const label04 = document.getElementById('fnt-04');
+    const fslabel01 = document.getElementById('fnt-s-01');
+    const fslabel02 = document.getElementById('fnt-s-02');
+    const fslabel03 = document.getElementById('fnt-s-03');
+    const fslabel04 = document.getElementById('fnt-s-04');
+    const fslabel05 = document.getElementById('fnt-s-05');
+    const lhlabel01 = document.getElementById('fnt-h-01');
+    const lhlabel02 = document.getElementById('fnt-h-02');
+    const lhlabel03 = document.getElementById('fnt-h-03');
+
+    const fnt01 = () => {
+      content.classList.add('c-fnt-01');
+      content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
+      label01.className = 'opt-button type01 active';
+      label02.className = 'opt-button type02';
+      label03.className = 'opt-button type03';
+      label04.className = 'opt-button type04';
+    }
+    const fnt02 = () => {
+      content.classList.add('c-fnt-02');
+      content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
+      label01.className = 'opt-button type01';
+      label02.className = 'opt-button type02 active';
+      label03.className = 'opt-button type03';
+      label04.className = 'opt-button type04';
+    }
+    const fnt03 = () => {
+      content.classList.add('c-fnt-03');
+      content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
+      label01.className = 'opt-button type01';
+      label02.className = 'opt-button type02';
+      label03.className = 'opt-button type03 active';
+      label04.className = 'opt-button type04';
+    }
+    const fnt04 = () => {
+      content.classList.add('c-fnt-04');
+      content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
+      label01.className = 'opt-button type01';
+      label02.className = 'opt-button type02';
+      label03.className = 'opt-button type03';
+      label04.className = 'opt-button type04 active';
+    }
+
+    const size01 = () => {
+      content.classList.add('c-fnt-s-01');
+      content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+      fslabel01.className = 'opt-button size01 active';
+      fslabel02.className = 'opt-button size02';
+      fslabel03.className = 'opt-button size03';
+      fslabel04.className = 'opt-button size04';
+      fslabel05.className = 'opt-button size05';
+    }
+    const size02 = () => {
+      content.classList.add('c-fnt-s-02');
+      content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+      fslabel01.className = 'opt-button size01';
+      fslabel02.className = 'opt-button size02 active';
+      fslabel03.className = 'opt-button size03';
+      fslabel04.className = 'opt-button size04';
+      fslabel05.className = 'opt-button size05';
+    }
+    const size03 = () => {
+      content.classList.add('c-fnt-s-03');
+      content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
+      fslabel01.className = 'opt-button size01';
+      fslabel02.className = 'opt-button size02';
+      fslabel03.className = 'opt-button size03 active';
+      fslabel04.className = 'opt-button size04';
+      fslabel05.className = 'opt-button size05';
+    }
+    const size04 = () => {
+      content.classList.add('c-fnt-s-04');
+      content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
+      fslabel01.className = 'opt-button size01';
+      fslabel02.className = 'opt-button size02';
+      fslabel03.className = 'opt-button size03';
+      fslabel04.className = 'opt-button size04 active';
+      fslabel05.className = 'opt-button size05';
+    }
+    const size05 = () => {
+      content.classList.add('c-fnt-s-05');
+      content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
+      fslabel01.className = 'opt-button size01';
+      fslabel02.className = 'opt-button size02';
+      fslabel03.className = 'opt-button size03';
+      fslabel04.className = 'opt-button size04';
+      fslabel05.className = 'opt-button size05 active';
+    }
+
+    const height01 = () => {
+      content.classList.add('c-fnt-h-01');
+      content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
+      lhlabel01.className = 'opt-button height01 active';
+      lhlabel02.className = 'opt-button height02';
+      lhlabel03.className = 'opt-button height03';
+    }
+    const height02 = () => {
+      content.classList.add('c-fnt-h-02');
+      content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
+      lhlabel01.className = 'opt-button height01';
+      lhlabel02.className = 'opt-button height02 active';
+      lhlabel03.className = 'opt-button height03';
+    }
+    const height03 = () => {
+      content.classList.add('c-fnt-h-03');
+      content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
+      lhlabel01.className = 'opt-button height01';
+      lhlabel02.className = 'opt-button height02';
+      lhlabel03.className = 'opt-button height03 active';
     }
 </script>
 </html>
