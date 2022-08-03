@@ -12,27 +12,28 @@ import java.util.List;
 @Getter@Setter
 @Table(name = "member")
 public class MemberEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberId")
     private Long id;
-    @Column(name = "loginId",length = 20,unique = true,nullable = false)
+    @Column(length = 50, unique = true, nullable = false)
     private String loginId;
-    @Column(name = "memberEmail",length = 50,unique = true,nullable = false)
+    @Column(length = 50, nullable = false)
     private String memberEmail;
-    @Column(name = "memberPassword", nullable = false,length = 100)
+    @Column(nullable = false, length = 100)
     private String memberPassword;
-    @Column(name = "memberName",length = 20,unique = true)
+    @Column(length = 50, unique = true)
     private String memberName;
-    @Column(name = "memberPoint")
+    @Column
     private int memberPoint;
-    @Column(name = "introduction",length = 500)
+    @Column(length = 500)
     private String introduction;
-    @Column(name = "memberImgName",length = 100)
+    @Column(length = 100)
     private String memberImgName;
-    @Column(name = "role",nullable = true,length = 20)
+    @Column(nullable = false, length = 20)
     private String role;
+    @Column
+    private String provider;
     //멤버 - 책 oneToMany ㅇ
     //멤버 - 보관홤 oneToMany ㅇ
     //멤버 - 작가댓글 oneToMany ㅇ
@@ -92,11 +93,10 @@ public class MemberEntity {
         memberEntity.setMemberPoint(500);
         memberEntity.setIntroduction(memberDTO.getIntroduction());
         memberEntity.setMemberImgName(memberDTO.getMemberImgName());
-        memberEntity.setRole("일반회원");
+        memberEntity.setRole("ROLE_USER");
+        memberEntity.setProvider(memberDTO.getProvider());
         return memberEntity;
     }
-
-
 
     public static MemberEntity roleChange(MemberEntity memberEntity) {
         memberEntity.setId(memberEntity.getId());
@@ -107,7 +107,8 @@ public class MemberEntity {
         memberEntity.setMemberPoint(memberEntity.getMemberPoint());
         memberEntity.setIntroduction(memberEntity.getIntroduction());
         memberEntity.setMemberImgName(memberEntity.getMemberImgName());
-        memberEntity.setRole("작가");
+        memberEntity.setRole("ROLE_WRITER");
+        memberEntity.setProvider(memberEntity.getProvider());
         return memberEntity;
     }
 
@@ -120,7 +121,23 @@ public class MemberEntity {
         memberEntity.setMemberPoint(pointEntity1.getTotalPoint());
         memberEntity.setIntroduction(memberEntity.getIntroduction());
         memberEntity.setMemberImgName(memberEntity.getMemberImgName());
-        memberEntity.setRole("작가");
+        memberEntity.setRole(memberEntity.getRole());
+        memberEntity.setProvider(memberEntity.getProvider());
+        return memberEntity;
+    }
+
+    public static MemberEntity updateEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setLoginId(memberDTO.getLoginId());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberPoint(500);
+        memberEntity.setIntroduction(memberDTO.getIntroduction());
+        memberEntity.setMemberImgName(memberDTO.getMemberImgName());
+        memberEntity.setRole("ROLE_USER");
+        memberEntity.setProvider(memberDTO.getProvider());
         return memberEntity;
     }
 }

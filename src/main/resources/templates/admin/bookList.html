@@ -71,7 +71,7 @@
                 </tr>
 
                 <tr th:each="book:${bookDTOList}">
-                  <div th:if="${book.writerRole}==1">
+                  <div>
                     <td th:text="${book.id}"></td>
                     <td th:text="${book.categoryId}"></td>
                     <td th:text="${book.genreId}"></td>
@@ -96,7 +96,6 @@
     </div>
   </div>
 </main>
-<table class="history-table">
 
 <script>
 function bookAgree(id){

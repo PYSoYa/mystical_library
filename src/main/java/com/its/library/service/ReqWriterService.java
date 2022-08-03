@@ -30,7 +30,7 @@ public class ReqWriterService {
             Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(reqWriterEntity.getMemberEntity().getId());
             if (optionalMemberEntity.isPresent()) {
                 MemberEntity memberEntity = optionalMemberEntity.get();
-                reqWriterDTOList.add(MemberDTO.findDTO(memberEntity));
+                reqWriterDTOList.add(MemberDTO.toDTO(memberEntity));
             }
 
         }

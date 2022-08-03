@@ -42,8 +42,8 @@
 </form>
 
 <input type="text" id="debutId" th:value="${debut.id}" hidden>
-<input type="text" id="memberId" th:value="${session.id}" hidden>
-<input type="text" id="memberName" th:value="${session.name}" readonly>
+<input type="text" id="memberId" th:value="${authentication.id}" hidden>
+<input type="text" id="memberName" th:value="${authentication.memberName}" readonly>
 <input type="text" id="contents">
 <input type="button" onclick="commentSave()" value="댓글작성">
 <div id="commentList">
@@ -63,18 +63,18 @@
     </tr>
 
 
-    <tr th:each="comment: ${commentList}">
-      <td th:id="'id_'+ ${comment.id}" th:text="${comment.id}" hidden></td>
-      <td th:id="'memberName_'+${comment.id}" th:text="${comment.memberName}"></td>
-      <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
-      <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
-      <div th:if="${comment.memberName}==${session.name}">
-        <div th:if="${comment.report}==false">
-          <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
-          <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
-        </div>
-      </div>
-      <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
+        <tr th:each="comment: ${commentList}">
+            <td th:id="'id_'+ ${comment.id}" th:text="${comment.id}" hidden></td>
+            <td th:id="'memberName_'+${comment.id}" th:text="${comment.memberName}"></td>
+            <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
+            <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
+            <div th:if="${comment.memberName}==${authentication.memberName}">
+                <div th:if="${comment.report}==false">
+                <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
+                <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
+                </div>
+            </div>
+            <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
 
 
     </tr>
@@ -85,6 +85,9 @@
 <script th:inline="javascript">
 
     function heartCheck(num) {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
         const love = document.getElementById("emptyHeart");
         const hate = document.getElementById("fullHeart");
         const memberId = [[${debut.memberId}]];
@@ -95,6 +98,9 @@
                 url: "/debut/love/" + id,
                 data: {"memberId": memberId, "num": num},
                 dataType: "text",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
                 success: function (result) {
                     love.className = "bi bi-heart-fill";
                 }
@@ -106,6 +112,9 @@
                 url: "/debut/love/" + id,
                 data: {"memberId": memberId, "num": num},
                 dataType: "text",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
                 success: function (result) {
                     hate.className = "bi bi-heart";
                 }
@@ -116,6 +125,9 @@
     }
 
     function commentSave() {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
         const memberId = document.getElementById("memberId").value;
         const debutId = document.getElementById("debutId").value;
         const contents = document.getElementById("contents").value;
@@ -127,6 +139,9 @@
             url: "/debutComment/save",
             data: {"memberId": memberId, "debutId": debutId, "contents": contents, "memberName": memberName},
             dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
                 let output = "<table>\n" +
                     "      <tr>\n" +
@@ -172,6 +187,9 @@
     }
 
     function commentUpdate(id) {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
         const memberName = document.getElementById("updateMemberName").value;
         const contents = document.getElementById("updateContents").value;
         const commentList = document.getElementById("commentList");
@@ -182,6 +200,9 @@
             url: "/debutComment/update",
             data: {"id": id, "memberName": memberName, "contents": contents, "debutId": debutId, "memberId": memberId},
             dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
                 let output = "<table>\n" +
                     "      <tr>\n" +
@@ -215,6 +236,9 @@
     }
 
     function commentDelete(commentId) {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
         const memberName = document.getElementById("memberName").value;
         const commentList = document.getElementById("commentList");
         const debutId = document.getElementById("debutId").value;
@@ -223,6 +247,9 @@
             url: "/debutComment/delete",
             data: {"commentId": commentId, "debutId": debutId},
             dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
                 let output = "<table>\n" +
                     "      <tr>\n" +
@@ -256,12 +283,18 @@
 
     }
     function commentReport(id) {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
         const memberId = [[${debut.memberId}]];
         $.ajax({
             type:"post",
             url:"/debutComment/list/"+id,
             data:{"memberId":memberId},
             dataType:"text",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             success:function (result){
                 if (result==="ok"){
                     alert("댓글 신고가 접수되었습니다 ")
