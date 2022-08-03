@@ -8,7 +8,7 @@ const checkClick = () => {
   }
 }
 
-const requestSignUp = () => {
+const requestSignUp = (social) => {
   const object = document.querySelector('.isChecked');
   const beforeHTML = document.querySelector('.hide-body');
   const beforeFooter = document.querySelector('.hide-footer');
@@ -22,12 +22,24 @@ const requestSignUp = () => {
       timer: 2000
     });
   } else {
-    beforeHTML.style.display = 'none';
-    beforeHTML.setAttribute('aria-hidden', 'true');
-    beforeFooter.style.display = 'none';
-    beforeFooter.setAttribute('aria-hidden', 'true');
+    if (social == 'naver') {
+      location.href = "/oauth2/authorization/naver";
+    } else if (social == 'google') {
+      location.href = "/oauth2/authorization/google";
+    } else if (social == 'facebook') {
+      location.href = "/oauth2/authorization/facebook";
+    } else if (social == 'kakao') {
+      location.href = "/oauth2/authorization/kakao";
+    } else if (social == 'github') {
+      location.href = "/oauth2/authorization/github";
+    } else {
+      beforeHTML.style.display = 'none';
+      beforeHTML.setAttribute('aria-hidden', 'true');
+      beforeFooter.style.display = 'none';
+      beforeFooter.setAttribute('aria-hidden', 'true');
 
-    afterHTML.style.display = 'block';
-    afterHTML.setAttribute('aria-hidden', 'false');
+      afterHTML.style.display = 'block';
+      afterHTML.setAttribute('aria-hidden', 'false');
+    }
   }
 }

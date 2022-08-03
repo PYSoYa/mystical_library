@@ -59,7 +59,7 @@
         <div class="profile-heart-detail-wrap">
           <span class="detail">234234명이 좋아해요</span>
         </div>
-        <div th:if="${member.id.equals(session.id)}" class="edit-btn-wrap">
+        <div th:if="${member.id.equals(authentication.id)}" class="edit-btn-wrap">
           <span id="memberIdForUpdate" th:text="${member.id}" hidden></span>
           <button type="button" onclick="reqUpdate()">정보수정</button>
         </div>
@@ -137,6 +137,9 @@
 </body>
 <script th:inline="javascript">
   const reqUpdate = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     const id = document.getElementById('memberIdForUpdate').innerHTML;
     const loginId = [[${member.loginId}]];
 
@@ -156,6 +159,9 @@
           url: '/member/check-password',
           data: {"loginId" : loginId, "memberPassword" : pw},
           dataType: 'text',
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
           success: function (result) {
             if (result !== 'no') {
               Swal.fire({

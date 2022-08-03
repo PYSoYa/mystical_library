@@ -130,7 +130,7 @@ public class WishService {
             if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberEntity().getId().equals(id)) {
                 Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
                 if (optionalMemberEntity.isPresent()) {
-                    memberDTOList.add(MemberDTO.findDTO(optionalMemberEntity.get()));
+                    memberDTOList.add(MemberDTO.toDTO(optionalMemberEntity.get()));
 
                 }
             }
