@@ -25,37 +25,25 @@ public class BoxService {
     public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
+        List<HistoryEntity> historyEntityList = new ArrayList<>();
+        List<Long> list = new ArrayList<>();
         MemberEntity memberEntity = new MemberEntity();
         HistoryEntity historyEntity = new HistoryEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
-
             if (episodeEntity.getPrice() == 0) {
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                return "무료";
-            } else if (memberEntity.getMemberPoint() < episodeEntity.getPrice()) {
-                return "ok";
+                return "무료저장";
+            } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) {
+                return "유료저장";
             } else {
-                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                return "no";
+                return "잔고부족";
             }
 
         }
-        Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByBooKIdAndMemberEntity(boxDTO.getBookId(), memberEntity);
-        if (optionalHistoryEntity.isPresent()) {
-            historyEntity = optionalHistoryEntity.get();
-            if (historyEntity.getHidden() == 1) {
-                historyEntity.setHidden(0);
-                historyRepository.save(historyEntity);
-                return "보여줘";
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
+        return null;
     }
 
     public String save(BoxDTO boxDTO) {

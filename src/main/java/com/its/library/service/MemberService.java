@@ -1,13 +1,9 @@
 package com.its.library.service;
 
-import com.its.library.dto.BookDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.PointDTO;
-import com.its.library.dto.WishlistDTO;
-import com.its.library.entity.BookEntity;
 import com.its.library.entity.MemberEntity;
 import com.its.library.entity.PointEntity;
-import com.its.library.entity.WishEntity;
 import com.its.library.repository.BookRepository;
 import com.its.library.repository.MemberRepository;
 import com.its.library.repository.PointRepository;
@@ -131,4 +127,16 @@ public class MemberService {
 
 
     }
+
+    public MemberDTO findByMemberName(String sessionName) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(sessionName);
+        MemberEntity memberEntity = new MemberEntity();
+        MemberDTO memberDTO = new MemberDTO();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            memberDTO = MemberDTO.findDTO(memberEntity);
+        }
+        return memberDTO;
+    }
+
 }

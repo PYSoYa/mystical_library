@@ -2,7 +2,7 @@ package com.its.library.controller;
 
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.MemberDTO;
-import com.its.library.dto.WishlistDTO;
+import com.its.library.dto.WishDTO;
 import com.its.library.service.MemberService;
 import com.its.library.service.WishService;
 
@@ -21,20 +21,20 @@ public class WishController {
     private final MemberService memberService;
     // 관심작가 유무 체크
     @PostMapping("/check")
-    private @ResponseBody String check(@ModelAttribute WishlistDTO wishlistDTO) {
-        String result = wishService.check(wishlistDTO);
+    private @ResponseBody String check(@ModelAttribute WishDTO wishDTO) {
+        String result = wishService.check(wishDTO);
         return result;
     }
     // 관심작가 저장처리
     @PostMapping("/save-writer")
-    private @ResponseBody String saveWriter(@ModelAttribute WishlistDTO wishlistDTO){
-        String result = wishService.saveWriter(wishlistDTO);
+    private @ResponseBody String saveWriter(@ModelAttribute WishDTO wishDTO){
+        String result = wishService.saveWriter(wishDTO);
         return result;
     }
     // 관심작가 삭제처리
     @DeleteMapping("/delete")
-    private @ResponseBody String delete(@ModelAttribute WishlistDTO wishlistDTO) {
-        String result = wishService.delete(wishlistDTO);
+    private @ResponseBody String delete(@ModelAttribute WishDTO wishDTO) {
+        String result = wishService.delete(wishDTO);
         return result;
     }
 

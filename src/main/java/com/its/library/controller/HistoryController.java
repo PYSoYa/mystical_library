@@ -35,4 +35,18 @@ public class HistoryController {
         String result = historyService.hidden(historyDTO);
         return result;
     }
+
+    // 열람내역 저장
+    @PostMapping("/save")
+    public @ResponseBody String save(@ModelAttribute HistoryDTO historyDTO) {
+        String result = historyService.historyUpdate(historyDTO);
+        return result;
+    }
+
+    // 열람내역 확인
+    @PostMapping("/check")
+    public @ResponseBody Long check(@ModelAttribute HistoryDTO historyDTO) {
+        Long result = historyService.findByHistory(historyDTO);
+        return result;
+    }
 }

@@ -8,7 +8,8 @@
 .book-detail-wrap .detail-wrap .title-wrap {width: 100%; display: flex; position: relative;}
 .book-detail-wrap .detail-wrap .title-wrap h2 {font-size: 2.225rem; font-weight: 600;}
 .book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap {margin-left: auto; padding: 0.125rem 4.25rem 0.125rem 0.125rem;}
-.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button {position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 100%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap .wishlist-btn {position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 100%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap .wishlist-btn1 {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 8rem; height: 100%; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 .book-detail-wrap .detail-wrap .title-wrap .wishlist-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
 
 .book-detail-wrap .detail-wrap .author-wrap {display: flex; padding: 1rem 0; font-size: 1.1rem; line-height: 1.125rem; font-weight: 400; white-space: nowrap;}
