@@ -20,6 +20,7 @@
       <div class="save-form-div">
         <div class="save-form">
           <form class="form-to-save" action="/debut/update" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <input type="hidden" name="debutHits" th:value="${debut.debutHits}">
             <input type="hidden" name="id" th:value="${debut.id}">
             <input type="hidden" name="memberId" th:value="${debut.memberId}">

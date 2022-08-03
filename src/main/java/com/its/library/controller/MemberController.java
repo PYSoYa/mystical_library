@@ -1,15 +1,17 @@
 package com.its.library.controller;
 
+import com.its.library.config.auth.PrincipalDetails;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishDTO;
 import com.its.library.service.MemberService;
+import com.its.library.service.ReqWriterService;
 import com.its.library.service.WishService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,46 +22,58 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final ReqWriterService reqWriterService;
+
+    // 회원가입시 이메일 인증
+    @PostMapping("/email-authentication")
+    public @ResponseBody String emailAuthentication(@RequestParam String memberEmail) {
+        String emailNum = memberService.emailAuthentication(memberEmail);
+        return emailNum;
+    }
     private final WishService wishService;
 
     // 회원가입 처리
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) throws IOException {
         memberService.save(memberDTO);
-        return "index";
-    }
-
-    // 로그인 처리
-    @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
-
-        MemberDTO memberDTO1 = memberService.login(memberDTO);
-        session.setAttribute("id",memberDTO1.getId());
-        session.setAttribute("name", memberDTO1.getMemberName());
         return "redirect:/";
     }
 
     // 회원정보 조회
     @GetMapping("/myPage/{id}")
-    public String myPage(@PathVariable("id") Long id, Model model, HttpSession session){
-        MemberDTO memberDTO = memberService.myPage(id);
-        String sessionName = (String) session.getAttribute("name");
-        List<WishDTO> wishDTOList = wishService.findByMemberName(sessionName);
-        List<WishDTO> wishDTOList1 = new ArrayList<>();
-        for (int i = 0; i < wishDTOList.size(); i++) {
-            if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                wishDTOList1.add(wishDTOList.get(i));
+    public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                         @PathVariable("id") Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
+        if (findDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/book-list";
+        } else {
+            MemberDTO memberDTO = memberService.myPage(id);
+            model.addAttribute("member", memberDTO);
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> wishDTOList1 = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    wishDTOList1.add(wishDTOList.get(i));
+                }
             }
+            System.out.println("wishDTOList1 = " + wishDTOList1);
+            model.addAttribute("wishlist", wishDTOList1);
+            return "member/myPage";
         }
-        System.out.println("wishDTOList1 = " + wishDTOList1);
-        model.addAttribute("wishlist", wishDTOList1);
-        model.addAttribute("member", memberDTO);
-        return "member/myPage";
     }
+
 
     // 회원정보 조회 (완결 작품)
     @GetMapping("/myPage/{id}/completion")
-    public String myPage2(@PathVariable("id") Long id, Model model){
+    public String myPage2(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                          @PathVariable("id") Long id, Model model){
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/myPageCompletion";
@@ -67,7 +81,12 @@ public class MemberController {
 
     // 회원정보 조회 (데뷔 글)
     @GetMapping("/myPage/{id}/debut")
-    public String myPage3(@PathVariable("id") Long id, Model model){
+    public String myPage3(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                          @PathVariable("id") Long id, Model model){
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/myPageDebut";
@@ -75,10 +94,22 @@ public class MemberController {
 
     // 업데이트 폼 페이지 요청
     @GetMapping("/update-form/{id}")
-    public String updateForm(@PathVariable("id") Long id, Model model) {
+    public String updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                             @PathVariable("id") Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/update";
+    }
+
+    // 회원정보 수정 처리
+    @PostMapping("/update")
+    public String update(MemberDTO memberDTO) throws IOException {
+        memberService.update(memberDTO);
+        return "redirect:/member/myPage/" + memberDTO.getId();
     }
 
     // 비밀번호 체크
@@ -94,7 +125,12 @@ public class MemberController {
 
     // 포인트 충전 페이지 이동
     @GetMapping("/purchase-point/{id}")
-    public String purchasePoint(@PathVariable("id") Long id, Model model) {
+    public String purchasePoint(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                @PathVariable("id") Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/pay";
@@ -102,7 +138,12 @@ public class MemberController {
 
     // 포인트 충전내역 페이지 이동 (수정필요)
     @GetMapping("/point-history/purchase/{id}")
-    public String purchaseHistory(@PathVariable("id") Long id, Model model) {
+    public String purchaseHistory(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                  @PathVariable("id") Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryPurchase";
@@ -110,7 +151,12 @@ public class MemberController {
 
     // 포인트 이용내역 페이지 이동 (수정필요)
     @GetMapping("/point-history/use/{id}")
-    public String useHistory(@PathVariable("id") Long id, Model model) {
+    public String useHistory(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                             @PathVariable("id") Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("member", memberDTO);
         return "member/pointHistoryUse";
@@ -118,16 +164,17 @@ public class MemberController {
 
     // 카카오페이
     @GetMapping("/kkoPay")
-    public @ResponseBody String kkoPay(@RequestParam("id")Long id, @RequestParam("cash") int memberPoint){
+    public @ResponseBody String kkoPay(@RequestParam("id")Long id,
+                                       @RequestParam("cash") int memberPoint){
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
 
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/";
+    //작가 승인 요청
+    @PostMapping("/req-writer-save")
+    public @ResponseBody String reqWriterSave(@RequestParam("id") Long id) {
+        String result = reqWriterService.save(id);
+        return result;
     }
 
     // 비밀번호 설정 페이지 요청

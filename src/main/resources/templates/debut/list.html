@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <h2>신비한 서재 입니다.</h2>
+</head>
+<body>
+
+
+<table class="table table-hover">
+
+  <tr>
+    <th scope="col">조회수</th>
+    <th scope="col">제목</th>
+    <th scope="col">소개글</th>
+    <th scope="col">작가명</th>
+    <th scope="col">함께하는작가</th>
+    <th scope="col">이미지</th>
+
+  </tr>
+  <tr th:each="debut: ${debutEpisodePage}">
+    <td th:text="${debut.id}" hidden></td>
+    <td th:text="${debut.debutHits}"></td>
+    <td th:text="${debut.debutTitle}"></td>
+    <td th:text="${debut.introduce}"></td>
+    <td th:text="${debut.memberName}"></td>
+    <td th:text="${debut.feat}"></td>
+    <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"></td>
+  </tr>
+</table>
+
+
+
+<div class="container">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+
+      <a class="page-link" th:href="@{/debut(page=1)}">
+        <span>First</span>
+      </a>
+    </li>
+
+    <li th:class="${debutEpisodePage.first} ? 'disabled'" class="page-item">
+
+      <a class="page-link" th:href="${debutEpisodePage.first} ? '#' : @{/debut(page=${debutEpisodePage.number})}">
+        <span><</span> <!-- < -->
+      </a>
+    </li>
+
+
+    <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+        th:class="${page == debutEpisodePage.number + 1} ? 'page-item active'" class="page-item">
+      <a class="page-link" th:text="${page}" th:href="@{/debut(page=${page})}"></a>
+    </li>
+
+
+    <li th:class="${debutEpisodePage.last} ? 'disabled'">
+      <a class="page-link" th:href="${debutEpisodePage.last} ? '#' : @{/debut(page=${debutEpisodePage.number + 2})}">
+        <span>&gt;</span>
+      </a>
+    </li>
+
+    <li class="page-item">
+      <a class="page-link" th:href="@{/debut(page=${debutEpisodePage.totalPages})}">
+        <span>Last</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>

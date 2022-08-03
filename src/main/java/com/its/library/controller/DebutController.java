@@ -1,19 +1,18 @@
 package com.its.library.controller;
 
-import com.its.library.common.PagingConst;
+import com.its.library.config.auth.PrincipalDetails;
 import com.its.library.dto.DebutCommentDTO;
 import com.its.library.dto.DebutEpisodeDTO;
+import com.its.library.dto.MemberDTO;
 import com.its.library.service.DebutCommentService;
 import com.its.library.service.DebutService;
+import com.its.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,33 +23,47 @@ public class DebutController {
     private final DebutService debutService;
     private final DebutCommentService debutCommentService;
 
-    //데뷔글 화면 요청처리
+    private final MemberService memberService;
+
+    //데뷔글 저장 화면 요청
     @GetMapping("/save-form")
-    public String saveForm() {
+    public String saveForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
         return "debut/save";
     }
 
-    //데뷔글 저장처리
+    //데뷔글 저장 처리
     @PostMapping("/save")
-    public String save(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO, HttpSession session) throws IOException {
-        Long id = (Long) session.getAttribute("id");
-        debutService.save(debutEpisodeDTO, id);
-        return "index";
+    public String save(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO) throws IOException {
+        debutService.save(debutEpisodeDTO, debutEpisodeDTO.getMemberId());
+        return "redirect:/";
     }
 
     //데뷔글 상세조회
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                         @PathVariable Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         DebutEpisodeDTO debutEpisodeDTO = debutService.detail(id);
         List<DebutCommentDTO> debutCommentDTOList = debutCommentService.findById(id);
-        model.addAttribute("commentList",debutCommentDTOList);
+        model.addAttribute("commentList", debutCommentDTOList);
         model.addAttribute("debut", debutEpisodeDTO);
         return "debut/detail";
     }
 
     //데뷔글 업데이트 폼
     @GetMapping("/update-form/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
+    public String updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                             @PathVariable Long id, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         DebutEpisodeDTO debutEpisodeDTO = debutService.updateForm(id);
         model.addAttribute("debut", debutEpisodeDTO);
         return "debut/update";
@@ -60,19 +73,21 @@ public class DebutController {
     @PostMapping("/update")
     public String update(@ModelAttribute DebutEpisodeDTO debutEpisodeDTO) throws IOException {
         debutService.update(debutEpisodeDTO);
-        return "index";
+        return "redirect:/";
     }
 
     //글 삭제 처리
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         debutService.delete(id);
-        return "index";
+        return "redirect:/";
     }
 
     //데뷔글 좋아요 처리
     @GetMapping("/love/{id}")
-    public @ResponseBody int love(@PathVariable Long id, @RequestParam("memberId") Long memberId, @RequestParam("num") int num) {
+    public @ResponseBody int love(@PathVariable Long id,
+                                  @RequestParam("memberId") Long memberId,
+                                  @RequestParam("num") int num) {
         if (num == 1) {
             int resultNum = debutService.loveSave(id, memberId);
             return resultNum;
@@ -95,41 +110,63 @@ public class DebutController {
 //        return "debut/poemPagingList";
 //    }
     @GetMapping("/poem/{category}/{addressId}")
-    public String poemList(@PathVariable("category")Long categoryId,Model model,@PathVariable("addressId")int addressId) {
+    public String poemList(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                           @PathVariable("category") Long categoryId, Model model,
+                           @PathVariable("addressId") int addressId) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
 
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId, addressId);
         model.addAttribute("poemList", debutEpisodeDTOList);
         System.out.println("poemList = " + debutEpisodeDTOList);
         return "debut/poemList";
 
     }
+
     //데뷔글 에세이 리스트
     @GetMapping("/essay/{category}/{addressId}")
-    public String essayList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
-        model.addAttribute("essayList", debutEpisodeDTOList);
-        System.out.println("essayList = " + debutEpisodeDTOList);
-        return "debut/essayList";
+    public String essayList(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                            @PathVariable("category") Long categoryId,
+                            @PathVariable("addressId") int addressId, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
 
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId, addressId);
+        model.addAttribute("essayList", debutEpisodeDTOList);
+        return "debut/essayList";
     }
+
     //데뷔글 웹소설 리스트
     @GetMapping("/web/{category}/{addressId}")
-    public String webList(@PathVariable("category")Long categoryId,Model model ,@PathVariable("addressId")int addressId) {
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId,addressId);
+    public String webList(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                          @PathVariable("category") Long categoryId,
+                          @PathVariable("addressId") int addressId, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId, addressId);
         model.addAttribute("webList", debutEpisodeDTOList);
         System.out.println("webList = " + debutEpisodeDTOList);
         return "debut/webList";
-
     }
+
     //데뷔글 매인 addressId=0 기본
     @GetMapping("/main/{addressId}")
-    public String mainPage(Model model ,@PathVariable("addressId")int addressId){
-       List<DebutEpisodeDTO> poemList = debutService.categoryList(1L,addressId);
-        List<DebutEpisodeDTO> essayList = debutService.categoryList(2L,addressId);
-        List<DebutEpisodeDTO> webList = debutService.categoryList(3L,addressId);
-        model.addAttribute("poemList",poemList);
-        model.addAttribute("essayList",essayList);
-        model.addAttribute("webList",webList);
+    public String mainPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                           @PathVariable("addressId") int addressId, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
+        List<DebutEpisodeDTO> poemList = debutService.categoryList(1L, addressId);
+        List<DebutEpisodeDTO> essayList = debutService.categoryList(2L, addressId);
+        List<DebutEpisodeDTO> webList = debutService.categoryList(3L, addressId);
+        model.addAttribute("poemList", poemList);
+        model.addAttribute("essayList", essayList);
+        model.addAttribute("webList", webList);
         return "debut/main";
     }
 }

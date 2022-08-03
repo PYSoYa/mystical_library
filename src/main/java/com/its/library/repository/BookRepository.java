@@ -39,6 +39,5 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     List<BookEntity> findByGenreEntityOrderByHitsDesc(GenreEntity genreEntity);
 
-
-
+    List<BookEntity> findByWriterRole(int num);
 }

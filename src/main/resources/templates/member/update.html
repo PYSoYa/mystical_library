@@ -59,6 +59,7 @@
           </div>
           <div class="member-detail-wrap">
             <form class="form-for-update" action="/member/update" method="post" enctype="multipart/form-data">
+              <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
               <input type="hidden" name="id" th:value="${member.id}">
               <div class="input-wrap">
                 <div class="label-wrap">
@@ -102,10 +103,10 @@
               </div>
               <div class="btn-wrap">
                 <div class="update-btn-wrap">
-                  <button type="button" class="update-btn">수정</button>
+                  <button type="submit" class="update-btn">수정</button>
                 </div>
                 <div class="cancel-btn-wrap">
-                  <button type="button" class="cancel-btn">취소</button>
+                  <button type="button" onclick="goBack()" class="cancel-btn">취소</button>
                 </div>
               </div>
             </form>

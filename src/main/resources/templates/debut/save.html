@@ -19,6 +19,7 @@
       <div class="save-form-div">
         <div class="save-form">
           <form class="form-to-save" action="/debut/save" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <div class="select-list-wrap">
               <div class="category-list-wrap">
                 <select name="categoryId" class="select-input">
@@ -28,6 +29,8 @@
                   <option value="3">에세이</option>
                 </select>
               </div>
+              <input type="hidden" name="memberId" th:value="${authentication.id}">
+              <input type="hidden" name="memberName" th:value="${authentication.memberName}">
               <div class="feat-wrap">
                 <input type="text" name="feat" class="feat" placeholder="공동작업 작가(필요 시)">
               </div>

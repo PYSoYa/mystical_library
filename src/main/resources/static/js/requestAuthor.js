@@ -5,12 +5,17 @@ const requestAuthor = () => {
     confirmButtonText: '네!',
     denyButtonText: '아니요..'
   }).then((result) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
     if (result.isConfirmed) {
       $.ajax({
         type: 'post',
-        url: '/admin/req-writer-save',
+        url: '/member/req-writer-save',
         data: {"id": id},
         dataType: 'text',
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
         success: function (result) {
           if (result === 'ok') {
             Swal.fire('작가 신청을 완료했어요!', '', 'success');
@@ -23,4 +28,8 @@ const requestAuthor = () => {
       Swal.fire('작가 신청을 취소했어요', '', 'info')
     }
   });
+}
+
+const goBack = () => {
+  location.href = "/member/myPage/" + id;
 }
