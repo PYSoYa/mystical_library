@@ -25,7 +25,7 @@ public class HistoryService {
     private final BookRepository bookRepository;
     private final EpisodeRepository episodeRepository;
 
-    public void historySave(HistoryDTO historyDTO) {
+    public String historyUpdate(HistoryDTO historyDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyDTO.getEpisodeId());
         MemberEntity memberEntity = new MemberEntity();
@@ -34,8 +34,11 @@ public class HistoryService {
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
-            historyEntity = HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity);
+            historyEntity = HistoryEntity.updateEntity(historyDTO, memberEntity, episodeEntity);
             historyRepository.save(historyEntity);
+            return "저장완료";
+        } else {
+            return null;
         }
 
     }
@@ -76,7 +79,26 @@ public class HistoryService {
         return "숨기기";
     }
 
-    public void findByWishListBook(Long id) {
-
+    public Long findByHistory(HistoryDTO historyDTO) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyDTO.getEpisodeId());
+        MemberEntity memberEntity = new MemberEntity();
+        EpisodeEntity episodeEntity = new EpisodeEntity();
+        HistoryEntity historyEntity = new HistoryEntity();
+        if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            episodeEntity = optionalEpisodeEntity.get();
+            Optional<HistoryEntity> optionalHistoryEntity  = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
+            if (optionalHistoryEntity.isPresent()) {
+                historyEntity = optionalHistoryEntity.get();
+                if (historyEntity != null) {
+                 Long historyId = historyEntity.getId();
+                    return historyId;
+                }
+            }
+        } else {
+            return null;
+        }
+        return null;
     }
 }

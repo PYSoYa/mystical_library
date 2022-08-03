@@ -46,6 +46,16 @@ public class HistoryEntity extends BaseEntity{
         return historyEntity;
     }
 
+    public static HistoryEntity updateEntity(HistoryDTO historyDTO, MemberEntity memberEntity, EpisodeEntity episodeEntity) {
+        HistoryEntity historyEntity = new HistoryEntity();
+        historyEntity.setId(historyDTO.getId());
+        historyEntity.setMemberEntity(memberEntity);
+        historyEntity.setEpisodeEntity(episodeEntity);
+        historyEntity.setBooKId(episodeEntity.getBookEntity().getId());
+        historyEntity.setHidden(0);
+        return historyEntity;
+    }
+
 
 
 

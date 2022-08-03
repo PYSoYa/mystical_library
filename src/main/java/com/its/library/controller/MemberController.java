@@ -1,7 +1,9 @@
 package com.its.library.controller;
 
 import com.its.library.dto.MemberDTO;
+import com.its.library.dto.WishDTO;
 import com.its.library.service.MemberService;
+import com.its.library.service.WishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import java.io.IOException;
 public class MemberController {
 
     private final MemberService memberService;
+    private final WishService wishService;
 
     // 회원가입 처리
     @PostMapping("/save")
@@ -36,8 +41,18 @@ public class MemberController {
 
     // 회원정보 조회
     @GetMapping("/myPage/{id}")
-    public String myPage(@PathVariable("id") Long id, Model model){
+    public String myPage(@PathVariable("id") Long id, Model model, HttpSession session){
         MemberDTO memberDTO = memberService.myPage(id);
+        String sessionName = (String) session.getAttribute("name");
+        List<WishDTO> wishDTOList = wishService.findByMemberName(sessionName);
+        List<WishDTO> wishDTOList1 = new ArrayList<>();
+        for (int i = 0; i < wishDTOList.size(); i++) {
+            if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                wishDTOList1.add(wishDTOList.get(i));
+            }
+        }
+        System.out.println("wishDTOList1 = " + wishDTOList1);
+        model.addAttribute("wishlist", wishDTOList1);
         model.addAttribute("member", memberDTO);
         return "member/myPage";
     }
