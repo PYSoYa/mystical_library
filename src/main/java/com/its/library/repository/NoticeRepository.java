@@ -13,4 +13,8 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity,Long> {
 
 
     Optional<NoticeEntity> findByIdAndNoticeReadIsFalse(Long memberId);
+
+    List<NoticeEntity> findAllById(Long memberId);
+
+    List<NoticeEntity> findByMemberEntity_Id(Long memberId);
 }
