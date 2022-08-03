@@ -22,7 +22,7 @@
       <td th:text="${comment.memberName}"></td>
       <td th:text="${comment.contents}"></td>
       <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      <td th:if="${session.name == comment.memberName}">
+      <td th:if="${authentication.memberName == comment.memberName}">
         <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
       </td>
     </tr>
@@ -253,7 +253,7 @@
 </body>
 <script th:inline="javascript">
   const first = () => {
-    const memberId = [[${session.id}]];
+    const memberId = [[${authentication.id}]];
     const bookId = [[${book.id}]];
 
     $.ajax({
@@ -271,106 +271,75 @@
     })
   }
   const priceMoney = (episodeId) => {
-    const memberId = [[${session.id}]];
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
     const bookId = [[${book.id}]];
 
-    if (memberId != null) {
-      $.ajax({
-        type: "post",
-        url: "/history/check",
-        data: {
-          "memberId": memberId,
-          "episodeId": episodeId
-        },
-        dataType: "text",
-        success: function (result) {
-          if (result != null){
+    $.ajax({
+      type: "post",
+      url: "/box/pointCheck",
+      data: {
+        "memberId": memberId,
+        "episodeId": episodeId,
+        "bookId": bookId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+          if (result === "잔고부족") {
+            Swal.fire({
+              icon: 'success',
+              text: '보유하신 포인트가 부족합니다.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else if (result === "결제") {
             $.ajax({
               type: "post",
-              url: "/history/save",
+              url: "/box/save",
               data: {
-                "id": result,
-                "bookId": bookId,
-                "episodeId": episodeId,
-                "memberId": memberId
+                "memberId": memberId,
+                "bookId": bookId
               },
               dataType: "text",
+              beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+              },
               success: function (result) {
-                if (result === "저장완료") {
-                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                if (result === "ok") {
+                  $.ajax({
+                    type:"get",
+                    url:"/point/pay/"+memberId,
+                    data:{"episodeId":episodeId,"bookId":bookId},
+                    dataType:"text",
+                    success:function (){
+                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                    }
+                  });
                 }
               }
             })
-          } else {
-              $.ajax({
-                type: "post",
-                url: "/box/pointCheck",
-                data: {
-                  "bookId": bookId,
-                  "episodeId": episodeId,
-                  "memberId": memberId
-                },
-                dataType: "text",
-                success: function (result) {
-                  if (result == "무료저장") {
-                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                  } else if (result === "유료저장") {
-                    $.ajax({
-                      type: "post",
-                      url: "/history/save",
-                      data: {
-                        "bookId": bookId,
-                        "episodeId": episodeId,
-                        "memberId": memberId
-                      },
-                      dataType: "text",
-                      success: function (result) {
-
-                      }
-                    })
-                    $.ajax({
-                      type: "post",
-                      url: "/box/save",
-                      data: {
-                        "memberId": memberId,
-                        "bookId": bookId
-                      },
-                      dataType: "text",
-                      success: function (result) {
-                        if (result === "ok") {
-                          $.ajax({
-                            type:"get",
-                            url:"/point/pay/"+memberId,
-                            data:{"episodeId":episodeId,"bookId":bookId},
-                            dataType:"text",
-                            success:function (){
-                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                            }
-                          });
-                        }
-                      }
-                    })
-                  } else if (result === "잔고부족"){
-                    Swal.fire({
-                      icon: 'success',
-                      text: '보유하신 포인트가 부족합니다.',
-                      showConfirmButton: false,
-                      timer: 1500
-                    });
-                    location.href = "/member/purchase-point/" + memberId;
-                  }
-                }
-              })
+          } else if (result === "보여줘") {
+            alert("보여줘");
+          } else if (result === "무료") {
+            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           }
         }
       })
-    }
   }
 
   const bookLove = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     const loveChange = document.getElementById("loveChange");
     const bookId = [[${book.id}]];
-    const memberName = [[${session.name}]];
+    const memberName = [[${authentication.memberName}]];
+
     $.ajax({
       type: "post",
       url: "/wish/check",
@@ -379,6 +348,9 @@
         "memberName": memberName
       },
       dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
       success: function (result) {
         if (result === "ok") {
           $.ajax({
@@ -389,6 +361,9 @@
               "memberName" : memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const wishlist = document.querySelector(".wishlist-btn");
               if (result == "ok"){
@@ -413,6 +388,9 @@
               "memberName": memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const wishlist = document.querySelector(".wishlist-btn1");
               if (result == "ok") {
@@ -426,14 +404,12 @@
               } else {
                 alert("실패");
               }
-
             },
 
           })
         }
       }
-    })
-
+    });
   }
 </script>
 </html>

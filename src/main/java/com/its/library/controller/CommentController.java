@@ -4,7 +4,6 @@ import com.its.library.dto.CommentDTO;
 import com.its.library.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,10 +25,8 @@ public class CommentController {
     // 회차 댓글 삭제처리
     @DeleteMapping("/delete/{id}")
     public @ResponseBody List<CommentDTO> commentDelete(@PathVariable("id") Long id,
-                                                        @RequestParam("episodeId") Long episodeId,
-                                                        Model model) {
+                                                        @RequestParam("episodeId") Long episodeId) {
         List<CommentDTO> result = commentService.commentDelete(id, episodeId);
-
         return result;
     }
 
