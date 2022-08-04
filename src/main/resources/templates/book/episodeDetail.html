@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <meta name="_csrf" th:content="${_csrf.token}">
   <title>신비한 서재입니다.</title>
 
   <link rel="stylesheet" th:href="@{/css/book/episode-detail.css}">
@@ -390,7 +392,7 @@
           <textarea name="contents" id="input-contents" rows="5" placeholder="댓글은 500자 까지 등록 가능합니다."></textarea>
           <div class="btn-wrap">
             <div class="btn-align-right">
-              <button type="button" th:onclick="" class="btn-submit">
+              <button type="button" th:onclick="commentSave()" class="btn-submit">
                 <span>댓글 등록</span>
               </button>
               <button type="button" class="btn-cancel" onclick="cancelBTN()">
@@ -406,7 +408,7 @@
           <span class="list-title">)</span>
         </div>
         <div class="comment-list-wrap">
-          <ul>
+          <ul id="saveComment">
             <li>
               <div class="info">
                 <div>
@@ -617,6 +619,11 @@
         const memberName = document.getElementById("memberName").value;
         const memberImgName = document.getElementById("memberImgName").value;
         const commentEpisode = document.getElementById("commentEpisode").value;
+        const inputContents = document.getElementById("input-contents").value;
+        const saveComment = document.getElementById("saveComment");
+
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
 
         $.ajax({
             type: "post",
@@ -626,11 +633,44 @@
                 "episodeId": episodeId,
                 "memberName": memberName,
                 "memberImgName": memberImgName,
-                "commentEpisode": commentEpisode
+                "commentEpisode": commentEpisode,
+                "contents": inputContents
             },
             dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
+                if (result != null) {
 
+                   for (let i in result) {
+                       var output = "<li>\n" +
+                           "              <div class=\"info\">" +
+                           "                <div>" +
+                           "                  <a href=\"#\" class=\"writer-link\">" +
+                           "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
+                           "                  </a>" +
+                           "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
+                           "                </div>" +
+                           "                <div>" +
+                           "                  <span class=\"update\">" +
+                           "                    <a href=\"javascript:;\" class=\"update-btn\">수정</a>" +
+                           "                  </span>" +
+                           "                  <span class=\"delete\">" +
+                           "                    <a href=\"javascript:;\" class=\"delete-btn\">삭제</a>" +
+                           "                  </span>" +
+                           "                  <span class=\"report\">" +
+                           "                    <a href=\"javascript:;\" class=\"report-btn\">신고</a>" +
+                           "                  </span>" +
+                           "                </div>" +
+                           "              </div>" +
+                           "              <div class=\"content\">" +
+                           "                <span class=\"content\">" + result[i].contents + "</span>" +
+                           "              </div>" +
+                           "            </li>"
+                   }
+                   saveComment.innerHTML = output;
+                }
             }
         })
     }
