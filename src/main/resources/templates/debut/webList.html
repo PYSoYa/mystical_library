@@ -81,7 +81,7 @@
       <div class="series-list">
         <div class="book-wrap" th:each="web:${webList}">
           <div class="img-wrap">
-            <a th:href="@{|/book/book/${web.id}|}">
+            <a th:href="@{|/debut/detail/${web.id}|}">
               <img th:src="@{|/upload/${web.debutImgName}|}" class="img" alt="">
             </a>
           </div>
