@@ -12,7 +12,7 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity,Long> {
     List<NoticeEntity> findAllByMemberEntity_IdAndNoticeReadIsFalse(Long memberId);
 
 
-    Optional<NoticeEntity> findByIdAndNoticeReadIsFalse(Long memberId);
+    Optional<NoticeEntity> findByMemberEntity_IdAndNoticeReadIsFalse(Long memberId);
 
     List<NoticeEntity> findAllById(Long memberId);
 
