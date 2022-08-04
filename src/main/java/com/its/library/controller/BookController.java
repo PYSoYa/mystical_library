@@ -31,6 +31,7 @@ public class BookController {
     private final WishService wishService;
     private final MemberService memberService;
     private final NoticeService noticeService;
+    private final EpisodeService episodeService;
 
     // 책 저장페이지 요청
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
@@ -227,14 +228,13 @@ public class BookController {
                             @RequestParam("genreId") Long genreId,
                             @RequestParam("alignmentId") Long alignmentId, Model model) {
         try {
+            List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
+            model.addAttribute("bookList", bookDTOList);
+            model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
+
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
-
-            List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
-            System.out.println("bookDTOList = " + bookDTOList);
-            model.addAttribute("bookList", bookDTOList);
-            model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
         } catch (NullPointerException e) {
             System.out.println("BookController.genreList");
             System.out.println("java.lang.NullPointerException: null");

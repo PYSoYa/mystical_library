@@ -16,7 +16,9 @@ public class CommentDTO {
     private Long id;
     private Long memberId;
     private Long episodeId;
+    private String commentEpisode;
     private Long bookId;
+    private String memberImgName;
     private String memberName;
     private String contents;
     private LocalDateTime createdTime;
@@ -27,6 +29,7 @@ public class CommentDTO {
         commentDTO.setId(commentEntity.getId());
         commentDTO.setMemberId(commentEntity.getMemberEntity().getId());
         commentDTO.setEpisodeId(commentEntity.getEpisodeEntity().getId());
+        commentDTO.setCommentEpisode(commentEntity.getCommentEpisode());
         commentDTO.setBookId(commentEntity.getBookId());
         commentDTO.setMemberName(commentEntity.getMemberName());
         commentDTO.setContents(commentEntity.getContents());

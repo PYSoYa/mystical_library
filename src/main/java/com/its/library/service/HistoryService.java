@@ -82,7 +82,7 @@ public class HistoryService {
             memberEntity = optionalMemberEntity.get();
             bookEntity = optionalBookEntity.get();
 
-            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity, bookEntity.getId());
+            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity.getId(), bookEntity.getId());
             for (int i = 0; i < historyEntityList.size(); i++) {
                 historyRepository.deleteById(historyEntityList.get(i).getId());
             }
@@ -121,7 +121,7 @@ public class HistoryService {
         List<HistoryDTO> historyDTOList = new ArrayList<>();
         if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
-            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity, bookId);
+            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity.getId(), bookId);
             for (HistoryEntity history: historyEntityList) {
                 historyDTOList.add(HistoryDTO.findDTO(history));
             }
