@@ -436,7 +436,7 @@ public class BookService {
         return bookDTOList5;
     }
 
-    public String first(Long bookId) {
+    public Long first(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();
         BookEntity bookEntity = new BookEntity();
@@ -449,6 +449,6 @@ public class BookService {
             }
         }
         System.out.println("episodeDTOList = " + episodeDTOList);
-        return null;
+        return episodeDTOList.get(0).getId();
     }
 }

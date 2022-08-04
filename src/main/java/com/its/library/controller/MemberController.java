@@ -53,14 +53,13 @@ public class MemberController {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
             List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-            List<WishDTO> wishDTOList1 = new ArrayList<>();
+            List<WishDTO> writerList = new ArrayList<>();
             for (int i = 0; i < wishDTOList.size(); i++) {
                 if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                    wishDTOList1.add(wishDTOList.get(i));
+                    writerList.add(wishDTOList.get(i));
                 }
             }
-            System.out.println("wishDTOList1 = " + wishDTOList1);
-            model.addAttribute("wishlist", wishDTOList1);
+            model.addAttribute("wishlist", writerList);
             return "member/myPage";
         }
     }

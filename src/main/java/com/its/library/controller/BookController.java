@@ -253,18 +253,19 @@ public class BookController {
             model.addAttribute("authentication", findDTO);
 
             BookDTO bookDTO = bookService.findById(id);
-            model.addAttribute("book", bookDTO);
             List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-            model.addAttribute("commentList", commentDTOList);
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-            model.addAttribute("episodeList", episodeDTOList);
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
-            model.addAttribute("wishlist", wishDTOList);
-
+            List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+            model.addAttribute("book", bookDTO);
+            model.addAttribute("commentList", commentDTOList);
+            model.addAttribute("episodeList", episodeDTOList);
+            model.addAttribute("wishlist", wishDTOList);
+            model.addAttribute("historyList", historyDTOList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
         } catch (NullPointerException e) {
@@ -315,8 +316,8 @@ public class BookController {
 
     // 첫화보기
     @GetMapping("/first")
-    public String first(@RequestParam("bookId") Long bookId) {
-        String result = bookService.first(bookId);
+    public @ResponseBody Long first(@RequestParam("bookId") Long bookId) {
+        Long result = bookService.first(bookId);
         return result;
     }
 
