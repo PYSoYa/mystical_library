@@ -1,3 +1,29 @@
+function countNotice (){
+  console.log("실행");
+  let header = $("meta[name='_csrf_header']").attr('content');
+  let token = $("meta[name='_csrf']").attr('content');
+
+  $.ajax({
+    type: "get",
+    url: "/notice/readCount",
+    dataType: "text",
+    beforeSend: function(xhr){
+      xhr.setRequestHeader(header, token);
+    },
+
+    success: function (result) {
+      console.log(result);
+      if (result == "true") {
+        const icon = document.querySelector('.notification');
+        icon.classList.add('new-notice');
+      } else {
+        const icon = document.querySelector('.notification');
+        icon.classList.remove('new-notice');
+      }
+    }
+  });
+}
+
 const checkClick = () => {
   const checkbox = document.querySelector('.isChecked');
 
