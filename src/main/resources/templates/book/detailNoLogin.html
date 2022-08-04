@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/book-detail.css}">
+</head>
+<body>
+<th:block th:replace="layout/header :: header"></th:block>
+
+<div id="test">
+  <table th:each="comment:${commentList}">
+    <tr>
+      <th>작성자</th>
+      <th>댓글 내용</th>
+      <th>작성시간</th>
+    </tr>
+    <tr>
+      <td th:text="${comment.memberName}"></td>
+      <td th:text="${comment.contents}"></td>
+      <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <td th:if="${authentication.memberName == comment.memberName}">
+        <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<main class="main-container">
+  <div class="book-episode-comment-container">
+    <div class="book-detail-container">
+      <div class="book-img-wrap">
+        <img th:src="@{|/upload/${book.bookImgName}|}" alt="" class="img">
+      </div>
+      <div class="book-detail-wrap">
+        <div class="detail-wrap">
+          <div class="title-wrap">
+            <h2 class="title" th:text="${book.bookTitle}"></h2>
+            <div class="wishlist-wrap">
+              <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
+            </div>
+          </div>
+          <div class="author-wrap">
+            <div class="author-wrapper">
+              <a href="#">
+                <span class="author" th:text="${book.memberName}"></span>
+              </a>
+            </div>
+            <div class="episode-quantity-wrap">
+              <span class="quantity">총 99화</span>
+            </div>
+            <div class="status-wrap">
+              <span class="status" th:text="${book.status}">연재</span>
+            </div>
+          </div>
+          <div class="intro-wrap">
+              <span class="intro" th:text="${book.introduce}"></span>
+          </div>
+          <div class="tag-wrap">
+            <span class="tag novel">웹소설</span>
+            <span class="tag poem">시</span>
+            <span class="tag essay">에세이</span>
+          </div>
+        </div>
+        <div class="action-wrap">
+          <div class="first-btn-wrap">
+            <button type="button" class="first-btn" th:onclick="first()">첫 화 보기</button>
+          </div>
+          <div class="continue-btn-wrap">
+            <button type="button" class="continue-btn" th:onclick="again()">이어보기</button>
+          </div>
+          <div class="more-detail-wrap">
+            <div class="hits-wrap">
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                </svg>
+              </div>
+              <div class="desc-wrap">
+                <span class="desc">2.2만</span>
+              </div>
+            </div>
+            <div class="heart-wrap">
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-heart heart-icon" viewBox="0 0 16 16">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                </svg>
+              </div>
+              <div class="desc-wrap">
+                <span class="desc">6.3천</span>
+              </div>
+            </div>
+            <div class="star-wrap">
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                </svg>
+              </div>
+              <div class="desc-wrap">
+                <span class="star" th:text="${book.star}"></span>
+              </div>
+            </div>
+            <div class="comment-quantity-wrap">
+              <div class="icon-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+                </svg>
+              </div>
+              <div class="desc-wrap">
+                <span class="desc">63</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="episode-detail-container">
+      <div class="quantity-episode-wrap">
+        <span class="quantity-episode">전체 (</span>
+        <span class="quantity-episode" th:text="${episodeList.size}"></span>
+        <span class="quantity-episode">)</span>
+      </div>
+      <div th:each="episode:${episodeList}">
+          <div class="episode-list-wrap">
+            <div  class="episode-list-wrap">
+              <div class="img-wrap">
+                <a href="javascript:;" class="img-link">
+                  <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
+                </a>
+              </div>
+              <div class="detail-wrap">
+                <div class="title-wrap">
+                  <div class="badge-wrap" th:if="${episode.payment==0}">
+                    <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
+                  </div>
+                  <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="title-link">
+                    <h5 class="title" th:text="${episode.episodeTitle}"></h5>
+                  </a>
+                </div>
+                <div class="date-wrap">
+                  <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
+                  <div class="star-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
+                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg>
+                    <span class="star" th:text="${episode.star}"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-wrap">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="comment-detail-container">
+      <div class="comment-header-wrap">
+        <span class="comment-header">댓글목록 (3672)</span>
+      </div>
+      <div class="comment-detail-wrap">
+        <div class="img-wrap">
+          <a href="#" class="img-link">
+            <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+          </a>
+        </div>
+        <div class="detail-wrap">
+          <div class="header-wrap">
+            <div class="writer-wrap">
+              <a href="#" class="writer-link">
+                <h5 class="writer">작성자</h5>
+              </a>
+            </div>
+            <div class="date-wrap">
+              <div class="symbol">·</div>
+              <span class="date">2022.06.23</span>
+            </div>
+            <div class="report-wrap">
+              <a href="#" class="report">신고</a>
+            </div>
+          </div>
+          <div class="content-wrap">
+              <span class="content">테러로 인해 잃어버린 공작의 5살 손녀
+
+천둥소리=폭탄소리????
+그래서 천둥소리에 왠지 모르게 벌벌 떨 정도로 무섭고 테러 이후의 기억은 잃어버린 건가..?
+
+현 부모가 자기 딸이 아니라서 돈이랑 여주명의로 사체까지 빌려서 작위 사고 등골까지 빼먹을라 했나</span>
+          </div>
+          <div class="comment-episode-wrap">
+            <span class="comment-episode">제목 제목 제목 제목 제목 1화</span>
+          </div>
+        </div>
+      </div>
+      <div class="comment-detail-wrap last-detail-wrap">
+        <div class="img-wrap">
+          <a href="#" class="img-link">
+            <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+          </a>
+        </div>
+        <div class="detail-wrap">
+          <div class="header-wrap">
+            <div class="writer-wrap">
+              <a href="#" class="writer-link">
+                <h5 class="writer">작성자2</h5>
+              </a>
+            </div>
+            <div class="date-wrap">
+              <div class="symbol">·</div>
+              <span class="date">2022.06.12</span>
+            </div>
+            <div class="report-wrap">
+              <a href="#" class="report">신고</a>
+            </div>
+          </div>
+          <div class="content-wrap">
+              <span class="content">피로 전해지는 저주를 자식에게
+물려줘서 미안해하는게 아니라..
+수치?죽여?여기 또 도른 황제있네요..
+
+근데 법들이 다..이상해요..
+가족법?손해배상청구법?
+또, 그와중에 50첩요리가 식탁에 다차려지나??
+걱정하는 나..ㅜㅜ</span>
+          </div>
+          <div class="comment-episode-wrap">
+            <span class="comment-episode">제목 제목 제목 제목 제목 2화</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+</body>
+<script th:inline="javascript">
+  const first = () => {
+    Swal.fire({
+      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      // denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
+        location.href = "/member/login-page";
+      } else if (result.isDenied) {
+        // Swal.fire('', '', 'info')
+      }
+    });
+  }
+
+  const again = () => {
+    Swal.fire({
+      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      // denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
+        location.href = "/member/login-page";
+      } else if (result.isDenied) {
+        // Swal.fire('', '', 'info')
+      }
+    });
+  }
+
+  const bookLove = () => {
+    Swal.fire({
+      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: '확인',
+      // denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
+        location.href = "/member/login-page";
+      } else if (result.isDenied) {
+        // Swal.fire('', '', 'info')
+      }
+    });
+  }
+</script>
+</html>
