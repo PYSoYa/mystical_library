@@ -33,15 +33,19 @@ public class NoticeController {
     @GetMapping("/readCount")
     public @ResponseBody boolean noticeReadCount(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         try {
+            System.out.println("NoticeController.noticeReadCount");
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
             boolean result = noticeService.readFalseCount(findDTO.getId());
+            System.out.println(result);
+
             return result;
         } catch (NullPointerException e) {
             System.out.println("NoticeController.noticeReadCount");
             System.out.println("java.lang.NullPointerException: null");
+            return false;
         }
-        return false;
+
     }
 }

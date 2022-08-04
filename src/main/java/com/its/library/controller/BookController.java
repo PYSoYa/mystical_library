@@ -33,7 +33,7 @@ public class BookController {
     private final NoticeService noticeService;
 
     // 책 저장페이지 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/book-save-form")
     public String bookSaveForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         String loginId = principalDetails.getUsername();
@@ -43,7 +43,7 @@ public class BookController {
     }
 
     // 책 저장처리
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-book-save")
     public String reqBookSave(@ModelAttribute BookDTO bookDTO) throws IOException {
         BookDTO saveDTO = bookService.reqBookSave(bookDTO);
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     // 회차 저장페이지 출력
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/episode-save-form/{id}")
     public String episodeSaveForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                   @PathVariable("id") Long bookId, Model model) {
@@ -65,7 +65,7 @@ public class BookController {
     }
 
     // 회차 저장처리
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-episode-save")
     public String reqEpisodeSave(@ModelAttribute EpisodeDTO episodeDTO) throws IOException {
         EpisodeDTO episodeDTO1 = bookService.reqEpisodeSave(episodeDTO);
@@ -75,7 +75,7 @@ public class BookController {
     }
 
     // 책 수정 페이지 출력
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/req-book-update")
     public String bookUpdateForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                  @RequestParam("id") Long id, Model model) {
@@ -89,7 +89,7 @@ public class BookController {
     }
 
     // 책 수정처리 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-book-update")
     public String reqBookUpdate(@ModelAttribute BookDTO bookDTO, @ModelAttribute MailDTO mailDTO) throws IOException {
 
@@ -99,7 +99,7 @@ public class BookController {
     }
 
     // 회차 수정 페이지 출력
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/req-episode-update")
     public String episodeUpdateForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                     @RequestParam("id") Long id, Model model) {
@@ -113,7 +113,7 @@ public class BookController {
     }
 
     // 회차 수정처리 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-episode-update")
     public String reqEpisodeUpdate(@ModelAttribute EpisodeDTO episodeDTO, @ModelAttribute MailDTO mailDTO) throws IOException {
         bookService.reqEpisodeUpdate(episodeDTO, mailDTO);
@@ -121,7 +121,7 @@ public class BookController {
     }
 
     // 책 삭제 페이지 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/req-book-delete")
     public String reqBookDeleteForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                     @RequestParam("id") Long id, Model model) {
@@ -134,7 +134,7 @@ public class BookController {
     }
 
     // 책 삭제 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-book-delete")
     public String reqBookDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
                                 @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
@@ -143,7 +143,7 @@ public class BookController {
     }
 
     // 회차 삭제페이지 요청
-    @PreAuthorize("hasRole('WRITER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/req-episode-delete")
     public String reqEpisodeDeleteForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                        @RequestParam("id") Long id, Model model) {
@@ -253,18 +253,19 @@ public class BookController {
             model.addAttribute("authentication", findDTO);
 
             BookDTO bookDTO = bookService.findById(id);
-            model.addAttribute("book", bookDTO);
             List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-            model.addAttribute("commentList", commentDTOList);
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-            model.addAttribute("episodeList", episodeDTOList);
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
-            model.addAttribute("wishlist", wishDTOList);
-
+            List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+            model.addAttribute("book", bookDTO);
+            model.addAttribute("commentList", commentDTOList);
+            model.addAttribute("episodeList", episodeDTOList);
+            model.addAttribute("wishlist", wishDTOList);
+            model.addAttribute("historyList", historyDTOList);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
         } catch (NullPointerException e) {
@@ -315,8 +316,8 @@ public class BookController {
 
     // 첫화보기
     @GetMapping("/first")
-    public String first(@RequestParam("bookId") Long bookId) {
-        String result = bookService.first(bookId);
+    public @ResponseBody Long first(@RequestParam("bookId") Long bookId) {
+        Long result = bookService.first(bookId);
         return result;
     }
 

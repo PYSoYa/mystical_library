@@ -38,7 +38,11 @@ public class DebutService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
-            DebutCategoryEntity categoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId()).get();
+            Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
+            if (optionalDebutCategoryEntity.isPresent()){
+                DebutCategoryEntity debutCategoryEntity =optionalDebutCategoryEntity.get();
+
+
             MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
             String debutImgName = debutImg.getOriginalFilename();
             debutImgName = System.currentTimeMillis() + "_" + debutImgName;
@@ -47,8 +51,9 @@ public class DebutService {
                 debutImg.transferTo(new File(savePath));
             }
             debutEpisodeDTO.setDebutImgName(debutImgName);
-            DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toSave(categoryEntity, debutEpisodeDTO, memberEntity);
+            DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toSave(debutCategoryEntity, debutEpisodeDTO, memberEntity);
             debutRepository.save(debutEpisodeEntity);
+            }
         }
 
     }

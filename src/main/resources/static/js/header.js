@@ -1,4 +1,4 @@
-window.onload = function (){
+function countNotice (){
   console.log("실행");
   let header = $("meta[name='_csrf_header']").attr('content');
   let token = $("meta[name='_csrf']").attr('content');
@@ -6,17 +6,19 @@ window.onload = function (){
   $.ajax({
     type: "get",
     url: "/notice/readCount",
-    dataType: "boolean",
+    dataType: "text",
     beforeSend: function(xhr){
       xhr.setRequestHeader(header, token);
     },
+
     success: function (result) {
-      if (result == true) {
+      console.log(result);
+      if (result == "true") {
         const icon = document.querySelector('.notification');
-        icon.className += 'new-notice';
+        icon.classList.add('new-notice');
       } else {
         const icon = document.querySelector('.notification');
-        icon.className += 'notification';
+        icon.classList.remove('new-notice');
       }
     }
   });

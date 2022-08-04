@@ -114,4 +114,20 @@ public class HistoryService {
         }
         return null;
     }
+
+    public List<HistoryDTO> findByBookId(Long bookId, Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        MemberEntity memberEntity = new MemberEntity();
+        List<HistoryDTO> historyDTOList = new ArrayList<>();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity, bookId);
+            for (HistoryEntity history: historyEntityList) {
+                historyDTOList.add(HistoryDTO.findDTO(history));
+            }
+            return historyDTOList;
+        } else {
+            return null;
+        }
+    }
 }
