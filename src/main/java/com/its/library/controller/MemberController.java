@@ -53,14 +53,13 @@ public class MemberController {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
             List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-            List<WishDTO> wishDTOList1 = new ArrayList<>();
+            List<WishDTO> writerList = new ArrayList<>();
             for (int i = 0; i < wishDTOList.size(); i++) {
                 if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                    wishDTOList1.add(wishDTOList.get(i));
+                    writerList.add(wishDTOList.get(i));
                 }
             }
-            System.out.println("wishDTOList1 = " + wishDTOList1);
-            model.addAttribute("wishlist", wishDTOList1);
+            model.addAttribute("wishlist", writerList);
             return "member/myPage";
         }
     }
@@ -74,9 +73,22 @@ public class MemberController {
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
 
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/myPageCompletion";
+        if (findDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/book-list";
+        } else {
+            MemberDTO memberDTO = memberService.myPage(id);
+            model.addAttribute("member", memberDTO);
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> writerList = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    writerList.add(wishDTOList.get(i));
+                }
+            }
+            model.addAttribute("wishlist", writerList);
+            return "member/myPageCompletion";
+        }
+
     }
 
     // 회원정보 조회 (데뷔 글)
@@ -87,9 +99,21 @@ public class MemberController {
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
 
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/myPageDebut";
+        if (findDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/book-list";
+        } else {
+            MemberDTO memberDTO = memberService.myPage(id);
+            model.addAttribute("member", memberDTO);
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> writerList = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    writerList.add(wishDTOList.get(i));
+                }
+            }
+            model.addAttribute("wishlist", writerList);
+            return "member/myPageDebut";
+        }
     }
 
     // 업데이트 폼 페이지 요청

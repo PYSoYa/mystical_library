@@ -13,6 +13,7 @@ import com.its.library.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -203,5 +204,17 @@ public class MemberService {
         }
     }
 
+
+    public MemberDTO findByMemberEmail(String memberEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+        MemberEntity memberEntity = new MemberEntity();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity);
+            return memberDTO;
+        } else {
+            return null;
+        }
+    }
 
 }
