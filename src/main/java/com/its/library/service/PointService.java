@@ -76,11 +76,9 @@ public class PointService {
     @Transactional
     public String pointPay(Long memberId, Long episodeId, Long bookId) {
         List<PointEntity> pointEntityList = pointRepository.findByMemberEntity_IdOrderByIdDesc(memberId);
-        System.out.println("pointEntityList = " + pointEntityList);
         PointEntity pointEntity = new PointEntity();
         for (int i=0;i==0;i++){
          pointEntity =pointEntityList.get(i);
-            System.out.println("pointEntity = " + pointEntity);
         }
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookId);

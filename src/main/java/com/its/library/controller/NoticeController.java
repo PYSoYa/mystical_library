@@ -38,7 +38,6 @@ public class NoticeController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
             boolean result = noticeService.readFalseCount(findDTO.getId());
-            System.out.println(result);
 
             return result;
         } catch (NullPointerException e) {

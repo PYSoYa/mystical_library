@@ -27,13 +27,9 @@ public class NoticeService {
 
     @Transactional
     public void save(Long id) {
-//        위시리스트에 관심을 가진 BookId를 통해 관심 가진 회원들을 찾는다
-//        회차저장 -> 운영자 승인목록 -> 승인처리 -> 회원들에게 알림이 가야함
-//        저장된 회차의 bookId  아이디로 위시리스트에 관심을 가진 memberName 을 찾는다
+
           EpisodeEntity episodeEntity =  episodeRepository.findById(id).get();
          List<WishEntity> wishEntityList = wishRepository.findByBookEntity_Id(episodeEntity.getBookEntity().getId());
-//        memberName 을통 해당 회원들의 아이디를 가져온다
-//        회원들의 아이디에 알림을 저장해준다
         for (int i=0;i< wishEntityList.size();i++){
          MemberEntity memberEntity =   memberRepository.findByMemberName(wishEntityList.get(i).getMemberName()).get();
             NoticeEntity noticeEntity = new NoticeEntity();
@@ -63,15 +59,12 @@ public class NoticeService {
             noticeEntityList1.add(noticeEntity1);
             noticeRepository.saveAll(noticeEntityList1);
         }
-
         List<NoticeEntity> noticeEntityList1=  noticeRepository.findByMemberEntity_Id(memberId);
         List<NoticeDTO> noticeDTOList = new ArrayList<>();
         for (NoticeEntity noticeEntity:noticeEntityList1) {
             NoticeEntity noticeEntity1= noticeEntity;
            NoticeDTO noticeDTO = NoticeDTO.save(noticeEntity1);
             noticeDTOList.add(noticeDTO);
-
-            System.out.println("noticeDTOList = " + noticeDTOList);
         }
             return noticeDTOList;
     }

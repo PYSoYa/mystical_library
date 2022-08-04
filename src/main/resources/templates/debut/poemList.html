@@ -80,7 +80,7 @@
       <div class="series-list">
         <div class="book-wrap" th:each="poem:${poemList}">
           <div class="img-wrap">
-            <a th:href="@{|/book/book/${poem.id}|}">
+            <a th:href="@{|/debut/detail/${poem.id}|}">
               <img th:src="@{|/upload/${poem.debutImgName}|}" class="img" alt="">
             </a>
           </div>
