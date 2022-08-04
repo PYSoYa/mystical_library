@@ -63,7 +63,6 @@ public class DebutController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
-
         DebutEpisodeDTO debutEpisodeDTO = debutService.updateForm(id);
         model.addAttribute("debut", debutEpisodeDTO);
         return "debut/update";

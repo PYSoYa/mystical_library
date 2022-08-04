@@ -110,7 +110,7 @@
             <li class="recent-debut-post-li" th:each="poem:${poemList}">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a th:href="@{|/debut/poem/${poem.id}|}">
+                  <a th:href="@{|/debut/detail/${poem.id}/|}">
                     <img th:src="@{|/upload/${poem.debutImgName}|}" class="img" alt="">
                   </a>
                 </div>
@@ -152,7 +152,7 @@
             <li class="recent-completion-li" th:each="essay:${essayList}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a th:href="@{|/debut/essay/${essay.id}|}">
+                  <a th:href="@{|/debut/detail/${essay.id}/|}">
                     <img th:src="@{|/upload/${essay.debutImgName}|}" class="img" alt="">
                   </a>
                 </div>
@@ -193,7 +193,7 @@
             <li class="recent-completion-li" th:each="web:${webList}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a th:href="@{|/debut/web/${web.id}|}">
+                  <a th:href="@{|/debut/detail/${web.id}/|}">
                     <img th:src="@{|/upload/${web.debutImgName}|}" class="img" alt="">
                   </a>
                 </div>
