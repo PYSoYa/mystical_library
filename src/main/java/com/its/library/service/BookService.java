@@ -79,15 +79,15 @@ public class BookService {
         String savePath = "C:\\springboot_img\\" + episodeImgName;
         if (!episodeImg.isEmpty()) {
             episodeImg.transferTo(new File(savePath));
+            episodeDTO.setEpisodeImgName(episodeImgName);
         }
-        episodeDTO.setEpisodeImgName(episodeImgName);
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTO.getBookId());
 
         if (optionalBookEntity.isPresent()) {
             BookEntity bookEntity = optionalBookEntity.get();
 
             EpisodeEntity episodeEntity = EpisodeEntity.saveEntity(episodeDTO, bookEntity);
-            EpisodeEntity episodeEntity1 =  episodeRepository.save(episodeEntity);
+            EpisodeEntity episodeEntity1 = episodeRepository.save(episodeEntity);
             EpisodeDTO episodeDTO1 = EpisodeDTO.findDTO(episodeEntity1);
             bookEntity.setEpisodeUpdateTime(episodeEntity.getCreatedDateTime());
             bookRepository.save(bookEntity);
@@ -152,7 +152,7 @@ public class BookService {
     }
 
     private final JavaMailSender mailSender;
-    private String mail = "pysoya@naver.com";
+    private String mail = "oloveo24@naver.com";
 
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
@@ -161,8 +161,8 @@ public class BookService {
         String savePath = "C:\\springboot_img\\" + bookImgName;
         if (!bookImg.isEmpty()) {
             bookImg.transferTo(new File(savePath));
+            bookDTO.setBookImgName(bookImgName);
         }
-        bookDTO.setBookImgName(bookImgName);
 
         mailDTO.setBookDTO(bookDTO);
 
@@ -181,8 +181,8 @@ public class BookService {
         String savePath = "C:\\springboot_img\\" + episodeImgName;
         if (!episodeImg.isEmpty()) {
             episodeImg.transferTo(new File(savePath));
+            episodeDTO.setEpisodeImgName(episodeImgName);
         }
-        episodeDTO.setEpisodeImgName(episodeImgName);
 
         mailDTO.setEpisodeDTO(episodeDTO);
 
@@ -302,8 +302,8 @@ public class BookService {
         }
     }
 
-    public List<BookDTO> findAll() {
-        List<BookEntity> bookEntityList = bookRepository.findAll();
+    public List<BookDTO> findByHiddenBook() {
+        List<BookEntity> bookEntityList = bookRepository.findByWriterRole(0);
         List<BookDTO> bookDTOList = new ArrayList<>();
         for (BookEntity bookList : bookEntityList) {
             BookEntity bookEntity = bookList;
@@ -357,86 +357,86 @@ public class BookService {
             for (BookEntity book : bookEntityList) {
                 bookDTOList.add(BookDTO.findDTO(book)); // 장르가 일치하는 책 리스트
             }
-        }else if (alignmentId == 2) { // 장르별 별점순 정렬
-                bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
-                for (BookEntity book : bookEntityList) {
-                    bookDTOList.add(BookDTO.findDTO(book));
-                }
-            } else if (alignmentId == 3) { // 장르별 조회순 정렬
-                bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
-                for (BookEntity book : bookEntityList) {
-                    bookDTOList.add(BookDTO.findDTO(book));
-                }
-            }
-            return bookDTOList;
-        }
-
-        // 장르 1번 리스트
-        public List<BookDTO> categoryList1 () {
-            List<BookEntity> bookEntityList = new ArrayList<>();
-            List<BookDTO> bookDTOList1 = new ArrayList<>();
-            bookEntityList = bookRepository.findAll();
+        } else if (alignmentId == 2) { // 장르별 별점순 정렬
+            bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 1) {
-                    bookDTOList1.add(BookDTO.findDTO(book));
-                }
+                bookDTOList.add(BookDTO.findDTO(book));
             }
-            return bookDTOList1;
-        }
-
-        // 장르 2번 리스트
-        public List<BookDTO> categoryList2 () {
-            List<BookEntity> bookEntityList = new ArrayList<>();
-            List<BookDTO> bookDTOList2 = new ArrayList<>();
-            bookEntityList = bookRepository.findAll();
+        } else if (alignmentId == 3) { // 장르별 조회순 정렬
+            bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 2) {
-                    bookDTOList2.add(BookDTO.findDTO(book));
-                }
+                bookDTOList.add(BookDTO.findDTO(book));
             }
-            return bookDTOList2;
         }
+        return bookDTOList;
+    }
 
-        // 장르 3번 리스트
-        public List<BookDTO> categoryList3 () {
-            List<BookEntity> bookEntityList = new ArrayList<>();
-            List<BookDTO> bookDTOList3 = new ArrayList<>();
-            bookEntityList = bookRepository.findAll();
-            for (BookEntity book : bookEntityList) {
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
-                    bookDTOList3.add(BookDTO.findDTO(book));
-                }
+    // 장르 1번 리스트
+    public List<BookDTO> categoryList1() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList1 = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 1) {
+                bookDTOList1.add(BookDTO.findDTO(book));
             }
-            return bookDTOList3;
         }
+        return bookDTOList1;
+    }
 
-        // 장르 4번 리스트
-        public List<BookDTO> categoryList4 () {
-            List<BookEntity> bookEntityList = new ArrayList<>();
-            List<BookDTO> bookDTOList4 = new ArrayList<>();
-            bookEntityList = bookRepository.findAll();
-            for (BookEntity book : bookEntityList) {
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 4) {
-                    bookDTOList4.add(BookDTO.findDTO(book));
-                }
+    // 장르 2번 리스트
+    public List<BookDTO> categoryList2() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList2 = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 2) {
+                bookDTOList2.add(BookDTO.findDTO(book));
             }
-            return bookDTOList4;
         }
+        return bookDTOList2;
+    }
 
-        // 장르 5번 리스트
-        public List<BookDTO> categoryList5 () {
-            List<BookEntity> bookEntityList = new ArrayList<>();
-            List<BookDTO> bookDTOList5 = new ArrayList<>();
-            bookEntityList = bookRepository.findAll();
-            for (BookEntity book : bookEntityList) {
-                if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 5) {
-                    bookDTOList5.add(BookDTO.findDTO(book));
-                }
+    // 장르 3번 리스트
+    public List<BookDTO> categoryList3() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList3 = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
+                bookDTOList3.add(BookDTO.findDTO(book));
             }
-            return bookDTOList5;
         }
+        return bookDTOList3;
+    }
 
-    public String first(Long bookId) {
+    // 장르 4번 리스트
+    public List<BookDTO> categoryList4() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList4 = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 4) {
+                bookDTOList4.add(BookDTO.findDTO(book));
+            }
+        }
+        return bookDTOList4;
+    }
+
+    // 장르 5번 리스트
+    public List<BookDTO> categoryList5() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList5 = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book : bookEntityList) {
+            if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 5) {
+                bookDTOList5.add(BookDTO.findDTO(book));
+            }
+        }
+        return bookDTOList5;
+    }
+
+    public Long first(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();
         BookEntity bookEntity = new BookEntity();
@@ -444,11 +444,11 @@ public class BookService {
         if (optionalBookEntity.isPresent()) {
             bookEntity = optionalBookEntity.get();
             episodeEntityList = episodeRepository.findByBookId(bookEntity.getId());
-            for (EpisodeEntity episode: episodeEntityList) {
+            for (EpisodeEntity episode : episodeEntityList) {
                 episodeDTOList.add(EpisodeDTO.findDTO(episode));
             }
         }
         System.out.println("episodeDTOList = " + episodeDTOList);
-        return null;
+        return episodeDTOList.get(0).getId();
     }
 }

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header">
-
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <meta name="_csrf" th:content="${_csrf.token}">
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}">
@@ -39,30 +40,30 @@
         </div>
       </form>
 
-      <div class="menu-icon-container" th:if="${session.id ne null}">
+      <div class="menu-icon-container" th:if="${authentication ne null}">
         <div class="menu-icon-wrap">
-          <a th:href="@{|/notice/history/${session.id}|}" class="notification">
+          <a th:href="@{|/notice/history/${authentication.id}|}" class="notification">
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-notification">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M5.55 10.02A6.445 6.445 0 0112 3.57a6.445 6.445 0 016.45 6.45v6.851H5.55v-6.85zm-1.5 6.851v-6.85A7.945 7.945 0 0112 2.07a7.945 7.945 0 017.95 7.95v6.85h.452a.75.75 0 010 1.5h-16.8a.75.75 0 010-1.5h.449zm5.5 4.328a.75.75 0 01.75-.75h3.4a.75.75 0 010 1.5h-3.4a.75.75 0 01-.75-.75z" fill="currentColor"></path>
             </svg>
           </a>
         </div>
         <div class="menu-icon-wrap">
-          <a th:href="@{/wish/wishlist/author/${session.id}}" class="wishlist">
+          <a th:href="@{|/wish/wishlist/author/${authentication.id}|}" class="wishlist">
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-wishlist">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M.25 3A.75.75 0 011 2.25h2.838c.34 0 .639.23.725.56l.751 2.866a.75.75 0 01.227-.035H22a.75.75 0 01.707 1l-3.405 9.61a.75.75 0 01-.707.499H7.243a.75.75 0 01-.725-.56L3.259 3.75H1A.75.75 0 01.25 3zm5.448 4.141l2.124 8.109h10.243l2.873-8.109H5.699zM9 20.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm9.5 1.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"></path>
             </svg>
           </a>
         </div>
         <div class="menu-icon-wrap">
-          <a th:href="@{|/history/${session.id}|}" class="box">
+          <a th:href="@{|/history/${authentication.id}|}" class="box">
             <svg width="1em" height="1em" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-box">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M3.207 4.083c0-.483.392-.875.875-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H4.082a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084H9.04V4.958H4.957z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9.04 4.083c0-.483.39-.875.874-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H9.914a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084h4.082V4.958H10.79z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.195 7.343a.875.875 0 01.619-1.071l5.634-1.51a.875.875 0 011.072.619l4.53 16.903a.875.875 0 01-.62 1.072l-5.634 1.51a.875.875 0 01-1.072-.62L15.195 7.344zm1.917.392L21.19 22.95l3.944-1.057-4.077-15.213-3.944 1.056z" fill="currentColor"></path>
             </svg>
           </a>
         </div>
         <div class="menu-icon-wrap">
-          <a th:href="@{|/member/myPage/${session.id}|}" class="my-page">
+          <a th:href="@{|/member/myPage/${authentication.id}|}" class="my-page">
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-my-page">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.389A2.194 2.194 0 1012 4a2.194 2.194 0 000 4.389zm0 1.5a3.694 3.694 0 100-7.39 3.694 3.694 0 000 7.39zM12.384 12.973h-.768A7.617 7.617 0 004.022 20h15.956a7.617 7.617 0 00-7.594-7.027zm-.768-1.5A9.116 9.116 0 002.5 20.589c0 .503.408.911.912.911h17.176a.912.912 0 00.912-.911 9.116 9.116 0 00-9.116-9.116h-.768z" fill="currentColor"></path>
             </svg>
@@ -78,7 +79,7 @@
         </div>
       </div>
 
-      <div class="menu-container" th:if="${session.id eq null}">
+      <div class="menu-container" th:if="${authentication eq null}">
         <div class="menu-wrap-div">
           <ul class="menu-wrap-ul">
             <li class="sign-up-wrap">
@@ -104,6 +105,7 @@
         </div>
         <div class="modal-body">
           <form class="login-form" action="/member/login" method="post">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <div class="input-wrap">
               <div class="label-id-wrap">
                 <label class="label-id">아이디</label>
@@ -144,28 +146,34 @@
         <div class="modal-footer">
           <div class="social-login-wrap">
             <div class="naver-login-wrap">
-              <button type="button" class="naver">
+              <button type="button" class="naver" onclick="naverLogin()">
                 <img th:src="@{/img/naver.png}" class="naver-img" alt="">
                 <span class="naver-content">네이버 아이디로 로그인</span>
               </button>
             </div>
             <div class="google-login-wrap">
-              <button type="button" class="google">
+              <button type="button" class="google" onclick="googleLogin()">
                 <img th:src="@{/img/google.png}" class="google-img" alt="">
                 <span class="google-content">구글 아이디로 로그인</span>
               </button>
             </div>
             <div class="facebook-login-wrap">
-              <button type="button" class="facebook">
+              <button type="button" class="facebook" onclick="facebookLogin()">
                 <img th:src="@{/img/facebook.png}" class="facebook-img" alt="">
                 <span class="facebook-content">페이스북 아이디로 로그인</span>
               </button>
             </div>
             <div class="kakao-login-wrap">
-              <button type="button" class="kakao">
+              <button type="button" class="kakao" onclick="kakaoLogin()">
                 <img th:src="@{/img/kakao.png}" class="kakao-img" alt="">
                 <span class="kakao-content">카카오 아이디로 로그인</span>
               </button>
+            </div>
+            <div class="github-login-wrap">
+              <button type="button" class="github" onclick="githubLogin()">
+              <img th:src="@{/img/github.png}" class="github-img" alt="">
+              <span class="github-content">깃허브 아이디로 로그인</span>
+            </button>
             </div>
           </div>
         </div>
@@ -264,6 +272,7 @@
             </div>
           </div>
           <form class="register-form" action="/member/save" method="post" enctype="multipart/form-data" style="display: none;" aria-hidden="true">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <div class="input-wrap">
               <div class="label-id-wrap">
                 <label class="label-id">아이디</label>
@@ -313,8 +322,8 @@
                 <label class="label-email">이메일</label>
               </div>
               <div class="input-email-wrap">
-                <input type="text" name="memberEmail" class="input-email" placeholder="example@example.com">
-                <button type="button" class="request-auth">인증번호 받기</button>
+                <input type="text" name="memberEmail" class="input-email" id="input-email" placeholder="example@example.com">
+                <button type="button" class="request-auth" onclick="emailAuthentication()">인증번호 받기</button>
               </div>
               <div class="result-email-wrap">
                 <span class="span-email" id="result-email">이메일 입력하세요</span>
@@ -324,11 +333,11 @@
               <div class="label-auth-wrap">
               </div>
               <div class="input-auth-wrap">
-                <input type="text" class="input-auth" placeholder="인증번호 입력">
-                <button type="button" class="check-auth">인증하기</button>
+                <input type="text" class="input-auth" id="input-auth" placeholder="인증번호 입력">
+                <button type="button" class="check-auth" onclick="emailNumberCheck()">인증하기</button>
               </div>
               <div class="result-auth-wrap">
-                <span class="span-auth" id="result-auth">인증번호가 달라요</span>
+                <span class="span-auth" id="result-auth"> </span>
               </div>
             </div>
             <div class="input-wrap last-input-wrap">
@@ -351,27 +360,33 @@
         <div class="modal-footer hide-footer">
           <div class="social-login-wrap">
             <div class="naver-login-wrap">
-              <button type="button" class="naver" onclick="requestSignUp()">
+              <button type="button" class="naver" onclick="requestSignUp('naver')">
                 <img th:src="@{/img/naver.png}" class="naver-img" alt="">
                 <span class="naver-content">네이버 아이디로 회원가입</span>
               </button>
             </div>
             <div class="google-login-wrap">
-              <button type="button" class="google" onclick="requestSignUp()">
+              <button type="button" class="google" onclick="requestSignUp('google')">
                 <img th:src="@{/img/google.png}" class="google-img" alt="">
                 <span class="google-content">구글 아이디로 회원가입</span>
               </button>
             </div>
             <div class="facebook-login-wrap">
-              <button type="button" class="facebook" onclick="requestSignUp()">
+              <button type="button" class="facebook" onclick="requestSignUp('facebook')">
                 <img th:src="@{/img/facebook.png}" class="facebook-img" alt="">
                 <span class="facebook-content">페이스북 아이디로 회원가입</span>
               </button>
             </div>
             <div class="kakao-login-wrap">
-              <button type="button" class="kakao" onclick="requestSignUp()">
+              <button type="button" class="kakao" onclick="requestSignUp('kakao')">
                 <img th:src="@{/img/kakao.png}" class="kakao-img" alt="">
                 <span class="kakao-content">카카오 아이디로 회원가입</span>
+              </button>
+            </div>
+            <div class="github-login-wrap">
+              <button type="button" class="github" onclick="requestSignUp('github')">
+                <img th:src="@{/img/github.png}" class="github-img" alt="">
+                <span class="github-content">깃허브 아이디로 회원가입</span>
               </button>
             </div>
           </div>
@@ -422,26 +437,58 @@
           location.href = '/member/find/password';
       });
     });
-    window.onload =function (){
-      const id = [[${session.id}]];
-      if (id!=null){
-      $.ajax({
-        type:"get",
-        url:"/notice/readCount/"+id,
-        dataType:"boolean",
-        success:function (result){
-          if (result==true){
-            const icon= document.querySelector('.notification');
-            icon.className +='new-notice';
-          }else {
-            const icon= document.querySelector('.notification');
-            icon.className +='notification';
-          }
-        }
-    });
-      }
 
-    };
+    const naverLogin = () => {
+      location.href = "/oauth2/authorization/naver";
+    }
+
+    const facebookLogin = () => {
+      location.href = "/oauth2/authorization/facebook";
+    }
+
+    const googleLogin = () => {
+      location.href = "/oauth2/authorization/google";
+    }
+
+    const kakaoLogin = () => {
+      location.href = "/oauth2/authorization/kakao";
+    }
+
+    const githubLogin = () => {
+      location.href = "/oauth2/authorization/github";
+    }
+
+    const emailAuthentication = () => {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
+      const memberEmail = document.getElementById("input-email").value;
+
+      $.ajax({
+        type: "post",
+        url: "/member/email-authentication",
+        data: {"memberEmail": memberEmail},
+        dataType: "text",
+        beforeSend: function(result){
+          result.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          console.log("보낸 인증번호: " + result);
+          code = result;
+          alert("메일 전송이 완료되었습니다.\n확인후 인증번호를 입력해주세요.");
+        }
+      });
+    }
+
+    const emailNumberCheck = () => {
+      const resultAuth = document.getElementById("result-auth");
+      const inputNumber = document.getElementById("input-auth").value;
+      if (inputNumber == code) {
+        resultAuth.innerHTML = "인증번호가 일치합니다.";
+        resultAuth.style.color = "dodgerblue";
+      } else {
+        resultAuth.innerHTML = "인증번호를 다시 확인해주세요.";
+      }
+    }
   </script>
 </th:block>
 </html>

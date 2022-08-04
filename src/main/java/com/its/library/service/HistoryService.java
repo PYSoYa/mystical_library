@@ -1,6 +1,7 @@
 package com.its.library.service;
 
 import com.its.library.dto.BookDTO;
+import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.HistoryDTO;
 import com.its.library.entity.BookEntity;
 import com.its.library.entity.EpisodeEntity;
@@ -13,6 +14,7 @@ import com.its.library.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +47,7 @@ public class HistoryService {
 
     public List<BookDTO> list(Long id) {
         List<HistoryEntity> historyEntityList = new ArrayList<>();
-        BookEntity bookEntity= new BookEntity();
+        BookEntity bookEntity = new BookEntity();
         List<HistoryDTO> historyDTOList = new ArrayList<>();
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         MemberEntity memberEntity = new MemberEntity();
@@ -71,12 +73,23 @@ public class HistoryService {
     }
 
     public String hidden(HistoryDTO historyDTO) {
-        List<HistoryEntity> historyEntityList = historyRepository.findByBooKId(historyDTO.getBookId());
-        for (int i = 0; i < historyEntityList.size(); i++) {
-            historyEntityList.get(i).setHidden(historyDTO.getHidden());
-            historyRepository.save(historyEntityList.get(i));
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(historyDTO.getBookId());
+        MemberEntity memberEntity = new MemberEntity();
+        BookEntity bookEntity = new BookEntity();
+        HistoryEntity historyEntity = new HistoryEntity();
+        if (optionalMemberEntity.isPresent() && optionalBookEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            bookEntity = optionalBookEntity.get();
+
+            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity, bookEntity.getId());
+            for (int i = 0; i < historyEntityList.size(); i++) {
+                historyRepository.deleteById(historyEntityList.get(i).getId());
+            }
+            return "숨기기";
+        } else {
+            return null;
         }
-        return "숨기기";
     }
 
     public Long findByHistory(HistoryDTO historyDTO) {
@@ -88,11 +101,11 @@ public class HistoryService {
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
-            Optional<HistoryEntity> optionalHistoryEntity  = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
+            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
             if (optionalHistoryEntity.isPresent()) {
                 historyEntity = optionalHistoryEntity.get();
                 if (historyEntity != null) {
-                 Long historyId = historyEntity.getId();
+                    Long historyId = historyEntity.getId();
                     return historyId;
                 }
             }
@@ -100,5 +113,21 @@ public class HistoryService {
             return null;
         }
         return null;
+    }
+
+    public List<HistoryDTO> findByBookId(Long bookId, Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        MemberEntity memberEntity = new MemberEntity();
+        List<HistoryDTO> historyDTOList = new ArrayList<>();
+        if (optionalMemberEntity.isPresent()) {
+            memberEntity = optionalMemberEntity.get();
+            List<HistoryEntity> historyEntityList = historyRepository.findByMemberEntityAndBooKId(memberEntity, bookId);
+            for (HistoryEntity history: historyEntityList) {
+                historyDTOList.add(HistoryDTO.findDTO(history));
+            }
+            return historyDTOList;
+        } else {
+            return null;
+        }
     }
 }

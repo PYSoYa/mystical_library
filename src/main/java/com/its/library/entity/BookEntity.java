@@ -76,7 +76,7 @@ public class BookEntity {
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus("연재");
-        bookEntity.setWriterRole(1);
+        bookEntity.setWriterRole(0);
         bookEntity.setHits(0);
         bookEntity.setStar(0.0);
         return  bookEntity;
@@ -93,7 +93,7 @@ public class BookEntity {
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
-        bookEntity.setWriterRole(1);
+        bookEntity.setWriterRole(0);
         bookEntity.setHits(bookDTO.getHits());
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
@@ -111,7 +111,7 @@ public class BookEntity {
         bookEntity.setIntroduce(bookDTO.getIntroduce());
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
-        bookEntity.setWriterRole(2);
+        bookEntity.setWriterRole(1);
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
     }

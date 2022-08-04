@@ -22,7 +22,7 @@
       <td th:text="${comment.memberName}"></td>
       <td th:text="${comment.contents}"></td>
       <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      <td th:if="${session.name == comment.memberName}">
+      <td th:if="${authentication.memberName == comment.memberName}">
         <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
       </td>
     </tr>
@@ -39,10 +39,10 @@
         <div class="detail-wrap">
           <div class="title-wrap">
             <h2 class="title" th:text="${book.bookTitle}"></h2>
-            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == session.name}">
+            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == authentication.memberName}">
               <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
             </div>
-            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != session.name}">
+            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != authentication.memberName}">
               <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
             </div>
           </div>
@@ -70,10 +70,10 @@
         </div>
         <div class="action-wrap">
           <div class="first-btn-wrap">
-            <button type="button" class="first-btn" th:onclick="first(${book.id})">첫 화 보기</button>
+            <button type="button" class="first-btn" th:onclick="first()">첫 화 보기</button>
           </div>
           <div class="continue-btn-wrap">
-            <button type="button" class="continue-btn" th:onclick="again(${book.id})">이어보기</button>
+            <button type="button" class="continue-btn" th:onclick="again()">이어보기</button>
           </div>
           <div class="more-detail-wrap">
             <div class="hits-wrap">
@@ -125,60 +125,43 @@
 
     <div class="episode-detail-container">
       <div class="quantity-episode-wrap">
-        <span class="quantity-episode">전체 (92)</span>
+        <span class="quantity-episode">전체 (</span>
+        <span class="quantity-episode" th:text="${episodeList.size}"></span>
+        <span class="quantity-episode">)</span>
       </div>
-      <div class="episode-list-wrap" th:each="episode:${episodeList}">
-        <div class="img-wrap">
-          <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="img-link">
-            <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
-          </a>
-        </div>
-        <div class="detail-wrap">
-          <div class="title-wrap">
-            <div class="badge-wrap" th:if="${episode.payment==0}">
-              <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
-            </div>
-            <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="title-link">
-              <h5 class="title" th:text="${episode.episodeTitle}"></h5>
-            </a>
-          </div>
-          <div class="date-wrap">
-            <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
-            <div class="star-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
-                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-              <span class="star" th:text="${episode.star}"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="episode-list-wrap last-list-wrap">
-        <div class="img-wrap">
-          <a href="#" class="img-link">
-            <img th:src="@{/img/book_img_1.jpeg}" alt="">
-          </a>
-        </div>
-        <div class="detail-wrap">
-          <div class="title-wrap">
-            <div class="badge-wrap">
-              <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
-            </div>
-            <a href="#" class="title-link">
-              <h5 class="title">제목 제목 제목 제목 제목</h5>
-            </a>
-          </div>
-          <div class="date-wrap">
-            <span class="date">2022. 08. 01</span>
-            <div class="star-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
-                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-              <span class="star">7.56</span>
+      <div th:each="episode:${episodeList}">
+        <div th:each="history:${historyList}">
+          <div class="episode-list-wrap" th:if="${episode.id == history.episodeId}">
+            <div  class="episode-list-wrap">
+              <div class="img-wrap">
+                <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="img-link">
+                  <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
+                </a>
+              </div>
+              <div class="detail-wrap">
+                <div class="title-wrap">
+                  <div class="badge-wrap" th:if="${episode.payment==0}">
+                    <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
+                  </div>
+                  <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="title-link">
+                    <h5 class="title" th:text="${episode.episodeTitle}"></h5>
+                  </a>
+                </div>
+                <div class="date-wrap">
+                  <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
+                  <div class="star-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
+                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg>
+                    <span class="star" th:text="${episode.star}"></span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="pagination-wrap">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
@@ -275,8 +258,12 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-  const first = (bookId) => {
-    const memberId = [[${session.id}]];
+  const first = () => {
+    const memberId = [[${authentication.id}]];
+    const bookId = [[${book.id}]];
+
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
     $.ajax({
       type: "get",
@@ -285,114 +272,113 @@
         "bookId": bookId
       },
       dataType: "text",
-      success: function (result) {
-        if (result === "첫화보기") {
-
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (episodeId) {
+        if (episodeId != null) {
+          $.ajax({
+            type: "post",
+            url: "/box/pointCheck",
+            data: {
+              "memberId": memberId,
+              "episodeId": episodeId,
+              "bookId": bookId
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result2) {
+              if (result2 == "무료저장")
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+            }
+          })
         }
       }
     })
   }
-  const priceMoney = (episodeId) => {
-    const memberId = [[${session.id}]];
+  const again = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
     const bookId = [[${book.id}]];
 
-    if (memberId != null) {
-      $.ajax({
-        type: "post",
-        url: "/history/check",
-        data: {
-          "memberId": memberId,
-          "episodeId": episodeId
-        },
-        dataType: "text",
-        success: function (result) {
-          if (result != null){
+    $.ajax({
+
+    })
+  }
+  const priceMoney = (episodeId) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
+    const bookId = [[${book.id}]];
+
+    $.ajax({
+      type: "post",
+      url: "/box/pointCheck",
+      data: {
+        "memberId": memberId,
+        "episodeId": episodeId,
+        "bookId": bookId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+          if (result === "잔고부족") {
+            Swal.fire({
+              icon: 'success',
+              text: '보유하신 포인트가 부족합니다.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else if (result === "결제") {
             $.ajax({
               type: "post",
-              url: "/history/save",
+              url: "/box/save",
               data: {
-                "id": result,
-                "bookId": bookId,
-                "episodeId": episodeId,
-                "memberId": memberId
+                "memberId": memberId,
+                "bookId": bookId
               },
               dataType: "text",
+              beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+              },
               success: function (result) {
-                if (result === "저장완료") {
-                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                if (result === "ok") {
+                  $.ajax({
+                    type:"get",
+                    url:"/point/pay/"+memberId,
+                    data:{"episodeId":episodeId,"bookId":bookId},
+                    dataType:"text",
+                    success:function (){
+                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                    }
+                  });
                 }
               }
             })
-          } else {
-              $.ajax({
-                type: "post",
-                url: "/box/pointCheck",
-                data: {
-                  "bookId": bookId,
-                  "episodeId": episodeId,
-                  "memberId": memberId
-                },
-                dataType: "text",
-                success: function (result) {
-                  if (result == "무료저장") {
-                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                  } else if (result === "유료저장") {
-                    $.ajax({
-                      type: "post",
-                      url: "/history/save",
-                      data: {
-                        "bookId": bookId,
-                        "episodeId": episodeId,
-                        "memberId": memberId
-                      },
-                      dataType: "text",
-                      success: function (result) {
-
-                      }
-                    })
-                    $.ajax({
-                      type: "post",
-                      url: "/box/save",
-                      data: {
-                        "memberId": memberId,
-                        "bookId": bookId
-                      },
-                      dataType: "text",
-                      success: function (result) {
-                        if (result === "ok") {
-                          $.ajax({
-                            type:"get",
-                            url:"/point/pay/"+memberId,
-                            data:{"episodeId":episodeId,"bookId":bookId},
-                            dataType:"text",
-                            success:function (){
-                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                            }
-                          });
-                        }
-                      }
-                    })
-                  } else if (result === "잔고부족"){
-                    Swal.fire({
-                      icon: 'success',
-                      text: '보유하신 포인트가 부족합니다.',
-                      showConfirmButton: false,
-                      timer: 1500
-                    });
-                    location.href = "/member/purchase-point/" + memberId;
-                  }
-                }
-              })
+          } else if (result === "보여줘") {
+            alert("보여줘");
+          } else if (result === "무료저장") {
+            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           }
         }
       })
-    }
   }
 
   const bookLove = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
     const loveChange = document.getElementById("loveChange");
     const bookId = [[${book.id}]];
-    const memberName = [[${session.name}]];
+    const memberName = [[${authentication.memberName}]];
+
     $.ajax({
       type: "post",
       url: "/wish/check",
@@ -401,6 +387,9 @@
         "memberName": memberName
       },
       dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
       success: function (result) {
         if (result === "ok") {
           $.ajax({
@@ -411,6 +400,9 @@
               "memberName" : memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const wishlist = document.querySelector(".wishlist-btn");
               if (result == "ok"){
@@ -435,6 +427,9 @@
               "memberName": memberName
             },
             dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
             success: function (result) {
               const wishlist = document.querySelector(".wishlist-btn1");
               if (result == "ok") {
@@ -448,15 +443,12 @@
               } else {
                 alert("실패");
               }
-
             },
 
           })
         }
       }
-    })
-
-
+    });
   }
 </script>
 </html>

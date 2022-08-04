@@ -130,25 +130,26 @@ public class WishService {
             if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberEntity().getId().equals(id)) {
                 Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
                 if (optionalMemberEntity.isPresent()) {
-                    memberDTOList.add(MemberDTO.findDTO(optionalMemberEntity.get()));
+                    memberDTOList.add(MemberDTO.toDTO(optionalMemberEntity.get()));
 
                 }
             }
         }
         return memberDTOList;
     }
-    public List<BookDTO> wishlist(Long id) {
+    public List<BookDTO> wishlist(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
-            if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getBookEntity().getMemberEntity().getId().equals(id)) {
+            if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getMemberName().equals(memberName)) {
                 Optional<BookEntity> optionalBookEntity = bookRepository.findById(wishEntityList.get(i).getBookEntity().getId());
                 if (optionalBookEntity.isPresent()) {
                     bookDTOList.add(BookDTO.findDTO(optionalBookEntity.get()));
                 }
             }
         }
+        System.out.println("bookDTOList = " + bookDTOList);
         return bookDTOList;
     }
 
@@ -156,9 +157,24 @@ public class WishService {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
         wishEntityList = wishlistRepository.findByMemberName(memberName);
-        for (WishEntity wish: wishEntityList) {
-            wishDTOList.add(WishDTO.findMemberDTO(wish));
-        }
+            for (WishEntity wish: wishEntityList) {
+                if (wish.getMemberEntity() != null){
+                    wishDTOList.add(WishDTO.findMemberDTO(wish));
+                }
+            }
+        System.out.println("wishDTOList = " + wishDTOList);
+        return wishDTOList;
+    }
+
+    public List<WishDTO> findByBook(String memberName) {
+        List<WishEntity> wishEntityList = new ArrayList<>();
+        List<WishDTO> wishDTOList = new ArrayList<>();
+        wishEntityList = wishlistRepository.findByMemberName(memberName);
+            for (WishEntity wish: wishEntityList) {
+                if (wish.getBookEntity() != null) {
+                    wishDTOList.add(WishDTO.findBookDTO(wish));
+                }
+            }
         System.out.println("wishDTOList = " + wishDTOList);
         return wishDTOList;
     }
