@@ -122,11 +122,6 @@
               <span class="intro">물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트</span>
             </div>
             <div class="star-wrap item">
-              <!-- 빈 하트 -->
-              <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg> -->
-              <!-- 꽉 찬 하트 -->
               <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
               </svg>
@@ -178,11 +173,6 @@
             success: function (result) {
               const loveChange1 = document.getElementById("loveChange1");
               if (result == "ok"){
-              // var output = "<a th:onclick=\"love1()\">" +
-              //         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart empty-heart\" viewBox=\"0 0 16 16\">" +
-              //         "<path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>" +
-              //         "</svg>" +
-              //         "</a>"
                 Swal.fire({
                   icon: 'success',
                   text: '관심 목록에서 삭제했어요.',
@@ -192,7 +182,6 @@
                 setTimeout(function (){
                   location.reload();
                 },1000);
-                // loveChange1.innerHTML = output;
               } else {
                 alert("실패");
               }
@@ -213,11 +202,6 @@
             success: function (result) {
               const loveChange2 = document.getElementById("loveChange2");
               if (result == "ok") {
-                // var output = "<a th:onclick=\"love1()\">" +
-                //         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"3rem\" height=\"3rem\" fill=\"currentColor\" class=\"bi bi-heart-fill full-heart\" viewBox=\"0 0 16 16\">" +
-                //         "<path fill-rule=\"evenodd\" d=\"M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z\"/>" +
-                //         "</svg>" +
-                //         "</a>"
                 Swal.fire({
                   icon: 'success',
                   text: '관심 목록에 해당 작가를 등록했어요.',
@@ -227,7 +211,6 @@
                 setTimeout(function (){
                   location.reload();
                 },1000);
-                // loveChange2.innerHTML = output;
               } else {
                 alert("실패");
               }
