@@ -25,11 +25,6 @@
   </select>
   <input type="button" onclick="saveStar()" value="버튼">
   <h3></h3>
-  <input type="hidden" id="memberId" name="memberId" th:value="${session.id}">
-  <input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
-  <input type="hidden" id="memberName" name="memberName" th:value="${session.name}">
-  <textarea type="text" id="contents" name="contents"></textarea>
-  <input type="button" onclick="saveComment()" value="댓글 작성">
   <div id="test">
     <table th:each="comment:${commentList}">
       <tr>
@@ -247,7 +242,8 @@
             <p>“그건……! 너지.”</p>
             <p>“그리고, 내 말 아직 안 끝났어. 세 번째, 나한테 돈 뜯어 가는 수준이 아주 예술이야. 빈대도 너보단 피를 덜 빨겠어.”</p>
             <p>페드로의 얼굴이 붉으락푸르락해지거나 말거나, 나는 차분하게 마저 말을 이었다.</p>
-            <p>“네 번째. 너 사실 입 냄새 나. 다섯 번째, 너 너무 재수 없어. 여섯 번째, 너는 사람을 열받게 만드는 재주가 있어. 일곱 번째, 너는 너무 이기적이고 네 멋대로 생각해. 여덟 번째, 세상에서 제일 잘생긴 척하면서 다른 사람들 외모 품평하는 것도 우스워. 너 그 정도 아니야. 그리고 아홉 번째…….”</p>
+            <p>“네 번째. 너 사실 입 냄새 나. 다섯 번째, 너 너무 재수 없어. 여섯 번째, 너는 사람을 열받게 만드는 재주가 있어. 일곱 번째, 너는 너무 이기적이고 네 멋대로 생각해. 여덟 번째,
+              세상에서 제일 잘생긴 척하면서 다른 사람들 외모 품평하는 것도 우스워. 너 그 정도 아니야. 그리고 아홉 번째…….”</p>
             <p>페드로의 눈이 서서히 동태가 되어 갔다.</p>
             <p>“……다음, 사백구십구 번째. 너 사마귀 닮았어. 잘 꾸민 사마귀. 오백 번째, 그냥 네가 싫어. 너의 머리끝부터 발끝까지 다 별로야.”</p>
             <p>영혼이 빠져나간 상태로 포크만 움켜잡고 있던 페드로가 일갈했다.</p>
@@ -386,16 +382,15 @@
         <div class="info">
           <h2 class="c-title">댓글 쓰기</h2>
         </div>
-        <form id="comment-form" action="/comment/save" method="post">
-<!--          <input type="hidden" name="memberId" th:value="${authentication.id}">-->
-<!--          <input type="hidden" name="episodeId" th:value="${episode.id}">-->
-<!--          <input type="hidden" name="memberName" th:value="${authentication.memberName}">-->
-<!--          <input type="hidden" name="memberImgName" th:value="${member.memberImgName}">-->
-          <input type="hidden" name="commentEpisode" th:value="${episode.episodeTitle}">
+          <input type="hidden" id="memberId" name="memberId" th:value="${authentication.id}">
+          <input type="hidden" id="episodeId" name="episodeId" th:value="${episode.id}">
+          <input type="hidden" id="memberName" name="memberName" th:value="${authentication.memberName}">
+          <input type="hidden" id="memberImgName" name="memberImgName" th:value="${member.memberImgName}">
+          <input type="hidden" id="commentEpisode" name="commentEpisode" th:value="${episode.episodeTitle}">
           <textarea name="contents" id="input-contents" rows="5" placeholder="댓글은 500자 까지 등록 가능합니다."></textarea>
           <div class="btn-wrap">
             <div class="btn-align-right">
-              <button type="submit" class="btn-submit">
+              <button type="button" th:onclick="" class="btn-submit">
                 <span>댓글 등록</span>
               </button>
               <button type="button" class="btn-cancel" onclick="cancelBTN()">
@@ -403,7 +398,6 @@
               </button>
             </div>
           </div>
-        </form>
       </div>
       <div class="list-wrap">
         <div class="info title">
@@ -614,232 +608,283 @@
 
 </body>
 <script th:inline="javascript">
-  const cancelBTN = () => {
-    document.getElementById('input-contents').value = '';
-  }
+    const cancelBTN = () => {
+        document.getElementById('input-contents').value = '';
+    }
+    const commentSave = () => {
+        const memberId = [[${authentication.id}]];
+        const episodeId = document.getElementById("episodeId").value;
+        const memberName = document.getElementById("memberName").value;
+        const memberImgName = document.getElementById("memberImgName").value;
+        const commentEpisode = document.getElementById("commentEpisode").value;
 
-  const updateComment = (id, memberName, contents) => {
-    const contentsUpdate = document.getElementById("contentsUpdate");
-    // const inputContents = document.getElementById("contents").value = contents;
-    let output = "<input type='text' id='updateContents' name='contents'>" +
-                 "<input type='button' onclick='update(" + id + "," + memberName + ")' value='수정완료'>";
-    contentsUpdate.innerHTML = output;
-  }
-  const update = (id, memberName) => {
-    const contents = document.getElementById("updateContents").value;
-    const episodeId = [[${episode.id}]];
-    const memberId = [[${session.id}]];
-    const div = document.getElementById("test");
+        $.ajax({
+            type: "post",
+            url: "/comment/save",
+            data: {
+                "memberId": memberId,
+                "episodeId": episodeId,
+                "memberName": memberName,
+                "memberImgName": memberImgName,
+                "commentEpisode": commentEpisode
+            },
+            dataType: "json",
+            success: function (result) {
 
-    $.ajax({
-      type: "put",
-      url: "/comment/update",
-      data: {
-        "id": id,
-        "memberId": memberId,
-        "memberName": memberName,
-        "contents": contents,
-        "episodeId": episodeId
-      },
-      dataType: "json",
-      success: function (result) {
-        let output = "<table>";
-        output += "<tr>" + "<th>" + "작성자" + "</th>";
-        output += "<tr>" + "<th>" + "댓글내용" + "</th>";
-        output += "<tr>" + "<th>" + "작성시간" + "</th>";
-        for (let i in result) {
-          output += "<tr>" + "<td>" + result[i].memberName + "</td>";
-          output += "<tr>" + "<td>" + result[i].contents + "</td>";
-          output += "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-          console.log(result[i].createdTime);
-        }
-        output += "</table>";
-        div.innerHTML = output;
-      }
-    });
-  }
-  const reportComment = (id) => {
-    const loginId = [[${session.id}]];
+            }
+        })
+    }
 
-    $.ajax({
-      type: "post",
-      url: "/comment/report-save/" + id,
-      data: {
-        "id": id,
-        "loginId": loginId
-      },
-      dataType: "text",
-      success: function (result) {
-        if (result === 'ok') {
-          alert("신고완료");
-        } else {
-          alert("신고실패");
-        }
-      }
-    });
-  }
-  const deleteComment = (id, memberName) => {
-    const div = document.getElementById("test")
-    const episodeId = [[${episode.id}]];
-    const loginName = [[${session.name}]];
-    $.ajax({
-      type: "delete",
-      url: "/comment/delete/" + id,
-      data: {
-        "episodeId": episodeId
-      },
-      dataType: "json",
-      success: function (result) {
-        let output = "<table>";
-        output += "<tr>" + "<th>" + "작성자" + "</th>";
-        output += "<th>" + "댓글내용" + "</th>";
-        output += "<th>" + "작성시간" + "</th>" + "</tr>";
-        for (let i in result) {
-          output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
-          output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
-          output += "<tr>" + "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-          if (loginName === memberName) {
-            output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">" + "</td>" + "</tr>";
-          }
-        }
-        output += "</table>";
-        div.innerHTML = output;
-      }
-    });
-  }
-  const saveStar = () => {
-    const memberId = [[${session.id}]];
-    const episodeId = [[${episode.id}]];
-    const star = document.getElementById("star").value;
+    const updateComment = (id, memberName, contents) => {
+        const contentsUpdate = document.getElementById("contentsUpdate");
+        // const inputContents = document.getElementById("contents").value = contents;
+        let output = "<input type='text' id='updateContents' name='contents'>" +
+            "<input type='button' onclick='update(" + id + "," + memberName + ")' value='수정완료'>";
+        contentsUpdate.innerHTML = output;
+    }
+    const update = (id, memberName) => {
 
-    $.ajax({
-      type: "post",
-      url: "/book/save-star",
-      data: {
-        "memberId": memberId,
-        "episodeId": episodeId,
-        "star": star
-      },
-      dataType: "text",
-      success: function (result) {
-        alert(result);
-      },
-    });
-  }
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
 
-  const content = document.querySelector('.content');
-  const label01 = document.getElementById('fnt-01');
-  const label02 = document.getElementById('fnt-02');
-  const label03 = document.getElementById('fnt-03');
-  const label04 = document.getElementById('fnt-04');
-  const fslabel01 = document.getElementById('fnt-s-01');
-  const fslabel02 = document.getElementById('fnt-s-02');
-  const fslabel03 = document.getElementById('fnt-s-03');
-  const fslabel04 = document.getElementById('fnt-s-04');
-  const fslabel05 = document.getElementById('fnt-s-05');
-  const lhlabel01 = document.getElementById('fnt-h-01');
-  const lhlabel02 = document.getElementById('fnt-h-02');
-  const lhlabel03 = document.getElementById('fnt-h-03');
+        const contents = document.getElementById("updateContents").value;
+        const episodeId = [[${episode.id}]];
+        const memberId = [[${session.id}]];
+        const div = document.getElementById("test");
 
-  const fnt01 = () => {
-    content.classList.add('c-fnt-01');
-    content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
-    label01.className = 'opt-button type01 active';
-    label02.className = 'opt-button type02';
-    label03.className = 'opt-button type03';
-    label04.className = 'opt-button type04';
-  }
-  const fnt02 = () => {
-    content.classList.add('c-fnt-02');
-    content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
-    label01.className = 'opt-button type01';
-    label02.className = 'opt-button type02 active';
-    label03.className = 'opt-button type03';
-    label04.className = 'opt-button type04';
-  }
-  const fnt03 = () => {
-    content.classList.add('c-fnt-03');
-    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
-    label01.className = 'opt-button type01';
-    label02.className = 'opt-button type02';
-    label03.className = 'opt-button type03 active';
-    label04.className = 'opt-button type04';
-  }
-  const fnt04 = () => {
-    content.classList.add('c-fnt-04');
-    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
-    label01.className = 'opt-button type01';
-    label02.className = 'opt-button type02';
-    label03.className = 'opt-button type03';
-    label04.className = 'opt-button type04 active';
-  }
+        $.ajax({
+            type: "put",
+            url: "/comment/update",
+            data: {
+                "id": id,
+                "memberId": memberId,
+                "memberName": memberName,
+                "contents": contents,
+                "episodeId": episodeId
+            },
+            dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+                let output = "<table>";
+                output += "<tr>" + "<th>" + "작성자" + "</th>";
+                output += "<tr>" + "<th>" + "댓글내용" + "</th>";
+                output += "<tr>" + "<th>" + "작성시간" + "</th>";
+                for (let i in result) {
+                    output += "<tr>" + "<td>" + result[i].memberName + "</td>";
+                    output += "<tr>" + "<td>" + result[i].contents + "</td>";
+                    output += "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    console.log(result[i].createdTime);
+                }
+                output += "</table>";
+                div.innerHTML = output;
+            }
+        });
+    }
+    const reportComment = (id) => {
 
-  const size01 = () => {
-    content.classList.add('c-fnt-s-01');
-    content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
-    fslabel01.className = 'opt-button size01 active';
-    fslabel02.className = 'opt-button size02';
-    fslabel03.className = 'opt-button size03';
-    fslabel04.className = 'opt-button size04';
-    fslabel05.className = 'opt-button size05';
-  }
-  const size02 = () => {
-    content.classList.add('c-fnt-s-02');
-    content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
-    fslabel01.className = 'opt-button size01';
-    fslabel02.className = 'opt-button size02 active';
-    fslabel03.className = 'opt-button size03';
-    fslabel04.className = 'opt-button size04';
-    fslabel05.className = 'opt-button size05';
-  }
-  const size03 = () => {
-    content.classList.add('c-fnt-s-03');
-    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
-    fslabel01.className = 'opt-button size01';
-    fslabel02.className = 'opt-button size02';
-    fslabel03.className = 'opt-button size03 active';
-    fslabel04.className = 'opt-button size04';
-    fslabel05.className = 'opt-button size05';
-  }
-  const size04 = () => {
-    content.classList.add('c-fnt-s-04');
-    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
-    fslabel01.className = 'opt-button size01';
-    fslabel02.className = 'opt-button size02';
-    fslabel03.className = 'opt-button size03';
-    fslabel04.className = 'opt-button size04 active';
-    fslabel05.className = 'opt-button size05';
-  }
-  const size05 = () => {
-    content.classList.add('c-fnt-s-05');
-    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
-    fslabel01.className = 'opt-button size01';
-    fslabel02.className = 'opt-button size02';
-    fslabel03.className = 'opt-button size03';
-    fslabel04.className = 'opt-button size04';
-    fslabel05.className = 'opt-button size05 active';
-  }
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
 
-  const height01 = () => {
-    content.classList.add('c-fnt-h-01');
-    content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
-    lhlabel01.className = 'opt-button height01 active';
-    lhlabel02.className = 'opt-button height02';
-    lhlabel03.className = 'opt-button height03';
-  }
-  const height02 = () => {
-    content.classList.add('c-fnt-h-02');
-    content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
-    lhlabel01.className = 'opt-button height01';
-    lhlabel02.className = 'opt-button height02 active';
-    lhlabel03.className = 'opt-button height03';
-  }
-  const height03 = () => {
-    content.classList.add('c-fnt-h-03');
-    content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
-    lhlabel01.className = 'opt-button height01';
-    lhlabel02.className = 'opt-button height02';
-    lhlabel03.className = 'opt-button height03 active';
-  }
+        const loginId = [[${session.id}]];
+
+        $.ajax({
+            type: "post",
+            url: "/comment/report-save/" + id,
+            data: {
+                "id": id,
+                "loginId": loginId
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+                if (result === 'ok') {
+                    alert("신고완료");
+                } else {
+                    alert("신고실패");
+                }
+            }
+        });
+    }
+    const deleteComment = (id, memberName) => {
+
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
+        const div = document.getElementById("test")
+        const episodeId = [[${episode.id}]];
+        const loginName = [[${session.name}]];
+        $.ajax({
+            type: "delete",
+            url: "/comment/delete/" + id,
+            data: {
+                "episodeId": episodeId
+            },
+            dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+                let output = "<table>";
+                output += "<tr>" + "<th>" + "작성자" + "</th>";
+                output += "<th>" + "댓글내용" + "</th>";
+                output += "<th>" + "작성시간" + "</th>" + "</tr>";
+                for (let i in result) {
+                    output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
+                    output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
+                    output += "<tr>" + "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
+                    if (loginName === memberName) {
+                        output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">" + "</td>" + "</tr>";
+                    }
+                }
+                output += "</table>";
+                div.innerHTML = output;
+            }
+        });
+    }
+    const saveStar = () => {
+
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
+        const memberId = [[${session.id}]];
+        const episodeId = [[${episode.id}]];
+        const star = document.getElementById("star").value;
+
+        $.ajax({
+            type: "post",
+            url: "/book/save-star",
+            data: {
+                "memberId": memberId,
+                "episodeId": episodeId,
+                "star": star
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+                alert(result);
+            },
+        });
+    }
+
+    const content = document.querySelector('.content');
+    const label01 = document.getElementById('fnt-01');
+    const label02 = document.getElementById('fnt-02');
+    const label03 = document.getElementById('fnt-03');
+    const label04 = document.getElementById('fnt-04');
+    const fslabel01 = document.getElementById('fnt-s-01');
+    const fslabel02 = document.getElementById('fnt-s-02');
+    const fslabel03 = document.getElementById('fnt-s-03');
+    const fslabel04 = document.getElementById('fnt-s-04');
+    const fslabel05 = document.getElementById('fnt-s-05');
+    const lhlabel01 = document.getElementById('fnt-h-01');
+    const lhlabel02 = document.getElementById('fnt-h-02');
+    const lhlabel03 = document.getElementById('fnt-h-03');
+
+    const fnt01 = () => {
+        content.classList.add('c-fnt-01');
+        content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
+        label01.className = 'opt-button type01 active';
+        label02.className = 'opt-button type02';
+        label03.className = 'opt-button type03';
+        label04.className = 'opt-button type04';
+    }
+    const fnt02 = () => {
+        content.classList.add('c-fnt-02');
+        content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
+        label01.className = 'opt-button type01';
+        label02.className = 'opt-button type02 active';
+        label03.className = 'opt-button type03';
+        label04.className = 'opt-button type04';
+    }
+    const fnt03 = () => {
+        content.classList.add('c-fnt-03');
+        content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
+        label01.className = 'opt-button type01';
+        label02.className = 'opt-button type02';
+        label03.className = 'opt-button type03 active';
+        label04.className = 'opt-button type04';
+    }
+    const fnt04 = () => {
+        content.classList.add('c-fnt-04');
+        content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
+        label01.className = 'opt-button type01';
+        label02.className = 'opt-button type02';
+        label03.className = 'opt-button type03';
+        label04.className = 'opt-button type04 active';
+    }
+
+    const size01 = () => {
+        content.classList.add('c-fnt-s-01');
+        content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+        fslabel01.className = 'opt-button size01 active';
+        fslabel02.className = 'opt-button size02';
+        fslabel03.className = 'opt-button size03';
+        fslabel04.className = 'opt-button size04';
+        fslabel05.className = 'opt-button size05';
+    }
+    const size02 = () => {
+        content.classList.add('c-fnt-s-02');
+        content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+        fslabel01.className = 'opt-button size01';
+        fslabel02.className = 'opt-button size02 active';
+        fslabel03.className = 'opt-button size03';
+        fslabel04.className = 'opt-button size04';
+        fslabel05.className = 'opt-button size05';
+    }
+    const size03 = () => {
+        content.classList.add('c-fnt-s-03');
+        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
+        fslabel01.className = 'opt-button size01';
+        fslabel02.className = 'opt-button size02';
+        fslabel03.className = 'opt-button size03 active';
+        fslabel04.className = 'opt-button size04';
+        fslabel05.className = 'opt-button size05';
+    }
+    const size04 = () => {
+        content.classList.add('c-fnt-s-04');
+        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
+        fslabel01.className = 'opt-button size01';
+        fslabel02.className = 'opt-button size02';
+        fslabel03.className = 'opt-button size03';
+        fslabel04.className = 'opt-button size04 active';
+        fslabel05.className = 'opt-button size05';
+    }
+    const size05 = () => {
+        content.classList.add('c-fnt-s-05');
+        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
+        fslabel01.className = 'opt-button size01';
+        fslabel02.className = 'opt-button size02';
+        fslabel03.className = 'opt-button size03';
+        fslabel04.className = 'opt-button size04';
+        fslabel05.className = 'opt-button size05 active';
+    }
+
+    const height01 = () => {
+        content.classList.add('c-fnt-h-01');
+        content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
+        lhlabel01.className = 'opt-button height01 active';
+        lhlabel02.className = 'opt-button height02';
+        lhlabel03.className = 'opt-button height03';
+    }
+    const height02 = () => {
+        content.classList.add('c-fnt-h-02');
+        content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
+        lhlabel01.className = 'opt-button height01';
+        lhlabel02.className = 'opt-button height02 active';
+        lhlabel03.className = 'opt-button height03';
+    }
+    const height03 = () => {
+        content.classList.add('c-fnt-h-03');
+        content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
+        lhlabel01.className = 'opt-button height01';
+        lhlabel02.className = 'opt-button height02';
+        lhlabel03.className = 'opt-button height03 active';
+    }
 </script>
 </html>
