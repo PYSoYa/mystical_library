@@ -30,6 +30,7 @@ public class BookController {
     private final WishService wishService;
     private final MemberService memberService;
     private final NoticeService noticeService;
+    private final EpisodeService episodeService;
 
     // 책 저장페이지 요청
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
@@ -315,7 +316,9 @@ public class BookController {
 
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
         BookDTO bookDTO = bookService.findById(bookId);
+        MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
+        model.addAttribute("member", memberDTO);
         model.addAttribute("book", bookDTO);
         model.addAttribute("episode", episodeDTO);
         model.addAttribute("commentList", commentDTOList);

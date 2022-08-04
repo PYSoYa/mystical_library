@@ -63,7 +63,6 @@ public class DebutController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
-
         DebutEpisodeDTO debutEpisodeDTO = debutService.updateForm(id);
         model.addAttribute("debut", debutEpisodeDTO);
         return "debut/update";
@@ -97,18 +96,6 @@ public class DebutController {
         }
     }
 
-    //데뷔글 페이징 리스트
-    //
-//    @GetMapping("/poem/{category}")
-//    public String poemPageingList(@PathVariable("category")Long categoryId,@PageableDefault(page = 1) Pageable pageable, Model model) {
-//        Page<DebutEpisodeDTO> debutEpisodeDTOPage = debutService.poemList(categoryId,pageable);
-//        model.addAttribute("debutEpisodePage", debutEpisodeDTOPage);
-//        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-//        int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < debutEpisodeDTOPage.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : debutEpisodeDTOPage.getTotalPages();
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//        return "debut/poemPagingList";
-//    }
     @GetMapping("/poem/{category}/{addressId}")
     public String poemList(@AuthenticationPrincipal PrincipalDetails principalDetails,
                            @PathVariable("category") Long categoryId, Model model,
@@ -119,7 +106,6 @@ public class DebutController {
 
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId, addressId);
         model.addAttribute("poemList", debutEpisodeDTOList);
-        System.out.println("poemList = " + debutEpisodeDTOList);
         return "debut/poemList";
 
     }
@@ -149,7 +135,6 @@ public class DebutController {
 
         List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.categoryList(categoryId, addressId);
         model.addAttribute("webList", debutEpisodeDTOList);
-        System.out.println("webList = " + debutEpisodeDTOList);
         return "debut/webList";
     }
 

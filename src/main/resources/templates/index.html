@@ -53,12 +53,12 @@
       <li class="category-wrap">
         <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">데뷔글 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <!-- 첫번째 주소  1번 시 2번 에세이 3번 web 웹소설-->
+          <!-- 두번째 주소 0번이 기본 주소 1번이 최신순 2번이 조회순 3번이 관심순-->
+          <li><a href="/debut/main/0" class="dropdown-item">데뷔글 메인</a></li>
+          <li><a href="/debut/poem/1/0" class="dropdown-item">시</a></li>
+          <li><a href="/debut/essay/2/0" class="dropdown-item">에세이</a></li>
+          <li><a href="/debut/web/3/0" class="dropdown-item">웹소설</a></li>
         </ul>
       </li>
     </ul>
@@ -754,9 +754,7 @@
       document.getElementById('move-slider').click();
     }
     setTimeout(slideClick, 5000);
-      setInterval(countNotice,20000,console.log("카운트실행"));
-
-
+      setInterval(countNotice,10000);
   }
 </script>
 </html>

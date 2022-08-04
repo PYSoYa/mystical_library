@@ -25,8 +25,11 @@ public class CommentEntity extends BaseEntity{
     private EpisodeEntity episodeEntity;
 
     @Column
+    private String commentEpisode;
+    @Column
     private Long bookId;
-
+    @Column
+    private String memberImgName;
     @Column(name = "memberName",nullable = false,length = 20)
     private String memberName;
     @Column(name = "contents",nullable = false,length = 500)
@@ -42,7 +45,9 @@ public class CommentEntity extends BaseEntity{
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setMemberEntity(memberEntity);
         commentEntity.setEpisodeEntity(episodeEntity);
+        commentEntity.setCommentEpisode(episodeEntity.getEpisodeTitle());
         commentEntity.setBookId(episodeEntity.getBookEntity().getId());
+        commentEntity.setMemberImgName(memberEntity.getMemberImgName());
         commentEntity.setMemberName(memberEntity.getMemberName());
         commentEntity.setContents(commentDTO.getContents());
         commentEntity.setCommentReport(false);
@@ -53,7 +58,9 @@ public class CommentEntity extends BaseEntity{
         commentEntity.setId(commentDTO.getId());
         commentEntity.setMemberEntity(memberEntity);
         commentEntity.setEpisodeEntity(episodeEntity);
+        commentEntity.setCommentEpisode(episodeEntity.getEpisodeContents());
         commentEntity.setBookId(episodeEntity.getBookEntity().getId());
+        commentEntity.setMemberImgName(memberEntity.getMemberImgName());
         commentEntity.setMemberName(memberEntity.getMemberName());
         commentEntity.setContents(commentDTO.getContents());
         commentEntity.setCommentReport(false);

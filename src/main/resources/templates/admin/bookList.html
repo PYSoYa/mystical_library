@@ -60,7 +60,6 @@
                   <th>작가번호</th>
                   <th>작가명</th>
                   <th>제목</th>
-                  <th>소개글</th>
                   <th>책표지</th>
                   <th>연재상태</th>
                   <th>글권한</th>
@@ -78,7 +77,6 @@
                     <td th:text="${book.memberId}"></td>
                     <td th:text="${book.memberName}"></td>
                     <td th:text="${book.bookTitle}"></td>
-                    <td th:text="${book.introduce}"></td>
                     <td><img th:src="@{|/upload/${book.bookImgName}|}" width="100" height="100"></td>
                     <td th:text="${book.status}"></td>
                     <td th:text="${book.writerRole}"></td>

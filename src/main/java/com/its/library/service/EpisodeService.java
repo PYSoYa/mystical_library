@@ -44,4 +44,14 @@ public class EpisodeService {
     public void episodeDelete(Long id) {
         episodeRepository.deleteById(id);
     }
+
+    public List<EpisodeDTO> episodeFindAll(Long id) {
+        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
+        episodeEntityList = episodeRepository.findByBookId(id);
+        for (EpisodeEntity episode: episodeEntityList) {
+            episodeDTOList.add(EpisodeDTO.findDTO(episode));
+        }
+        return episodeDTOList;
+    }
 }
