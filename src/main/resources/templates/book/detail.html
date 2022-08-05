@@ -253,9 +253,9 @@
             "bookId": bookId
         },
         dataType: "text",
-        success: function (result) {
-            if (result == "ff") {
-
+        success: function (episodeId) {
+            if (episodeId != null) {
+                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
             }
         }
     })

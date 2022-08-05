@@ -34,4 +34,8 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
     @Transactional
     @Query(value = "select * from history where member_id = :memberId and booKId = :bookId order by created_date_time asc", nativeQuery = true)
     List<HistoryEntity> findByMemberEntityAndBooKId(Long memberId, Long bookId);
+
+    @Transactional
+    @Query(value = "select * from history where member_id = :memberId and booKId = :bookId order by created_date_time desc", nativeQuery = true)
+    List<HistoryEntity> findByAgain(Long memberId, Long bookId);
 }
