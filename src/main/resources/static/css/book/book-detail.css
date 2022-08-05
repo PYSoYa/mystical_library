@@ -19,6 +19,7 @@
 .book-detail-wrap .detail-wrap .author-wrap a::after,
 .book-detail-wrap .detail-wrap .author-wrap > div > span::after {content: "·"; margin-left: 1rem; margin-right: 1rem;}
 .book-detail-wrap .detail-wrap .author-wrap > div > .status::after {content: ''; width: 0; height: 0;}
+.book-detail-wrap .detail-wrap .author-wrap .edit-span::after {content: ""; margin: 0;}
 
 .book-detail-wrap .detail-wrap .intro-wrap {padding-right: 4rem; padding-top: 1.5rem; word-break: keep-all; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; position: relative; font-size: 1.125rem; line-height: 2rem; min-height: 100px; font-weight: 400; color: rgba(0, 0, 0, 0.471);}
 .book-detail-wrap .detail-wrap .tag-wrap {padding-top: 1.5rem;}
@@ -50,6 +51,7 @@
 .episode-detail-container .episode-list-wrap:not(:last-child) {border-bottom: 1px solid #e5e5e5;}
 .episode-detail-container .last-list-wrap {border-bottom: 1px solid #aaa !important;}
 .episode-detail-container .episode-list-wrap {padding: 1.35rem 0.625rem;}
+.episode-detail-container .episode-list-wrap1 {background-color: #eee;}
 .episode-detail-container .episode-list-wrap .img-wrap {padding-right: 3rem;}
 .episode-detail-container .episode-list-wrap .img-wrap img {width: 6rem; height: 8.75rem; border-radius: 4px;}
 .episode-detail-container .episode-list-wrap .img-wrap img:hover {opacity: 0.5; transition: 0.2s ease;}

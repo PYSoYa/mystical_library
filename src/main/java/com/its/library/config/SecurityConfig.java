@@ -27,8 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/icon/**", "/img/**", "/js/**");
-        web.ignoring().antMatchers("/member/email-authentication");
-        web.ignoring().antMatchers("/member/save");
     }
 
 
@@ -36,20 +34,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable();
         http    .authorizeRequests()
+                    .antMatchers("/", "/member/login-page", "/member/save", "/member/email-authentication", "/member/login").permitAll()
                     .antMatchers("/book/episode/**").authenticated()
-                    .antMatchers("/book/book-save-form").access("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
-                    .antMatchers("/book/episode-save-form").access("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
+                    .antMatchers("/book/book-save-form").authenticated()
+                    .antMatchers("/book/episode-save-form").authenticated()
                     .antMatchers("/book/save-star").authenticated()
+                    .antMatchers("/comment/**").authenticated()
+                    .antMatchers("/debutComment/**").authenticated()
                     .antMatchers("/wish/**").authenticated()
                     .antMatchers("/box/**").authenticated()
                     .antMatchers("/debut/**").authenticated()
                     .antMatchers("/history/**").authenticated()
-                    .antMatchers("/member/**").authenticated()
+//                    .antMatchers("/member/**").authenticated()
                     .antMatchers("/point/**").authenticated()
+                    .antMatchers("/comment/**").authenticated()
                     .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                     .anyRequest().permitAll()
                     .and()
                 .formLogin()
+                    .loginPage("/member/login-page")
                     .loginProcessingUrl("/member/login")
                     .usernameParameter("loginId")
                     .passwordParameter("memberPassword")

@@ -39,6 +39,19 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/login-page")
+    public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+        try {
+            String loginId = principalDetails.getUsername();
+            MemberDTO memberDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", memberDTO);
+        } catch (NullPointerException e) {
+            System.out.println("HomeController.index");
+            System.out.println("java.lang.NullPointerException: null");
+        }
+        return "member/login";
+    }
+
     // 회원정보 조회
     @GetMapping("/myPage/{id}")
     public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -204,7 +217,7 @@ public class MemberController {
     // 비밀번호 설정 페이지 요청
     @GetMapping("/set-password")
     public String setPassword() {
-        return "member/setPassword";
+        return "login";
     }
 
     // 아이디 찾기 페이지 요청

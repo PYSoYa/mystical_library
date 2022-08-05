@@ -7,6 +7,7 @@ import com.its.library.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,5 +31,7 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
 
     Optional<HistoryEntity> findByMemberEntityAndEpisodeEntity(MemberEntity memberEntity, EpisodeEntity episodeEntity);
 
-    List<HistoryEntity> findByMemberEntityAndBooKId(MemberEntity memberEntity, Long bookId);
+    @Transactional
+    @Query(value = "select * from history where member_id = :memberId and booKId = :bookId order by created_date_time asc", nativeQuery = true)
+    List<HistoryEntity> findByMemberEntityAndBooKId(Long memberId, Long bookId);
 }
