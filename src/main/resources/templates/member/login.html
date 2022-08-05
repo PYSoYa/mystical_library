@@ -13,7 +13,20 @@
 <main class="main-container">
   <div class="content-container">
     <div class="title-wrap">
-      <h5 class="title">비밀번호 설정</h5>
+      <h5 class="title">로그인</h5>
+    </div>
+    <form class="login-form" action="/member/login" method="post">
+      <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+    <div class="input-wrap">
+      <div class="label-id-wrap">
+        <label class="label-id">아이디</label>
+      </div>
+      <div class="input-id-wrap">
+        <input type="text" id="input-id" name="loginId" class="input-id" placeholder="아이디123">
+      </div>
+      <div class="result-id-wrap">
+        <span class="span-id" id="result-id-login">잘 좀 입력하세요</span>
+      </div>
     </div>
     <div class="input-wrap">
       <div class="label-pw-wrap">
@@ -26,23 +39,14 @@
         <span class="span-pw" id="result-pw">비밀번호도 입력해보세요</span>
       </div>
     </div>
-    <div class="input-wrap">
-      <div class="label-pw-again-wrap">
-        <label class="label-pw-again">비밀번호 재확인</label>
-      </div>
-      <div class="input-pw-again-wrap">
-        <input type="password" class="input-pw-again" placeholder="********">
-      </div>
-      <div class="result-pw-again-wrap">
-        <span class="span-pw-again" id="result-pw-again">비밀번호 확인하세요</span>
-      </div>
-    </div>
     <div class="btn-wrap">
-      <button type="button" class="submit-btn">설정하기</button>
+      <button type="submit" class="submit-btn">로그인</button>
     </div>
+    </form>
   </div>
 </main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+</script>
 </html>

@@ -70,8 +70,8 @@ public class NoticeService {
     }
     @Transactional
     public boolean readFalseCount(Long memberId) {
-       Optional<NoticeEntity> falseResult = noticeRepository.findByMemberEntity_IdAndNoticeReadIsFalse(memberId);
-       if (falseResult.isEmpty()){
+       List<NoticeEntity> noticeEntityList = noticeRepository.findByMemberEntity_IdAndNoticeReadIsFalse(memberId);
+       if (noticeEntityList.size() <= 0){
         return false;
        }
        return true;

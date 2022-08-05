@@ -1,3 +1,5 @@
+.main-container span {cursor: default;}
+
 .category-div {margin-top: 1.25rem}
 .category-ul {margin-left: -9.375rem; display: flex; padding: 0 1.875rem 0 1.125rem; justify-content: center;}
 .category-wrap {margin-left: 9.375rem; display: inline-flex; line-height: initial;}
@@ -43,7 +45,36 @@
 .book-wrap .detail-wrap .intro-wrap {height: 4rem; display: block; opacity: 0.6;}
 .book-wrap .detail-wrap .intro-wrap span {display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 1.125rem; overflow: hidden; text-overflow: ellipsis; position: relative;}
 .book-wrap .detail-wrap .tag-wrap > span:not(:last-child) {margin-right: 1rem;}
-.book-wrap .detail-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
-.book-wrap .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
-.book-wrap .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
-.book-wrap .detail-wrap .tag-wrap .essay {background-color: #ff702a;}
+.book-wrap .detail-wrap .tag-wrap .tag,
+.detail-wrap .star-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.book-wrap .detail-wrap .tag-wrap .novel,
+.detail-wrap .star-wrap .tag-wrap .novel {background-color: #00bfdd;}
+.book-wrap .detail-wrap .tag-wrap .poem,
+.detail-wrap .star-wrap .tag-wrap .poem {background-color: #ffca28;}
+.book-wrap .detail-wrap .tag-wrap .essay,
+.detail-wrap .star-wrap .tag-wrap .essay {background-color: #ff702a;}
+
+.detail-wrap .star-wrap .debut-heart {padding-top: 4px; color: #dd2424;}
+.detail-wrap .star-wrap .debut-eye {padding-top: 2px;}
+.detail-wrap .author {color: #1e9eff;}
+.detail-wrap .star-wrap {margin-top: 1rem !important;}
+.save-form-btn {
+    margin-left: auto;
+    position: relative;
+    border: none;
+    outline: none;
+    border-radius: 0.188rem;
+    width: 6rem;
+    height: 140%;
+    color: #faf7eb;
+    background-color: #1e9eff;
+    font-size: 1rem;
+    letter-spacing: 0.013rem;
+    box-shadow: 0 0.125rem 0.313rem #00000026;
+}
+.save-form-btn:hover {
+    border: 1px solid #1e9eff;
+    color: #1e9eff;
+    background-color: #fff;
+    transition: 0.3s ease;
+}
