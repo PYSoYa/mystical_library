@@ -108,125 +108,42 @@
     <div class="popular-books-list-container">
       <div class="popular-books-list-wrap">
         <div class="popular-books-list-div">
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">1</span>
-            </div>
+          <div class="popular-books" th:each="popular1:${bookList}">
             <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_1.jpeg}" alt="">
+              <a th:if="${authentication != null}" th:href="@{|/book/book/${popular1.id}|}">
+                <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
+              </a>
+              <a th:unless="${authentication != null}" th:href="@{|/book/${popular1.id}|}">
+                <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
               </a>
             </div>
             <div class="detail-wrap">
-              <div class="title">제목1</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
+              <div class="title" th:text="${popular1.bookTitle}"></div>
+              <div class="intro" th:text="${popular1.introduce}"></div>
               <div class="star-wrap">
                 <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                 </svg>
-                <span class="star">9.2</span>
-              </div>
-            </div>
-          </div>
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">2</span>
-            </div>
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_2.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목2</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.8</span>
-              </div>
-            </div>
-          </div>
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">3</span>
-            </div>
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_3.jpg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목3</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.3</span>
+                <span class="star" th:text="${popular1.star}"></span>
               </div>
             </div>
           </div>
         </div>
         <div class="popular-books-list-div">
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">4</span>
-            </div>
+          <div class="popular-books" th:each="popular2:${bookList1}">
             <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_3.jpg}" alt="">
+              <a th:href="@{|/book/book/${popular2.id}|}">
+                <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
             </div>
             <div class="detail-wrap">
-              <div class="title">제목4</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
+              <div class="title" th:text="${popular2.bookTitle}"></div>
+              <div class="intro" th:text="${popular2.introduce}"></div>
               <div class="star-wrap">
                 <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                 </svg>
-                <span class="star">7.7</span>
-              </div>
-            </div>
-          </div>
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">5</span>
-            </div>
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_1.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목5</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.6</span>
-              </div>
-            </div>
-          </div>
-          <div class="popular-books">
-            <div class="rank-wrap">
-              <span class="rank">6</span>
-            </div>
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_2.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목6</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">9.4</span>
+                <span class="star" th:text="${popular2.star}"></span>
               </div>
             </div>
           </div>
@@ -239,7 +156,7 @@
     <div class="recent-debut-post-title-container">
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text">
-          <span class="recent-debut-post-title">최신 데뷔글</span>
+          <span class="recent-debut-post-title">최신 완결 작품</span>
         </div>
       </div>
     </div>
@@ -247,97 +164,24 @@
       <div class="recent-debut-post-list-wrap">
         <div class="recent-debut-post-div">
           <ul class="recent-debut-post-ul">
-            <li class="recent-debut-post-li">
+            <li class="recent-debut-post-li" th:each="finsh:${newList}">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book/${finsh.id}|}">
+                    <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/${finsh.id}|}">
+                    <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
                 <div class="detail-wrap">
-                  <span class="title">제목1</span>
-                  <span class="author">톰보이1</span>
+                  <span class="title" th:text="${finsh.bookTitle}"></span>
+                  <span class="author" th:text="${finsh.memberName}"></span>
                   <div class="star-wrap">
                     <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                     </svg>
-                    <span class="star">7.5</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="recent-debut-post-li">
-              <div class="recent-debut-post">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="title">제목2</span>
-                  <span class="author">톰보이2</span>
-                  <div class="star-wrap">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                    </svg>
-                    <span class="star">9.7</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="recent-debut-post-li">
-              <div class="recent-debut-post">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="title">제목3</span>
-                  <span class="author">톰보이3</span>
-                  <div class="star-wrap">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                    </svg>
-                    <span class="star">6.8</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="recent-debut-post-li">
-              <div class="recent-debut-post">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="title">제목4</span>
-                  <span class="author">톰보이4</span>
-                  <div class="star-wrap">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                    </svg>
-                    <span class="star">9.1</span>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="recent-debut-post-li">
-              <div class="recent-debut-post">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="title">제목5</span>
-                  <span class="author">톰보이5</span>
-                  <div class="star-wrap">
-                    <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                    </svg>
-                    <span class="star">8.4</span>
+                    <span class="star" th:text="${finsh.star}"></span>
                   </div>
                 </div>
               </div>
@@ -352,7 +196,7 @@
     <div class="recent-completion-title-container">
       <div class="recent-completion-title-wrap">
         <div class="recent-completion-title-text">
-          <span class="recent-completion-title">최신 완결 작품</span>
+          <span class="recent-completion-title">최신 데뷔글</span>
         </div>
       </div>
     </div>

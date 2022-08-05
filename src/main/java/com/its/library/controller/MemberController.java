@@ -56,6 +56,7 @@ public class MemberController {
     @GetMapping("/myPage/{id}")
     public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
                          @PathVariable("id") Long id, Model model) {
+        List<WishDTO> wishDTOList = new ArrayList<>();
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
@@ -65,13 +66,14 @@ public class MemberController {
         } else {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
-            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
             List<WishDTO> writerList = new ArrayList<>();
             for (int i = 0; i < wishDTOList.size(); i++) {
                 if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
                     writerList.add(wishDTOList.get(i));
                 }
             }
+            System.out.println("writerList = " + writerList);
             model.addAttribute("wishlist", writerList);
             return "member/myPage";
         }
