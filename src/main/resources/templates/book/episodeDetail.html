@@ -27,29 +27,6 @@
   </select>
   <input type="button" onclick="saveStar()" value="버튼">
   <h3></h3>
-  <div id="test">
-    <table th:each="comment:${commentList}">
-      <tr>
-        <th>작성자</th>
-        <th>댓글 내용</th>
-        <th>작성시간</th>
-      </tr>
-      <tr>
-        <td th:text="${comment.memberName}"></td>
-        <td id="contentsUpdate" th:text="${comment.contents}"></td>
-        <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:if="${session.name == comment.memberName}">
-          <input type="button"
-                 th:onclick="updateComment([[${comment.id}]],[[${comment.memberName}]],[[${comment.contents}]])"
-                 value="수정">
-          <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
-        </td>
-        <td>
-          <input type="button" th:onclick="reportComment([[${comment.id}]])" value="신고">
-        </td>
-      </tr>
-    </table>
-  </div>
 </div>
 
 <div id="wrap">
@@ -409,196 +386,28 @@
         </div>
         <div class="comment-list-wrap">
           <ul id="saveComment">
-            <li>
+            <li th:each="comment:${commentList}">
               <div class="info">
                 <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
+                  <a th:href="@{|/member/mypage/${comment.memberId}|}" class="writer-link">
+                    <span class="writer" th:text="${comment.memberName}">어쩔</span>
                   </a>
-                  <span class="date">2022-04-02</span>
+                  <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>
                 <div>
                   <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
+                    <a href="javascript:;" class="update-btn" th:onclick="updateComment([[${comment.id}]],[[${comment.memberName}]],[[${comment.contents}]])">수정</a>
                   </span>
                   <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
+                    <a href="javascript:;" class="delete-btn" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])">삭제</a>
                   </span>
                   <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
+                    <a href="javascript:;" class="report-btn" th:onclick="reportComment([[${comment.id}]])">신고</a>
                   </span>
                 </div>
               </div>
               <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
+                <span class="content" th:text="${comment.contents}"></span>
               </div>
             </li>
           </ul>
@@ -615,6 +424,7 @@
     }
     const commentSave = () => {
         const memberId = [[${authentication.id}]];
+        const loginName = [[${authentication.memberName}]];
         const episodeId = document.getElementById("episodeId").value;
         const memberName = document.getElementById("memberName").value;
         const memberImgName = document.getElementById("memberImgName").value;
@@ -647,27 +457,31 @@
                        var output = "<li>\n" +
                            "              <div class=\"info\">" +
                            "                <div>" +
-                           "                  <a href=\"#\" class=\"writer-link\">" +
+                           "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
                            "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
                            "                  </a>" +
                            "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
                            "                </div>" +
-                           "                <div>" +
-                           "                  <span class=\"update\">" +
-                           "                    <a href=\"javascript:;\" class=\"update-btn\">수정</a>" +
-                           "                  </span>" +
-                           "                  <span class=\"delete\">" +
-                           "                    <a href=\"javascript:;\" class=\"delete-btn\">삭제</a>" +
-                           "                  </span>" +
-                           "                  <span class=\"report\">" +
-                           "                    <a href=\"javascript:;\" class=\"report-btn\">신고</a>" +
-                           "                  </span>" +
-                           "                </div>" +
+                           "                <div>" ;
+
+                                      if (result[i].memberName == loginName) {
+                                          output += "            <span class=\"update\">" +
+                                              "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                                              "                  </span>" +
+                                              "                  <span class=\"delete\">" +
+                                              "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                                              "                  </span>" +
+                                              "                  <span class=\"report\">" +
+                                              "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                                              "                  </span>";
+                                      }
+
+                           output += "    </div>" +
                            "              </div>" +
                            "              <div class=\"content\">" +
                            "                <span class=\"content\">" + result[i].contents + "</span>" +
                            "              </div>" +
-                           "            </li>"
+                           "            </li>";
                    }
                    saveComment.innerHTML = output;
                 }
@@ -688,9 +502,10 @@
         let token = $("meta[name='_csrf']").attr('content');
 
         const contents = document.getElementById("updateContents").value;
+        const loginName = [[${authentication.memberName}]];
         const episodeId = [[${episode.id}]];
-        const memberId = [[${session.id}]];
-        const div = document.getElementById("test");
+        const memberId = [[${authentication.id}]];
+        const saveComment = document.getElementById("saveComment");
 
         $.ajax({
             type: "put",
@@ -707,18 +522,38 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function (result) {
-                let output = "<table>";
-                output += "<tr>" + "<th>" + "작성자" + "</th>";
-                output += "<tr>" + "<th>" + "댓글내용" + "</th>";
-                output += "<tr>" + "<th>" + "작성시간" + "</th>";
+
                 for (let i in result) {
-                    output += "<tr>" + "<td>" + result[i].memberName + "</td>";
-                    output += "<tr>" + "<td>" + result[i].contents + "</td>";
-                    output += "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                    console.log(result[i].createdTime);
+                    var output = "<li>\n" +
+                        "              <div class=\"info\">" +
+                        "                <div>" +
+                        "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
+                        "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
+                        "                  </a>" +
+                        "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
+                        "                </div>" +
+                        "                <div>" ;
+
+                    if (result[i].memberName == loginName) {
+                        output += "            <span class=\"update\">" +
+                            "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                            "                  </span>" +
+                            "                  <span class=\"delete\">" +
+                            "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                            "                  </span>" +
+                            "                  <span class=\"report\">" +
+                            "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                  </span>";
+                    }
+
+                    output += "    </div>" +
+                        "              </div>" +
+                        "              <div class=\"content\">" +
+                        "                <span class=\"content\">" + result[i].contents + "</span>" +
+                        "              </div>" +
+                        "            </li>";
                 }
-                output += "</table>";
-                div.innerHTML = output;
+                saveComment.innerHTML = output;
             }
         });
     }
@@ -727,7 +562,7 @@
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
 
-        const loginId = [[${session.id}]];
+        const loginId = [[${authentication.id}]];
 
         $.ajax({
             type: "post",
@@ -754,9 +589,10 @@
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
 
-        const div = document.getElementById("test")
+        const saveComment = document.getElementById("saveComment");
+        const loginName = [[${authentication.memberName}]];
         const episodeId = [[${episode.id}]];
-        const loginName = [[${session.name}]];
+
         $.ajax({
             type: "delete",
             url: "/comment/delete/" + id,
@@ -768,20 +604,37 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function (result) {
-                let output = "<table>";
-                output += "<tr>" + "<th>" + "작성자" + "</th>";
-                output += "<th>" + "댓글내용" + "</th>";
-                output += "<th>" + "작성시간" + "</th>" + "</tr>";
                 for (let i in result) {
-                    output += "<tr>" + "<td>" + result[i].memberName + "</td>" + "</tr>";
-                    output += "<tr>" + "<td>" + result[i].contents + "</td>" + "</tr>";
-                    output += "<tr>" + "<td>" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</td>";
-                    if (loginName === memberName) {
-                        output += "<tr>" + "<td>" + "<input type=\"button\" onclick=\"deleteComment(" + result[i].id + ',' + result[i].episodeId + ")\" value=\"삭제\">" + "</td>" + "</tr>";
+                    var output = "<li>\n" +
+                        "              <div class=\"info\">" +
+                        "                <div>" +
+                        "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
+                        "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
+                        "                  </a>" +
+                        "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
+                        "                </div>" +
+                        "                <div>" ;
+
+                    if (result[i].memberName == loginName) {
+                        output += "            <span class=\"update\">" +
+                            "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                            "                  </span>" +
+                            "                  <span class=\"delete\">" +
+                            "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                            "                  </span>" +
+                            "                  <span class=\"report\">" +
+                            "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                  </span>";
                     }
+
+                    output += "    </div>" +
+                        "              </div>" +
+                        "              <div class=\"content\">" +
+                        "                <span class=\"content\">" + result[i].contents + "</span>" +
+                        "              </div>" +
+                        "            </li>";
                 }
-                output += "</table>";
-                div.innerHTML = output;
+                saveComment.innerHTML = output;
             }
         });
     }
@@ -790,7 +643,7 @@
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
 
-        const memberId = [[${session.id}]];
+        const memberId = [[${authentication.id}]];
         const episodeId = [[${episode.id}]];
         const star = document.getElementById("star").value;
 
