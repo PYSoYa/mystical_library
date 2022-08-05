@@ -129,6 +129,17 @@ public class MemberController {
         }
     }
 
+    // 비밀번호 체크
+    @PostMapping("/check-password")
+    public @ResponseBody String checkPassword(@ModelAttribute MemberDTO memberDTO) {
+        MemberDTO loginDTO = memberService.login(memberDTO);
+        if (loginDTO != null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
     // 업데이트 폼 페이지 요청
     @GetMapping("/update-form/{id}")
     public String updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -149,11 +160,13 @@ public class MemberController {
         return "redirect:/member/myPage/" + memberDTO.getId();
     }
 
-    // 비밀번호 체크
-    @PostMapping("/check-password")
-    public @ResponseBody String checkPassword(@ModelAttribute MemberDTO memberDTO) {
-        MemberDTO loginDTO = memberService.login(memberDTO);
-        if (loginDTO != null) {
+
+
+    // 닉네임 변경시 중복 체크
+    @PostMapping("/member-name-dup-check")
+    public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
+        MemberDTO memberDTO = memberService.findByMemberName(memberName);
+        if (memberDTO.getId() == null) {
             return "ok";
         } else {
             return "no";
