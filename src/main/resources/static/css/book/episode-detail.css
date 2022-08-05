@@ -18,6 +18,7 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 #wrap .viewer-container .head-area .head-wrap {width: 940px; height: 100%; position: relative; z-index: 2; padding: 10px 100px 9px 100px;}
 #wrap .viewer-container .logo-wrap .logo {width: 69px; height: 69px; position: absolute; top: 0; left: 0; bottom: 0;}
 #wrap .viewer-container .info-wrap .book-title-wrap .book-title {margin: 3px 0 0; font-size: 0.933em; font-weight: 600; color: #555; letter-spacing: 0.03rem;}
+#wrap .viewer-container .info-wrap .book-title-wrap .debut-writer {color: #1e9eff;}
 #wrap .viewer-container .info-wrap .episode-title-wrap .episode-title {font-weight: 400; font-size: 1.2em; color: #333; float: left; margin: 0; padding-top: 0.2rem; letter-spacing: 0.03rem;}
 #wrap .viewer-container .info-wrap .spread-wrap .spread {padding: 0 30px; display: inline-block; position: absolute; right: 0; top: 0; bottom: 0; overflow: visible; margin: 0; border: none; background: none; white-space: nowrap; cursor: pointer; vertical-align: middle; box-sizing: border-box; border-right: 1px solid #ccc;}
 #wrap .viewer-container .info-wrap .spread-wrap .spread span {width: 26px; height: 14px; background: url(../../img/icon_arrow.png) no-repeat; font-size: 0; line-height: 0; text-indent: -9999px; vertical-align: middle; display: inline-block;}
@@ -33,18 +34,19 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 #wrap .viewer-container .viewer {padding: 80px 200px; -ms-overflow-style: none; overflow: hidden scroll; position: relative; background-color: #fff; height: 872px; min-width: 570px;}
 #wrap .viewer-container .viewer .content {font-size: 16px; pointer-events: none; user-select: none; line-height: 1.4; height: 100%; overflow: hidden;}
 #wrap .viewer-container .viewer .content p {text-align: justify; font-size: 16px; text-indent: 0.8em; line-height: 1.7em; margin: 5% 0.2em 5% 0.2em; padding: 0 2px 2px 0; color: #666; word-break: keep-all;}
-#wrap .viewer-container .viewer .c-fnt-01 p {font-family: 'Noto Sans KR', sans-serif;}
-#wrap .viewer-container .viewer .c-fnt-02 p {font-family: 'Noto Serif KR', serif;}
-#wrap .viewer-container .viewer .c-fnt-03 p {font-family: 'Gowun Batang', serif;}
-#wrap .viewer-container .viewer .c-fnt-04 p {font-family: 'Nanum Gothic', sans-serif;}
+#wrap .viewer-container .viewer .content * {text-align: justify; text-indent: 0.8em; line-height: 1.7em; margin: 5% 0.2em 5% 0.2em; padding: 0 2px 2px 0; color: #666;}
+#wrap .viewer-container .viewer .c-fnt-01 * {font-family: 'Noto Sans KR', sans-serif;}
+#wrap .viewer-container .viewer .c-fnt-02 * {font-family: 'Noto Serif KR', serif;}
+#wrap .viewer-container .viewer .c-fnt-03 * {font-family: 'Gowun Batang', serif;}
+#wrap .viewer-container .viewer .c-fnt-04 * {font-family: 'Nanum Gothic', sans-serif;}
 #wrap .viewer-container .viewer .c-fnt-s-01 p {font-size: 12px;}
 #wrap .viewer-container .viewer .c-fnt-s-02 p {font-size: 14px;}
 #wrap .viewer-container .viewer .c-fnt-s-03 p {font-size: 16px;}
 #wrap .viewer-container .viewer .c-fnt-s-04 p {font-size: 18px;}
 #wrap .viewer-container .viewer .c-fnt-s-05 p {font-size: 20px;}
-#wrap .viewer-container .viewer .c-fnt-h-01 p {line-height: 1.5em;}
-#wrap .viewer-container .viewer .c-fnt-h-02 p {line-height: 2em;}
-#wrap .viewer-container .viewer .c-fnt-h-03 p {line-height: 2.5em;}
+#wrap .viewer-container .viewer .c-fnt-h-01 * {line-height: 1.5em;}
+#wrap .viewer-container .viewer .c-fnt-h-02 * {line-height: 2em;}
+#wrap .viewer-container .viewer .c-fnt-h-03 * {line-height: 2.5em;}
 /* viewer-next-button */
 #wrap .viewer-container .nav-btn .next-btn {right: 0;}
 #wrap .viewer-container .nav-btn .prev-btn {left: 0;}
@@ -74,8 +76,11 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 #wrap .viewer-container .content-footer .rate-wrap .rate-desc-wrap {padding-left: 16px;}
 #wrap .viewer-container .content-footer .rate-wrap .rate-desc {font-size: 1.25rem; font-weight: 600; padding-right: 16px; cursor: default;}
 #wrap .viewer-container .content-footer .rate-wrap .last-star {padding-right: 16px;}
-#wrap .viewer-container .content-footer .rate-wrap .star-btn {outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; border-radius: 4px; box-shadow: 0 0.125rem 0.313rem #00000026;}
-#wrap .viewer-container .content-footer .rate-wrap .star-btn:hover {opacity: 0.5; transition: 0.2s ease;}
+#wrap .viewer-container .content-footer .rate-wrap .star-form > button:not(:last-child) {margin-right: 1rem;}
+#wrap .viewer-container .content-footer .star-wrap .love {color: #dd2424; cursor: pointer !important;}
+#wrap .viewer-container .content-footer .star-wrap .love:hover {opacity: 0.5; transition: 0.2s ease;}
+#wrap .viewer-container .content-footer .rate-wrap .star-btn {color: #1e9eff; outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+#wrap .viewer-container .content-footer .rate-wrap .star-btn:hover {background-color: #1e9eff; color: #fff; transition: 0.3s ease;}
 /* 별점 저장 폼 */
 .star-form fieldset {display: inline-block; direction: rtl; border: 0;}
 .star-form fieldset legend {text-align: left;}

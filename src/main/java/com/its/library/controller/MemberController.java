@@ -1,8 +1,10 @@
 package com.its.library.controller;
 
 import com.its.library.config.auth.PrincipalDetails;
+import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishDTO;
+import com.its.library.service.DebutService;
 import com.its.library.service.MemberService;
 import com.its.library.service.ReqWriterService;
 import com.its.library.service.WishService;
@@ -20,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
+    private final DebutService debutService;
     private final MemberService memberService;
     private final ReqWriterService reqWriterService;
 
@@ -114,6 +116,9 @@ public class MemberController {
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
 
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+        model.addAttribute("myDebutList",debutEpisodeDTOList);
+
         if (findDTO.getRole().equals("ROLE_ADMIN")) {
             return "redirect:/admin/book-list";
         } else {
@@ -128,6 +133,17 @@ public class MemberController {
             }
             model.addAttribute("wishlist", writerList);
             return "member/myPageDebut";
+        }
+    }
+
+    // 비밀번호 체크
+    @PostMapping("/check-password")
+    public @ResponseBody String checkPassword(@ModelAttribute MemberDTO memberDTO) {
+        MemberDTO loginDTO = memberService.login(memberDTO);
+        if (loginDTO != null) {
+            return "ok";
+        } else {
+            return "no";
         }
     }
 
@@ -151,11 +167,13 @@ public class MemberController {
         return "redirect:/member/myPage/" + memberDTO.getId();
     }
 
-    // 비밀번호 체크
-    @PostMapping("/check-password")
-    public @ResponseBody String checkPassword(@ModelAttribute MemberDTO memberDTO) {
-        MemberDTO loginDTO = memberService.login(memberDTO);
-        if (loginDTO != null) {
+
+
+    // 닉네임 변경시 중복 체크
+    @PostMapping("/member-name-dup-check")
+    public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
+        MemberDTO memberDTO = memberService.findByMemberName(memberName);
+        if (memberDTO.getId() == null) {
             return "ok";
         } else {
             return "no";
