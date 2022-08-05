@@ -40,7 +40,6 @@ public class CommentService {
         for (CommentEntity comment : commentEntityList) {
             commentDTOList.add(CommentDTO.findDTO(comment));
         }
-        System.out.println("commentDTOList = " + commentDTOList);
         return commentDTOList;
     }
 

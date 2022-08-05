@@ -14,24 +14,6 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<div id="test">
-  <table th:each="comment:${commentList}">
-    <tr>
-      <th>작성자</th>
-      <th>댓글 내용</th>
-      <th>작성시간</th>
-    </tr>
-    <tr>
-      <td th:text="${comment.memberName}"></td>
-      <td th:text="${comment.contents}"></td>
-      <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      <td th:if="${authentication.memberName == comment.memberName}">
-        <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
-      </td>
-    </tr>
-  </table>
-</div>
-
 <main class="main-container">
   <div class="book-episode-comment-container">
     <div class="book-detail-container">
@@ -182,7 +164,7 @@
       </div>
       <div class="comment-detail-wrap" th:each="comment:${commentList}">
         <div class="img-wrap">
-          <a th:href="@{|/member/mypage/${comment.memberId}|}" class="img-link">
+          <a th:href="@{|/member/myPage/${comment.memberId}|}" class="img-link">
             <img th:src="@{|/upload/${comment.memberImgName}|}" class="img" alt="">
           </a>
         </div>
@@ -271,9 +253,9 @@
             "bookId": bookId
         },
         dataType: "text",
-        success: function (result) {
-            if (result == "ff") {
-
+        success: function (episodeId) {
+            if (episodeId != null) {
+                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
             }
         }
     })
@@ -305,13 +287,14 @@
               showConfirmButton: false,
               timer: 1500
             });
-          } else if (result === "결제") {
+          } else if (result === "유료저장") {
             $.ajax({
               type: "post",
               url: "/box/save",
               data: {
                 "memberId": memberId,
-                "bookId": bookId
+                "bookId": bookId,
+                "episodeId": episodeId
               },
               dataType: "text",
               beforeSend: function(xhr){
@@ -324,17 +307,23 @@
                     url:"/point/pay/"+memberId,
                     data:{"episodeId":episodeId,"bookId":bookId},
                     dataType:"text",
-                    success:function (){
-                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                    success:function (result){
+                        if (result == "ok"){
+                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                        }
                     }
                   });
+                } else if (result == "no") {
+                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                 }
               }
             })
           } else if (result === "보여줘") {
             alert("보여줘");
           } else if (result === "무료저장") {
-            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          } else if (result == "결제이력있음") {
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           }
         }
       })

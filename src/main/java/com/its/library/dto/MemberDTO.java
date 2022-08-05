@@ -15,22 +15,23 @@ public class MemberDTO {
     private Long id;
     private String loginId;
     private String memberPassword;
-    private String memberName;
-    private int memberPoint;
     private String memberEmail;
+    private String memberName;
     private MultipartFile memberImg;
     private String memberImgName;
-    private String introduction;
+    private int memberPoint;
     private String role;
+    private String introduction;
     private String provider;
 
 
     @Builder
-    public MemberDTO(String loginId, String memberEmail, String memberPassword, String memberName, int memberPoint, String role, String provider) {
+    public MemberDTO(String loginId, String memberPassword, String memberEmail, String memberName, String memberImgName, int memberPoint, String role, String provider) {
         this.loginId = loginId;
         this.memberPassword = memberPassword;
-        this.memberName = memberName;
         this.memberEmail = memberEmail;
+        this.memberName = memberName;
+        this.memberImgName = memberImgName;
         this.memberPoint = memberPoint;
         this.role = role;
         this.provider = provider;
@@ -40,13 +41,13 @@ public class MemberDTO {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberEntity.getId());
         memberDTO.setLoginId(memberEntity.getLoginId());
-        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
         memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
         memberDTO.setMemberName(memberEntity.getMemberName());
-        memberDTO.setMemberPoint(memberEntity.getMemberPoint());
-        memberDTO.setIntroduction(memberEntity.getIntroduction());
         memberDTO.setMemberImgName(memberEntity.getMemberImgName());
+        memberDTO.setMemberPoint(memberEntity.getMemberPoint());
         memberDTO.setRole(memberEntity.getRole());
+        memberDTO.setIntroduction(memberEntity.getIntroduction());
         memberDTO.setProvider(memberEntity.getProvider());
         return memberDTO;
     }

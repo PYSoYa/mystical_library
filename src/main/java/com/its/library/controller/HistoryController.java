@@ -56,4 +56,11 @@ public class HistoryController {
         Long result = historyService.findByHistory(historyDTO);
         return result;
     }
+
+    // 이어보기
+    @GetMapping("/again")
+    public @ResponseBody Long again(@RequestParam("bookId") Long bookId, @RequestParam("memberId") Long memberId) {
+        Long episodeId = historyService.findByAgain(bookId, memberId);
+        return episodeId;
+    }
 }

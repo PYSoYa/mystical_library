@@ -36,20 +36,28 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             oauth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
             oauth2UserInfo = new KaKaoUserInfo((Map) oAuth2User.getAttributes().get("kakao_account"));
+            System.out.println("oauth2UserInfo = " + oauth2UserInfo);
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("github")) {
             oauth2UserInfo = new GithubUserInfo((Map) oAuth2User.getAttributes());
         } else {
             System.out.println("다른 소셜 로그인 입니다.");
         }
 
+
         String provider = oauth2UserInfo.getProvider();
 //        String providerId = oauth2UserInfo.getProviderId();
 
-        String loginId = oauth2UserInfo.getName() + oauth2UserInfo.getEmail();
+        String loginId = oauth2UserInfo.getProvider() + "_" + oauth2UserInfo.getEmail();
         String password = "";
         String email = oauth2UserInfo.getEmail();
-        String role = "USER";
-        String memberName = oauth2UserInfo.getName() + oauth2UserInfo.getEmail();
+        String role = "ROLE_USER";
+        String memberName = oauth2UserInfo.getName();
+        String memberImgName = "mystical_user.png";
+
+        if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            oauth2UserInfo = new KaKaoUserInfo((Map) oAuth2User.getAttributes().get("properties"));
+            memberName = oauth2UserInfo.getName();
+        }
 
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByLoginId(loginId);
         MemberDTO memberDTO = new MemberDTO();
@@ -57,9 +65,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             // 회원가입 강제 진행
             memberDTO = MemberDTO.builder()
                     .loginId(loginId)
-                    .memberEmail(email)
                     .memberPassword(password)
+                    .memberEmail(email)
                     .memberName(memberName)
+                    .memberImgName(memberImgName)
                     .memberPoint(500)
                     .role(role)
                     .provider(provider)

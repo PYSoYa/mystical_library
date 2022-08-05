@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BoxRepository extends JpaRepository<BoxEntity, Long> {
     List<BoxEntity> findByMemberEntity(MemberEntity memberEntity);
+
+    List<BoxEntity> findByMemberEntityAndEpisodeId(MemberEntity memberEntity, Long episodeId);
 }

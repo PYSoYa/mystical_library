@@ -149,7 +149,6 @@ public class WishService {
                 }
             }
         }
-        System.out.println("bookDTOList = " + bookDTOList);
         return bookDTOList;
     }
 
@@ -162,7 +161,6 @@ public class WishService {
                     wishDTOList.add(WishDTO.findMemberDTO(wish));
                 }
             }
-        System.out.println("wishDTOList = " + wishDTOList);
         return wishDTOList;
     }
 
@@ -175,7 +173,6 @@ public class WishService {
                     wishDTOList.add(WishDTO.findBookDTO(wish));
                 }
             }
-        System.out.println("wishDTOList = " + wishDTOList);
         return wishDTOList;
     }
 }

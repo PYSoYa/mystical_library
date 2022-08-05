@@ -100,7 +100,7 @@
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text" style="display: flex;">
           <span class="recent-debut-post-title">시</span>
-          <button type="button" class="save-form-btn">글쓰기</button>
+          <button type="button" class="save-form-btn" onclick="debutSave()">글쓰기</button>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="detail-wrap">
                   <span class="title" th:text="${poem.debutTitle}"></span>
-                  <a href="#" class="author">
+                  <a th:href="@{|/member/myPage/${poem.memberId}|}" class="author">
                     <span class="author" th:text="${poem.memberName}"></span>
                   </a>
                   <div class="star-wrap debut-star-wrap">
@@ -245,6 +245,10 @@
     }
     setTimeout(slideClick, 5000);
     setInterval(countNotice,5000,console.log("카운트실행"));
+  }
+  function debutSave() {
+    location.href="/debut/save-form";
+
   }
 </script>
 </html>

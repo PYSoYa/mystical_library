@@ -44,7 +44,6 @@ public class MemberService {
         // 난수의 범위 111111 ~ 999999 (6자리 난수)
         Random r = new Random();
         int randomNum = r.nextInt(888888) + 111111;
-        System.out.println("인증번호 : " + randomNum);
         int emailNum = randomNum;
         String toAddress = memberEmail;
         String title = "[" + emailNum + "]" + " 신비한서재 이메일 인증을 진행해주세요.";
@@ -74,6 +73,9 @@ public class MemberService {
             memberImgName = System.currentTimeMillis() + "_" + memberImgName;
             String savePath = "C:\\springboot_img\\" + memberImgName;
             memberImg.transferTo(new File(savePath));
+            memberDTO.setMemberImgName(memberImgName);
+        } else {
+            memberImgName = "mystical_user.png";
             memberDTO.setMemberImgName(memberImgName);
         }
 
@@ -128,9 +130,8 @@ public class MemberService {
     public List<MemberDTO> findAll() {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for (MemberEntity listParameter : memberEntityList) {
-            MemberEntity memberEntity = listParameter;
-            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity);
+        for (MemberEntity member : memberEntityList) {
+            MemberDTO memberDTO = MemberDTO.toDTO(member);
             memberDTOList.add(memberDTO);
         }
         return memberDTOList;
@@ -146,7 +147,6 @@ public class MemberService {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             memberEntity.setMemberPoint(memberEntity.getMemberPoint() + memberPoint);
-            System.out.println("memberEntity = " + memberEntity);
             memberRepository.save(memberEntity);
 
             return "ok";
@@ -191,15 +191,15 @@ public class MemberService {
             MemberEntity memberEntity = optionalMemberEntity.get();
 
             MultipartFile memberImg = memberDTO.getMemberImg();
-            String memberImgName = memberImg.getOriginalFilename();
             if (!memberImg.isEmpty()) {
+                String memberImgName = memberImg.getOriginalFilename();
                 memberImgName = System.currentTimeMillis() + "_" + memberImgName;
                 String savePath = "C:\\springboot_img\\" + memberImgName;
                 memberImg.transferTo(new File(savePath));
+                memberEntity.setMemberImgName(memberImgName);
             }
             memberEntity.setMemberName(memberDTO.getMemberName());
             memberEntity.setIntroduction(memberDTO.getIntroduction());
-            memberEntity.setMemberImgName(memberImgName);
             memberRepository.save(memberEntity);
         }
     }

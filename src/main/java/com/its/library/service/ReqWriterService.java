@@ -52,27 +52,27 @@ public class ReqWriterService {
         return null;
     }
 
+    // 작가로 권한 변경
     @Transactional
     public void roleChange(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
-            MemberEntity member = MemberEntity.roleChange(memberEntity);
-            MemberEntity memberEntity1 = memberRepository.save(member);
-            reqWriterListDelete(memberEntity1);
+            memberEntity.setRole("ROLE_WRITER");
+            memberRepository.save(memberEntity);
+            reqWriterListDelete(id);
         }
     }
 
+    // 작가 승인 처리 후 테이블에서 삭제
     @Transactional
-    public void reqWriterListDelete(MemberEntity memberEntity) {
-        reqWriterRepository.deleteByMemberEntity(memberEntity);
+    public void reqWriterListDelete(Long memberId) {
+        reqWriterRepository.deleteByMemberEntity_Id(memberId);
     }
+    
+    // 작가 거절 처리 후 테이블에서 삭제
     @Transactional
     public void reqWriterDelete(Long memberId) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-        if (optionalMemberEntity.isPresent()) {
-            MemberEntity memberEntity = optionalMemberEntity.get();
-            reqWriterRepository.deleteByMemberEntity(memberEntity);
-        }
+        reqWriterListDelete(memberId);
     }
 }

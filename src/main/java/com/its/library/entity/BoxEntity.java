@@ -24,13 +24,20 @@ public class BoxEntity {
     @Column(name = "bookId")
     private Long bookId;
 
+    @Column(name = "episodeId")
+    private Long episodeId;
+
     @OneToMany(mappedBy = "boxEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BookEntity> bookEntityList = new ArrayList<>();
 
     public BoxEntity saveEntity(BoxDTO boxDTO, MemberEntity memberEntity) {
         BoxEntity boxEntity = new BoxEntity();
+        if (boxDTO.getId() != null) {
+            boxEntity.setId(boxDTO.getId());
+        }
         boxEntity.setMemberEntity(memberEntity);
         boxEntity.setBookId(boxDTO.getBookId());
+        boxEntity.setEpisodeId(boxDTO.getEpisodeId());
         return boxEntity;
     }
 

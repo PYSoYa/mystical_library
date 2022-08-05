@@ -18,20 +18,20 @@ public class MemberEntity {
     private Long id;
     @Column(length = 50, unique = true, nullable = false)
     private String loginId;
-    @Column(length = 50, nullable = false)
-    private String memberEmail;
     @Column(nullable = false, length = 100)
     private String memberPassword;
-    @Column(length = 50, unique = true)
+    @Column(length = 50, nullable = false)
+    private String memberEmail;
+    @Column(length = 50)
     private String memberName;
-    @Column
-    private int memberPoint;
-    @Column(length = 500)
-    private String introduction;
     @Column(length = 100)
     private String memberImgName;
+    @Column
+    private int memberPoint;
     @Column(nullable = false, length = 20)
     private String role;
+    @Column(length = 500)
+    private String introduction;
     @Column
     private String provider;
     //멤버 - 책 oneToMany ㅇ
@@ -87,13 +87,13 @@ public class MemberEntity {
     public static MemberEntity saveEntity(MemberDTO memberDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setLoginId(memberDTO.getLoginId());
-        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberName(memberDTO.getMemberName());
-        memberEntity.setMemberPoint(500);
-        memberEntity.setIntroduction(memberDTO.getIntroduction());
         memberEntity.setMemberImgName(memberDTO.getMemberImgName());
+        memberEntity.setMemberPoint(500);
         memberEntity.setRole("ROLE_USER");
+        memberEntity.setIntroduction(memberDTO.getIntroduction());
         memberEntity.setProvider(memberDTO.getProvider());
         return memberEntity;
     }
