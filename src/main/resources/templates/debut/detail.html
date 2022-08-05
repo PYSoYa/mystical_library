@@ -92,10 +92,10 @@
     function heartCheck(num) {
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
+        const memberId = [[${authentication.id}]];
 
         const love = document.getElementById("emptyHeart");
         const hate = document.getElementById("fullHeart");
-        const memberId = [[${debut.memberId}]];
         const id = [[${debut.id}]];
         if (num == 1) {
             $.ajax({

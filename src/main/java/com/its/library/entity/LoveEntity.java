@@ -30,7 +30,7 @@ public class LoveEntity {
         LoveEntity loveEntity = new LoveEntity();
         loveEntity.setDebutId(loveDTO.getDebutId());
         loveEntity.setMemberEntity(memberEntity);
-        loveEntity.setLove(1);
+        loveEntity.setLove(loveEntity.getLove()+1);
         return loveEntity;
     }
     //좋아요 - 맴버 manyToOne

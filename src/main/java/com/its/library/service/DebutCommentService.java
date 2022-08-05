@@ -70,7 +70,6 @@ public class DebutCommentService {
                 DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
                 debutCommentDTOList.add(debutCommentDTO1);
             }
-            System.out.println("debutCommentDTOList = " + debutCommentDTOList);
             return debutCommentDTOList;
         } else {
             return null;
