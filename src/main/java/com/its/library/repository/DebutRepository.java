@@ -40,5 +40,7 @@ public interface DebutRepository extends JpaRepository<DebutEpisodeEntity,Long> 
     @Modifying
     @Query(value = "select * from debut_episode  where category_id =:id order by love desc",nativeQuery = true)
     List<DebutEpisodeEntity> orderByLove(Long id);
+
+    List<DebutEpisodeEntity> findByMemberEntity_Id(Long id);
 }
 
