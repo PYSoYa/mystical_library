@@ -260,5 +260,14 @@ public class DebutService {
         return null;
     }
 
-
+    @Transactional
+    public List<DebutEpisodeDTO> myDebutWrite(Long id) {
+       List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByMemberEntity_Id(id);
+       List<DebutEpisodeDTO> debutEpisodeDTOList = new ArrayList<>();
+        for (DebutEpisodeEntity debutEpisodeEntity:debutEpisodeEntityList) {
+            DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
+            debutEpisodeDTOList.add(DebutEpisodeDTO.toDTO(debutEpisodeEntity1));
+        }
+        return debutEpisodeDTOList;
+    }
 }

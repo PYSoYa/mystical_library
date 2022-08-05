@@ -1,8 +1,10 @@
 package com.its.library.controller;
 
 import com.its.library.config.auth.PrincipalDetails;
+import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishDTO;
+import com.its.library.service.DebutService;
 import com.its.library.service.MemberService;
 import com.its.library.service.ReqWriterService;
 import com.its.library.service.WishService;
@@ -20,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
+    private final DebutService debutService;
     private final MemberService memberService;
     private final ReqWriterService reqWriterService;
 
@@ -111,6 +113,9 @@ public class MemberController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
+
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+        model.addAttribute("myDebutList",debutEpisodeDTOList);
 
         if (findDTO.getRole().equals("ROLE_ADMIN")) {
             return "redirect:/admin/book-list";
