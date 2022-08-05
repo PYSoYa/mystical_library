@@ -40,4 +40,12 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findByGenreEntityOrderByHitsDesc(GenreEntity genreEntity);
 
     List<BookEntity> findByWriterRole(int num);
+
+    @Transactional
+    @Query(value = "select * from book order by hits desc", nativeQuery = true)
+    List<BookEntity> findAllHits();
+
+    @Transactional
+    @Query(value = "select * from book where status = '완결' order by episode_update_time desc", nativeQuery = true)
+    List<BookEntity> findAllNew();
 }

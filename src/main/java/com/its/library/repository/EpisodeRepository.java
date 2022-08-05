@@ -34,7 +34,6 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
     @Query(value = "select * from episode where book_id = :bookId order by episode_id desc", nativeQuery = true)
     List<EpisodeEntity> findByBookEntityId(@Param("bookId") Long bookId);
 
-    List<EpisodeEntity> findByBookEntityOrderByCreatedDateTimeDesc(BookEntity bookEntity);
 
     @Transactional
     @Query(value = "select distinct(book_id) from episode order by episode_id asc", nativeQuery = true)
