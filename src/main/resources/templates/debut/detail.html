@@ -501,45 +501,39 @@
   function heartCheck(num) {
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
-    function heartCheck(num) {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-        const memberId = [[${authentication.id}]];
+    const memberId = [[${authentication.id}]];
 
-        const love = document.getElementById("emptyHeart");
-        const hate = document.getElementById("fullHeart");
-        const id = [[${debut.id}]];
-        if (num == 1) {
-            $.ajax({
-                type: "get",
-                url: "/debut/love/" + id,
-                data: {"memberId": memberId, "num": num},
-                dataType: "text",
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    love.className = "bi bi-heart-fill";
-                }
-
-      });
-    } else {
-      $.ajax({
-        type: "get",
-        url: "/debut/love/" + id,
-        data: {"memberId": memberId, "num": num},
-        dataType: "text",
-        beforeSend: function(xhr){
-          xhr.setRequestHeader(header, token);
-        },
-        success: function (result) {
-          hate.className = "bi bi-heart";
+    const love = document.getElementById("emptyHeart");
+    const hate = document.getElementById("fullHeart");
+    const id = [[${debut.id}]];
+      if (num == 1) {
+        $.ajax({
+          type: "get",
+          url: "/debut/love/" + id,
+          data: {"memberId": memberId, "num": num},
+          dataType: "text",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            love.className = "bi bi-heart-fill";
         }
-
       });
+      } else {
+        $.ajax({
+          type: "get",
+          url: "/debut/love/" + id,
+          data: {"memberId": memberId, "num": num},
+          dataType: "text",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            hate.className = "bi bi-heart";
+          }
+        });
+      }
     }
-
-  }
 
   function commentSave() {
     let header = $("meta[name='_csrf_header']").attr('content');
@@ -699,6 +693,7 @@
 
 
   }
+
   function commentReport(id) {
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
