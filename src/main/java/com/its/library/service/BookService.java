@@ -448,7 +448,6 @@ public class BookService {
                 episodeDTOList.add(EpisodeDTO.findDTO(episode));
             }
         }
-        System.out.println("episodeDTOList = " + episodeDTOList);
         return episodeDTOList.get(0).getId();
     }
 }

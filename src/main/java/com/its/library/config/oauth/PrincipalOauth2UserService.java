@@ -48,8 +48,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String loginId = oauth2UserInfo.getName() + oauth2UserInfo.getEmail();
         String password = "";
         String email = oauth2UserInfo.getEmail();
-        String role = "USER";
+        String role = "ROLE_USER";
         String memberName = oauth2UserInfo.getName() + oauth2UserInfo.getEmail();
+        String memberImgName = "mystical_user.png";
 
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByLoginId(loginId);
         MemberDTO memberDTO = new MemberDTO();
@@ -57,9 +58,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             // 회원가입 강제 진행
             memberDTO = MemberDTO.builder()
                     .loginId(loginId)
-                    .memberEmail(email)
                     .memberPassword(password)
+                    .memberEmail(email)
                     .memberName(memberName)
+                    .memberImgName(memberImgName)
                     .memberPoint(500)
                     .role(role)
                     .provider(provider)

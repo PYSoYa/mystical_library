@@ -15,12 +15,13 @@ public class BoxDTO {
     private Long id;
     private Long memberId;
     private Long bookId;
-
+    private Long episodeId;
 
     public static BoxDTO findDTO(BoxEntity boxEntity) {
         BoxDTO boxDTO = new BoxDTO();
         boxDTO.setMemberId(boxEntity.getMemberEntity().getId());
         boxDTO.setBookId(boxEntity.getBookId());
+        boxDTO.setEpisodeId(boxEntity.getEpisodeId());
         return boxDTO;
     }
 }

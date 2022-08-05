@@ -202,18 +202,12 @@ public class AdminController {
         model.addAttribute("authentication", findDTO);
 
         reqWriterService.roleChange(id);
-
         return "redirect:/admin/req-writer-list";
     }
 
     //작가 승인 거절 처리
     @GetMapping("/req-writer-delete/{id}")
-    public String reqWriterDelete(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                  @PathVariable("id") Long memberId, Model model) {
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
+    public String reqWriterDelete(@PathVariable("id") Long memberId) {
         reqWriterService.reqWriterDelete(memberId);
         return "redirect:/admin/req-writer-list";
     }

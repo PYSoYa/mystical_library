@@ -27,9 +27,7 @@ public class BoxController {
     @PostMapping("/pointCheck")
     public @ResponseBody String pointCheck(@ModelAttribute BoxDTO boxDTO,
                                            @ModelAttribute HistoryDTO historyDTO, Long episodeId){
-        System.out.println("historyDTO = " + historyDTO);
         String result = boxService.pointCheck(boxDTO,historyDTO, episodeId);
-        System.out.println("result = " + result);
         return result;
     }
 

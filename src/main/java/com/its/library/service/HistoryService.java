@@ -130,4 +130,13 @@ public class HistoryService {
             return null;
         }
     }
+
+    public Long findByAgain(Long bookId, Long memberId) {
+        List<HistoryEntity> historyEntityList = historyRepository.findByAgain(memberId, bookId);
+        if (historyEntityList.get(0).getEpisodeEntity().getId() != null) {
+            return historyEntityList.get(0).getEpisodeEntity().getId();
+        } else {
+            return null;
+        }
+    }
 }

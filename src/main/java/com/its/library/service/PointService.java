@@ -5,10 +5,7 @@ import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.PointDTO;
 import com.its.library.entity.*;
-import com.its.library.repository.BookRepository;
-import com.its.library.repository.EpisodeRepository;
-import com.its.library.repository.MemberRepository;
-import com.its.library.repository.PointRepository;
+import com.its.library.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +21,8 @@ public class PointService {
     private final EpisodeRepository episodeRepository;
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
-
+    private final HistoryRepository historyRepository;
+    private final BoxRepository boxRepository;
 
     public List<PointDTO> pointHistory() {
         List<PointEntity> pointEntityList = pointRepository.findAll();
