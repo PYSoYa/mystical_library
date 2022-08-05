@@ -44,7 +44,6 @@ public class MemberService {
         // 난수의 범위 111111 ~ 999999 (6자리 난수)
         Random r = new Random();
         int randomNum = r.nextInt(888888) + 111111;
-        System.out.println("인증번호 : " + randomNum);
         int emailNum = randomNum;
         String toAddress = memberEmail;
         String title = "[" + emailNum + "]" + " 신비한서재 이메일 인증을 진행해주세요.";
@@ -146,7 +145,6 @@ public class MemberService {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             memberEntity.setMemberPoint(memberEntity.getMemberPoint() + memberPoint);
-            System.out.println("memberEntity = " + memberEntity);
             memberRepository.save(memberEntity);
 
             return "ok";
