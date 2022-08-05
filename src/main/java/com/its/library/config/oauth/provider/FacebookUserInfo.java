@@ -26,7 +26,7 @@ public class FacebookUserInfo implements Oauth2UserInfo{
 
     @Override
     public String getName() {
-        return "facebook_";
+        return (String) attributes.get("name");
     }
 
 }

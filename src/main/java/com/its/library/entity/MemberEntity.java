@@ -22,7 +22,7 @@ public class MemberEntity {
     private String memberPassword;
     @Column(length = 50, nullable = false)
     private String memberEmail;
-    @Column(length = 50, unique = true)
+    @Column(length = 50)
     private String memberName;
     @Column(length = 100)
     private String memberImgName;
