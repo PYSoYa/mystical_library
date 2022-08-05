@@ -293,7 +293,8 @@
               url: "/box/save",
               data: {
                 "memberId": memberId,
-                "bookId": bookId
+                "bookId": bookId,
+                "episodeId": episodeId
               },
               dataType: "text",
               beforeSend: function(xhr){
@@ -312,13 +313,17 @@
                         }
                     }
                   });
+                } else if (result == "no") {
+                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                 }
               }
             })
           } else if (result === "보여줘") {
             alert("보여줘");
           } else if (result === "무료저장") {
-            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          } else if (result == "결제이력있음") {
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           }
         }
       })
