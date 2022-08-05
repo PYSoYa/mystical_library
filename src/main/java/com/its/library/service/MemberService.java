@@ -75,6 +75,9 @@ public class MemberService {
             String savePath = "C:\\springboot_img\\" + memberImgName;
             memberImg.transferTo(new File(savePath));
             memberDTO.setMemberImgName(memberImgName);
+        } else {
+            memberImgName = "mystical_user.png";
+            memberDTO.setMemberImgName(memberImgName);
         }
 
         MemberEntity memberEntity = MemberEntity.saveEntity(memberDTO);
@@ -128,9 +131,8 @@ public class MemberService {
     public List<MemberDTO> findAll() {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for (MemberEntity listParameter : memberEntityList) {
-            MemberEntity memberEntity = listParameter;
-            MemberDTO memberDTO = MemberDTO.toDTO(memberEntity);
+        for (MemberEntity member : memberEntityList) {
+            MemberDTO memberDTO = MemberDTO.toDTO(member);
             memberDTOList.add(memberDTO);
         }
         return memberDTOList;
@@ -191,15 +193,15 @@ public class MemberService {
             MemberEntity memberEntity = optionalMemberEntity.get();
 
             MultipartFile memberImg = memberDTO.getMemberImg();
-            String memberImgName = memberImg.getOriginalFilename();
             if (!memberImg.isEmpty()) {
+                String memberImgName = memberImg.getOriginalFilename();
                 memberImgName = System.currentTimeMillis() + "_" + memberImgName;
                 String savePath = "C:\\springboot_img\\" + memberImgName;
                 memberImg.transferTo(new File(savePath));
+                memberEntity.setMemberImgName(memberImgName);
             }
             memberEntity.setMemberName(memberDTO.getMemberName());
             memberEntity.setIntroduction(memberDTO.getIntroduction());
-            memberEntity.setMemberImgName(memberImgName);
             memberRepository.save(memberEntity);
         }
     }
