@@ -31,6 +31,7 @@ public class CommentDTO {
         commentDTO.setEpisodeId(commentEntity.getEpisodeEntity().getId());
         commentDTO.setCommentEpisode(commentEntity.getCommentEpisode());
         commentDTO.setBookId(commentEntity.getBookId());
+        commentDTO.setMemberImgName(commentEntity.getMemberImgName());
         commentDTO.setMemberName(commentEntity.getMemberName());
         commentDTO.setContents(commentEntity.getContents());
         commentDTO.setCreatedTime(commentEntity.getCreatedDateTime());
