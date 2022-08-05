@@ -37,6 +37,7 @@ public class BoxService {
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "무료저장";
             } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) {
+                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "유료저장";
             } else {
                 return "잔고부족";
