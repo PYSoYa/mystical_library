@@ -58,23 +58,5 @@
 .detail-wrap .star-wrap .debut-eye {padding-top: 2px;}
 .detail-wrap .author {color: #1e9eff;}
 .detail-wrap .star-wrap {margin-top: 1rem !important;}
-.save-form-btn {
-    margin-left: auto;
-    position: relative;
-    border: none;
-    outline: none;
-    border-radius: 0.188rem;
-    width: 6rem;
-    height: 140%;
-    color: #faf7eb;
-    background-color: #1e9eff;
-    font-size: 1rem;
-    letter-spacing: 0.013rem;
-    box-shadow: 0 0.125rem 0.313rem #00000026;
-}
-.save-form-btn:hover {
-    border: 1px solid #1e9eff;
-    color: #1e9eff;
-    background-color: #fff;
-    transition: 0.3s ease;
-}
+.save-form-btn {margin-left: auto; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 6rem; height: 140%; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.save-form-btn:hover {border: 1px solid #1e9eff; color: #1e9eff; background-color: #fff; transition: 0.3s ease;}

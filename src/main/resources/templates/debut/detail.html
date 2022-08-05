@@ -4,313 +4,719 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- CSS only -->
-  <!-- CSS only -->
-
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <script th:src="@{/js/jquery.js}"></script>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <meta name="_csrf" th:content="${_csrf.token}">
   <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/episode-detail.css}">
+  <link rel="stylesheet" th:href="@{/css/layout/header.css}">
+  <link rel="stylesheet" th:href="@{/css/index.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <script th:src="@{/js/episodeDetail.js}"></script>
+  <script th:src="@{/js/jquery.js}"></script>
+  <script th:src="@{|https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js|}"></script>
 </head>
 <body>
 
-    <th:block th:replace="layout/header :: header"></th:block>
-
-
-    <tr>
-        <th>사진</th>
-        <th>글번호</th>
-        <th>제목</th>
-        <th>작성시간</th>
-        <th>내용</th>
-        <th>조회수</th>
-        <th>수정</th>
-        <th>삭제</th>
-        <th>좋아요</th>
-    </tr>
-    <tr>
-        <td><img th:src="@{|/upload/${debut.debutImgName}|}" width="100" height="100"></td>
-        <td th:text="${debut.id}"></td>
-        <td th:text="${debut.debutTitle}"></td>
-        <td th:text="${debut.createdTime}"></td>
-        <td th:text="${debut.debutContents}"></td>
-        <td th:text="${debut.debutHits}"></td>
-        <td><a th:href="@{|/debut/update-Form/${debut.id}|}">수정</a></td>
-        <td><a th:href="@{|/debut/delete/${debut.id}|}">삭제</a></td>
-        <img th:src="@{/icon/heart.svg}" id="emptyHeart" onclick="heartCheck(1)">
-        <img th:src="@{/icon/heart-fill.svg}" id="fullHeart" onclick="heartCheck(0)">
-    </tr>
-
-    </table>
-
-    </form>
-
-    <input type="text" id="debutId" th:value="${debut.id}" hidden>
-    <input type="text" id="memberId" th:value="${authentication.id}" hidden>
-    <input type="text" id="memberName" th:value="${authentication.memberName}" readonly>
-    <input type="text" id="contents">
-    <input type="button" onclick="commentSave()" value="댓글작성">
-    <div id="commentList">
-        <table>
-            <tr>
-
-                <th>작성자</th>
-                <th>내용</th>
-                <th>작성시간</th>
-                <th>수정</th>
-                <th>삭제</th>
-                <th>댓글신고</th>
-
-
-
-
-            </tr>
-
-
-            <tr th:each="comment: ${commentList}">
-                <td th:id="'id_'+ ${comment.id}" th:text="${comment.id}" hidden></td>
-                <td th:id="'memberName_'+${comment.id}" th:text="${comment.memberName}"></td>
-                <td th:id="'contents_'+${comment.id}" th:text="${comment.contents}"></td>
-                <td th:id="'craetedTime_'+${comment.id}" th:text="${comment.createdTime}"></td>
-                <div th:if="${comment.memberName}==${authentication.memberName}">
-                    <div th:if="${comment.report}==false">
-                        <td><input type="button" value="댓글수정" th:onclick="commentUpdateForm([[${comment.id}]])"></td>
-                        <td><input type="button" value="댓글삭제" th:onclick="commentDelete([[${comment.id}]])"></td>
-                    </div>
+<div id="wrap">
+  <div class="viewer-container">
+    <div class="head-area">
+      <div class="head-wrap">
+        <div class="logo-wrap">
+          <a th:href="@{|/member/myPage/${debut.memberId}/debut|}" class="logo-link">
+            <img th:src="@{|/upload/${debut.debutImgName}|}" class="logo" alt="">
+          </a>
+        </div>
+        <div class="info-wrap">
+          <div class="book-title-wrap">
+            <a th:href="@{|/member/myPage/${debut.memberId}|}" class="book-link">
+              <span class="book-title debut-writer" th:text="${debut.memberName}"></span>
+            </a>
+          </div>
+          <div class="episode-title-wrap">
+            <span class="episode-title" th:text="${debut.debutTitle}"></span>
+          </div>
+          <div class="spread-wrap">
+            <button type="button" class="spread" style="cursor: default;">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="tool-wrap">
+        <div class="book-info-wrap">
+          <a th:href="@{|/member/myPage/${debut.memberId}/debut|}" class="book-info">
+              <span class="icon">
+                <img th:src="@{/img/icon_list.png}" class="list-icon" alt="">
+              </span>
+            <span class="book-info-desc">작품정보</span>
+          </a>
+        </div>
+        <div class="view-option-wrap">
+          <a href="javascript:;" class="view-option">
+              <span class="icon">
+                <img th:src="@{/img/icon_view_option.png}" class="option-icon" alt="">
+              </span>
+            <span class="view-option-desc">보기설정</span>
+            <div id="view-option-panel" class="option-panel">
+              <div class="outer">
+                <form class="option-form" id action method="post">
+                  <fieldset>
+                    <legend>보기설정</legend>
+                    <dl class="items">
+                      <dt>폰트 설정</dt>
+                      <dd class="font-family">
+                        <label id="fnt-01" class="opt-button type01 active" onclick="fnt01()">
+                          <span>기본</span>
+                        </label>
+                        <label id="fnt-02" class="opt-button type02" onclick="fnt02()">
+                          <span>명조</span>
+                        </label>
+                        <label id="fnt-03" class="opt-button type03" onclick="fnt03()">
+                          <span>고운바탕</span>
+                        </label>
+                        <label id="fnt-04" class="opt-button type04" onclick="fnt04()">
+                          <span>나눔고딕</span>
+                        </label>
+                      </dd>
+                    </dl>
+                    <dl class="items">
+                      <dt>글자 크기</dt>
+                      <dd class="font-size">
+                        <label id="fnt-s-01" class="opt-button size01" onclick="size01()">
+                          <span>12px</span>
+                        </label>
+                        <label id="fnt-s-02" class="opt-button size02" onclick="size02()">
+                          <span>14px</span>
+                        </label>
+                        <label id="fnt-s-03" class="opt-button size03 active" onclick="size03()">
+                          <span>16px</span>
+                        </label>
+                        <label id="fnt-s-04" class="opt-button size04" onclick="size04()">
+                          <span>18px</span>
+                        </label>
+                        <label id="fnt-s-05" class="opt-button size05" onclick="size05()">
+                          <span>20px</span>
+                        </label>
+                      </dd>
+                    </dl>
+                    <dl class="items">
+                      <dt>줄 간격</dt>
+                      <dd class="line-height">
+                        <label id="fnt-h-01" class="opt-button height01" onclick="height01()">
+                          <span>0.5</span>
+                        </label>
+                        <label id="fnt-h-02" class="opt-button height02 active" onclick="height02()">
+                          <span>1.0</span>
+                        </label>
+                        <label id="fnt-h-03" class="opt-button height03" onclick="height03()">
+                          <span>1.5</span>
+                        </label>
+                      </dd>
+                    </dl>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="body-area">
+      <div class="viewer-wrap">
+        <div class="viewer">
+          <a class="content" th:utext="${debut.debutContents}">
+          </a>
+          <div class="content-footer">
+            <div class="rate-wrap">
+              <div class="rate-desc-wrap">
+              </div>
+              <div class="star-form">
+                <button type="button" class="star-btn">수정</button>
+                <button type="button" class="star-btn">삭제</button>
+              </div>
+            </div>
+            <div class="attention-wrap">
+              <div class="star-wrap">
+                <span class="love" onclick="heartCheck()">❤</span>
+                <span class="star-desc" th:text="${debut.love}"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="moveTop" class="">
+      <span>최상단으로 이동</span>
+    </button>
+  </div>
+  <div class="comment-container">
+    <div class="comment-list-container">
+      <div class="write-wrap">
+        <div class="info">
+          <h2 class="c-title">댓글 쓰기</h2>
+        </div>
+        <input type="hidden" name="debutId" th:value="${debut.id}">
+        <input type="hidden" id="memberId" name="memberId" th:value="${authentication.id}">
+        <input type="hidden" id="memberName" name="memberName" th:value="${authentication.memberName}">
+        <textarea name="contents" id="input-contents" rows="5" placeholder="댓글은 500자 까지 등록 가능합니다."></textarea>
+        <div class="btn-wrap">
+          <div class="btn-align-right">
+            <button type="button" th:onclick="commentSave()" class="btn-submit">
+              <span>댓글 등록</span>
+            </button>
+            <button type="button" class="btn-cancel" onclick="cancelBTN()">
+              <span>취소</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="list-wrap">
+        <div class="info title">
+          <span class="list-title">댓글 목록 (</span>
+          <span class="list-title" th:value="${commentList.size()}">2847</span>
+          <span class="list-title">)</span>
+        </div>
+        <div class="comment-list-wrap">
+          <ul id="saveComment">
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
                 </div>
-                <td><input type="button" value="댓글신고 "th:onclick="commentReport([[${comment.id}]])"></td>
-
-
-            </tr>
-        </table>
-
-    <th:block th:replace="layout/footer :: footer"></th:block>
-
-
-
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+            <li>
+              <div class="info">
+                <div>
+                  <a href="#" class="writer-link">
+                    <span class="writer">어쩔</span>
+                  </a>
+                  <span class="date">2022-04-02</span>
+                </div>
+                <div>
+                  <span class="update">
+                    <a href="javascript:;" class="update-btn">수정</a>
+                  </span>
+                  <span class="delete">
+                    <a href="javascript:;" class="delete-btn">삭제</a>
+                  </span>
+                  <span class="report">
+                    <a href="javascript:;" class="report-btn">신고</a>
+                  </span>
+                </div>
+              </div>
+              <div class="content">
+                <span class="content">댓글 내용 댓글 내용</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 <script th:inline="javascript">
 
-    function heartCheck(num) {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-        const memberId = [[${authentication.id}]];
+  const cancelBTN = () => {
+    document.getElementById('input-contents').value = '';
+  }
 
-        const love = document.getElementById("emptyHeart");
-        const hate = document.getElementById("fullHeart");
-        const id = [[${debut.id}]];
-        if (num == 1) {
-            $.ajax({
-                type: "get",
-                url: "/debut/love/" + id,
-                data: {"memberId": memberId, "num": num},
-                dataType: "text",
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    love.className = "bi bi-heart-fill";
-                }
+  const content = document.querySelector('.content');
+  const label01 = document.getElementById('fnt-01');
+  const label02 = document.getElementById('fnt-02');
+  const label03 = document.getElementById('fnt-03');
+  const label04 = document.getElementById('fnt-04');
+  const fslabel01 = document.getElementById('fnt-s-01');
+  const fslabel02 = document.getElementById('fnt-s-02');
+  const fslabel03 = document.getElementById('fnt-s-03');
+  const fslabel04 = document.getElementById('fnt-s-04');
+  const fslabel05 = document.getElementById('fnt-s-05');
+  const lhlabel01 = document.getElementById('fnt-h-01');
+  const lhlabel02 = document.getElementById('fnt-h-02');
+  const lhlabel03 = document.getElementById('fnt-h-03');
 
-            });
-        } else {
-            $.ajax({
-                type: "get",
-                url: "/debut/love/" + id,
-                data: {"memberId": memberId, "num": num},
-                dataType: "text",
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    hate.className = "bi bi-heart";
-                }
+  const fnt01 = () => {
+    content.classList.add('c-fnt-01');
+    content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
+    label01.className = 'opt-button type01 active';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04';
+  }
+  const fnt02 = () => {
+    content.classList.add('c-fnt-02');
+    content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02 active';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04';
+  }
+  const fnt03 = () => {
+    content.classList.add('c-fnt-03');
+    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03 active';
+    label04.className = 'opt-button type04';
+  }
+  const fnt04 = () => {
+    content.classList.add('c-fnt-04');
+    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04 active';
+  }
 
-            });
+  const size01 = () => {
+    content.classList.add('c-fnt-s-01');
+    content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01 active';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size02 = () => {
+    content.classList.add('c-fnt-s-02');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02 active';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size03 = () => {
+    content.classList.add('c-fnt-s-03');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03 active';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size04 = () => {
+    content.classList.add('c-fnt-s-04');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04 active';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size05 = () => {
+    content.classList.add('c-fnt-s-05');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05 active';
+  }
+
+  const height01 = () => {
+    content.classList.add('c-fnt-h-01');
+    content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
+    lhlabel01.className = 'opt-button height01 active';
+    lhlabel02.className = 'opt-button height02';
+    lhlabel03.className = 'opt-button height03';
+  }
+  const height02 = () => {
+    content.classList.add('c-fnt-h-02');
+    content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
+    lhlabel01.className = 'opt-button height01';
+    lhlabel02.className = 'opt-button height02 active';
+    lhlabel03.className = 'opt-button height03';
+  }
+  const height03 = () => {
+    content.classList.add('c-fnt-h-03');
+    content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
+    lhlabel01.className = 'opt-button height01';
+    lhlabel02.className = 'opt-button height02';
+    lhlabel03.className = 'opt-button height03 active';
+  }
+
+  function heartCheck(num) {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+    const memberId = [[${authentication.id}]];
+
+    const love = document.getElementById("emptyHeart");
+    const hate = document.getElementById("fullHeart");
+    const id = [[${debut.id}]];
+      if (num == 1) {
+        $.ajax({
+          type: "get",
+          url: "/debut/love/" + id,
+          data: {"memberId": memberId, "num": num},
+          dataType: "text",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            love.className = "bi bi-heart-fill";
+        }
+      });
+      } else {
+        $.ajax({
+          type: "get",
+          url: "/debut/love/" + id,
+          data: {"memberId": memberId, "num": num},
+          dataType: "text",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            hate.className = "bi bi-heart";
+          }
+        });
+      }
+    }
+
+  function commentSave() {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = document.getElementById("memberId").value;
+    const debutId = document.getElementById("debutId").value;
+    const contents = document.getElementById("contents").value;
+    const memberName = document.getElementById("memberName").value;
+    const commentList = document.getElementById("commentList");
+
+    $.ajax({
+      type: "post",
+      url: "/debutComment/save",
+      data: {"memberId": memberId, "debutId": debutId, "contents": contents, "memberName": memberName},
+      dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        let output = "<table>\n" +
+            "      <tr>\n" +
+            "        <th>작성자</th>\n" +
+            "        <th>내용</th>\n" +
+            "        <th>작성시간</th>\n" +
+            "         <th>삭제</th>" +
+
+            "      </tr>\n";
+        for (let i in result) {
+          output += "<tr>" +
+              "    <td>" + result[i].memberName + "</td>\n" +
+              "    <td>" + result[i].contents + "</td>\n" +
+              "    <td>" + result[i].createdTime + "</td>\n";
+          if (result[i].memberName == memberName) {
+            output += "<div>\n" +
+                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + "{})\"></td>" +
+                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                "      </div>" +
+                "</tr>";
+          }
+        }
+        output += "    </table>";
+
+        commentList.innerHTML = output;
+        document.getElementById("contents").innerHTML = "";
+
+      }
+    });
+
+
+  }
+
+  function commentUpdateForm(id) {
+    const commentList = document.getElementById("commentList");
+
+    const memberName = document.getElementById("memberName_"+id).innerHTML;
+    const contents = document.getElementById("contents_"+id).innerHTML;
+    commentList.innerHTML = "<input id='updateMemberName' type=\"text\" value=\"" + memberName + "\"readonly>\n" +
+        "      <input id=\"updateContents\" type=\"text\" value=\"" + contents + "\">\n" +
+        "      <input value='댓글수정' type=\"button\" onclick=\"commentUpdate(" + id + ")\">";
+
+  }
+
+  function commentUpdate(id) {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberName = document.getElementById("updateMemberName").value;
+    const contents = document.getElementById("updateContents").value;
+    const commentList = document.getElementById("commentList");
+    const debutId = document.getElementById("debutId").value;
+    const memberId = document.getElementById("memberId").value;
+    $.ajax({
+      type: "put",
+      url: "/debutComment/update",
+      data: {"id": id, "memberName": memberName, "contents": contents, "debutId": debutId, "memberId": memberId},
+      dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        let output = "<table>\n" +
+            "      <tr>\n" +
+            "        <th>작성자</th>\n" +
+            "        <th>내용</th>\n" +
+            "        <th>작성시간</th>\n" +
+            "         <th>삭제</th>" +
+
+            "      </tr>\n";
+        for (let i in result) {
+          output += "<tr>" +
+              "    <td>" + result[i].memberName + "</td>\n" +
+              "    <td>" + result[i].contents + "</td>\n" +
+              "    <td>" + result[i].createdTime + "</td>\n";
+          console.log(result[i].createdTime);
+          if (result[i].memberName == memberName) {
+            output += "<div>\n" +
+                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
+                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                "      </div>" +
+                "</tr>";
+          }
+        }
+        output += "    </table>";
+
+        commentList.innerHTML = output;
+        document.getElementById("contents").innerHTML = "";
+      }
+    });
+
+  }
+
+  function commentDelete(commentId) {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberName = document.getElementById("memberName").value;
+    const commentList = document.getElementById("commentList");
+    const debutId = document.getElementById("debutId").value;
+    $.ajax({
+      type: "delete",
+      url: "/debutComment/delete",
+      data: {"commentId": commentId, "debutId": debutId},
+      dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        let output = "<table>\n" +
+            "      <tr>\n" +
+            "        <th>작성자</th>\n" +
+            "        <th>내용</th>\n" +
+            "        <th>작성시간</th>\n" +
+            "         <th>삭제</th>" +
+
+            "      </tr>\n";
+        for (let i in result) {
+          output += "<tr>" +
+              "    <td>" + result[i].memberName + "</td>\n" +
+              "    <td>" + result[i].contents + "</td>\n" +
+              "    <td>" + result[i].createdTime + "</td>\n";
+          if (result[i].memberName == memberName) {
+            output += "<div>\n" +
+                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
+                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
+                "      </div>" +
+                "</tr>";
+          }
+        }
+        output += "    </table>";
+
+        commentList.innerHTML = output;
+        document.getElementById("contents").innerHTML = "";
+      }
+    });
+
+
+
+  }
+
+  function commentReport(id) {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${debut.memberId}]];
+    $.ajax({
+      type:"post",
+      url:"/debutComment/list/"+id,
+      data:{"memberId":memberId},
+      dataType:"text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success:function (result){
+        if (result==="ok"){
+          alert("댓글 신고가 접수되었습니다 ")
+        }else {
+          alert("댓글 신고 처리가 실패하였습니다 ")
         }
 
-    }
+      }
+    });
 
-    function commentSave() {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const memberId = document.getElementById("memberId").value;
-        const debutId = document.getElementById("debutId").value;
-        const contents = document.getElementById("contents").value;
-        const memberName = document.getElementById("memberName").value;
-        const commentList = document.getElementById("commentList");
-
-        $.ajax({
-            type: "post",
-            url: "/debutComment/save",
-            data: {"memberId": memberId, "debutId": debutId, "contents": contents, "memberName": memberName},
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                let output = "<table>\n" +
-                    "      <tr>\n" +
-                    "        <th>작성자</th>\n" +
-                    "        <th>내용</th>\n" +
-                    "        <th>작성시간</th>\n" +
-                    "         <th>삭제</th>" +
-
-                    "      </tr>\n";
-                for (let i in result) {
-                    output += "<tr>" +
-                        "    <td>" + result[i].memberName + "</td>\n" +
-                        "    <td>" + result[i].contents + "</td>\n" +
-                        "    <td>" + result[i].createdTime + "</td>\n";
-                    if (result[i].memberName == memberName) {
-                        output += "<div>\n" +
-                            "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + "{})\"></td>" +
-                            "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                            "      </div>" +
-                            "</tr>";
-                    }
-                }
-                output += "    </table>";
-
-                commentList.innerHTML = output;
-                document.getElementById("contents").innerHTML = "";
-
-            }
-        });
-
-
-    }
-
-    function commentUpdateForm(id) {
-        const commentList = document.getElementById("commentList");
-
-        const memberName = document.getElementById("memberName_"+id).innerHTML;
-        const contents = document.getElementById("contents_"+id).innerHTML;
-        commentList.innerHTML = "<input id='updateMemberName' type=\"text\" value=\"" + memberName + "\"readonly>\n" +
-            "      <input id=\"updateContents\" type=\"text\" value=\"" + contents + "\">\n" +
-            "      <input value='댓글수정' type=\"button\" onclick=\"commentUpdate(" + id + ")\">";
-
-    }
-
-    function commentUpdate(id) {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const memberName = document.getElementById("updateMemberName").value;
-        const contents = document.getElementById("updateContents").value;
-        const commentList = document.getElementById("commentList");
-        const debutId = document.getElementById("debutId").value;
-        const memberId = document.getElementById("memberId").value;
-        $.ajax({
-            type: "put",
-            url: "/debutComment/update",
-            data: {"id": id, "memberName": memberName, "contents": contents, "debutId": debutId, "memberId": memberId},
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                let output = "<table>\n" +
-                    "      <tr>\n" +
-                    "        <th>작성자</th>\n" +
-                    "        <th>내용</th>\n" +
-                    "        <th>작성시간</th>\n" +
-                    "         <th>삭제</th>" +
-
-                    "      </tr>\n";
-                for (let i in result) {
-                    output += "<tr>" +
-                        "    <td>" + result[i].memberName + "</td>\n" +
-                        "    <td>" + result[i].contents + "</td>\n" +
-                        "    <td>" + result[i].createdTime + "</td>\n";
-                    console.log(result[i].createdTime);
-                    if (result[i].memberName == memberName) {
-                        output += "<div>\n" +
-                            "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
-                            "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                            "      </div>" +
-                            "</tr>";
-                    }
-                }
-                output += "    </table>";
-
-                commentList.innerHTML = output;
-                document.getElementById("contents").innerHTML = "";
-            }
-        });
-
-    }
-
-    function commentDelete(commentId) {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const memberName = document.getElementById("memberName").value;
-        const commentList = document.getElementById("commentList");
-        const debutId = document.getElementById("debutId").value;
-        $.ajax({
-            type: "delete",
-            url: "/debutComment/delete",
-            data: {"commentId": commentId, "debutId": debutId},
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                let output = "<table>\n" +
-                    "      <tr>\n" +
-                    "        <th>작성자</th>\n" +
-                    "        <th>내용</th>\n" +
-                    "        <th>작성시간</th>\n" +
-                    "         <th>삭제</th>" +
-
-                    "      </tr>\n";
-                for (let i in result) {
-                    output += "<tr>" +
-                        "    <td>" + result[i].memberName + "</td>\n" +
-                        "    <td>" + result[i].contents + "</td>\n" +
-                        "    <td>" + result[i].createdTime + "</td>\n";
-                    if (result[i].memberName == memberName) {
-                        output += "<div>\n" +
-                            "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
-                            "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                            "      </div>" +
-                            "</tr>";
-                    }
-                }
-                output += "    </table>";
-
-                commentList.innerHTML = output;
-                document.getElementById("contents").innerHTML = "";
-            }
-        });
-
-
-
-    }
-    function commentReport(id) {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const memberId = [[${debut.memberId}]];
-        $.ajax({
-            type:"post",
-            url:"/debutComment/list/"+id,
-            data:{"memberId":memberId},
-            dataType:"text",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success:function (result){
-                if (result==="ok"){
-                    alert("댓글 신고가 접수되었습니다 ")
-                }else {
-                    alert("댓글 신고 처리가 실패하였습니다 ")
-                }
-
-            }
-        });
-
-    }
+  }
 </script>
-</body>
 </html>
