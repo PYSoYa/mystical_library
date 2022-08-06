@@ -169,6 +169,8 @@ public class BookController {
     public String categoryList(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                @RequestParam("categoryId") Long categoryId, Model model) {
         try {
+            boolean result = false;
+            MemberDTO findDTO = new MemberDTO();
             if (categoryId == 1) {
                 List<BookDTO> bookDTOList1 = bookService.categoryList1();
                 List<BookDTO> bookDTOList2 = bookService.categoryList2();
@@ -183,9 +185,18 @@ public class BookController {
             } else if (categoryId == 2) {
 
             }
-            String loginId = principalDetails.getUsername();
-            MemberDTO findDTO = memberService.findByLoginId(loginId);
-            model.addAttribute("authentication", findDTO);
+            if (principalDetails != null) {
+                String loginId = principalDetails.getUsername();
+                findDTO = memberService.findByLoginId(loginId);
+                result = true;
+                model.addAttribute("authentication", findDTO);
+                model.addAttribute("result", result);
+            } else {
+                result = false;
+                model.addAttribute("authentication", findDTO);
+                model.addAttribute("result", result);
+            }
+
         } catch (NullPointerException e) {
             System.out.println("BookController.categoryList");
             System.out.println("java.lang.NullPointerException: null");

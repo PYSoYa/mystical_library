@@ -30,16 +30,22 @@ public class HomeController {
             List<BookDTO> popularEntityList = new ArrayList<>();
             List<BookDTO> popularEntityList1 = new ArrayList<>();
             List<BookDTO> newList = new ArrayList<>();
-            List<BookEntity> bookHitsList = bookRepository.findAllHits();
-            for (int i = 0; i < 6; i++) {
-                if (i > 2) {
-                    popularEntityList1.add(BookDTO.findDTO(bookHitsList.get(i))); // 4,5,6
+            List<BookEntity> bookHitsList = new ArrayList<>();
+            List<BookEntity> bookNewList = new ArrayList<>();
+            bookHitsList = bookRepository.findAllHits();
+            if (bookHitsList.size() != 0 && bookHitsList.size() > 5) {
+                for (int i = 0; i < 6; i++) {
+                    if (i > 2) {
+                        popularEntityList1.add(BookDTO.findDTO(bookHitsList.get(i))); // 4,5,6
+                    }
+                    popularEntityList.add(BookDTO.findDTO(bookHitsList.get(i))); // 1,2,3
                 }
-                popularEntityList.add(BookDTO.findDTO(bookHitsList.get(i))); // 1,2,3
             }
-            List<BookEntity> bookNewList = bookRepository.findAllNew();
-            for (int i = 0; i < bookNewList.size(); i++) {
-                newList.add(BookDTO.findDTO(bookNewList.get(i)));
+            bookNewList = bookRepository.findAllNew();
+            if (bookNewList.size() != 0) {
+                for (int i = 0; i < bookNewList.size(); i++) {
+                    newList.add(BookDTO.findDTO(bookNewList.get(i)));
+                }
             }
             model.addAttribute("bookList", popularEntityList); // 전체 카테고리중 조회수 제일 높은 리스트 두개
             model.addAttribute("bookList1", popularEntityList1);
