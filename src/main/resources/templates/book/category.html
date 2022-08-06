@@ -101,7 +101,7 @@
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text" style="display: flex;">
           <span class="recent-debut-post-title">판타지 TOP</span>
-          <button type="button" class="save-form-btn" sec:authorize="isAuthenticated()" th:if="${authentication.role != 'ROLE_USER'}">글쓰기</button>
+          <button type="button" onclick="bookSaveForm()" class="save-form-btn" sec:authorize="isAuthenticated()" th:if="${authentication.role != 'ROLE_USER'}">글쓰기</button>
         </div>
       </div>
     </div>
@@ -301,7 +301,11 @@
       document.getElementById('move-slider').click();
     }
     setTimeout(slideClick, 5000);
-    setInterval(countNotice,5000,console.log("카운트실행"));
+    setInterval(countNotice, 5000, console.log("카운트실행"));
+  }
+
+  const bookSaveForm = () => {
+    location.href = '/book/book-save-form';
   }
 </script>
 </html>
