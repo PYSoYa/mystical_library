@@ -2,10 +2,12 @@ package com.its.library.controller;
 
 import com.its.library.config.auth.PrincipalDetails;
 import com.its.library.dto.BookDTO;
+import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.entity.BookEntity;
 import com.its.library.repository.BookRepository;
 import com.its.library.repository.EpisodeRepository;
+import com.its.library.service.DebutService;
 import com.its.library.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,7 @@ public class HomeController {
 
     private final MemberService memberService;
     private final BookRepository bookRepository;
+    private final DebutService debutService;
 
     @GetMapping("/")
     public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
@@ -52,6 +55,8 @@ public class HomeController {
             model.addAttribute("newList", newList); // 전체 카테고리중 완결작
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
+           List<DebutEpisodeDTO> debutEpisodeDTOS = debutService.indexNewList();//데뷔 최신글 리스트 5개
+           model.addAttribute("newDebutList",debutEpisodeDTOS);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
             System.out.println("HomeController.index");
@@ -59,4 +64,6 @@ public class HomeController {
         }
         return "index";
     }
+
+
 }
