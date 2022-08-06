@@ -118,6 +118,30 @@
                   <input type="hidden" name="memberImgName" th:value="${member.memberImgName}">
                 </div>
               </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-instagram">인스타그램</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-instagram">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-instagram">트위터</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-twitter">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <div class="label-wrap">
+                  <label class="label-instagram">페이스북</label>
+                </div>
+                <div class="input-wrapper">
+                  <input type="text" class="input-facebook">
+                </div>
+              </div>
               <div class="btn-wrap">
                 <div class="update-btn-wrap">
                   <button type="button" class="update-btn" onclick="updateMember()">수정</button>
@@ -149,7 +173,6 @@
 
     const updatePassword = document.getElementById("update-member-password").value;
     const updatePassword2 = document.getElementById("update-member-password2").value;
-
 
   }
 </script>
