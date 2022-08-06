@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <th:block th:fragment="header">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <meta name="_csrf" th:content="${_csrf.token}">
@@ -40,7 +40,7 @@
         </div>
       </form>
 
-      <div class="menu-icon-container" th:if="${authentication ne null}">
+      <div class="menu-icon-container" sec:authorize="isAuthenticated()">
         <div class="menu-icon-wrap">
           <a th:href="@{|/notice/history/${authentication.id}|}" class="notification">
             <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-notification">
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="menu-container" th:if="${authentication eq null}">
+      <div class="menu-container" sec:authorize="isAnonymous()">
         <div class="menu-wrap-div">
           <ul class="menu-wrap-ul">
             <li class="sign-up-wrap">
