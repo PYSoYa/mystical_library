@@ -39,20 +39,20 @@ public class DebutService {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
-            if (optionalDebutCategoryEntity.isPresent()){
-                DebutCategoryEntity debutCategoryEntity =optionalDebutCategoryEntity.get();
+            if (optionalDebutCategoryEntity.isPresent()) {
+                DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
 
 
-            MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
-            String debutImgName = debutImg.getOriginalFilename();
-            debutImgName = System.currentTimeMillis() + "_" + debutImgName;
-            String savePath = "C:\\springboot_img\\" + debutImgName;
-            if (!debutImg.isEmpty()) {
-                debutImg.transferTo(new File(savePath));
-            }
-            debutEpisodeDTO.setDebutImgName(debutImgName);
-            DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toSave(debutCategoryEntity, debutEpisodeDTO, memberEntity);
-            debutRepository.save(debutEpisodeEntity);
+                MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
+                String debutImgName = debutImg.getOriginalFilename();
+                debutImgName = System.currentTimeMillis() + "_" + debutImgName;
+                String savePath = "C:\\springboot_img\\" + debutImgName;
+                if (!debutImg.isEmpty()) {
+                    debutImg.transferTo(new File(savePath));
+                }
+                debutEpisodeDTO.setDebutImgName(debutImgName);
+                DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toSave(debutCategoryEntity, debutEpisodeDTO, memberEntity);
+                debutRepository.save(debutEpisodeEntity);
             }
         }
 
@@ -107,7 +107,7 @@ public class DebutService {
                 DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
                 DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toUpdate(debutCategoryEntity, debutEpisodeDTO, memberEntity);
                 debutRepository.save(debutEpisodeEntity);
-                
+
             }
 
         }
@@ -262,12 +262,28 @@ public class DebutService {
 
     @Transactional
     public List<DebutEpisodeDTO> myDebutWrite(Long id) {
-       List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByMemberEntity_Id(id);
-       List<DebutEpisodeDTO> debutEpisodeDTOList = new ArrayList<>();
-        for (DebutEpisodeEntity debutEpisodeEntity:debutEpisodeEntityList) {
+        List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.findByMemberEntity_Id(id);
+        List<DebutEpisodeDTO> debutEpisodeDTOList = new ArrayList<>();
+        for (DebutEpisodeEntity debutEpisodeEntity : debutEpisodeEntityList) {
             DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
             debutEpisodeDTOList.add(DebutEpisodeDTO.toDTO(debutEpisodeEntity1));
         }
         return debutEpisodeDTOList;
+    }
+
+    public List<DebutEpisodeDTO> indexNewList() {
+        List<DebutEpisodeEntity> debutEpisodeEntityList = debutRepository.indexNewList();
+        List<DebutEpisodeDTO> debutEpisodeDTOList = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < 5; i++) {
+                debutEpisodeDTOList.add(DebutEpisodeDTO.toDTO(debutEpisodeEntityList.get(i)));
+            }
+        }catch (Exception e){
+            System.out.println("인덱스 최신 데뷔글 null catch");
+        }
+
+        return debutEpisodeDTOList;
+
     }
 }
