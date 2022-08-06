@@ -100,7 +100,7 @@
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text" style="display: flex;">
           <span class="recent-debut-post-title">현대 판타지 TOP</span>
-          <button type="button" class="save-form-btn">글쓰기</button>
+          <button type="button" class="save-form-btn" th:if="${authentication.role != 'ROLE_USER' && authentication.role != null}">글쓰기</button>
         </div>
       </div>
     </div>
