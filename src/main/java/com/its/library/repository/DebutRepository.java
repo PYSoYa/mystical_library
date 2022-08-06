@@ -42,5 +42,11 @@ public interface DebutRepository extends JpaRepository<DebutEpisodeEntity,Long> 
     List<DebutEpisodeEntity> orderByLove(Long id);
 
     List<DebutEpisodeEntity> findByMemberEntity_Id(Long id);
+
+
+
+    @Modifying
+    @Query(value = "select * from debut_episode d  order by created_date_time desc ",nativeQuery = true)
+    List<DebutEpisodeEntity> indexNewList();
 }
 
