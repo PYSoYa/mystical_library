@@ -21,16 +21,10 @@
         <div class="detail-wrap">
           <div class="title-wrap">
             <h2 class="title" th:text="${book.bookTitle}"></h2>
-            <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == authentication.memberName}">
-              <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
-            </div>
-            <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != authentication.memberName}">
-              <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
-            </div>
           </div>
           <div class="author-wrap">
             <div class="author-wrapper">
-              <a th:href="@{|/member/mypage/${book.memberId}|}">
+              <a th:href="@{|/member/myPage/${book.memberId}|}">
                 <span class="author" th:text="${book.memberName}"></span>
               </a>
             </div>
@@ -41,6 +35,23 @@
             </div>
             <div class="status-wrap">
               <span class="status" th:text="${book.status}"></span>
+            </div>
+            <div class="book-episode-btn-wrap">
+              <div class="episode-save-btn-wrap">
+                <button type="button" th:onclick="episodeSaveBTN()" class="episode-save-btn">회차 작성</button>
+              </div>
+              <div class="book-update-btn-wrap">
+                <button type="button" th:onclick="bookUpdateBTN()" class="book-update-btn">책 수정 요청</button>
+              </div>
+              <div class="book-delete-btn-wrap">
+                <button type="button" th:onclick="bookDeleteBTN()" class="book-delete-btn">책 삭제 요청</button>
+              </div>
+              <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == authentication.memberName}">
+                <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
+              </div>
+              <div class="wishlist-wrap" th:if="${wishlist.size() == 0 || wishlist.get(0).getMemberName() != authentication.memberName}">
+                <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
+              </div>
             </div>
           </div>
           <div class="intro-wrap">
@@ -406,6 +417,19 @@
         }
       }
     });
+  }
+
+  const episodeSaveBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/episode-save-form/' + bookId;
+  }
+  const bookUpdateBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/req-book-update?id=' + bookId;
+  }
+  const bookDeleteBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/req-book-delete?id=' + bookId;
   }
   const reportComment = (id) => {
 
