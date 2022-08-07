@@ -132,7 +132,10 @@
         <div class="popular-books-list-div">
           <div class="popular-books" th:each="popular2:${bookList1}">
             <div class="img-wrap">
-              <a th:href="@{|/book/book/${popular2.id}|}">
+              <a th:if="${authentication != null}" th:href="@{|/book/book/${popular2.id}|}">
+                <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
+              </a>
+              <a th:unless="${authentication != null}" th:href="@{|/book/${popular2.id}|}">
                 <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
             </div>

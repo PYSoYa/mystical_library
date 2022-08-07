@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +14,10 @@
   <link rel="stylesheet" th:href="@{/css/index.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <script th:src="@{/js/episodeDetail.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/js/header.js}"></script>
   <script th:src="@{/js/jquery.js}"></script>
+  <script th:src="@{/js/sweetalert2.min.js}"></script>
   <script th:src="@{|https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js|}"></script>
 </head>
 <body>
@@ -406,7 +410,7 @@
                   </span>
                 </div>
               </div>
-              <div class="content">
+              <div id="changeContents" class="content">
                 <span class="content" th:text="${comment.contents}"></span>
               </div>
             </li>
@@ -416,8 +420,8 @@
     </div>
   </div>
 </div>
-
 </body>
+
 <script th:inline="javascript">
     const cancelBTN = () => {
         document.getElementById('input-contents').value = '';
@@ -454,7 +458,7 @@
                 if (result != null) {
 
                    for (let i in result) {
-                       var output = "<li>\n" +
+                       var output = "<li>" +
                            "              <div class=\"info\">" +
                            "                <div>" +
                            "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
@@ -466,13 +470,13 @@
 
                                       if (result[i].memberName == loginName) {
                                           output += "            <span class=\"update\">" +
-                                              "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                                              "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
                                               "                  </span>" +
                                               "                  <span class=\"delete\">" +
-                                              "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                                              "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
                                               "                  </span>" +
                                               "                  <span class=\"report\">" +
-                                              "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                                              "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
                                               "                  </span>";
                                       }
 
@@ -490,30 +494,35 @@
     }
 
     const updateComment = (id, memberName, contents) => {
-        const contentsUpdate = document.getElementById("contentsUpdate");
-        // const inputContents = document.getElementById("contents").value = contents;
-        let output = "<input type='text' id='updateContents' name='contents'>" +
-            "<input type='button' onclick='update(" + id + "," + memberName + ")' value='수정완료'>";
+        const contentsUpdate = document.getElementById("changeContents");
+        const loginName = [[${authentication.memberName}]];
+
+        var output = "<input type=\'text\' id=\'input-content1\' name=\'contents\' rows=\'2\'>";
+        if (loginName == memberName) {
+            output += "<button type=\"button\" onclick=\"modify("+ id + "," + "memberName" + ")\">"+"<span>"+"댓글수정" + "</span>" + "</button>";
+        }
         contentsUpdate.innerHTML = output;
     }
-    const update = (id, memberName) => {
+
+    const modify = (commentId, commentName) => {
 
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
 
-        const contents = document.getElementById("updateContents").value;
+        const contents = document.getElementById("input-content1").value;
         const loginName = [[${authentication.memberName}]];
         const episodeId = [[${episode.id}]];
         const memberId = [[${authentication.id}]];
         const saveComment = document.getElementById("saveComment");
 
+
         $.ajax({
             type: "put",
             url: "/comment/update",
             data: {
-                "id": id,
+                "id": commentId,
                 "memberId": memberId,
-                "memberName": memberName,
+                "memberName": commentName,
                 "contents": contents,
                 "episodeId": episodeId
             },
@@ -536,13 +545,13 @@
 
                     if (result[i].memberName == loginName) {
                         output += "            <span class=\"update\">" +
-                            "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                            "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
                             "                  </span>" +
                             "                  <span class=\"delete\">" +
-                            "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                            "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
                             "                  </span>" +
                             "                  <span class=\"report\">" +
-                            "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
                             "                  </span>";
                     }
 
@@ -557,6 +566,7 @@
             }
         });
     }
+
     const reportComment = (id) => {
 
         let header = $("meta[name='_csrf_header']").attr('content');
@@ -617,13 +627,13 @@
 
                     if (result[i].memberName == loginName) {
                         output += "            <span class=\"update\">" +
-                            "                    <a href=\"javascript:;\" class=\"update-btn\" th:onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
+                            "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + "," + result[i].memberName + "," + result[i].contents + ")\">수정</a>" +
                             "                  </span>" +
                             "                  <span class=\"delete\">" +
-                            "                    <a href=\"javascript:;\" class=\"delete-btn\" th:onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
+                            "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
                             "                  </span>" +
                             "                  <span class=\"report\">" +
-                            "                    <a href=\"javascript:;\" class=\"report-btn\" th:onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
                             "                  </span>";
                     }
 

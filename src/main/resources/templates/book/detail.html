@@ -7,9 +7,6 @@
   <title>신비한 서재입니다.</title>
 
   <link rel="stylesheet" th:href="@{/css/book/book-detail.css}">
-  <script>
-
-  </script>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
@@ -39,7 +36,7 @@
             </div>
             <div class="episode-quantity-wrap">
               <span class="edit-span">총</span>
-              <span class="edit-span" th:text="${episodeList.size}"></span>
+              <span class="edit-span" th:text="${episodeSize}"></span>
               <span class="quantity">화</span>
             </div>
             <div class="status-wrap">
@@ -81,7 +78,7 @@
                 </svg>
               </div>
               <div class="desc-wrap">
-                <span class="desc">6.3천(맴버 전체의 관심수 따오기)</span>
+                <span class="desc" th:text="${bookLove}"></span>
               </div>
             </div>
             <div class="star-wrap">
@@ -102,7 +99,7 @@
                 </svg>
               </div>
               <div class="desc-wrap">
-                <span class="desc">총댓글 따오기</span>
+                <span class="desc" th:text="${commentSize}"></span>
               </div>
             </div>
           </div>
@@ -113,7 +110,7 @@
     <div class="episode-detail-container">
       <div class="quantity-episode-wrap">
         <span class="quantity-episode">전체 (</span>
-        <span class="quantity-episode" th:text="${episodeList.size}"></span>
+        <span class="quantity-episode" th:text="${episodeSize}"></span>
         <span class="quantity-episode">)</span>
       </div>
         <div class="episode-list-wrap" th:each="episode:${episodeList}">
@@ -160,7 +157,9 @@
 
     <div class="comment-detail-container">
       <div class="comment-header-wrap">
-        <span class="comment-header">댓글목록 (3672)</span>
+        <span class="comment-header">댓글목록 (</span>
+        <span class="comment-header" th:text="${commentSize}"></span>
+        <span class="comment-header">)</span>
       </div>
       <div class="comment-detail-wrap" th:each="comment:${commentList}">
         <div class="img-wrap">
@@ -177,10 +176,10 @@
             </div>
             <div class="date-wrap">
               <div class="symbol">·</div>
-              <span class="date" th:text="${comment.createdTime}"></span>
+              <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </div>
             <div class="report-wrap">
-              <a href="#" class="report">신고(에이작스 추가해야댐)</a>
+              <a href="javascript:;" class="report" th:onclick="reportComment([[${comment.id}]])">신고</a>
             </div>
           </div>
           <div class="content-wrap">
@@ -407,6 +406,33 @@
         }
       }
     });
+  }
+  const reportComment = (id) => {
+
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
+
+      const loginId = [[${authentication.id}]];
+
+      $.ajax({
+          type: "post",
+          url: "/comment/report-save/" + id,
+          data: {
+              "id": id,
+              "loginId": loginId
+          },
+          dataType: "text",
+          beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+              if (result === 'ok') {
+                  alert("신고완료");
+              } else {
+                  alert("신고실패");
+              }
+          }
+      });
   }
 </script>
 </html>
