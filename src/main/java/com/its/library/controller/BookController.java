@@ -274,7 +274,6 @@ public class BookController {
             model.addAttribute("endPage", endPage);
         } catch (NullPointerException e) {
             System.out.println("BookController.bookDetail");
-            System.out.println("java.lang.NullPointerException: null");
         }
         return "book/detail";
     }

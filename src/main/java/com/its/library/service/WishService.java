@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WishService {
-    private final WishRepository wishlistRepository;
+    private final WishRepository wishRepository;
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
 
@@ -30,7 +30,7 @@ public class WishService {
             MemberEntity memberEntity = new MemberEntity();
             if (optionalMemberEntity.isPresent()){
                 memberEntity = optionalMemberEntity.get();
-                Optional<WishEntity> optionalWishEntity = wishlistRepository.findByMemberEntityAndMemberName(memberEntity, wishDTO.getMemberName());
+                Optional<WishEntity> optionalWishEntity = wishRepository.findByMemberEntityAndMemberName(memberEntity, wishDTO.getMemberName());
                 if (optionalWishEntity.isPresent()) {
                     return "ok";
                 } else {
@@ -44,7 +44,7 @@ public class WishService {
             BookEntity bookEntity = new BookEntity();
             if (optionalBookEntity.isPresent()) {
                 bookEntity = optionalBookEntity.get();
-                Optional<WishEntity> optionalWishEntity = wishlistRepository.findByBookEntityAndMemberName(bookEntity, wishDTO.getMemberName());
+                Optional<WishEntity> optionalWishEntity = wishRepository.findByBookEntityAndMemberName(bookEntity, wishDTO.getMemberName());
                 if (optionalWishEntity.isPresent()){
                     return "ok";
                 } else {
@@ -66,8 +66,8 @@ public class WishService {
             }
             WishEntity wishEntity = new WishEntity();
             wishEntity = WishEntity.saveWriterEntity(wishDTO, memberEntity);
-            Long id = wishlistRepository.save(wishEntity).getId();
-            Optional<WishEntity> optionalWishEntity = wishlistRepository.findById(id);
+            Long id = wishRepository.save(wishEntity).getId();
+            Optional<WishEntity> optionalWishEntity = wishRepository.findById(id);
             if (optionalWishEntity.isPresent()) {
                 return "ok";
             } else {
@@ -81,8 +81,8 @@ public class WishService {
             }
             WishEntity wishEntity = new WishEntity();
             wishEntity = WishEntity.saveBookEntity(wishDTO, bookEntity);
-            Long id = wishlistRepository.save(wishEntity).getId();
-            Optional<WishEntity> optionalWishEntity = wishlistRepository.findById(id);
+            Long id = wishRepository.save(wishEntity).getId();
+            Optional<WishEntity> optionalWishEntity = wishRepository.findById(id);
             if (optionalWishEntity.isPresent()) {
                 return "ok";
             } else {
@@ -99,9 +99,9 @@ public class WishService {
             if (optionalMemberEntity.isPresent()) {
                 memberEntity = optionalMemberEntity.get();
             }
-            Optional<WishEntity> optionalWishEntity = wishlistRepository.findByMemberEntityAndMemberName(memberEntity, wishDTO.getMemberName());
+            Optional<WishEntity> optionalWishEntity = wishRepository.findByMemberEntityAndMemberName(memberEntity, wishDTO.getMemberName());
             if (optionalWishEntity.isPresent()) {
-                wishlistRepository.deleteById(optionalWishEntity.get().getId());
+                wishRepository.deleteById(optionalWishEntity.get().getId());
                 return "ok";
             } else {
                 return "no";
@@ -112,9 +112,9 @@ public class WishService {
             if (optionalBookEntity.isPresent()) {
                 bookEntity = optionalBookEntity.get();
             }
-            Optional<WishEntity> optionalWishEntity = wishlistRepository.findByBookEntityAndMemberName(bookEntity, wishDTO.getMemberName());
+            Optional<WishEntity> optionalWishEntity = wishRepository.findByBookEntityAndMemberName(bookEntity, wishDTO.getMemberName());
             if (optionalWishEntity.isPresent()) {
-                wishlistRepository.deleteById(optionalWishEntity.get().getId());
+                wishRepository.deleteById(optionalWishEntity.get().getId());
                 return "ok";
             } else {
                 return "no";
@@ -125,7 +125,7 @@ public class WishService {
     public List<MemberDTO> memberWishlist(Long id) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        wishEntityList = wishlistRepository.findAll();
+        wishEntityList = wishRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
             if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberEntity().getId().equals(id)) {
                 Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
@@ -140,7 +140,7 @@ public class WishService {
     public List<BookDTO> wishlist(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
-        wishEntityList = wishlistRepository.findAll();
+        wishEntityList = wishRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
             if (wishEntityList.get(i).getMemberEntity() == null && wishEntityList.get(i).getMemberName().equals(memberName)) {
                 Optional<BookEntity> optionalBookEntity = bookRepository.findById(wishEntityList.get(i).getBookEntity().getId());
@@ -155,7 +155,7 @@ public class WishService {
     public List<WishDTO> findByMemberName(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
-        wishEntityList = wishlistRepository.findByMemberName(memberName);
+        wishEntityList = wishRepository.findByMemberName(memberName);
             for (WishEntity wish: wishEntityList) {
                 if (wish.getMemberEntity() != null){
                     wishDTOList.add(WishDTO.findMemberDTO(wish));
@@ -167,12 +167,16 @@ public class WishService {
     public List<WishDTO> findByBook(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
-        wishEntityList = wishlistRepository.findByMemberName(memberName);
+        wishEntityList = wishRepository.findByMemberName(memberName);
             for (WishEntity wish: wishEntityList) {
                 if (wish.getBookEntity() != null) {
                     wishDTOList.add(WishDTO.findBookDTO(wish));
                 }
             }
         return wishDTOList;
+    }
+
+    public int findByMemberId(Long writerId) {
+        return wishRepository.countByMemberEntity_Id(writerId);
     }
 }

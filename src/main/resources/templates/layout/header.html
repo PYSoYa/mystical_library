@@ -271,14 +271,14 @@
               </div>
             </div>
           </div>
-          <form class="register-form" action="/member/save" method="post" enctype="multipart/form-data" style="display: none;" aria-hidden="true">
+          <form class="register-form" action="/member/save" method="post" enctype="multipart/form-data" name="memberSaveForm" style="display: none;" aria-hidden="true">
             <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <div class="input-wrap">
               <div class="label-id-wrap">
                 <label class="label-id">아이디</label>
               </div>
               <div class="input-id-wrap">
-                <input type="text" name="loginId" class="input-id" placeholder="아이디123">
+                <input type="text" name="loginId" class="input-id" placeholder="아이디123" autofocus>
               </div>
               <div class="result-id-wrap">
                 <span class="span-id" id="result-id">잘 좀 입력하세요</span>
@@ -352,7 +352,7 @@
             </div>
             <div class="sign-in-btn-wrap">
               <div class="btn-wrap">
-                <button type="submit" class="submit-btn">회원가입</button>
+                <button type="button" class="submit-btn" onclick="goMemberSave()">회원가입</button>
               </div>
             </div>
           </form>
@@ -437,6 +437,16 @@
           location.href = '/member/find/password';
       });
     });
+
+    const goMemberSave = () => {
+      Swal.fire('회원가입이 완료되었습니다.')
+              .then((result) => {
+                if (result.isConfirmed) {
+                  memberSaveForm.submit();
+                }
+              })
+
+    }
 
     const naverLogin = () => {
       location.href = "/oauth2/authorization/naver";

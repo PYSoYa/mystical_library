@@ -450,4 +450,13 @@ public class BookService {
         }
         return episodeDTOList.get(0).getId();
     }
+
+    public List<BookDTO> findAllByOnStatus(Long memberId) {
+        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "연재");
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity book: bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
+        }
+        return bookDTOList;
+    }
 }
