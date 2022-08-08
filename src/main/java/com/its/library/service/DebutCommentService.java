@@ -130,4 +130,14 @@ public class DebutCommentService {
         }
         return null;
     }
+
+    public DebutCommentDTO updateForm(Long id) {
+       Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
+       if (optionalDebutCommentEntity.isPresent()){
+           DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
+          return DebutCommentDTO.toDTO(debutComment);
+
+       }
+       return null;
+    }
 }
