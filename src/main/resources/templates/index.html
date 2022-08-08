@@ -132,7 +132,10 @@
         <div class="popular-books-list-div">
           <div class="popular-books" th:each="popular2:${bookList1}">
             <div class="img-wrap">
-              <a th:href="@{|/book/book/${popular2.id}|}">
+              <a th:if="${authentication != null}" th:href="@{|/book/book/${popular2.id}|}">
+                <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
+              </a>
+              <a th:unless="${authentication != null}" th:href="@{|/book/${popular2.id}|}">
                 <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
             </div>
@@ -163,8 +166,8 @@
     <div class="recent-debut-post-list-container">
       <div class="recent-debut-post-list-wrap">
         <div class="recent-debut-post-div">
-          <ul class="recent-debut-post-ul">
-            <li class="recent-debut-post-li" th:each="finsh:${newList}">
+          <ul th:each="finsh:${newList}" class="recent-debut-post-ul">
+            <li class="recent-debut-post-li" >
               <div class="recent-debut-post">
                 <div class="img-wrap">
                   <a th:if="${authentication != null}" th:href="@{|/book/book/${finsh.id}|}">
@@ -204,8 +207,8 @@
       <div class="recent-completion-list-wrap">
         <div class="recent-completion-div">
           <ul class="recent-completion-ul">
-            <li class="recent-completion-li">
-              <div th:each="newDebut:${newDebutList}" class="recent-completion">
+            <li th:each="newDebut:${newDebutList}" class="recent-completion-li">
+              <div class="recent-completion">
                 <div class="img-wrap">
                   <a th:href="@{|/debut/detail/${newDebut.id}|}">
                     <img th:src="@{|/upload/${newDebut.debutImgName}|}" class="img" alt="">

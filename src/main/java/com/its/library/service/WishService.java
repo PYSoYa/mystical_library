@@ -176,6 +176,21 @@ public class WishService {
         return wishDTOList;
     }
 
+    public List<WishDTO> findByBookWish(Long bookId) {
+        List<WishEntity> wishEntityList = new ArrayList<>();
+        List<WishDTO> wishDTOList = new ArrayList<>();
+        BookEntity bookEntity = new BookEntity();
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookId);
+        if (optionalBookEntity.isPresent()) {
+            bookEntity = optionalBookEntity.get();
+        }
+        wishEntityList = wishRepository.findByBookEntity_Id(bookEntity.getId());
+        for (WishEntity wish: wishEntityList) {
+            wishDTOList.add(WishDTO.findBookDTO(wish));
+        }
+        return wishDTOList;
+    }
+
     public int findByMemberId(Long writerId) {
         return wishRepository.countByMemberEntity_Id(writerId);
     }

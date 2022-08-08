@@ -81,20 +81,23 @@ public class DebutController {
         debutService.delete(id);
         return "redirect:/";
     }
+    @GetMapping("/loveCheck/{id}")
+    public @ResponseBody String loveCheck(@PathVariable("id")Long id,@RequestParam("memberId")Long memberId){
+       return debutService.loveCheck(id,memberId);
+
+    }
 
     //데뷔글 좋아요 처리
-    @GetMapping("/love/{id}")
-    public @ResponseBody int love(@PathVariable Long id,
-                                  @RequestParam("memberId") Long memberId,
-                                  @RequestParam("num") int num) {
-        if (num == 1) {
-            int resultNum = debutService.loveSave(id, memberId);
-            return resultNum;
-        } else {
-            int resultNum = debutService.loveDelete(id, memberId);
-            return resultNum;
-        }
+    @GetMapping("/loveSave/{id}")
+    public @ResponseBody int loveSave(@PathVariable Long id, @RequestParam("memberId") Long memberId){
+         return debutService.loveSave(id, memberId);
     }
+
+    @GetMapping("/loveDelete/{id}")
+    public @ResponseBody int loveDelete(@PathVariable Long id, @RequestParam("memberId")Long memberId){
+       return debutService.loveDelete(id, memberId);
+    }
+
 
     @GetMapping("/poem/{category}/{addressId}")
     public String poemList(@AuthenticationPrincipal PrincipalDetails principalDetails,
