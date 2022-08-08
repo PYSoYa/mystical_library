@@ -189,7 +189,7 @@
                   <input type="radio" name="star" value="2" id="rate4"><label for="rate4">⭐</label>
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
-                <button type="button" class="star-btn" th:onclick="saveStar()">별점주기</button>
+                <button type="button" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
               </div>
             </div>
             <div class="attention-wrap">
@@ -273,6 +273,9 @@
     const cancelBTN = () => {
         document.getElementById('input-contents').value = '';
     }
+    const cancelBTN1 = () => {
+        document.getElementById('input-content1').value = '';
+    }
     const commentSave = () => {
         const memberId = [[${authentication.id}]];
         const loginName = [[${authentication.memberName}]];
@@ -308,29 +311,29 @@
                        output += "<li>" +
                            "              <div class=\"info\">" +
                            "                <div>" +
-                           "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
-                           "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
+                           "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
+                           "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
                            "                  </a>" +
-                           "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
+                           "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
                            "                </div>" +
-                           "                <div>" ;
+                           "                <div>";
 
-                                      if (result[i].memberName == loginName) {
-                                          output += "            <span class=\"update\">" +
-                                              "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
-                                              "                  </span>" +
-                                              "                  <span class=\"delete\">" +
-                                              "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
-                                              "                  </span>" +
-                                              "                  <span class=\"report\">" +
-                                              "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
-                                              "                  </span>";
-                                      }
+                       if (result[i].memberName == loginName) {
+                           output += "            <span class=\"update\">" +
+                               "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
+                               "                  </span>" +
+                               "                  <span class=\"delete\">" +
+                               "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
+                               "                  </span>";
 
-                           output += "    </div>" +
+                       }
+                       output += "                <span class=\"report\">" +
+                           "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                           "                      </span>" +
+                           "              </div>" +
                            "              </div>" +
                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
-                           "                <span class=\"content\">" + result[i].contents + "</span>" +
+                           "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
                            "              </div>" +
                            "            </li>";
                    }
@@ -346,7 +349,7 @@
 
         var output = "<input type=\'text\' id=\'input-content1\' name=\'contents\' value='" + contentsBefore + "'>";
         output += "<button type=\"button\" onclick=\"modify("+ id + ")\" class=\"modify-btn\">수정</button>";
-        output += "<button type=\"button\" onclick=\"cancelBTN()\" class=\"cancel-btn\">취소</button>";
+        output += "<button type=\"button\" onclick=\"cancelBTN1()\" class=\"cancel-btn\">취소</button>";
         contentsUpdate.innerHTML = output;
     }
 
@@ -377,7 +380,7 @@
 
                     var output = "";
                     for (let i in result) {
-                         output += "<li>" +
+                        output += "<li>" +
                             "              <div class=\"info\">" +
                             "                <div>" +
                             "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
@@ -392,17 +395,17 @@
                                 "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
                                 "                  </span>" +
                                 "                  <span class=\"delete\">" +
-                                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
-                                "                  </span>" +
-                                "                  <span class=\"report\">" +
-                                "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
                                 "                  </span>";
-                        }
 
-                        output += "    </div>" +
+                        }
+                        output += "                <span class=\"report\">" +
+                            "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                      </span>" +
                             "              </div>" +
-                            "              <div class=\"content\">" +
-                            "                <span class=\"content\">" + result[i].contents + "</span>" +
+                            "              </div>" +
+                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+                            "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
                             "              </div>" +
                             "            </li>";
                     }
@@ -439,7 +442,7 @@
             }
         });
     }
-    const deleteComment = (id, memberName) => {
+    const deleteComment = (id) => {
 
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
@@ -459,38 +462,41 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function (result) {
-                var output = "";
-                for (let i in result) {
-                    output = "<li>" +
-                        "              <div class=\"info\">" +
-                        "                <div>" +
-                        "                  <a href=\"/member/mypage/"+ result[i].memberId +"\" class=\"writer-link\">" +
-                        "                    <span class=\"writer\">"+ result[i].memberName +"</span>" +
-                        "                  </a>" +
-                        "                  <span class=\"date\">"+ moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") +"</span>" +
-                        "                </div>" +
-                        "                <div>" ;
+                if (result != null) {
 
-                    if (result[i].memberName == loginName) {
-                        output += "            <span class=\"update\">" +
-                            "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
-                            "                  </span>" +
-                            "                  <span class=\"delete\">" +
-                            "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + "," + result[i].memberName + ")\">삭제</a>" +
-                            "                  </span>" +
-                            "                  <span class=\"report\">" +
-                            "                    <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
-                            "                  </span>";
+                    var output = "";
+                    for (let i in result) {
+                        output += "<li>" +
+                            "              <div class=\"info\">" +
+                            "                <div>" +
+                            "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
+                            "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
+                            "                  </a>" +
+                            "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
+                            "                </div>" +
+                            "                <div>";
+
+                        if (result[i].memberName == loginName) {
+                            output += "            <span class=\"update\">" +
+                                "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
+                                "                  </span>" +
+                                "                  <span class=\"delete\">" +
+                                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
+                                "                  </span>";
+
+                        }
+                        output += "                <span class=\"report\">" +
+                            "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                            "                      </span>" +
+                                         "    </div>" +
+                            "              </div>" +
+                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+                            "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
+                            "              </div>" +
+                            "            </li>";
                     }
-
-                    output += "    </div>" +
-                        "              </div>" +
-                        "              <div class=\"content\">" +
-                        "                <span class=\"content\">" + result[i].contents + "</span>" +
-                        "              </div>" +
-                        "            </li>";
+                    saveComment.innerHTML = output;
                 }
-                saveComment.innerHTML = output;
             }
         });
     }
