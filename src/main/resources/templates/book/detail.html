@@ -38,13 +38,13 @@
             </div>
             <div class="book-episode-btn-wrap">
               <div class="episode-save-btn-wrap">
-                <button type="button" th:onclick="episodeSaveBTN()" class="episode-save-btn">회차 작성</button>
+                <button type="button" th:if="${book.memberName eq authentication.memberName && book.status ne '완결'}" th:onclick="episodeSaveBTN()" class="episode-save-btn">회차 작성</button>
               </div>
               <div class="book-update-btn-wrap">
-                <button type="button" th:onclick="bookUpdateBTN()" class="book-update-btn">책 수정 요청</button>
+                <button type="button" th:if="${book.memberName eq authentication.memberName}" th:onclick="bookUpdateBTN()" class="book-update-btn">책 수정 요청</button>
               </div>
               <div class="book-delete-btn-wrap">
-                <button type="button" th:onclick="bookDeleteBTN()" class="book-delete-btn">책 삭제 요청</button>
+                <button type="button" th:if="${book.memberName eq authentication.memberName}" th:onclick="bookDeleteBTN()" class="book-delete-btn">책 삭제 요청</button>
               </div>
               <div class="wishlist-wrap" th:if="${wishlist.size() != 0 && wishlist.get(0).getMemberName() == authentication.memberName}">
                 <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
