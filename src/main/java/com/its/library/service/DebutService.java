@@ -42,15 +42,14 @@ public class DebutService {
             if (optionalDebutCategoryEntity.isPresent()) {
                 DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
 
-
                 MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
                 String debutImgName = debutImg.getOriginalFilename();
-                debutImgName = System.currentTimeMillis() + "_" + debutImgName;
-                String savePath = "C:\\springboot_img\\" + debutImgName;
                 if (!debutImg.isEmpty()) {
+                    debutImgName = System.currentTimeMillis() + "_" + debutImgName;
+                    String savePath = "C:\\springboot_img\\" + debutImgName;
                     debutImg.transferTo(new File(savePath));
+                    debutEpisodeDTO.setDebutImgName(debutImgName);
                 }
-                debutEpisodeDTO.setDebutImgName(debutImgName);
                 DebutEpisodeEntity debutEpisodeEntity = DebutEpisodeEntity.toSave(debutCategoryEntity, debutEpisodeDTO, memberEntity);
                 debutRepository.save(debutEpisodeEntity);
             }
@@ -95,11 +94,12 @@ public class DebutService {
         Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeDTO.getCategoryId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
+
             MultipartFile debutImg = debutEpisodeDTO.getDebutImg();
             String debutImgName = debutImg.getOriginalFilename();
-            debutImgName = System.currentTimeMillis() + "_" + debutImgName;
-            String savePath = "C:\\springboot_img\\" + debutImgName;
             if (!debutImg.isEmpty()) {
+                debutImgName = System.currentTimeMillis() + "_" + debutImgName;
+                String savePath = "C:\\springboot_img\\" + debutImgName;
                 debutImg.transferTo(new File(savePath));
                 debutEpisodeDTO.setDebutImgName(debutImgName);
             }
@@ -129,25 +129,21 @@ public class DebutService {
             loveDTO.setDebutId(debutId);
             loveDTO.setMemberId(memberId);
             LoveEntity loveEntity = LoveEntity.toSave(loveDTO, memberEntity);
-                loveRepository.save(loveEntity);
-                int loveNum = loveRepository.countByDebutId(debutId);
-                Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
-                if (optionalDebutEpisodeEntity.isPresent()) {
-                    DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
-                    Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
-                    if (optionalDebutCategoryEntity.isPresent()) {
-                        DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
-                        debutEpisodeEntity.setMemberEntity(memberEntity);
-                        debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
-                        debutEpisodeEntity.setLove(loveNum);
-                        debutRepository.save(debutEpisodeEntity);
-
-                    }
+            loveRepository.save(loveEntity);
+            int loveNum = loveRepository.countByDebutId(debutId);
+            Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
+            if (optionalDebutEpisodeEntity.isPresent()) {
+                DebutEpisodeEntity debutEpisodeEntity = optionalDebutEpisodeEntity.get();
+                Optional<DebutCategoryEntity> optionalDebutCategoryEntity = debutCategoryRepository.findById(debutEpisodeEntity.getDebutCategoryEntity().getId());
+                if (optionalDebutCategoryEntity.isPresent()) {
+                    DebutCategoryEntity debutCategoryEntity = optionalDebutCategoryEntity.get();
+                    debutEpisodeEntity.setMemberEntity(memberEntity);
+                    debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
+                    debutEpisodeEntity.setLove(loveNum);
+                    debutRepository.save(debutEpisodeEntity);
                 }
-                return 1;
-
-
-
+            }
+            return 1;
         } else {
             return 0;
         }
@@ -174,7 +170,6 @@ public class DebutService {
                     debutEpisodeEntity.setDebutCategoryEntity(debutCategoryEntity);
                     debutEpisodeEntity.setLove(loveNum);
                     debutRepository.save(debutEpisodeEntity);
-
                 }
             }
             return 1;
@@ -197,11 +192,8 @@ public class DebutService {
                         DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
                         DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
                         debutEpisodeDTOS.add(debutEpisodeDTO);
-
-
                     }
                     return debutEpisodeDTOS;
-
                 }
             case 1:
                 Optional<DebutCategoryEntity> optionalDebutCategoryEntity1 = debutCategoryRepository.findById(categoryId);
@@ -213,11 +205,8 @@ public class DebutService {
                         DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
                         DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
                         debutEpisodeDTOS.add(debutEpisodeDTO);
-
-
                     }
                     return debutEpisodeDTOS;
-
                 }
             case 2:
                 Optional<DebutCategoryEntity> optionalDebutCategoryEntity2 = debutCategoryRepository.findById(categoryId);
@@ -229,11 +218,8 @@ public class DebutService {
                         DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
                         DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
                         debutEpisodeDTOS.add(debutEpisodeDTO);
-
-
                     }
                     return debutEpisodeDTOS;
-
                 }
             case 3:
                 Optional<DebutCategoryEntity> optionalDebutCategoryEntity3 = debutCategoryRepository.findById(categoryId);
@@ -245,11 +231,8 @@ public class DebutService {
                         DebutEpisodeEntity debutEpisodeEntity1 = debutEpisodeEntity;
                         DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(debutEpisodeEntity1);
                         debutEpisodeDTOS.add(debutEpisodeDTO);
-
-
                     }
                     return debutEpisodeDTOS;
-
                 }
                 break;
         }
@@ -275,7 +258,7 @@ public class DebutService {
             for (int i = 0; i < 5; i++) {
                 debutEpisodeDTOList.add(DebutEpisodeDTO.toDTO(debutEpisodeEntityList.get(i)));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("인덱스 최신 데뷔글 null catch");
         }
 
@@ -284,17 +267,17 @@ public class DebutService {
     }
 
     public String loveCheck(Long id, Long memberId) {
-       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-       if (optionalMemberEntity.isPresent()){
-           MemberEntity memberEntity = optionalMemberEntity.get();
-          Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(id,memberEntity);
-         if (optionalLoveEntity.isPresent()){
-             return "ok";
-         }else {
-             return "no";
-         }
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(id, memberEntity);
+            if (optionalLoveEntity.isPresent()) {
+                return "ok";
+            } else {
+                return "no";
+            }
 
-       }
-       return null;
+        }
+        return null;
     }
 }
