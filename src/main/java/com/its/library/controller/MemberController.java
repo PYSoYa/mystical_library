@@ -41,15 +41,16 @@ public class MemberController {
     }
 
     @GetMapping("/login-page")
-    public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+    public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                            @RequestParam(value = "exception", required = false) String exception, Model model) {
         try {
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
             System.out.println("HomeController.index");
-            System.out.println("java.lang.NullPointerException: null");
         }
+        model.addAttribute("exception", exception);
         return "member/login";
     }
 

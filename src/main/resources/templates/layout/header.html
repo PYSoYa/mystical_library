@@ -278,7 +278,7 @@
                 <label class="label-id">아이디</label>
               </div>
               <div class="input-id-wrap">
-                <input type="text" name="loginId" class="input-id" placeholder="아이디123" autofocus>
+                <input type="text" name="loginId" class="input-id" placeholder="아이디123" required autofocus>
               </div>
               <div class="result-id-wrap">
                 <span class="span-id" id="result-id">잘 좀 입력하세요</span>
@@ -289,7 +289,7 @@
                 <label class="label-pw">비밀번호</label>
               </div>
               <div class="input-pw-wrap">
-                <input type="password" name="memberPassword" class="input-pw" placeholder="********">
+                <input type="password" name="memberPassword" class="input-pw" placeholder="********" required>
               </div>
               <div class="result-pw-wrap">
                 <span class="span-pw" id="result-pw">비밀번호도 입력해보세요</span>
@@ -300,7 +300,7 @@
                 <label class="label-pw-again">비밀번호 재확인</label>
               </div>
               <div class="input-pw-again-wrap">
-                <input type="password" class="input-pw-again" placeholder="********">
+                <input type="password" class="input-pw-again" placeholder="********" required>
               </div>
               <div class="result-pw-again-wrap">
                 <span class="span-pw-again" id="result-pw-again">비밀번호 확인하세요</span>
@@ -311,7 +311,7 @@
                 <label class="label-name">닉네임 (작가명)</label>
               </div>
               <div class="input-name-wrap">
-                <input type="text" name="memberName" class="input-name" placeholder="신비한서재">
+                <input type="text" name="memberName" class="input-name" placeholder="신비한서재" required>
               </div>
               <div class="result-name-wrap">
                 <span class="span-name" id="result-name">닉네임이 참 좋네요</span>
@@ -322,7 +322,7 @@
                 <label class="label-email">이메일</label>
               </div>
               <div class="input-email-wrap">
-                <input type="text" name="memberEmail" class="input-email" id="input-email" placeholder="example@example.com">
+                <input type="text" name="memberEmail" class="input-email" id="input-email" placeholder="example@example.com" required>
                 <button type="button" class="request-auth" onclick="emailAuthentication()">인증번호 받기</button>
               </div>
               <div class="result-email-wrap">
@@ -333,7 +333,7 @@
               <div class="label-auth-wrap">
               </div>
               <div class="input-auth-wrap">
-                <input type="text" class="input-auth" id="input-auth" placeholder="인증번호 입력">
+                <input type="text" class="input-auth" id="input-auth" placeholder="인증번호 입력" required>
                 <button type="button" class="check-auth" onclick="emailNumberCheck()">인증하기</button>
               </div>
               <div class="result-auth-wrap">
