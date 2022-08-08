@@ -49,6 +49,7 @@ public class EpisodeDTO {
         episodeDTO.setPayment(episodeEntity.getPayment());
         episodeDTO.setEpisodeHits(episodeEntity.getHits());
         episodeDTO.setWriterRole(episodeEntity.getWriterRole());
+        episodeDTO.setStar(episodeEntity.getStar());
         episodeDTO.setCreatedTime(episodeEntity.getCreatedDateTime());
         return episodeDTO;
     }

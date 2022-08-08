@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
+import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class CommentService {
         }
         commentRepository.save(CommentEntity.saveEntity(commentDTO, memberEntity, episodeEntity));
 
-        commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
+        commentEntityList = commentRepository.findByEpisodeId(episodeEntity.getId());
         for (CommentEntity comment : commentEntityList) {
             commentDTOList.add(CommentDTO.findDTO(comment));
         }
@@ -58,7 +59,7 @@ public class CommentService {
         List<CommentDTO> commentDTOList = new ArrayList<>();
         if (optionalEpisodeEntity.isPresent()) {
             episodeEntity = optionalEpisodeEntity.get();
-            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
+            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeId(episodeEntity.getId());
             for (CommentEntity comment : commentEntityList) {
                 commentDTOList.add(CommentDTO.findDTO(comment));
             }
@@ -84,7 +85,7 @@ public class CommentService {
         }
         if (optionalEpisodeEntity.isPresent()) {
             episodeEntity = optionalEpisodeEntity.get();
-            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
+            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeId(episodeEntity.getId());
             for (CommentEntity comment : commentEntityList) {
                 commentDTOList.add(CommentDTO.findDTO(comment));
             }
@@ -117,22 +118,23 @@ public class CommentService {
     }
 
     public List<CommentDTO> update(CommentDTO commentDTO) {
-        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(commentDTO.getId());
         CommentEntity commentEntity = new CommentEntity();
         List<CommentDTO> commentDTOList = new ArrayList<>();
+        List<CommentEntity> commentEntityList = new ArrayList<>();
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(commentDTO.getId());
         if (optionalCommentEntity.isPresent()) {
             commentEntity = optionalCommentEntity.get();
             commentEntity.setContents(commentDTO.getContents());
             commentRepository.save(commentEntity);
-            Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(commentDTO.getEpisodeId());
-            if (optionalCommentEntity.isPresent()) {
-                EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-                List<CommentEntity> commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
-                for (CommentEntity comment : commentEntityList) {
-                    commentDTOList.add(CommentDTO.findDTO(comment));
-                }
+        }
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(commentDTO.getEpisodeId());
+        EpisodeEntity episodeEntity = new EpisodeEntity();
+        if (optionalEpisodeEntity.isPresent()) {
+            episodeEntity = optionalEpisodeEntity.get();
+            commentEntityList = commentRepository.findByEpisodeId(episodeEntity.getId());
+            for (CommentEntity comment : commentEntityList) {
+                commentDTOList.add(CommentDTO.findDTO(comment));
             }
-
             return commentDTOList;
         } else {
             return null;

@@ -1,13 +1,11 @@
 package com.its.library.controller;
 
 import com.its.library.config.auth.PrincipalDetails;
+import com.its.library.dto.BookDTO;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishDTO;
-import com.its.library.service.DebutService;
-import com.its.library.service.MemberService;
-import com.its.library.service.ReqWriterService;
-import com.its.library.service.WishService;
+import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,6 +23,7 @@ public class MemberController {
     private final DebutService debutService;
     private final MemberService memberService;
     private final ReqWriterService reqWriterService;
+    private final BookService bookService;
 
     // 회원가입시 이메일 인증
     @PostMapping("/email-authentication")
@@ -42,15 +41,16 @@ public class MemberController {
     }
 
     @GetMapping("/login-page")
-    public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+    public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                            @RequestParam(value = "exception", required = false) String exception, Model model) {
         try {
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
             System.out.println("HomeController.index");
-            System.out.println("java.lang.NullPointerException: null");
         }
+        model.addAttribute("exception", exception);
         return "member/login";
     }
 
@@ -75,8 +75,13 @@ public class MemberController {
                     writerList.add(wishDTOList.get(i));
                 }
             }
-            System.out.println("writerList = " + writerList);
             model.addAttribute("wishlist", writerList);
+
+            List<BookDTO> bookDTOList = bookService.findAllByOnStatus(id);
+            model.addAttribute("bookList", bookDTOList);
+
+            int wishCount = wishService.findByMemberId(id);
+            model.addAttribute("wishCount", wishCount);
             return "member/myPage";
         }
     }

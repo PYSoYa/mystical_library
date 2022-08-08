@@ -31,6 +31,7 @@ public class BookController {
     private final MemberService memberService;
     private final NoticeService noticeService;
     private final EpisodeService episodeService;
+    private final StarService starService;
 
     // 책 저장페이지 요청
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
@@ -258,13 +259,21 @@ public class BookController {
 
             BookDTO bookDTO = bookService.findById(id);
             List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
+            List<WishDTO> bookLoveList = wishService.findByBookWish(id);
+            int bookLove = bookLoveList.size();
             List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+            model.addAttribute("episodeSize", episodeSize);
+            model.addAttribute("commentSize", commentSize);
+            model.addAttribute("bookLove", bookLove);
             model.addAttribute("book", bookDTO);
             model.addAttribute("commentList", commentDTOList);
             model.addAttribute("episodeList", episodeDTOList);
@@ -274,7 +283,6 @@ public class BookController {
             model.addAttribute("endPage", endPage);
         } catch (NullPointerException e) {
             System.out.println("BookController.bookDetail");
-            System.out.println("java.lang.NullPointerException: null");
         }
         return "book/detail";
     }
@@ -292,8 +300,16 @@ public class BookController {
 
         } finally {
             BookDTO bookDTO = bookService.findById(id);
-            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
+            model.addAttribute("episodeSize", episodeSize);
+
+            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
+            model.addAttribute("commentSize", commentSize);
+
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
             model.addAttribute("book", bookDTO);
@@ -313,11 +329,13 @@ public class BookController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
-
+        StarDTO starDTO = new StarDTO();
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
         BookDTO bookDTO = bookService.findById(bookId);
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
+        starDTO = starService.starList(findDTO.getId(), id);
+        model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("book", bookDTO);
         model.addAttribute("episode", episodeDTO);

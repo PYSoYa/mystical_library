@@ -25,7 +25,7 @@
         <input type="text" id="input-id" name="loginId" class="input-id" placeholder="아이디123">
       </div>
       <div class="result-id-wrap">
-        <span class="span-id" id="result-id-login">잘 좀 입력하세요</span>
+        <span class="span-id" id="result-id-login"></span>
       </div>
     </div>
     <div class="input-wrap">
@@ -36,9 +36,11 @@
         <input type="password" name="memberPassword" class="input-pw" placeholder="********">
       </div>
       <div class="result-pw-wrap">
-        <span class="span-pw" id="result-pw">비밀번호도 입력해보세요</span>
+        <span class="span-pw" id="result-pw"></span>
+        <p class="" th:text="${exception}"></p>
       </div>
     </div>
+
     <div class="btn-wrap">
       <button type="submit" class="submit-btn">로그인</button>
     </div>
