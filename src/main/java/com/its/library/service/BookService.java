@@ -36,12 +36,12 @@ public class BookService {
     public BookDTO reqBookSave(BookDTO bookDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
         String bookImgName = bookImg.getOriginalFilename();
-        bookImgName = System.currentTimeMillis() + "_" + bookImgName;
-        String savePath = "C:\\springboot_img\\" + bookImgName;
         if (!bookImg.isEmpty()) {
+            bookImgName = System.currentTimeMillis() + "_" + bookImgName;
+            String savePath = "C:\\springboot_img\\" + bookImgName;
             bookImg.transferTo(new File(savePath));
+            bookDTO.setBookImgName(bookImgName);
         }
-        bookDTO.setBookImgName(bookImgName);
 
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(bookDTO.getMemberName());
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(bookDTO.getGenreId());
@@ -75,9 +75,9 @@ public class BookService {
     public EpisodeDTO reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
         MultipartFile episodeImg = episodeDTO.getEpisodeImg();
         String episodeImgName = episodeImg.getOriginalFilename();
-        episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
-        String savePath = "C:\\springboot_img\\" + episodeImgName;
         if (!episodeImg.isEmpty()) {
+            episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
+            String savePath = "C:\\springboot_img\\" + episodeImgName;
             episodeImg.transferTo(new File(savePath));
             episodeDTO.setEpisodeImgName(episodeImgName);
         }
@@ -157,9 +157,9 @@ public class BookService {
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
         String bookImgName = bookImg.getOriginalFilename();
-        bookImgName = System.currentTimeMillis() + "_" + bookImgName;
-        String savePath = "C:\\springboot_img\\" + bookImgName;
         if (!bookImg.isEmpty()) {
+            bookImgName = System.currentTimeMillis() + "_" + bookImgName;
+            String savePath = "C:\\springboot_img\\" + bookImgName;
             bookImg.transferTo(new File(savePath));
             bookDTO.setBookImgName(bookImgName);
         }
@@ -177,9 +177,9 @@ public class BookService {
     public void reqEpisodeUpdate(EpisodeDTO episodeDTO, MailDTO mailDTO) throws IOException {
         MultipartFile episodeImg = episodeDTO.getEpisodeImg();
         String episodeImgName = episodeImg.getOriginalFilename();
-        episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
-        String savePath = "C:\\springboot_img\\" + episodeImgName;
         if (!episodeImg.isEmpty()) {
+            episodeImgName = System.currentTimeMillis() + "_" + episodeImgName;
+            String savePath = "C:\\springboot_img\\" + episodeImgName;
             episodeImg.transferTo(new File(savePath));
             episodeDTO.setEpisodeImgName(episodeImgName);
         }
@@ -449,5 +449,14 @@ public class BookService {
             }
         }
         return episodeDTOList.get(0).getId();
+    }
+
+    public List<BookDTO> findAllByOnStatus(Long memberId) {
+        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "연재");
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity book : bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
+        }
+        return bookDTOList;
     }
 }

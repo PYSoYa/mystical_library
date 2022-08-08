@@ -11,24 +11,6 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<div id="test">
-  <table th:each="comment:${commentList}">
-    <tr>
-      <th>작성자</th>
-      <th>댓글 내용</th>
-      <th>작성시간</th>
-    </tr>
-    <tr>
-      <td th:text="${comment.memberName}"></td>
-      <td th:text="${comment.contents}"></td>
-      <td th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-      <td th:if="${authentication.memberName == comment.memberName}">
-        <input type="button" th:onclick="deleteComment([[${comment.id}]],[[${comment.memberName}]])" value="삭제">
-      </td>
-    </tr>
-  </table>
-</div>
-
 <main class="main-container">
   <div class="book-episode-comment-container">
     <div class="book-detail-container">
@@ -39,21 +21,23 @@
         <div class="detail-wrap">
           <div class="title-wrap">
             <h2 class="title" th:text="${book.bookTitle}"></h2>
-            <div class="wishlist-wrap">
-              <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
-            </div>
           </div>
           <div class="author-wrap">
             <div class="author-wrapper">
-              <a href="#">
+              <a th:href="@{|/member/myPage/${book.memberId}|}">
                 <span class="author" th:text="${book.memberName}"></span>
               </a>
             </div>
             <div class="episode-quantity-wrap">
-              <span class="quantity">총 99화</span>
+              <span class="edit-span">총</span>
+              <span class="edit-span" th:text="${episodeSize}"></span>
+              <span class="quantity">화</span>
             </div>
             <div class="status-wrap">
-              <span class="status" th:text="${book.status}">연재</span>
+              <span class="status" th:text="${book.status}"></span>
+            </div>
+            <div class="book-episode-btn-wrap">
+                <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
             </div>
           </div>
           <div class="intro-wrap">
@@ -170,75 +154,34 @@
 
     <div class="comment-detail-container">
       <div class="comment-header-wrap">
-        <span class="comment-header">댓글목록 (3672)</span>
+        <span class="comment-header">댓글목록 </span><span th:text="'(' + ${commentSize} + ')'"></span>
       </div>
-      <div class="comment-detail-wrap">
+      <div class="comment-detail-wrap" th:each="comment:${commentList}">
         <div class="img-wrap">
           <a href="#" class="img-link">
-            <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+            <img th:src="@{|/upload/${comment.memberImgName}|}" class="img" alt="">
           </a>
         </div>
         <div class="detail-wrap">
           <div class="header-wrap">
             <div class="writer-wrap">
               <a href="#" class="writer-link">
-                <h5 class="writer">작성자</h5>
+                <h5 class="writer" th:text="${comment.memberName}"></h5>
               </a>
             </div>
             <div class="date-wrap">
               <div class="symbol">·</div>
-              <span class="date">2022.06.23</span>
+              <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </div>
             <div class="report-wrap">
-              <a href="#" class="report">신고</a>
+              <a href="#" class="report"></a>
             </div>
           </div>
           <div class="content-wrap">
-              <span class="content">테러로 인해 잃어버린 공작의 5살 손녀
-
-천둥소리=폭탄소리????
-그래서 천둥소리에 왠지 모르게 벌벌 떨 정도로 무섭고 테러 이후의 기억은 잃어버린 건가..?
-
-현 부모가 자기 딸이 아니라서 돈이랑 여주명의로 사체까지 빌려서 작위 사고 등골까지 빼먹을라 했나</span>
+              <span class="content" th:text="${comment.contents}"></span>
           </div>
           <div class="comment-episode-wrap">
-            <span class="comment-episode">제목 제목 제목 제목 제목 1화</span>
-          </div>
-        </div>
-      </div>
-      <div class="comment-detail-wrap last-detail-wrap">
-        <div class="img-wrap">
-          <a href="#" class="img-link">
-            <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-          </a>
-        </div>
-        <div class="detail-wrap">
-          <div class="header-wrap">
-            <div class="writer-wrap">
-              <a href="#" class="writer-link">
-                <h5 class="writer">작성자2</h5>
-              </a>
-            </div>
-            <div class="date-wrap">
-              <div class="symbol">·</div>
-              <span class="date">2022.06.12</span>
-            </div>
-            <div class="report-wrap">
-              <a href="#" class="report">신고</a>
-            </div>
-          </div>
-          <div class="content-wrap">
-              <span class="content">피로 전해지는 저주를 자식에게
-물려줘서 미안해하는게 아니라..
-수치?죽여?여기 또 도른 황제있네요..
-
-근데 법들이 다..이상해요..
-가족법?손해배상청구법?
-또, 그와중에 50첩요리가 식탁에 다차려지나??
-걱정하는 나..ㅜㅜ</span>
-          </div>
-          <div class="comment-episode-wrap">
-            <span class="comment-episode">제목 제목 제목 제목 제목 2화</span>
+            <span class="comment-episode" th:text="${comment.commentEpisode}"></span>
           </div>
         </div>
       </div>
@@ -251,51 +194,63 @@
 <script th:inline="javascript">
   const first = () => {
     Swal.fire({
-      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
-      showDenyButton: true,
+      title: '로그인 후에 이용가능한 메뉴입니다.',
+      showDenyButton: false,
       showCancelButton: false,
-      confirmButtonText: '확인',
-      // denyButtonText: `Don't save`,
+      confirmButtonText: '로그인'
+      // denyButtonText: ``,
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
-        location.href = "/member/login-page";
-      } else if (result.isDenied) {
-        // Swal.fire('', '', 'info')
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 창으로 이동합니다.',
+          showConfirmButton: false,
+        });
+        setTimeout(function (){
+          location.href = "/member/login-page";
+        },1200);
       }
     });
   }
 
   const again = () => {
     Swal.fire({
-      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
-      showDenyButton: true,
+      title: '로그인 후에 이용가능한 메뉴입니다.',
+      showDenyButton: false,
       showCancelButton: false,
-      confirmButtonText: '확인',
-      // denyButtonText: `Don't save`,
+      confirmButtonText: '로그인'
+      // denyButtonText: ``,
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
-        location.href = "/member/login-page";
-      } else if (result.isDenied) {
-        // Swal.fire('', '', 'info')
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 창으로 이동합니다.',
+          showConfirmButton: false,
+        });
+        setTimeout(function (){
+          location.href = "/member/login-page";
+        },1200);
       }
     });
   }
 
   const bookLove = () => {
     Swal.fire({
-      title: '로그인 후에 이용가능한 메뉴입니다.\n로그인 하시겠습니까?',
-      showDenyButton: true,
+      title: '로그인 후에 이용가능한 메뉴입니다.',
+      showDenyButton: false,
       showCancelButton: false,
-      confirmButtonText: '확인',
-      // denyButtonText: `Don't save`,
+      confirmButtonText: '로그인'
+      // denyButtonText: ``,
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire('로그인 창으로 이동합니다.', '', 'success');
-        location.href = "/member/login-page";
-      } else if (result.isDenied) {
-        // Swal.fire('', '', 'info')
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 창으로 이동합니다.',
+          showConfirmButton: false,
+        });
+        setTimeout(function (){
+          location.href = "/member/login-page";
+        },1200);
       }
     });
   }
