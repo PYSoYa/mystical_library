@@ -283,7 +283,6 @@ public class BookController {
             model.addAttribute("endPage", endPage);
         } catch (NullPointerException e) {
             System.out.println("BookController.bookDetail");
-            System.out.println("java.lang.NullPointerException: null");
         }
         return "book/detail";
     }
@@ -301,8 +300,16 @@ public class BookController {
 
         } finally {
             BookDTO bookDTO = bookService.findById(id);
-            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
+            model.addAttribute("episodeSize", episodeSize);
+
+            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
+            model.addAttribute("commentSize", commentSize);
+
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
             model.addAttribute("book", bookDTO);
