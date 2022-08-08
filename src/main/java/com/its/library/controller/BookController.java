@@ -258,13 +258,21 @@ public class BookController {
 
             BookDTO bookDTO = bookService.findById(id);
             List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
+            List<WishDTO> bookLoveList = wishService.findByBookWish(id);
+            int bookLove = bookLoveList.size();
             List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+            model.addAttribute("episodeSize", episodeSize);
+            model.addAttribute("commentSize", commentSize);
+            model.addAttribute("bookLove", bookLove);
             model.addAttribute("book", bookDTO);
             model.addAttribute("commentList", commentDTOList);
             model.addAttribute("episodeList", episodeDTOList);
@@ -313,7 +321,6 @@ public class BookController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
-
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
         BookDTO bookDTO = bookService.findById(bookId);
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
