@@ -163,8 +163,8 @@
     <div class="recent-debut-post-list-container">
       <div class="recent-debut-post-list-wrap">
         <div class="recent-debut-post-div">
-          <ul class="recent-debut-post-ul">
-            <li class="recent-debut-post-li" th:each="finsh:${newList}">
+          <ul th:each="finsh:${newList}" class="recent-debut-post-ul">
+            <li class="recent-debut-post-li" >
               <div class="recent-debut-post">
                 <div class="img-wrap">
                   <a th:if="${authentication != null}" th:href="@{|/book/book/${finsh.id}|}">
@@ -204,8 +204,8 @@
       <div class="recent-completion-list-wrap">
         <div class="recent-completion-div">
           <ul class="recent-completion-ul">
-            <li class="recent-completion-li">
-              <div th:each="newDebut:${newDebutList}" class="recent-completion">
+            <li th:each="newDebut:${newDebutList}" class="recent-completion-li">
+              <div class="recent-completion">
                 <div class="img-wrap">
                   <a th:href="@{|/debut/detail/${newDebut.id}|}">
                     <img th:src="@{|/upload/${newDebut.debutImgName}|}" class="img" alt="">

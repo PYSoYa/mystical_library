@@ -129,10 +129,6 @@ public class DebutService {
             loveDTO.setDebutId(debutId);
             loveDTO.setMemberId(memberId);
             LoveEntity loveEntity = LoveEntity.toSave(loveDTO, memberEntity);
-            Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(debutId, memberEntity);
-            if (optionalLoveEntity.isPresent()) {
-                return 0;
-            } else {
                 loveRepository.save(loveEntity);
                 int loveNum = loveRepository.countByDebutId(debutId);
                 Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutId);
@@ -148,8 +144,8 @@ public class DebutService {
 
                     }
                 }
-                return loveNum;
-            }
+                return 1;
+
 
 
         } else {
@@ -181,7 +177,7 @@ public class DebutService {
 
                 }
             }
-            return loveNum;
+            return 1;
 
         } else {
             return 0;
@@ -285,5 +281,20 @@ public class DebutService {
 
         return debutEpisodeDTOList;
 
+    }
+
+    public String loveCheck(Long id, Long memberId) {
+       Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+       if (optionalMemberEntity.isPresent()){
+           MemberEntity memberEntity = optionalMemberEntity.get();
+          Optional<LoveEntity> optionalLoveEntity = loveRepository.findByDebutIdAndMemberEntity(id,memberEntity);
+         if (optionalLoveEntity.isPresent()){
+             return "ok";
+         }else {
+             return "no";
+         }
+
+       }
+       return null;
     }
 }
