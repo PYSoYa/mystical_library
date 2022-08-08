@@ -39,10 +39,11 @@ public class CommentController {
     }
 
     // 회차 댓글 내용수정
-    @PutMapping("/update")
+    @PostMapping("/update")
     public @ResponseBody List<CommentDTO> update(@ModelAttribute CommentDTO commentDTO) {
         System.out.println("commentDTO = " + commentDTO);
         List<CommentDTO> result = commentService.update(commentDTO);
+        System.out.println("result = " + result);
         return result;
     }
 
