@@ -85,7 +85,7 @@ public class CommentService {
         }
         if (optionalEpisodeEntity.isPresent()) {
             episodeEntity = optionalEpisodeEntity.get();
-            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeEntity(episodeEntity);
+            List<CommentEntity> commentEntityList = commentRepository.findByEpisodeId(episodeEntity.getId());
             for (CommentEntity comment : commentEntityList) {
                 commentDTOList.add(CommentDTO.findDTO(comment));
             }
