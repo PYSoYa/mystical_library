@@ -155,13 +155,13 @@
         <div class="info">
           <h2 class="c-title">댓글 쓰기</h2>
         </div>
-        <input type="hidden" name="debutId" th:value="${debut.id}">
+        <input type="hidden" id="debutId" th:value="${debut.id}">
         <input type="hidden" id="memberId" name="memberId" th:value="${authentication.id}">
         <input type="hidden" id="memberName" name="memberName" th:value="${authentication.memberName}">
         <textarea name="contents" id="input-contents" rows="5" placeholder="댓글은 500자 까지 등록 가능합니다."></textarea>
         <div class="btn-wrap">
           <div class="btn-align-right">
-            <button type="button" th:onclick="commentSave()" class="btn-submit">
+            <button type="button" onclick="commentSave()" class="btn-submit">
               <span>댓글 등록</span>
             </button>
             <button type="button" class="btn-cancel" onclick="cancelBTN()">
@@ -173,18 +173,19 @@
       <div class="list-wrap">
         <div class="info title">
           <span class="list-title">댓글 목록 (</span>
-          <span class="list-title" th:value="${commentList.size()}">2847</span>
+          <span th:if="${commentList.size()!=null}" class="list-title" th:value="${commentList.size()}"></span>
           <span class="list-title">)</span>
         </div>
-        <div class="comment-list-wrap">
+        <div th:each="comment:${commentList}" class="comment-list-wrap">
           <ul id="saveComment">
             <li>
               <div class="info">
                 <div>
                   <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
+                    <span th:text="${comment.memberName}" class="writer"></span>
                   </a>
-                  <span class="date">2022-04-02</span>
+                  <span th:text="${comment.createdTime}" class="date">
+                  </span>
                 </div>
                 <div>
                   <span class="update">
@@ -199,175 +200,7 @@
                 </div>
               </div>
               <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
-              </div>
-            </li>
-            <li>
-              <div class="info">
-                <div>
-                  <a href="#" class="writer-link">
-                    <span class="writer">어쩔</span>
-                  </a>
-                  <span class="date">2022-04-02</span>
-                </div>
-                <div>
-                  <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
-                  </span>
-                  <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
-                  </span>
-                  <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
-                  </span>
-                </div>
-              </div>
-              <div class="content">
-                <span class="content">댓글 내용 댓글 내용</span>
+                <span th:text="${comment.contents}" class="content"></span>
               </div>
             </li>
           </ul>
@@ -498,41 +331,60 @@
     lhlabel03.className = 'opt-button height03 active';
   }
 
-  function heartCheck(num) {
+  function heartCheck() {
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
     const memberId = [[${authentication.id}]];
-
-    const love = document.getElementById("emptyHeart");
-    const hate = document.getElementById("fullHeart");
     const id = [[${debut.id}]];
-      if (num == 1) {
+
+          $.ajax({
+            type:"get",
+            url:"/debut/loveCheck/"+id,
+            data:{"memberId":memberId},
+            dataType:"text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            }, success: function (result) {
+
+
+
+      if (result === "no") {
         $.ajax({
           type: "get",
-          url: "/debut/love/" + id,
-          data: {"memberId": memberId, "num": num},
+          url: "/debut/loveSave/" + id,
+          data: {"memberId": memberId},
           dataType: "text",
           beforeSend: function(xhr){
             xhr.setRequestHeader(header, token);
           },
           success: function (result) {
-            love.className = "bi bi-heart-fill";
+            console.log(result)
+            if (result==1){
+              location.reload();
+            }
+
         }
       });
       } else {
         $.ajax({
           type: "get",
-          url: "/debut/love/" + id,
-          data: {"memberId": memberId, "num": num},
+          url: "/debut/loveDelete/" + id,
+          data: {"memberId": memberId},
           dataType: "text",
           beforeSend: function(xhr){
             xhr.setRequestHeader(header, token);
           },
           success: function (result) {
-            hate.className = "bi bi-heart";
+            console.log(result)
+            if (result==1){
+              location.reload();
+            }
+
           }
         });
       }
+    }
+          });
     }
 
   function commentSave() {

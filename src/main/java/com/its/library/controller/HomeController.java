@@ -35,6 +35,8 @@ public class HomeController {
             List<BookDTO> newList = new ArrayList<>();
             List<BookEntity> bookHitsList = new ArrayList<>();
             List<BookEntity> bookNewList = new ArrayList<>();
+            List<DebutEpisodeDTO> debutEpisodeDTOS = debutService.indexNewList();//데뷔 최신글 리스트 5개
+            model.addAttribute("newDebutList",debutEpisodeDTOS);
             bookHitsList = bookRepository.findAllHits();
             if (bookHitsList.size() != 0 && bookHitsList.size() > 5) {
                 for (int i = 0; i < 6; i++) {
@@ -55,8 +57,6 @@ public class HomeController {
             model.addAttribute("newList", newList); // 전체 카테고리중 완결작
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
-           List<DebutEpisodeDTO> debutEpisodeDTOS = debutService.indexNewList();//데뷔 최신글 리스트 5개
-           model.addAttribute("newDebutList",debutEpisodeDTOS);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
             System.out.println("HomeController.index");
