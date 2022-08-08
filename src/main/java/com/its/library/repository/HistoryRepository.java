@@ -21,7 +21,7 @@ public interface HistoryRepository extends JpaRepository<HistoryEntity, Long> {
 
     List<HistoryEntity> findByBooKId(Long bookId);
 
-    @Query(value = "select distinct(h.episodeEntity.id) from HistoryEntity h where h.memberEntity.id = :memberId")
+    @Query(value = "select distinct(h.booKId) from HistoryEntity h where h.memberEntity.id = :memberId")
     List<Long> findByMemberId(@Param("memberId") Long memberId);
 
     List<HistoryEntity> findByMemberEntityIsNull();

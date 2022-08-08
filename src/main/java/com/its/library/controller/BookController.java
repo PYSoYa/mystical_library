@@ -31,6 +31,7 @@ public class BookController {
     private final MemberService memberService;
     private final NoticeService noticeService;
     private final EpisodeService episodeService;
+    private final StarService starService;
 
     // 책 저장페이지 요청
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
@@ -328,10 +329,13 @@ public class BookController {
         String loginId = principalDetails.getUsername();
         MemberDTO findDTO = memberService.findByLoginId(loginId);
         model.addAttribute("authentication", findDTO);
+        StarDTO starDTO = new StarDTO();
         EpisodeDTO episodeDTO = bookService.episodeFindById(id);
         BookDTO bookDTO = bookService.findById(bookId);
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
+        starDTO = starService.starList(findDTO.getId(), id);
+        model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("book", bookDTO);
         model.addAttribute("episode", episodeDTO);
