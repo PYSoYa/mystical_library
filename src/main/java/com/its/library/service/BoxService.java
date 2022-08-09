@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +23,17 @@ public class BoxService {
     private final BookRepository bookRepository;
     private final HistoryRepository historyRepository;
 
-    public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId) {
+    public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId, String memberName) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(historyDTO.getBookId());
         MemberEntity memberEntity = new MemberEntity();
         HistoryEntity historyEntity = new HistoryEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
+        BookEntity bookEntity = new BookEntity();
+        if (optionalBookEntity.isPresent()) {
+            bookEntity = optionalBookEntity.get();
+        }
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
@@ -41,7 +47,7 @@ public class BoxService {
                 }
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "무료저장";
-            } else if (memberEntity.getMemberPoint() > episodeEntity.getPrice()) {
+            } else if (memberEntity.getMemberPoint() >= episodeEntity.getPrice()) {
                 Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
                 if (optionalHistoryEntity.isPresent()) {
                     historyEntity = optionalHistoryEntity.get();
@@ -60,23 +66,31 @@ public class BoxService {
         return null;
     }
 
-    public String save(BoxDTO boxDTO) {
+    public String save(BoxDTO boxDTO, String memberName) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(boxDTO.getBookId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(boxDTO.getEpisodeId());
         BoxEntity boxEntity = new BoxEntity();
         MemberEntity memberEntity = new MemberEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
+        BookEntity bookEntity = new BookEntity();
         if (optionalMemberEntity.isPresent() && optionalBookEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
+            bookEntity = optionalBookEntity.get();
+            if (bookEntity.getMemberName().equals(memberName)) {
+                boxRepository.save(boxEntity.saveEntity(boxDTO, memberEntity));
+                return "no";
+            }
             List<BoxEntity> boxEntityList = boxRepository.findByMemberEntityAndEpisodeId(memberEntity, episodeEntity.getId());
+
             if (boxEntityList.size() != 0) {
                 boxDTO.setId(boxEntityList.get(0).getId());
                 boxRepository.save(boxEntity.saveEntity(boxDTO, memberEntity));
                 return "no";
             } else {
                 boxRepository.save(boxEntity.saveEntity(boxDTO, memberEntity));
+                System.out.println("여기로오면안돼");
                 return "ok";
             }
         } else {
