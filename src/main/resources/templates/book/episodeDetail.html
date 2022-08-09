@@ -347,9 +347,9 @@
         const contentsUpdate = document.getElementById(id + "comment");
         const contentsBefore = document.getElementById(id + "span").innerHTML;
 
-        var output = "<input type=\'text\' id=\'input-content1\' name=\'contents\' value='" + contentsBefore + "'>";
-        output += "<button type=\"button\" onclick=\"modify("+ id + ")\" class=\"modify-btn\">수정</button>";
-        output += "<button type=\"button\" onclick=\"cancelBTN1()\" class=\"cancel-btn\">취소</button>";
+        var output = "<textarea type=\'text\' id=\'input-content1\' name=\'contents\' class='input-contents'>"+ contentsBefore + "</textarea>";
+        output += "<button type=\"button\" onclick=\"modify("+ id + ")\" class=\"comment-update-btn\">" + "<span>" + "수정" +"</span>" + "</button>";
+        output += "<button type=\"button\" onclick=\"cancelBTN1()\" class=\"comment-cancel-btn\">" + "<span>" + "취소" +"</span>" + "</button>";
         contentsUpdate.innerHTML = output;
     }
 

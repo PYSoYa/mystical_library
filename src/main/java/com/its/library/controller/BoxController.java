@@ -33,8 +33,9 @@ public class BoxController {
 
     // 구매한 회차 저장
     @PostMapping("/save")
-    public @ResponseBody String save(@ModelAttribute BoxDTO boxDTO) {
-        String result = boxService.save(boxDTO);
+    public @ResponseBody String save(@ModelAttribute BoxDTO boxDTO,
+                                     @RequestParam("memberName") String memberName) {
+        String result = boxService.save(boxDTO, memberName);
         return result;
     }
 

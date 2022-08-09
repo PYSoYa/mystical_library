@@ -103,6 +103,7 @@ public class BookService {
     public EpisodeDTO episodeFindById(Long id) {
         BookEntity bookEntity = new BookEntity();
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
         episodeRepository.episodeHits(id);
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
         if (optionalEpisodeEntity.isPresent()) {
@@ -110,7 +111,11 @@ public class BookService {
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
             bookEntity = optionalBookEntity.get();
             episodeEntityList = episodeRepository.findByBookEntity_Id(bookEntity.getId());
-            int hits = bookRepository.hitsSum(episodeEntityList.get(0).getId());
+            for (EpisodeEntity episode: episodeEntityList) {
+                episodeDTOList.add(EpisodeDTO.findDTO(episode));
+                System.out.println("episodeDTOList = " + episodeDTOList);
+            }
+            int hits = bookRepository.hitsSum(episodeEntityList.get(0).getBookEntity().getId());
             bookEntity.setHits(hits);
             bookRepository.save(bookEntity);
             EpisodeDTO episodeDTO = EpisodeDTO.findDTO(episodeEntity);
