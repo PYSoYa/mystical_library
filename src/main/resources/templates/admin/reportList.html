@@ -46,64 +46,61 @@
           </div>
         </div>
         <div class="history-detail-container">
-          <div class="history-title-wrap">
-            <h5 class="title">작가댓글 신고내역</h5>
-          </div>
-          <div class="history-detail-wrap">
-            <div class="history-detail-wrapper">
-              <div class="table-wrap">
-                <table class="history-table">
-                  <tr>
-                    <th>신고번호</th>
-                    <th>회원번호</th>
-                    <th>작가댓글 신고번호</th>
-                    <th>작가댓글 신고내용</th>
-                    <th>승인</th>
-                    <th>거절</th>
-
-                  </tr>
-                  <tr th:each="writer:${writerList}">
-                    <td th:text="${writer.id}"></td>
-                    <td th:text="${writer.memberId}"></td>
-                    <td th:text="${writer.commentId}"></td>
-                    <td th:text="${writer.writerContents}"></td>
-                    <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${writer.id}]])"></td>
-                    <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${writer.id}]])"></td>
-
-                  </tr>
-
-                </table>
+          <div class="history-list-wrap">
+            <div class="history-title-wrap">
+              <h5 class="title">작가댓글 신고내역</h5>
+            </div>
+            <div class="history-detail-wrap">
+              <div class="history-detail-wrapper">
+                <div class="table-wrap">
+                  <table class="history-table">
+                    <tr>
+                      <th>신고번호</th>
+                      <th>회원번호</th>
+                      <th>작가댓글 신고번호</th>
+                      <th>작가댓글 신고내용</th>
+                      <th>승인</th>
+                      <th>거절</th>
+                    </tr>
+                    <tr th:each="writer:${writerList}">
+                      <td th:text="${writer.id}"></td>
+                      <td th:text="${writer.memberId}"></td>
+                      <td th:text="${writer.commentId}"></td>
+                      <td th:text="${writer.writerContents}"></td>
+                      <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${writer.id}]])"></td>
+                      <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${writer.id}]])"></td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-          </br>
-          <div class="history-title-wrap">
-            <h5 class="title">데뷔댓글 신고내역</h5>
-          </div>
-          <div class="history-detail-wrap">
-            <div class="history-detail-wrapper">
-              <div class="table-wrap">
-                <table class="history-table">
-                  <tr>
-                    <th>신고번호</th>
-                    <th>회원번호</th>
-                    <th>데뷔댓글 신고번호</th>
-                    <th>데뷔댓글 신고내용</th>
-                    <th>승인</th>
-                    <th>거절</th>
-
-                  </tr>
-
-                  <tr th:each="debut:${debutList}">
-                    <td th:text="${debut.id}"></td>
-                    <td th:text="${debut.memberId}"></td>
-                    <td th:text="${debut.debutCommentId}"></td>
-                    <td th:text="${debut.debutContents}"></td>
-                    <td><input type="button" th:value="승인" th:onclick="episodeAgree([[${debut.id}]])"></td>
-                    <td><input type="button" th:value="거절" th:onclick="episodeDelete([[${debut.id}]])"></td>
-
-                  </tr>
-                </table>
+          <div class="history-list-wrap">
+            <div class="history-title-wrap">
+              <h5 class="title">데뷔댓글 신고내역</h5>
+            </div>
+            <div class="history-detail-wrap">
+              <div class="history-detail-wrapper">
+                <div class="table-wrap">
+                  <table class="history-table">
+                    <tr>
+                      <th>신고번호</th>
+                      <th>회원번호</th>
+                      <th>데뷔댓글 신고번호</th>
+                      <th>데뷔댓글 신고내용</th>
+                      <th>승인</th>
+                      <th>거절</th>
+                    </tr>
+                    <tr th:each="debut:${debutList}">
+                      <td th:text="${debut.id}"></td>
+                      <td th:text="${debut.memberId}"></td>
+                      <td th:text="${debut.debutCommentId}"></td>
+                      <td th:text="${debut.debutContents}"></td>
+                      <td><input type="button" class="accept-btn" th:value="승인" th:onclick="episodeAgree([[${debut.id}]])"></td>
+                      <td><input type="button" class="deny-btn" th:value="거절" th:onclick="episodeDelete([[${debut.id}]])"></td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

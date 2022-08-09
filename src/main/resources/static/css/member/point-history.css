@@ -12,6 +12,7 @@
 .menu-list-container a:link {color: #666;}
 /* 디테일 */
 .history-detail-container {display: flex; flex-direction: column; width: 100%;}
+.history-detail-container .history-list-wrap {min-height: 250px;}
 .history-detail-container .history-title-wrap {margin-bottom: 0.625rem; padding: 1.25rem; border-bottom: 1px solid #d1d5d9;}
 .history-detail-container .history-title-wrap .title {font-size: 1.5rem; font-weight: 600; font-family: inherit;}
 .history-detail-container .history-detail-wrap {border-radius: 0.25rem; padding-top: 1.25rem;}
@@ -28,6 +29,12 @@
 .history-table tr th:first-child {border-radius: 0.25rem 0 0 0;}
 .history-table tr th:last-child {border-radius: 0 0.25rem 0 0;}
 .history-table tr td:last-child {color: #bb3636; font-weight: 600;}
+.history-table .tag {padding: 0.25rem; border-radius: 4px; color: #fff; font-size: 1rem;}
+.history-table .tag.novel {background-color: #00bfdd;}
+.history-table .tag.poem {background-color: #ffca28;}
+.history-table .tag.essay {background-color: #ff702a;}
+.history-table .accept-btn {color: #fff; background-color: #1e9eff; border: none; outline: none; padding: 0.25rem; font-size: 1rem; border-radius: 2px;}
+.history-table .deny-btn {color: #fff; background-color: #f78282; border: none; outline: none; padding: 0.25rem; font-size: 1rem; border-radius: 2px;}
 /* 총 충전 금액 */
 .total-amount {display: flex; flex-direction: row; position: relative; justify-content: end; margin: 0; padding-top: 1.5rem; font-size: 1.25rem; font-weight: 600;}
 .total-amount .title {margin-right: 8rem;}

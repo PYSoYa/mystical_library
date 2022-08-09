@@ -58,9 +58,9 @@
               <span class="intro" th:text="${book.introduce}"></span>
           </div>
           <div class="tag-wrap">
-            <span class="tag novel">웹소설</span>
-            <span class="tag poem">시</span>
-            <span class="tag essay">에세이</span>
+            <span class="tag novel" th:if="${book.categoryId eq 1}">웹소설</span>
+            <span class="tag poem" th:if="${book.categoryId eq 2}">시</span>
+            <span class="tag essay" th:if="${book.categoryId eq 3}">에세이</span>
           </div>
         </div>
         <div class="action-wrap">
@@ -150,7 +150,6 @@
             </div>
           </div>
         </div>
-
       <div class="pagination-wrap">
         <nav aria-label="Page navigation example">
           <ul class="pagination">
