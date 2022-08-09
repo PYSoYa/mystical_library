@@ -489,4 +489,12 @@ public class BookService {
         return bookDTOList;
     }
 
+    public List<BookDTO> finishBook(Long memberId) {
+        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "완결");
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity book: bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
+        }
+        return bookDTOList;
+    }
 }

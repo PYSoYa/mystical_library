@@ -32,22 +32,12 @@
         <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <ul class="dropdown-menu">
           <li><a href="#" class="dropdown-item" th:href="@{/book/category?categoryId=2}">시 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
         <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">에세이 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a href="#" class="dropdown-item" th:href="@{/book/category?categoryId=3}">에세이 메인</a></li>
         </ul>
       </li>
       <li class="category-wrap">
@@ -127,142 +117,6 @@
               <span class="tag novel" th:if="${book.categoryId eq 1}">웹소설</span>
               <span class="tag poem" th:if="${book.categoryId eq 2}">시</span>
               <span class="tag essay" th:if="${book.categoryId eq 3}">에세이</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-wrap">
-          <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-            </a>
-          </div>
-          <div class="detail-wrap">
-            <div class="title-wrap">
-              <h5 class="title">타이틀</h5>
-            </div>
-            <div class="author-wrap">
-              <a href="#" class="author-link">
-                <span class="author">작가</span>
-              </a>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-              </svg>
-              <span class="hits">100만+</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-heart heart-icon" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
-              <span class="heart">234</span>
-            </div>
-            <div class="intro-wrap">
-              <span class="intro">소개글 대충 쓰기 아무튼 대충임 글이 잘릴까요? 몰라용~~~</span>
-            </div>
-            <div class="tag-wrap">
-              <span class="tag novel">웹소설</span>
-              <span class="tag poem">시</span>
-              <span class="tag essay">에세이</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-wrap">
-          <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-            </a>
-          </div>
-          <div class="detail-wrap">
-            <div class="title-wrap">
-              <h5 class="title">타이틀</h5>
-            </div>
-            <div class="author-wrap">
-              <a href="#" class="author-link">
-                <span class="author">작가</span>
-              </a>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-              </svg>
-              <span class="hits">100만+</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-heart heart-icon" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
-              <span class="heart">234</span>
-            </div>
-            <div class="intro-wrap">
-              <span class="intro">소개글 소개글 소개글 소개하는 글 소개를 해주세요 글이란 뭘까 나도 몰라용~~</span>
-            </div>
-            <div class="tag-wrap">
-              <span class="tag novel">웹소설</span>
-              <span class="tag poem">시</span>
-              <span class="tag essay">에세이</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-wrap">
-          <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-            </a>
-          </div>
-          <div class="detail-wrap">
-            <div class="title-wrap">
-              <h5 class="title">타이틀</h5>
-            </div>
-            <div class="author-wrap">
-              <a href="#" class="author-link">
-                <span class="author">작가</span>
-              </a>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-              </svg>
-              <span class="hits">100만+</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-heart heart-icon" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
-              <span class="heart">234</span>
-            </div>
-            <div class="intro-wrap">
-              <span class="intro">소개글 집가고 싶다 집가고싶다 집집집ㅈ빚빚빚빚ㅂ집집집ㅈㅂ집집집지ㅣㅂ집집짖ㅂㅂ지</span>
-            </div>
-            <div class="tag-wrap">
-              <span class="tag novel">웹소설</span>
-              <span class="tag poem">시</span>
-              <span class="tag essay">에세이</span>
-            </div>
-          </div>
-        </div>
-        <div class="book-wrap">
-          <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-            </a>
-          </div>
-          <div class="detail-wrap">
-            <div class="title-wrap">
-              <h5 class="title">타이틀</h5>
-            </div>
-            <div class="author-wrap">
-              <a href="#" class="author-link">
-                <span class="author">작가</span>
-              </a>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
-                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-              </svg>
-              <span class="hits">100만+</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-heart heart-icon" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
-              <span class="heart">234</span>
-            </div>
-            <div class="intro-wrap">
-              <span class="intro">소개글 오예 오예 오예 오예 오 예</span>
-            </div>
-            <div class="tag-wrap">
-              <span class="tag novel">웹소설</span>
-              <span class="tag poem">시</span>
-              <span class="tag essay">에세이</span>
             </div>
           </div>
         </div>
