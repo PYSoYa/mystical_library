@@ -36,8 +36,8 @@ public class DebutCommentController {
     }
     //댓글 수정
     @PutMapping("/update")
-    public @ResponseBody List<DebutCommentDTO> update(@ModelAttribute DebutCommentDTO debutCommentDTO) {
-        List<DebutCommentDTO> result = debutCommentService.update(debutCommentDTO);
+    public @ResponseBody String update(@RequestParam("id")Long id,@RequestParam("contents")String contents) {
+        String result = debutCommentService.update(id,contents);
         return result;
     }
     //신고내역 저장

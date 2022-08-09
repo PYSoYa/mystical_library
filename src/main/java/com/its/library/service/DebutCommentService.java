@@ -80,35 +80,13 @@ public class DebutCommentService {
         debutCommentRepository.deleteById(id);
     }
 
-    public List<DebutCommentDTO> update(DebutCommentDTO debutCommentDTO) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutCommentDTO.getMemberId());
-        MemberEntity memberEntity = new MemberEntity();
-        if (optionalMemberEntity.isPresent()) {
-            memberEntity = optionalMemberEntity.get();
-        }
-        Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(debutCommentDTO.getId());
-        if (optionalDebutCommentEntity.isPresent()) {
-            DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
-            debutComment.setContents(debutCommentDTO.getContents());
-            debutCommentRepository.save(debutComment);
-        }
-        Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutCommentDTO.getDebutId());
-        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
-        if (optionalDebutEpisodeEntity.isPresent()) {
-            debutEpisodeEntity = optionalDebutEpisodeEntity.get();
-
-        }
-
-
-        List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
-        List<DebutCommentEntity> byDebutEpisodeEntity = debutEpisodeEntity.getDebutCommentEntityList();
-        for (DebutCommentEntity debutComment : byDebutEpisodeEntity) {
-            DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
-
-            debutCommentDTOList.add(debutCommentDTO1);
-
-        }
-        return debutCommentDTOList;
+    public String update(Long id,String contents) {
+       DebutCommentEntity debutComment = debutCommentRepository.update(id,contents);
+       if (debutComment!=null){
+           return "ok";
+       }else {
+           return "no";
+       }
     }
 
     public String reportSave(Long id, Long memberId) {
