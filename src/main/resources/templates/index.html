@@ -251,107 +251,39 @@
     <div class="free-popular-books-list-container">
       <div class="free-popular-books-list-wrap">
         <div class="free-popular-books-list-div">
-          <div class="free-popular-books">
+          <div th:each="top3:${top123}" class="free-popular-books">
             <div class="img-wrap">
               <a href="#">
-                <img th:src="@{/img/book_img_3.jpg}" alt="">
+                <img th:src="@{|/upload/${top3.debutImgName}|}" class="img" alt="">
               </a>
             </div>
             <div class="detail-wrap">
-              <div class="title">제목1</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
+              <div class="title" th:text="${top3.debutTitle}"></div>
+              <div class="intro" th:text="${top3.introduce}"></div>
               <div class="star-wrap">
                 <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                 </svg>
-                <span class="star">9.2</span>
-              </div>
-            </div>
-          </div>
-          <div class="free-popular-books">
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_2.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목2</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.8</span>
-              </div>
-            </div>
-          </div>
-          <div class="free-popular-books">
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_1.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목3</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.3</span>
+                <span class="star" th:text="${top3.love}"></span>
               </div>
             </div>
           </div>
         </div>
         <div class="free-popular-books-list-div">
-          <div class="free-popular-books">
+          <div th:each="top6:${top456}" class="free-popular-books">
             <div class="img-wrap">
               <a href="#">
-                <img th:src="@{/img/book_img_2.jpeg}" alt="">
+                <img th:src="@{|/upload/${top6.debutImgName}|}" class="img" alt="">
               </a>
             </div>
             <div class="detail-wrap">
-              <div class="title">제목4</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
+              <div class="title" th:text="${top6.debutTitle}"></div>
+              <div class="intro" th:text="${top6.introduce}"></div>
               <div class="star-wrap">
                 <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                 </svg>
-                <span class="star">7.7</span>
-              </div>
-            </div>
-          </div>
-          <div class="free-popular-books">
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_1.jpeg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목5</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">8.6</span>
-              </div>
-            </div>
-          </div>
-          <div class="free-popular-books">
-            <div class="img-wrap">
-              <a href="#">
-                <img th:src="@{/img/book_img_3.jpg}" alt="">
-              </a>
-            </div>
-            <div class="detail-wrap">
-              <div class="title">제목6</div>
-              <div class="intro">설명설명설명이길면 어떻게 될까요 그러게요 한번 알아볼까요</div>
-              <div class="star-wrap">
-                <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-                </svg>
-                <span class="star">9.4</span>
+                <span class="star" th:text="${top6.love}"></span>
               </div>
             </div>
           </div>
@@ -359,6 +291,7 @@
       </div>
     </div>
   </div>
+
 
   <div class="new-author-container">
     <div class="new-author-title-container">
