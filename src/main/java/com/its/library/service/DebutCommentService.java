@@ -80,35 +80,14 @@ public class DebutCommentService {
         debutCommentRepository.deleteById(id);
     }
 
-    public List<DebutCommentDTO> update(DebutCommentDTO debutCommentDTO) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(debutCommentDTO.getMemberId());
-        MemberEntity memberEntity = new MemberEntity();
-        if (optionalMemberEntity.isPresent()) {
-            memberEntity = optionalMemberEntity.get();
-        }
-        Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(debutCommentDTO.getId());
-        if (optionalDebutCommentEntity.isPresent()) {
-            DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
-            debutComment.setContents(debutCommentDTO.getContents());
-            debutCommentRepository.save(debutComment);
-        }
-        Optional<DebutEpisodeEntity> optionalDebutEpisodeEntity = debutRepository.findById(debutCommentDTO.getDebutId());
-        DebutEpisodeEntity debutEpisodeEntity = new DebutEpisodeEntity();
-        if (optionalDebutEpisodeEntity.isPresent()) {
-            debutEpisodeEntity = optionalDebutEpisodeEntity.get();
-
-        }
-
-
-        List<DebutCommentDTO> debutCommentDTOList = new ArrayList<>();
-        List<DebutCommentEntity> byDebutEpisodeEntity = debutEpisodeEntity.getDebutCommentEntityList();
-        for (DebutCommentEntity debutComment : byDebutEpisodeEntity) {
-            DebutCommentDTO debutCommentDTO1 = DebutCommentDTO.toDTO(debutComment);
-
-            debutCommentDTOList.add(debutCommentDTO1);
-
-        }
-        return debutCommentDTOList;
+    @Transactional
+    public String update(Long id,String contents) {
+       int debutComment = debutCommentRepository.update(id,contents);
+       if (debutComment>=1){
+           return "ok";
+       }else {
+           return "no";
+       }
     }
 
     public String reportSave(Long id, Long memberId) {
@@ -131,13 +110,13 @@ public class DebutCommentService {
         return null;
     }
 
-    public DebutCommentDTO updateForm(Long id) {
-       Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
-       if (optionalDebutCommentEntity.isPresent()){
-           DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
-          return DebutCommentDTO.toDTO(debutComment);
-
-       }
-       return null;
-    }
+//    public DebutCommentDTO updateForm(Long id) {
+//       Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
+//       if (optionalDebutCommentEntity.isPresent()){
+//           DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
+//          return DebutCommentDTO.toDTO(debutComment);
+//
+//       }
+//       return null;
+//    }
 }

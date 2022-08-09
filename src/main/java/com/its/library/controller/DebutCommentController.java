@@ -29,15 +29,15 @@ public class DebutCommentController {
         List<DebutCommentDTO> result = debutCommentService.findById(debutId);
         return result;
     }
-    @GetMapping("/updateForm/{id}")
-    public @ResponseBody DebutCommentDTO updateForm(@PathVariable Long id){
-       DebutCommentDTO debutCommentDTO = debutCommentService.updateForm(id);
-       return debutCommentDTO;
-    }
+//    @GetMapping("/updateForm/{id}")
+//    public @ResponseBody DebutCommentDTO updateForm(@PathVariable Long id){
+//       DebutCommentDTO debutCommentDTO = debutCommentService.updateForm(id);
+//       return debutCommentDTO;
+//    }
     //댓글 수정
     @PutMapping("/update")
-    public @ResponseBody List<DebutCommentDTO> update(@ModelAttribute DebutCommentDTO debutCommentDTO) {
-        List<DebutCommentDTO> result = debutCommentService.update(debutCommentDTO);
+    public @ResponseBody String update(@RequestParam("id")Long id,@RequestParam("contents")String contents) {
+        String result = debutCommentService.update(id,contents);
         return result;
     }
     //신고내역 저장
