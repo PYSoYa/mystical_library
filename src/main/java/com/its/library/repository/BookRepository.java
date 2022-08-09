@@ -50,4 +50,5 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findAllNew();
 
     List<BookEntity> findAllByMemberEntity_IdAndStatus(Long memberId, String status);
+
 }
