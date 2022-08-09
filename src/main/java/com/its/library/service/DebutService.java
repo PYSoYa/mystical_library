@@ -280,4 +280,29 @@ public class DebutService {
         }
         return null;
     }
+
+    @Transactional
+    public List<DebutEpisodeDTO> hitsTop123() {
+        List<DebutEpisodeEntity> top123EntityList = debutRepository.hitsTop123();
+        List<DebutEpisodeDTO> top123DTOList = new ArrayList<>();
+        for (DebutEpisodeEntity debutEpisodeEntity : top123EntityList) {
+            DebutEpisodeEntity top123Entity = debutEpisodeEntity;
+            DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(top123Entity);
+            top123DTOList.add(debutEpisodeDTO);
+        }
+        return top123DTOList;
+    }
+
+    @Transactional
+    public List<DebutEpisodeDTO> hitsTop456() {
+        List<DebutEpisodeEntity> top456EntityList = debutRepository.hitsTop456();
+        List<DebutEpisodeDTO> top456DTOList = new ArrayList<>();
+        for (DebutEpisodeEntity debutEpisodeEntity : top456EntityList) {
+            DebutEpisodeEntity top123Entity = debutEpisodeEntity;
+            DebutEpisodeDTO debutEpisodeDTO = DebutEpisodeDTO.toDTO(top123Entity);
+            top456DTOList.add(debutEpisodeDTO);
+
+        }
+        return top456DTOList;
+    }
 }

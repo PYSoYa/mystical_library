@@ -48,5 +48,13 @@ public interface DebutRepository extends JpaRepository<DebutEpisodeEntity,Long> 
     @Modifying
     @Query(value = "select * from debut_episode d  order by created_date_time desc ",nativeQuery = true)
     List<DebutEpisodeEntity> indexNewList();
+
+    @Modifying
+    @Query(value = "select * from debut_episode order by debut_hits desc limit 0,3",nativeQuery = true)
+    List<DebutEpisodeEntity>hitsTop123();
+
+    @Modifying
+    @Query(value = "select * from debut_episode order by debut_hits desc limit 3,3;",nativeQuery = true)
+    List<DebutEpisodeEntity>hitsTop456();
 }
 
