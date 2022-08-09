@@ -76,13 +76,13 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img th:src="@{/img/slider_img_1.svg}" class="d-block w-100" alt="...">
+            <img th:src="@{/img/slider_img_3.jpg}" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img th:src="@{/img/slider_img_2.svg}" class="d-block w-100" alt="...">
+            <img th:src="@{/img/slider_img_5.jpg}" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img th:src="@{/img/slider_img_3.svg}" class="d-block w-100" alt="...">
+            <img th:src="@{/img/slider_img_2.jpg}" class="d-block w-100" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -131,6 +131,11 @@
                       <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                     </svg>
                     <span class="hits" th:text="${book.hits}"></span>
+                    <div class="tag-wrap">
+                      <span class="tag novel" th:if="${book.categoryId eq 1}">웹소설</span>
+                      <span class="tag poem" th:if="${book.categoryId eq 2}">시</span>
+                      <span class="tag essay" th:if="${book.categoryId eq 3}">에세이</span>
+                    </div>
                   </div>
                 </div>
               </div>

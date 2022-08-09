@@ -16,3 +16,12 @@
 .detail-wrap span {margin-right: 1.5rem; cursor: default;}
 .save-form-btn {margin-left: auto; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 6rem; height: 140%; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 .save-form-btn:hover {border: 1px solid #1e9eff; color: #1e9eff; background-color: #fff; transition: 0.3s ease;}
+
+.book-wrap .detail-wrap .tag-wrap .tag,
+.detail-wrap .star-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.book-wrap .detail-wrap .tag-wrap .novel,
+.detail-wrap .star-wrap .tag-wrap .novel {background-color: #00bfdd;}
+.book-wrap .detail-wrap .tag-wrap .poem,
+.detail-wrap .star-wrap .tag-wrap .poem {background-color: #ffca28;}
+.book-wrap .detail-wrap .tag-wrap .essay,
+.detail-wrap .star-wrap .tag-wrap .essay {background-color: #ff702a;}
