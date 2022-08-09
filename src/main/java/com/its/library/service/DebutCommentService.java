@@ -80,9 +80,10 @@ public class DebutCommentService {
         debutCommentRepository.deleteById(id);
     }
 
+    @Transactional
     public String update(Long id,String contents) {
-       DebutCommentEntity debutComment = debutCommentRepository.update(id,contents);
-       if (debutComment!=null){
+       int debutComment = debutCommentRepository.update(id,contents);
+       if (debutComment>=1){
            return "ok";
        }else {
            return "no";
@@ -109,13 +110,13 @@ public class DebutCommentService {
         return null;
     }
 
-    public DebutCommentDTO updateForm(Long id) {
-       Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
-       if (optionalDebutCommentEntity.isPresent()){
-           DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
-          return DebutCommentDTO.toDTO(debutComment);
-
-       }
-       return null;
-    }
+//    public DebutCommentDTO updateForm(Long id) {
+//       Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
+//       if (optionalDebutCommentEntity.isPresent()){
+//           DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
+//          return DebutCommentDTO.toDTO(debutComment);
+//
+//       }
+//       return null;
+//    }
 }

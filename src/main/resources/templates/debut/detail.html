@@ -421,7 +421,7 @@
     const contentForm = document.getElementById('div' + id);
     const contentBefore = document.getElementById('span' + id).innerHTML;
 
-    let output = '<textarea class="input-contents" id="updateContent">' + contentBefore + '</textarea>';
+    let output = '<textarea class="input-contents" id="updateContents">' + contentBefore + '</textarea>';
     output += '<button type="button" class="comment-update-btn" onclick="commentUpdate(' + id + ')"><span>수정</span></button>';
     output += '<button type="button" class="comment-cancel-btn" onclick="commentCancel()"><span>취소</span></button>';
 
@@ -431,25 +431,24 @@
   function commentUpdate(id) {
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
+    const updateContents = document.getElementById("updateContents").value;
 
-    const memberName = document.getElementById("updateMemberName").value;
-    const updateContents = document.getElementById("input-contents").value;
-    const debutId = document.getElementById("debutId").value;
-    const memberId = document.getElementById("memberId").value;
     $.ajax({
       type: "put",
       url: "/debutComment/update",
       data: {"id": id,
-        "memberName": memberName,
         "contents": updateContents,
-        "debutId": debutId,
-        "memberId": memberId},
-      dataType: "json",
+        },
+      dataType: "text",
       beforeSend: function(xhr){
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
-        location.reload();
+        console.log(result)
+        if (result==="ok"){
+          location.reload();
+        }
+
       }
     });
 
