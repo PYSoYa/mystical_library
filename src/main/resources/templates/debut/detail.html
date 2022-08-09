@@ -175,7 +175,6 @@
           <span class="list-title">)</span>
         </div>
         <div class="comment-list-wrap">
-          <div id="commentList">
           <ul th:each="comment:${commentList}">
             <li>
               <div class="info">
@@ -198,13 +197,11 @@
                   </span>
                 </div>
               </div>
-              <div class="content">
-                <span th:text="${comment.contents}" class="content"></span>
-
+              <div th:id="${'div' + comment.id}" class="content">
+                <span th:text="${comment.contents}" th:id="${'span' + comment.id}" class="content"></span>
               </div>
             </li>
           </ul>
-          </div>
         </div>
       </div>
     </div>
@@ -416,33 +413,19 @@
 
   }
 
+  const commentCancel = () => {
+    location.reload();
+  }
+
   function commentUpdateForm(id) {
-   $.ajax({
-     type:"get",
-     url:"/debutComment/updateForm/"+id,
-     dataType:"json",
-     success:function (debutCommentDTO){
-       const commentList = document.getElementById("commentList");
-       commentList.innerHTML="<div class=\"comment-container\">\n" +
-               "  <div class=\"comment-list-container\">\n" +
-               "    <div class=\"write-wrap\">\n" +
-               "      <input type=\"hidden\" id=\"updateMemberName\" name=\"memberName\" value=\""+ debutCommentDTO.memberName +"\" readonly>\n" +
-               "      <textarea name=\"contents\" id=\"input-contents\" rows=\"5\">"+ debutCommentDTO.contents +"</textarea>" +
-               "      <div class=\"btn-wrap\">\n" +
-               "        <div class=\"btn-align-right\">\n" +
-               "          <button type=\"button\" onclick=\"commentUpdate("+ id +")\" class=\"btn-submit\">\n" +
-               "            <span>댓글 등록</span>\n" +
-               "          </button>\n" +
-               "          <button type=\"button\" class=\"btn-cancel\" onclick=\"cancelBTN()\">\n" +
-               "            <span>취소</span>\n" +
-               "          </button>" +
-               "        </div>" +
-               "      </div>" +
-               "    </div>" +
-               "  </div>" +
-               "</div>"
-     }
-   });
+    const contentForm = document.getElementById('div' + id);
+    const contentBefore = document.getElementById('span' + id).innerHTML;
+
+    let output = '<textarea class="input-contents" id="updateContent">' + contentBefore + '</textarea>';
+    output += '<button type="button" class="comment-update-btn" onclick="commentUpdate(' + id + ')"><span>수정</span></button>';
+    output += '<button type="button" class="comment-cancel-btn" onclick="commentCancel()"><span>취소</span></button>';
+
+    contentForm.innerHTML = output;
   }
 
   function commentUpdate(id) {
@@ -456,13 +439,17 @@
     $.ajax({
       type: "put",
       url: "/debutComment/update",
-      data: {"id": id, "memberName": memberName, "contents": updateContents, "debutId": debutId, "memberId": memberId},
+      data: {"id": id,
+        "memberName": memberName,
+        "contents": updateContents,
+        "debutId": debutId,
+        "memberId": memberId},
       dataType: "json",
       beforeSend: function(xhr){
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
-       location.reload();
+        location.reload();
       }
     });
 
