@@ -128,9 +128,9 @@
             <div class="rate-wrap">
               <div class="rate-desc-wrap">
               </div>
-              <div class="star-form">
-                <button type="button" class="star-btn">수정</button>
-                <button type="button" class="star-btn">삭제</button>
+              <div th:if="${authentication.memberName==debut.memberName}" class="star-form">
+                <button type="button" class="star-btn" th:onclick="updateForm([[${debut.id}]])">수정</button>
+                <button type="button" class="star-btn" th:onclick="drop([[${debut.id}]])">삭제</button>
               </div>
             </div>
             <div class="attention-wrap">
@@ -171,7 +171,7 @@
       <div class="list-wrap">
         <div class="info title">
           <span class="list-title">댓글 목록 (</span>
-          <span class="list-title" th:value="${#lists.size(commentList)}"></span>
+          <span class="list-title" th:text="${#lists.size(commentList)}"></span>
           <span class="list-title">)</span>
         </div>
         <div class="comment-list-wrap">
@@ -500,6 +500,17 @@
 
       }
     });
+
+
+
+  }
+  function updateForm(id) {
+    location.href="/debut/update-form/"+id;
+
+  }
+  function drop(id) {
+    location.href="/debut/delete/"+id;
+
 
   }
 </script>

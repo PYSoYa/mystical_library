@@ -24,7 +24,12 @@ public class NoticeController {
     private final MemberService memberService;
 
     @GetMapping("/history/{id}")
-    public String noticeHistory(@PathVariable("id") Long memberId, Model model) {
+    public String noticeHistory(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                @PathVariable("id") Long memberId, Model model) {
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
         List<NoticeDTO> noticeDTOList = noticeService.noticeHistory(memberId);
         model.addAttribute("noticeList", noticeDTOList);
         return "notice/noticeHistory";

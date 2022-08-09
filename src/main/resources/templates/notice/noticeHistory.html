@@ -10,27 +10,27 @@
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-<main class="main-container">
+
     <table class="history-table">
         <tr>
-            <th>알림</th>
+            <th>알림 내용</th>
             <th>시간</th>
 
         </tr>
-        <tr th:each="noitce:${noticeList}">
-            <td th:text="${noitce.id}" hidden></td>
-            <td th:text="${noitce.memberId}" hidden></td>
-            <td th:text="${noitce.episodeTitle}"></td>
-            <td th:text="*{#temporals.format(noitce.createdTime, 'yyyy-MM-dd')}"></td>
-            <td th:text="${noitce.episodeId}"hidden></td>
-            <td th:text="${noitce.wishId}"hidden></td>
-            <td th:text="${noitce.read}" hidden></td>
+        <tr th:each="notice:${noticeList}">
+            <td th:text="${notice.id}" hidden></td>
+            <td th:text="${notice.memberId}" hidden></td>
+            <td th:text="${notice.episodeTitle}"></td>
+            <td th:text="*{#temporals.format(notice.createdTime, 'yyyy-MM-dd')}"></td>
+            <td th:text="${notice.episodeId}"hidden></td>
+            <td th:text="${notice.wishId}"hidden></td>
+            <td th:text="${notice.read}" hidden></td>
 
 
         </tr>
 
     </table>
-    </main>
+
 
 
 <th:block th:replace="layout/footer :: footer"></th:block>
