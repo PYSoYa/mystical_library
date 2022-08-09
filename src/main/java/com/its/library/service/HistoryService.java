@@ -56,16 +56,11 @@ public class HistoryService {
         }
         List<BookDTO> bookDTOList = new ArrayList<>();
         List<Long> list = historyRepository.findByMemberId(memberEntity.getId());
+        System.out.println("list = " + list);
         for (int i = 0; i < list.size(); i++) {
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(list.get(i));
             if (optionalBookEntity.isPresent()) {
                 bookEntity = optionalBookEntity.get();
-                historyEntityList = historyRepository.findByBooKId(bookEntity.getId());
-                historyDTOList.add(HistoryDTO.findDTO(historyEntityList.get(0)));
-            }
-        }
-        for (int i = 0; i < historyDTOList.size(); i++) {
-            if (historyDTOList.get(i).getHidden() == 0) {
                 bookDTOList.add(BookDTO.findDTO(bookEntity));
             }
         }

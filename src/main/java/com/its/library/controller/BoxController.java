@@ -26,9 +26,8 @@ public class BoxController {
     // 포인트 보유 체크
     @PostMapping("/pointCheck")
     public @ResponseBody String pointCheck(@ModelAttribute BoxDTO boxDTO,
-                                           @ModelAttribute HistoryDTO historyDTO, Long episodeId,
-                                           @RequestParam("memberName") String memberName){
-        String result = boxService.pointCheck(boxDTO,historyDTO, episodeId, memberName);
+                                           @ModelAttribute HistoryDTO historyDTO, Long episodeId){
+        String result = boxService.pointCheck(boxDTO,historyDTO, episodeId);
         return result;
     }
 
