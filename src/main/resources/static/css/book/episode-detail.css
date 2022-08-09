@@ -14,7 +14,7 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 #wrap .comment-container {overflow: hidden scroll;}
 #wrap .comment-container::-webkit-scrollbar {display: none;}
 /* head-area */
-#wrap .viewer-container .head-area {width: 1117px; height: 70px; vertical-align: middle; display: flex; background-color: #fff; border: 1px solid #ccc; position: fixed; margin: -23px 0 0 -559px; left: 50%; top: 23px; z-index: 2;}
+#wrap .viewer-container .head-area {width: 1110px; height: 70px; vertical-align: middle; display: flex; background-color: #fff; border: 1px solid #ccc; position: fixed; margin: -23px 0 0 -555px; left: 50%; top: 23px; z-index: 2;}
 #wrap .viewer-container .head-area .head-wrap {width: 940px; height: 100%; position: relative; z-index: 2; padding: 10px 100px 9px 100px;}
 #wrap .viewer-container .logo-wrap .logo {width: 69px; height: 69px; position: absolute; top: 0; left: 0; bottom: 0;}
 #wrap .viewer-container .info-wrap .book-title-wrap .book-title {margin: 3px 0 0; font-size: 0.933em; font-weight: 600; color: #555; letter-spacing: 0.03rem;}
