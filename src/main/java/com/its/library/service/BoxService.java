@@ -23,17 +23,14 @@ public class BoxService {
     private final BookRepository bookRepository;
     private final HistoryRepository historyRepository;
 
-    public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId, String memberName) {
+    public String pointCheck(BoxDTO boxDTO, HistoryDTO historyDTO, Long episodeId) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(boxDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(historyDTO.getBookId());
         MemberEntity memberEntity = new MemberEntity();
         HistoryEntity historyEntity = new HistoryEntity();
         EpisodeEntity episodeEntity = new EpisodeEntity();
-        BookEntity bookEntity = new BookEntity();
-        if (optionalBookEntity.isPresent()) {
-            bookEntity = optionalBookEntity.get();
-        }
+
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
@@ -106,7 +103,7 @@ public class BoxService {
         List<BookDTO> bookDTOList = new ArrayList<>();
         if (optionalMemberEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
-            boxEntityList = boxRepository.findByMemberEntity(memberEntity);
+            boxEntityList = boxRepository.findByMemberEntity_Id(memberEntity.getId());
             for (int i = 0; i < boxEntityList.size(); i++) {
                 Optional<BookEntity> optionalBookEntity = bookRepository.findById(boxEntityList.get(i).getBookId());
                 if (optionalBookEntity.isPresent()) {
