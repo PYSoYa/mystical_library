@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신비한 서재입니다.</title>
-    <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+  <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
-
-    <table class="history-table">
-        <tr>
+<main class="main-container">
+  <div class="history-container">
+    <div class="history-wrap">
+      <div class="history-div">
+        <table class="history-table">
+          <tr>
             <th>알림 내용</th>
             <th>시간</th>
-
-        </tr>
-        <tr th:each="notice:${noticeList}">
+          </tr>
+          <tr th:each="notice:${noticeList}">
             <td th:text="${notice.id}" hidden></td>
             <td th:text="${notice.memberId}" hidden></td>
             <td th:text="${notice.episodeTitle}"></td>
             <td th:text="*{#temporals.format(notice.createdTime, 'yyyy-MM-dd')}"></td>
-            <td th:text="${notice.episodeId}"hidden></td>
-            <td th:text="${notice.wishId}"hidden></td>
+            <td th:text="${notice.episodeId}" hidden></td>
+            <td th:text="${notice.wishId}" hidden></td>
             <td th:text="${notice.read}" hidden></td>
-
-
-        </tr>
-
-    </table>
-
-
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 
