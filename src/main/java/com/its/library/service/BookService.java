@@ -441,6 +441,30 @@ public class BookService {
         return bookDTOList5;
     }
 
+    public List<BookDTO> siList() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book: bookEntityList) {
+            if (book.getCategoryEntity().getId() == 2) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+        }
+        return bookDTOList;
+    }
+
+    public List<BookDTO> essayList() {
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        bookEntityList = bookRepository.findAll();
+        for (BookEntity book: bookEntityList) {
+            if (book.getCategoryEntity().getId() == 3) {
+                bookDTOList.add(BookDTO.findDTO(book));
+            }
+        }
+        return bookDTOList;
+    }
+
     public Long first(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();
@@ -464,4 +488,5 @@ public class BookService {
         }
         return bookDTOList;
     }
+
 }
