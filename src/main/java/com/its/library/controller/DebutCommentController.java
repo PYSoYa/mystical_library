@@ -29,6 +29,11 @@ public class DebutCommentController {
         List<DebutCommentDTO> result = debutCommentService.findById(debutId);
         return result;
     }
+    @GetMapping("/updateForm/{id}")
+    public @ResponseBody DebutCommentDTO updateForm(@PathVariable Long id){
+       DebutCommentDTO debutCommentDTO = debutCommentService.updateForm(id);
+       return debutCommentDTO;
+    }
     //댓글 수정
     @PutMapping("/update")
     public @ResponseBody List<DebutCommentDTO> update(@ModelAttribute DebutCommentDTO debutCommentDTO) {

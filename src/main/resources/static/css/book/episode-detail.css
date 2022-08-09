@@ -175,3 +175,13 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 .comment-container .comment-list-container .list-wrap .comment-list-wrap .info .report-btn:hover,
 .comment-container .comment-list-container .list-wrap .comment-list-wrap .info .delete-btn:hover,
 .comment-container .comment-list-container .list-wrap .comment-list-wrap .info .update-btn:hover {opacity: 0.5; transition: 0.3s ease;}
+/* 댓글 수정 시 input, button */
+.comment-container .comment-list-container .list-wrap ul li .content .input-contents {width: 100%; padding: 15px 18px; border: 1px solid #ccc; line-height: 1.4; overflow: auto; overflow-x: hidden; background-color: #fff; resize: none; color: #666; vertical-align: middle; letter-spacing: -.3px; word-break: normal; outline: none; height: 120px; margin-bottom: 20px;}
+.comment-container .comment-list-container .list-wrap ul li .content .input-contents:hover {border-color: #1e9eff;}
+.comment-container .comment-list-container .list-wrap ul li .content .input-contents:focus {border-color: #1e9eff;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-update-btn {background-color: #1e9eff; color: #fff; display: inline-block; position: relative; overflow: hidden; padding: 0; border: none; outline: none; white-space: nowrap; cursor: pointer; vertical-align: middle; font-size: 1rem; margin-right: 10px; min-width: 100px;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn {background-color: #333; color: #fff; display: inline-block; position: relative; overflow: hidden; padding: 0; border: none; white-space: nowrap; cursor: pointer; vertical-align: middle; min-width: 80px;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-update-btn span {color: #fff;border: 1px solid #1e9eff; transition: color 0.3s; min-width: 78px; height: 38px; display: block; padding: 0 30px; text-align: center; font-size: 15px; line-height: 36px; position: relative;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn span {color: #fff; transition: color 0.3s; min-width: 78px; height: 38px; display: block; padding: 0 30px; border: 1px solid #333; text-align: center; font-size: 15px; line-height: 36px; position: relative;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-update-btn:hover span {color: #1e9eff !important; background-color: #fff; border: 1px solid #1e9eff;}
+.comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn:hover span {color: #333 !important; background-color: #fff; border: 1px solid #333;}

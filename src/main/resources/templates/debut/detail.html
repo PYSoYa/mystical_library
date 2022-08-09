@@ -9,8 +9,6 @@
   <title>신비한 서재입니다.</title>
 
   <link rel="stylesheet" th:href="@{/css/book/episode-detail.css}">
-  <link rel="stylesheet" th:href="@{/css/layout/header.css}">
-  <link rel="stylesheet" th:href="@{/css/index.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <script th:src="@{/js/episodeDetail.js}"></script>
   <script th:src="@{/js/jquery.js}"></script>
@@ -173,34 +171,34 @@
       <div class="list-wrap">
         <div class="info title">
           <span class="list-title">댓글 목록 (</span>
-          <span th:if="${commentList.size()!=null}" class="list-title" th:value="${commentList.size()}"></span>
+          <span class="list-title" th:value="${#lists.size(commentList)}"></span>
           <span class="list-title">)</span>
         </div>
-        <div th:each="comment:${commentList}" class="comment-list-wrap">
-          <ul id="saveComment">
+        <div class="comment-list-wrap">
+          <ul th:each="comment:${commentList}">
             <li>
               <div class="info">
                 <div>
                   <a href="#" class="writer-link">
                     <span th:text="${comment.memberName}" class="writer"></span>
                   </a>
-                  <span th:text="${comment.createdTime}" class="date">
+                  <span th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}" class="date">
                   </span>
                 </div>
-                <div>
+                <div th:if="${comment.memberName==authentication.memberName}">
                   <span class="update">
-                    <a href="javascript:;" class="update-btn">수정</a>
+                    <a href="javascript:;" class="update-btn" th:onclick="commentUpdateForm([[${comment.id}]])">수정</a>
                   </span>
                   <span class="delete">
-                    <a href="javascript:;" class="delete-btn">삭제</a>
+                    <a href="javascript:;" class="delete-btn" th:onclick="commentDelete([[${comment.id}]])">삭제</a>
                   </span>
                   <span class="report">
-                    <a href="javascript:;" class="report-btn">신고</a>
+                    <a href="javascript:;" class="report-btn" th:onclick="commentReport([[${comment.id}]])">신고</a>
                   </span>
                 </div>
               </div>
-              <div class="content">
-                <span th:text="${comment.contents}" class="content"></span>
+              <div th:id="${'div' + comment.id}" class="content">
+                <span th:text="${comment.contents}" th:id="${'span' + comment.id}" class="content"></span>
               </div>
             </li>
           </ul>
@@ -210,6 +208,7 @@
   </div>
 </div>
 </body>
+
 <script th:inline="javascript">
 
   const cancelBTN = () => {
@@ -393,9 +392,10 @@
 
     const memberId = document.getElementById("memberId").value;
     const debutId = document.getElementById("debutId").value;
-    const contents = document.getElementById("contents").value;
+    const contents = document.getElementById("input-contents").value;
     const memberName = document.getElementById("memberName").value;
-    const commentList = document.getElementById("commentList");
+
+
 
     $.ajax({
       type: "post",
@@ -406,47 +406,26 @@
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
-        let output = "<table>\n" +
-            "      <tr>\n" +
-            "        <th>작성자</th>\n" +
-            "        <th>내용</th>\n" +
-            "        <th>작성시간</th>\n" +
-            "         <th>삭제</th>" +
-
-            "      </tr>\n";
-        for (let i in result) {
-          output += "<tr>" +
-              "    <td>" + result[i].memberName + "</td>\n" +
-              "    <td>" + result[i].contents + "</td>\n" +
-              "    <td>" + result[i].createdTime + "</td>\n";
-          if (result[i].memberName == memberName) {
-            output += "<div>\n" +
-                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + "{})\"></td>" +
-                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                "      </div>" +
-                "</tr>";
-          }
-        }
-        output += "    </table>";
-
-        commentList.innerHTML = output;
-        document.getElementById("contents").innerHTML = "";
-
+      location.reload();
       }
     });
 
 
   }
 
+  const commentCancel = () => {
+    location.reload();
+  }
+
   function commentUpdateForm(id) {
-    const commentList = document.getElementById("commentList");
+    const contentForm = document.getElementById('div' + id);
+    const contentBefore = document.getElementById('span' + id).innerHTML;
 
-    const memberName = document.getElementById("memberName_"+id).innerHTML;
-    const contents = document.getElementById("contents_"+id).innerHTML;
-    commentList.innerHTML = "<input id='updateMemberName' type=\"text\" value=\"" + memberName + "\"readonly>\n" +
-        "      <input id=\"updateContents\" type=\"text\" value=\"" + contents + "\">\n" +
-        "      <input value='댓글수정' type=\"button\" onclick=\"commentUpdate(" + id + ")\">";
+    let output = '<textarea class="input-contents" id="updateContent">' + contentBefore + '</textarea>';
+    output += '<button type="button" class="comment-update-btn" onclick="commentUpdate(' + id + ')"><span>수정</span></button>';
+    output += '<button type="button" class="comment-cancel-btn" onclick="commentCancel()"><span>취소</span></button>';
 
+    contentForm.innerHTML = output;
   }
 
   function commentUpdate(id) {
@@ -454,45 +433,23 @@
     let token = $("meta[name='_csrf']").attr('content');
 
     const memberName = document.getElementById("updateMemberName").value;
-    const contents = document.getElementById("updateContents").value;
-    const commentList = document.getElementById("commentList");
+    const updateContents = document.getElementById("input-contents").value;
     const debutId = document.getElementById("debutId").value;
     const memberId = document.getElementById("memberId").value;
     $.ajax({
       type: "put",
       url: "/debutComment/update",
-      data: {"id": id, "memberName": memberName, "contents": contents, "debutId": debutId, "memberId": memberId},
+      data: {"id": id,
+        "memberName": memberName,
+        "contents": updateContents,
+        "debutId": debutId,
+        "memberId": memberId},
       dataType: "json",
       beforeSend: function(xhr){
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
-        let output = "<table>\n" +
-            "      <tr>\n" +
-            "        <th>작성자</th>\n" +
-            "        <th>내용</th>\n" +
-            "        <th>작성시간</th>\n" +
-            "         <th>삭제</th>" +
-
-            "      </tr>\n";
-        for (let i in result) {
-          output += "<tr>" +
-              "    <td>" + result[i].memberName + "</td>\n" +
-              "    <td>" + result[i].contents + "</td>\n" +
-              "    <td>" + result[i].createdTime + "</td>\n";
-          console.log(result[i].createdTime);
-          if (result[i].memberName == memberName) {
-            output += "<div>\n" +
-                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
-                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                "      </div>" +
-                "</tr>";
-          }
-        }
-        output += "    </table>";
-
-        commentList.innerHTML = output;
-        document.getElementById("contents").innerHTML = "";
+        location.reload();
       }
     });
 
@@ -514,31 +471,7 @@
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
-        let output = "<table>\n" +
-            "      <tr>\n" +
-            "        <th>작성자</th>\n" +
-            "        <th>내용</th>\n" +
-            "        <th>작성시간</th>\n" +
-            "         <th>삭제</th>" +
-
-            "      </tr>\n";
-        for (let i in result) {
-          output += "<tr>" +
-              "    <td>" + result[i].memberName + "</td>\n" +
-              "    <td>" + result[i].contents + "</td>\n" +
-              "    <td>" + result[i].createdTime + "</td>\n";
-          if (result[i].memberName == memberName) {
-            output += "<div>\n" +
-                "<td><input type=\"button\" value=\"댓글수정\" onclick=\"commentUpdateForm(" + result[i].id + ")\"></td>" +
-                "      <td><input type=\"button\" value=\"댓글삭제\" onclick=\"commentDelete(" + result[i].id + ")\"></td>\n" +
-                "      </div>" +
-                "</tr>";
-          }
-        }
-        output += "    </table>";
-
-        commentList.innerHTML = output;
-        document.getElementById("contents").innerHTML = "";
+        location.reload();
       }
     });
 
