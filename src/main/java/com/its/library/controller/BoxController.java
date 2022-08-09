@@ -26,15 +26,17 @@ public class BoxController {
     // 포인트 보유 체크
     @PostMapping("/pointCheck")
     public @ResponseBody String pointCheck(@ModelAttribute BoxDTO boxDTO,
-                                           @ModelAttribute HistoryDTO historyDTO, Long episodeId){
-        String result = boxService.pointCheck(boxDTO,historyDTO, episodeId);
+                                           @ModelAttribute HistoryDTO historyDTO, Long episodeId,
+                                           @RequestParam("memberName") String memberName){
+        String result = boxService.pointCheck(boxDTO,historyDTO, episodeId, memberName);
         return result;
     }
 
     // 구매한 회차 저장
     @PostMapping("/save")
-    public @ResponseBody String save(@ModelAttribute BoxDTO boxDTO) {
-        String result = boxService.save(boxDTO);
+    public @ResponseBody String save(@ModelAttribute BoxDTO boxDTO,
+                                     @RequestParam("memberName") String memberName) {
+        String result = boxService.save(boxDTO, memberName);
         return result;
     }
 

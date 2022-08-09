@@ -275,15 +275,17 @@
     let token = $("meta[name='_csrf']").attr('content');
 
     const memberId = [[${authentication.id}]];
+    const memberName = [[${authentication.memberName}]];
     const bookId = [[${book.id}]];
 
     $.ajax({
       type: "post",
       url: "/box/pointCheck",
       data: {
-        "memberId": memberId,
-        "episodeId": episodeId,
-        "bookId": bookId
+          "memberId": memberId,
+          "memberName": memberName,
+          "episodeId": episodeId,
+          "bookId": bookId
       },
       dataType: "text",
       beforeSend: function(xhr){
@@ -302,9 +304,10 @@
               type: "post",
               url: "/box/save",
               data: {
-                "memberId": memberId,
-                "bookId": bookId,
-                "episodeId": episodeId
+                  "memberId": memberId,
+                  "memberName": memberName,
+                  "bookId": bookId,
+                  "episodeId": episodeId
               },
               dataType: "text",
               beforeSend: function(xhr){
@@ -318,12 +321,12 @@
                     data:{"episodeId":episodeId,"bookId":bookId},
                     dataType:"text",
                     success:function (result){
-                        if (result == "ok"){
+                        if (result === "ok"){
                             location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                         }
                     }
                   });
-                } else if (result == "no") {
+                } else if (result === "no") {
                     location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                 }
               }
