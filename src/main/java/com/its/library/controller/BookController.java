@@ -138,8 +138,9 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-book-delete")
     public String reqBookDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
-                                @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
-        bookService.reqBookDelete(id, memberName, why, mailTitle);
+                                @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle,
+                                @RequestParam("fromAddress") String fromAddress) {
+        bookService.reqBookDelete(id, memberName, why, mailTitle, fromAddress);
         return "redirect:/";
     }
 
@@ -160,8 +161,9 @@ public class BookController {
     @Secured({"ROLE_WRITER", "ROLE_ADMIN"})
     @PostMapping("/req-episode-delete")
     public String reqEpisodeDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
-                                   @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
-        bookService.reqEpisodeDelete(id, memberName, why, mailTitle);
+                                   @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle,
+                                   @RequestParam("fromAddress") String fromAddress) {
+        bookService.reqEpisodeDelete(id, memberName, why, mailTitle, fromAddress);
         return "redirect:/";
     }
 
