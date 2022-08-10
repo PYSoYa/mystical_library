@@ -58,15 +58,12 @@
                     <th>회원번호</th>
                     <th>충전시간</th>
                     <th>충전 금액</th>
-
                   </tr>
-
                   <tr th:if="${point.plusPoint!=0}" th:each="point:${pointList}">
                     <td th:text="${point.id}"></td>
                     <td th:text="${point.memberId}"></td>
                     <td th:text="*{#temporals.format(point.pointTime, 'yyyy-MM-dd')}"></td>
                     <td><p th:text="${point.plusPoint}" class="plus-Point"></p></td>
-
                   </tr>
                 </table>
               </div>

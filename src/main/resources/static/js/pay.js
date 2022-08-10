@@ -59,12 +59,12 @@ const changePoint = () => {
   const pointAfterHave = document.getElementById('point-after-have');
   const price = document.getElementById('price');
 
+  price.innerHTML = cash + ' 원';
+
   if (cash >= 10000) {
     cash = cash / 10 + cash;
   }
-
   pointAfterHave.innerHTML = (cash + pointHave) + ' 포인트';
-  price.innerHTML = cash + ' 원';
 };
 
 window.onload = () => {

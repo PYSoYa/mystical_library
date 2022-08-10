@@ -1,8 +1,8 @@
 .book-episode-comment-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
 .book-episode-comment-container > div:not(:last-child) {margin-bottom: 2rem;}
 .book-detail-container {font-size: 0.938rem; line-height: 1.25rem; min-height: 316px; position: relative; margin-top: 1.25rem; display: flex; padding: 0.625rem;}
-.book-detail-container .book-img-wrap {width: 13.5rem; height: 19.75rem; margin-right: 4rem;}
-.book-detail-container .book-img-wrap .img {width: 15.5rem; height: 22.6rem; padding: 0; border-radius: 4px;}
+.book-detail-container .book-img-wrap {width: 15.5rem; height: 22.15rem; margin-right: 4rem;}
+.book-detail-container .book-img-wrap .img {width: 15.5rem; height: 22.15rem; padding: 0; border-radius: 4px;}
 
 .book-detail-wrap {width: 100%;}
 .book-detail-wrap .detail-wrap .title-wrap {width: 100%; display: flex; position: relative;}
@@ -17,16 +17,17 @@
 .book-detail-wrap .detail-wrap .author-wrap > div > span::after {content: "·"; margin-left: 1rem; margin-right: 1rem;}
 .book-detail-wrap .detail-wrap .author-wrap > div > .status::after {content: ''; width: 0; height: 0;}
 .book-detail-wrap .detail-wrap .author-wrap .edit-span::after {content: ""; margin: 0;}
-.book-detail-wrap .detail-wrap .author-wrap .book-episode-btn-wrap > div {padding: 0.125rem 2.25rem 0.125rem 0.125rem;}
-.book-detail-wrap .detail-wrap .author-wrap .book-episode-btn-wrap {margin-left: auto; display: flex;}
-.book-detail-wrap .detail-wrap .author-wrap button {margin-top: -20px; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 240%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
-.book-detail-wrap .detail-wrap .author-wrap .wishlist-wrap .wishlist-btn1 {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 8rem; height: 240%; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
-.book-detail-wrap .detail-wrap .author-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
+.book-detail-wrap .detail-wrap .tag-wrap .book-episode-btn-wrap > div {padding: 0.125rem 2.25rem 0.125rem 0.125rem;}
+.book-detail-wrap .detail-wrap .tag-wrap .book-episode-btn-wrap {margin-left: auto; display: flex;}
+.book-detail-wrap .detail-wrap .tag-wrap button {margin-top: -20px; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 180%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .tag-wrap .wishlist-wrap {margin-right: 48px;}
+.book-detail-wrap .detail-wrap .tag-wrap .wishlist-wrap .wishlist-btn1 {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 8rem; height: 240%; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .tag-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
 
 .book-detail-wrap .detail-wrap .intro-wrap {padding-right: 4rem; padding-top: 1.5rem; word-break: keep-all; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; position: relative; font-size: 1.125rem; line-height: 2rem; min-height: 100px; font-weight: 400; color: rgba(0, 0, 0, 0.471);}
-.book-detail-wrap .detail-wrap .tag-wrap {padding-top: 1.5rem;}
+.book-detail-wrap .detail-wrap .tag-wrap {padding-top: 1.5rem; display: flex;}
 .book-detail-wrap .detail-wrap .tag-wrap > span:not(:last-child) {margin-right: 1rem;}
-.book-detail-wrap .detail-wrap .tag-wrap .tag {padding: 0.25REM; border-radius: 4px; color: #fff; font-size: 1rem;}
+.book-detail-wrap .detail-wrap .tag-wrap .tag {padding: 0.25rem; border-radius: 4px; color: #fff; font-size: 1rem;}
 .book-detail-wrap .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
 .book-detail-wrap .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
 .book-detail-wrap .detail-wrap .tag-wrap .essay {background-color: #ff702a;}

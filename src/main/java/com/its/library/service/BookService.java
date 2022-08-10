@@ -157,7 +157,7 @@ public class BookService {
     }
 
     private final JavaMailSender mailSender;
-    private String mail = "oloveo24@naver.com";
+    private final String mail = "oloveo24@naver.com";
 
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
@@ -199,21 +199,33 @@ public class BookService {
         mailSender.send(message);
     }
 
-    public void reqBookDelete(Long id, String memberName, String why, String mailTitle) {
+    public void reqBookDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailTitle);
-        message.setText("책 고유번호: " + id + "\n" + "\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
+        message.setText("회신 이메일: " + fromAddress +
+                "\n"
+                + "책 고유번호: " + id +
+                "\n"
+                + "작가명: " + memberName +
+                "\n"
+                + "삭제사유: " + why);
         mailSender.send(message);
     }
 
-    public void reqEpisodeDelete(Long id, String memberName, String why, String mailTitle) {
+    public void reqEpisodeDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailTitle);
-        message.setText("회차 고유번호: " + id + "\n" + "\n" + "작가명: " + memberName + "\n" + "삭제사유: " + why);
+        message.setText("회신 이메일: " + fromAddress +
+                "\n"
+                + "책 고유번호: " + id +
+                "\n"
+                + "작가명: " + memberName +
+                "\n"
+                + "삭제사유: " + why);
         mailSender.send(message);
     }
 

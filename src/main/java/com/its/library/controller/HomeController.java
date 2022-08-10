@@ -36,7 +36,12 @@ public class HomeController {
             List<BookEntity> bookHitsList = new ArrayList<>();
             List<BookEntity> bookNewList = new ArrayList<>();
             List<DebutEpisodeDTO> debutEpisodeDTOS = debutService.indexNewList();//데뷔 최신글 리스트 5개
+            List<DebutEpisodeDTO> top123 =debutService.hitsTop123();
+            List<DebutEpisodeDTO> top456 =debutService.hitsTop456();
+            model.addAttribute("top123",top123);
+            model.addAttribute("top456",top456);
             model.addAttribute("newDebutList",debutEpisodeDTOS);
+
             bookHitsList = bookRepository.findAllHits();
             if (bookHitsList.size() != 0 && bookHitsList.size() > 5) {
                 for (int i = 0; i < 6; i++) {

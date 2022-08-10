@@ -1,9 +1,21 @@
 @charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 /* root */
+*, *::after, *::before {font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased;}
+html {line-height: normal; color: #222; font-weight: 400; font-size: 0.875rem; letter-spacing: -0.03em; -webkit-text-size-adjust: 100%;}
+a {text-decoration: none; outline: none; font-family: inherit; cursor: pointer; color:inherit;}
+a:link {text-decoration: none; -webkit-text-decoration: none;}
+ul, li {list-style: none;}
 body {background-color: #eee !important; box-sizing: border-box; border-collapse: collapse;}
+ul {list-style-type: none; margin: 0; padding: 0;}
+li {line-height: initial;}
+hr {margin: 0; padding: 0; box-sizing: content-box; overflow: visible;}
+h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
+
 /* container */
 #wrap a {color: inherit; text-decoration: none; outline: none;}
 #wrap {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; }
@@ -14,7 +26,7 @@ body {background-color: #eee !important; box-sizing: border-box; border-collapse
 #wrap .comment-container {overflow: hidden scroll;}
 #wrap .comment-container::-webkit-scrollbar {display: none;}
 /* head-area */
-#wrap .viewer-container .head-area {width: 1110px; height: 70px; vertical-align: middle; display: flex; background-color: #fff; border: 1px solid #ccc; position: fixed; margin: -23px 0 0 -555px; left: 50%; top: 23px; z-index: 2;}
+#wrap .viewer-container .head-area {width: 1117px; height: 70px; vertical-align: middle; display: flex; background-color: #fff; border: 1px solid #ccc; position: fixed; margin: -23px 0 0 -559px; left: 50%; top: 23px; z-index: 2;}
 #wrap .viewer-container .head-area .head-wrap {width: 940px; height: 100%; position: relative; z-index: 2; padding: 10px 100px 9px 100px;}
 #wrap .viewer-container .logo-wrap .logo {width: 69px; height: 69px; position: absolute; top: 0; left: 0; bottom: 0;}
 #wrap .viewer-container .info-wrap .book-title-wrap .book-title {margin: 3px 0 0; font-size: 0.933em; font-weight: 600; color: #555; letter-spacing: 0.03rem;}

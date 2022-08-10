@@ -79,7 +79,7 @@ public class DebutController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         debutService.delete(id);
-        return "redirect:/";
+        return "redirect:/debut/main/0";
     }
     @GetMapping("/loveCheck/{id}")
     public @ResponseBody String loveCheck(@PathVariable("id")Long id,@RequestParam("memberId")Long memberId){
