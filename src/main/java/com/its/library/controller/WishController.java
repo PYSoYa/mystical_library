@@ -52,7 +52,8 @@ public class WishController {
         model.addAttribute("authentication", findDTO);
 
         MemberDTO memberDTO = memberService.myPage(id);
-        List<MemberDTO> memberDTOList = wishService.memberWishlist(memberDTO.getId());
+        List<MemberDTO> memberDTOList = wishService.memberWishlist(memberDTO.getMemberName());
+        System.out.println("memberDTOList = " + memberDTOList);
         model.addAttribute("member", memberDTO);
         model.addAttribute("memberList", memberDTOList);
         return "member/wishlistAuthor";

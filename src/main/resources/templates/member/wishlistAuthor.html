@@ -34,87 +34,13 @@
             <div class="list-author-wrap">
               <div class="author-wrap" th:each="member:${memberList}">
                 <div class="img-wrap">
-                  <a th:href="@{|/member/mypage/${member.id}|}">
+                  <a th:href="@{|/member/myPage/${member.id}|}">
                     <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
                   </a>
                 </div>
                 <div class="detail-wrap">
                   <div class="title-wrap">
                     <h5 class="title" th:text="${member.memberName}"></h5>
-                  </div>
-                </div>
-              </div>
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이2</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이3</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이4</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이5</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="list-author-wrap">
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이6</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="author-wrap">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <div class="title-wrap">
-                    <h5 class="title">톰보이7</h5>
                   </div>
                 </div>
               </div>

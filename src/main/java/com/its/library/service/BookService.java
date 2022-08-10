@@ -280,7 +280,7 @@ public class BookService {
             StarEntity starEntity = StarEntity.saveEntity(starDTO, memberEntity, episodeEntity);
             starRepository.save(starEntity).getId();
             double starAvg = starRepository.starAvg(episodeEntity.getId());
-            episodeEntity.setStar(starAvg);
+            episodeEntity.setStar(Math.round(starAvg * 100) / 100.0);
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
             if (optionalBookEntity.isPresent()) {
                 episodeRepository.save(episodeEntity);
