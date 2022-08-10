@@ -97,7 +97,7 @@ public class MemberController {
     // 회원정보 조회 (완결 작품)
     @GetMapping("/myPage/{id}/completion")
     public String myPage2(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                          @PathVariable("id") Long id, Model model){
+                          @PathVariable("id") Long id, Model model) {
         List<BookDTO> bookDTOList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
         String loginId = principalDetails.getUsername();
@@ -122,8 +122,6 @@ public class MemberController {
             model.addAttribute("wishCount", wishCount);
             model.addAttribute("bookList", bookDTOList);
             model.addAttribute("wishlist", writerList);
-        } catch (Exception e) {
-
         }
         return "member/myPageCompletion";
     }
@@ -143,23 +141,22 @@ public class MemberController {
             if (findDTO.getRole().equals("ROLE_ADMIN")) {
                 return "redirect:/admin/book-list";
             }
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
-        model.addAttribute("myDebutList",debutEpisodeDTOList);
-        if (findDTO.getRole().equals("ROLE_ADMIN")) {
-            return "redirect:/admin/book-list";
-        } else {
-            MemberDTO memberDTO = memberService.myPage(id);
-            model.addAttribute("member", memberDTO);
-            int wishCount = wishService.findByMemberId(id);
-            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-            List<WishDTO> writerList = new ArrayList<>();
-            for (int i = 0; i < wishDTOList.size(); i++) {
-                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                    writerList.add(wishDTOList.get(i));
+            List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+            model.addAttribute("myDebutList", debutEpisodeDTOList);
+            if (findDTO.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/book-list";
+            } else {
+                int wishCount = wishService.findByMemberId(id);
+                List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+                List<WishDTO> writerList = new ArrayList<>();
+                for (int i = 0; i < wishDTOList.size(); i++) {
+                    if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                        writerList.add(wishDTOList.get(i));
+                    }
                 }
+                model.addAttribute("wishCount", wishCount);
+                model.addAttribute("wishlist", writerList);
             }
-            model.addAttribute("wishCount", wishCount);
-            model.addAttribute("wishlist", writerList);
         } catch (Exception e) {
             model.addAttribute("authentication", new MemberDTO());
         }

@@ -198,6 +198,9 @@ public class MemberService {
                 memberImg.transferTo(new File(savePath));
                 memberEntity.setMemberImgName(memberImgName);
             }
+            String newPassword = memberDTO.getMemberPassword();
+            String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+            memberEntity.setMemberPassword(encodedPassword);
             memberEntity.setMemberName(memberDTO.getMemberName());
             memberEntity.setIntroduction(memberDTO.getIntroduction());
             memberRepository.save(memberEntity);
