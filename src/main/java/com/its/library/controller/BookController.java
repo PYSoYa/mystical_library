@@ -341,6 +341,8 @@ public class BookController {
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
         starDTO = starService.starList(findDTO.getId(), id);
+        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(id);
+        model.addAttribute("episodeList", episodeDTOList);
         model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("book", bookDTO);

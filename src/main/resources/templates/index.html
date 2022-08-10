@@ -164,8 +164,8 @@
     <div class="recent-debut-post-list-container">
       <div class="recent-debut-post-list-wrap">
         <div class="recent-debut-post-div">
-          <ul th:each="finsh:${newList}" class="recent-debut-post-ul">
-            <li class="recent-debut-post-li" >
+          <ul class="recent-debut-post-ul">
+            <li th:each="finsh:${newList}"  class="recent-debut-post-li" >
               <div class="recent-debut-post">
                 <div class="img-wrap">
                   <a th:if="${authentication != null}" th:href="@{|/book/book/${finsh.id}|}">
