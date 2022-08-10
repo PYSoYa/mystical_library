@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="profile-heart-detail-wrap">
-          <span class="detail">234234명이 좋아해요</span>
+          <span class="detail" th:text="${wishCount}+'명이 좋아해요'" th:if="${wishCount ne 0}"></span>
         </div>
         <div th:if="${member.id.equals(authentication.id)}" class="edit-btn-wrap">
           <span id="memberIdForUpdate" th:text="${member.id}" hidden></span>
@@ -85,48 +85,25 @@
         </div>
       </div>
 
-      <div class="post-list-container">
+      <div class="post-list-container" th:each="book:${bookList}">
         <div class="post-container">
           <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_2.jpeg}" alt="">
+            <a th:href="@{|/book/book/${book.id}|}">
+              <img th:src="@{|/upload/${book.bookImgName}|}" alt="">
             </a>
           </div>
           <div class="detail-wrap">
             <div class="title-wrap item">
-              <span class="title">물휴지</span>
+              <span class="title" th:text="${book.bookTitle}"></span>
             </div>
             <div class="intro-wrap item">
-              <span class="intro">물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트</span>
+              <span class="intro" th:text="${book.introduce}"></span>
             </div>
             <div class="star-wrap item">
               <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
               </svg>
-              <span class="star">9.2</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="post-list-container">
-        <div class="post-container">
-          <div class="img-wrap">
-            <a href="#">
-              <img th:src="@{/img/book_img_1.jpeg}" alt="">
-            </a>
-          </div>
-          <div class="detail-wrap">
-            <div class="title-wrap item">
-              <span class="title">물휴지</span>
-            </div>
-            <div class="intro-wrap item">
-              <span class="intro">물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트물휴지는 물티슈입니다. 계속 길어지나 테스트</span>
-            </div>
-            <div class="star-wrap item">
-              <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
-              </svg>
-              <span class="star">9.2</span>
+              <span class="star" th:text="${book.star}"></span>
             </div>
           </div>
         </div>
