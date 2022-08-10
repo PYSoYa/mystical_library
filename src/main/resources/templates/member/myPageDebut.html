@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="profile-heart-detail-wrap">
-          <span class="detail">234234명이 좋아해요</span>
+          <span class="detail" th:text="${wishCount}+'명이 좋아해요'" th:if="${wishCount ne 0}"></span>
         </div>
         <div th:if="${member.id.equals(authentication.id)}" class="edit-btn-wrap">
           <span id="memberIdForUpdate" th:text="${member.id}" hidden></span>

@@ -184,7 +184,11 @@ public class BookController {
                 model.addAttribute("bookList4", bookDTOList4);
                 model.addAttribute("bookList5", bookDTOList5);
             } else if (categoryId == 2) {
-
+                List<BookDTO> bookDTOList = bookService.siList();
+                model.addAttribute("bookList", bookDTOList);
+            } else {
+                List<BookDTO> bookDTOList = bookService.essayList();
+                model.addAttribute("booList", bookDTOList);
             }
 
             String loginId = principalDetails.getUsername();
