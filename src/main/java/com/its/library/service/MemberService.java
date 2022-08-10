@@ -48,7 +48,7 @@ public class MemberService {
         String toAddress = memberEmail;
         String title = "[" + emailNum + "]" + " 신비한서재 이메일 인증을 진행해주세요.";
         String content = "신비한 서재를 방문해주셔서 감사합니다.\n" +
-                "인증 번호는 " + emailNum + " 입니다.\n" +
+                "인증 번호는 [" + emailNum + "] 입니다.\n" +
                 "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
 
         SimpleMailMessage message = new SimpleMailMessage();
@@ -198,6 +198,9 @@ public class MemberService {
                 memberImg.transferTo(new File(savePath));
                 memberEntity.setMemberImgName(memberImgName);
             }
+            String newPassword = memberDTO.getMemberPassword();
+            String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+            memberEntity.setMemberPassword(encodedPassword);
             memberEntity.setMemberName(memberDTO.getMemberName());
             memberEntity.setIntroduction(memberDTO.getIntroduction());
             memberRepository.save(memberEntity);
@@ -217,4 +220,45 @@ public class MemberService {
         }
     }
 
+    public MemberDTO findByLoginIdAndMemberEmail(MemberDTO memberDTO) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByLoginIdAndMemberEmail(memberDTO.getLoginId(), memberDTO.getMemberEmail());
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDTO.toDTO(optionalMemberEntity.get());
+        } else {
+            return null;
+        }
+    }
+
+    public void passwordReset(String memberEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(memberEmail);
+        if (optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            int leftLimit = 48; // numeral '0'
+            int rightLimit = 122; // letter 'z'
+            int targetStringLength = 10;
+            Random random = new Random();
+            String newPassword = random.ints(leftLimit, rightLimit + 1)
+                    .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                    .limit(targetStringLength)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString();
+
+            String encodedNewPassword = bCryptPasswordEncoder.encode(newPassword);
+            memberEntity.setMemberPassword(encodedNewPassword);
+            memberRepository.save(memberEntity);
+
+            String toAddress = memberEmail;
+            String title = "[신비한 서재] 비밀번호 찾기 서비스입니다.";
+            String content = "신비한 서재를 방문해주셔서 감사합니다.\n" +
+                    "새로운 비밀번호는 " + newPassword + " 입니다.\n" +
+                    "로그인 후에 비밀번호 변경을 해주시길 바랍니다.";
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(memberEmail);
+            message.setFrom(fromMail);
+            message.setSubject(title);
+            message.setText(content);
+            mailSender.send(message);
+        }
+    }
 }

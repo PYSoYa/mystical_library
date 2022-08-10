@@ -13,18 +13,7 @@
 <main class="main-container">
   <div class="content-container">
     <div class="title-wrap">
-      <h5 class="title">비밀번호 찾기</h5>
-    </div>
-    <div class="input-wrap">
-      <div class="label-id-wrap">
-        <label class="label-id">아이디</label>
-      </div>
-      <div class="input-id-wrap">
-        <input type="text" id="loginId" class="input-id" placeholder="아이디123">
-      </div>
-      <div class="result-id-wrap">
-        <span class="span-id" id="resultId"></span>
-      </div>
+      <h5 class="title">아이디 찾기</h5>
     </div>
     <div class="input-wrap">
       <div class="label-email-wrap">
@@ -42,7 +31,7 @@
       <div class="label-auth-wrap">
       </div>
       <div class="input-auth-wrap">
-        <input type="text" id="inputAuth" class="input-auth" placeholder="인증번호 입력">
+        <input type="text" class="input-auth" id="inputAuth" placeholder="인증번호 입력">
         <button type="button" class="check-auth" onclick="emailNumCheck()">인증하기</button>
       </div>
       <div class="result-auth-wrap">
@@ -50,7 +39,7 @@
       </div>
     </div>
     <div class="btn-wrap">
-      <button type="button" class="submit-btn" onclick="passwordReset()">비밀번호 찾기</button>
+      <button type="button" class="submit-btn" onclick="findId()">아이디 찾기</button>
     </div>
   </div>
 </main>
@@ -62,16 +51,15 @@
     let emailNumCheckResult = false;
     const memberEmailCheck = () => {
         const memberEmail = document.getElementById("memberEmail").value;
-        const loginId = document.getElementById("loginId").value;
         const resultEmail = document.getElementById("resultEmail");
-        if (memberEmail.length != 0 && loginId.length != 0) {
+        if (memberEmail.length != 0) {
             let header = $("meta[name='_csrf_header']").attr('content');
             let token = $("meta[name='_csrf']").attr('content');
 
             $.ajax({
                 type: "post",
-                url: "/member/find-by-login-id-and-email",
-                data: {"loginId": loginId, "memberEmail": memberEmail},
+                url: "/member/find-by-email",
+                data: {"memberEmail": memberEmail},
                 dataType: "text",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
@@ -81,12 +69,12 @@
                         code = result;
                         Swal.fire('메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.');
                     } else {
-                        resultEmail.innerHTML = '아이디 또는 이메일을 다시 확인해주세요.';
+                        resultEmail.innerHTML = '해당하는 이메일이 없습니다. 이메일을 다시 확인해주세요.';
                     }
                 }
             });
         } else {
-            resultEmail.innerHTML = '아이디와 이메일을 입력해주세요.';
+            resultEmail.innerHTML = '이메일을 입력해주세요.';
         }
     }
 
@@ -103,13 +91,7 @@
         }
     }
 
-    const passwordReset = () => {
-        const loginId = document.getElementById("loginId");
-        const inputMemberEmail = document.getElementById("memberEmail");
-        const inputNumber = document.getElementById("inputAuth");
-        const resultAuth = document.getElementById("resultAuth");
-
-
+    const findId = () => {
         if (emailNumCheckResult == true) {
             let header = $("meta[name='_csrf_header']").attr('content');
             let token = $("meta[name='_csrf']").attr('content');
@@ -118,21 +100,29 @@
 
             $.ajax({
                 type: "post",
-                url: "/member/password-reset",
+                url: "/member/find-login-id",
                 data: {"memberEmail": memberEmail},
+                dataType: "json",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
-                success: function () {
-                    Swal.fire('이메일로 비밀번호가 전송되었습니다.');
-                    loginId.value = "";
-                    inputMemberEmail.value = "";
-                    inputNumber.value = "";
-                    resultAuth.innerHTML = "";
+                success: function (result) {
+                    if (result.provider == null) {
+                        Swal.fire('회원님의 로그인 아이디는 ' + "'" + result.loginId + "'" + ' 입니다.');
+                    } else if (result.provider == 'naver') {
+                        Swal.fire('회원님은 네이버 로그인 USER 입니다.');
+                    } else if (result.provider == 'google') {
+                        Swal.fire('회원님은 구글 로그인 USER 입니다.');
+                    } else if (result.provider == 'facebook') {
+                        Swal.fire('회원님은 페이스북 로그인 USER 입니다.');
+                    } else if (result.provider == 'kakao') {
+                        Swal.fire('회원님은 카카오 로그인 USER 입니다.');
+                    } else if (result.provider == 'github') {
+                        Swal.fire('회원님은 깃허브 로그인 USER 입니다.');
+                    }
                 }
             });
         } else {
-            Swal.fire('죄송합니다.\n서버 오류로 인증에 실패했습니다.\n다시 진행해주세요.');
             Swal.fire('"인증하기" 를 눌러주세요.');
         }
     }
