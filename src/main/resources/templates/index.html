@@ -32,22 +32,12 @@
         <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <ul class="dropdown-menu">
           <li><a href="#" class="dropdown-item" th:href="@{/book/category?categoryId=2}">시 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
         </ul>
       </li>
       <li class="category-wrap">
         <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">에세이 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a href="#" class="dropdown-item" th:href="@{/book/category?categoryId=3}">에세이 메인</a></li>
         </ul>
       </li>
       <li class="category-wrap">
@@ -174,8 +164,8 @@
     <div class="recent-debut-post-list-container">
       <div class="recent-debut-post-list-wrap">
         <div class="recent-debut-post-div">
-          <ul th:each="finsh:${newList}" class="recent-debut-post-ul">
-            <li class="recent-debut-post-li" >
+          <ul class="recent-debut-post-ul">
+            <li th:each="finsh:${newList}"  class="recent-debut-post-li" >
               <div class="recent-debut-post">
                 <div class="img-wrap">
                   <a th:if="${authentication != null}" th:href="@{|/book/book/${finsh.id}|}">

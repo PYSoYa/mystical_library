@@ -138,8 +138,9 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/req-book-delete")
     public String reqBookDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
-                                @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
-        bookService.reqBookDelete(id, memberName, why, mailTitle);
+                                @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle,
+                                @RequestParam("fromAddress") String fromAddress) {
+        bookService.reqBookDelete(id, memberName, why, mailTitle, fromAddress);
         return "redirect:/";
     }
 
@@ -160,8 +161,9 @@ public class BookController {
     @Secured({"ROLE_WRITER", "ROLE_ADMIN"})
     @PostMapping("/req-episode-delete")
     public String reqEpisodeDelete(@RequestParam("id") Long id, @RequestParam("memberName") String memberName,
-                                   @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle) {
-        bookService.reqEpisodeDelete(id, memberName, why, mailTitle);
+                                   @RequestParam("why") String why, @RequestParam("mailTitle") String mailTitle,
+                                   @RequestParam("fromAddress") String fromAddress) {
+        bookService.reqEpisodeDelete(id, memberName, why, mailTitle, fromAddress);
         return "redirect:/";
     }
 
@@ -182,7 +184,11 @@ public class BookController {
                 model.addAttribute("bookList4", bookDTOList4);
                 model.addAttribute("bookList5", bookDTOList5);
             } else if (categoryId == 2) {
-
+                List<BookDTO> bookDTOList = bookService.siList();
+                model.addAttribute("bookList", bookDTOList);
+            } else {
+                List<BookDTO> bookDTOList = bookService.essayList();
+                model.addAttribute("booList", bookDTOList);
             }
 
             String loginId = principalDetails.getUsername();
@@ -335,6 +341,8 @@ public class BookController {
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
         starDTO = starService.starList(findDTO.getId(), id);
+        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(id);
+        model.addAttribute("episodeList", episodeDTOList);
         model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("book", bookDTO);

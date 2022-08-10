@@ -1,17 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/save-form.css}">
+  <link rel="stylesheet" th:href="@{/css/book/update.css}">
 </head>
 <body>
-    <form action="/book/req-book-delete" method="post">
-        <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-        <input type="hidden" name="id" th:value="${authentication.id}">
-        <input type="hidden" name="memberName" th:value="${authentication.memberName}">
-        <input type="text" name="mailTitle" placeholder="메일제목"><br>
-        <textarea name="why" placeholder="삭제사유"></textarea><br>
-        <input type="submit" value="전송">
-    </form>
+<th:block th:replace="layout/header :: header"></th:block>
+
+<main class="main-container">
+  <div class="save-form-container">
+    <div class="save-form-wrap">
+      <div class="save-form-div">
+        <div class="save-form">
+          <form class="form-to-save" action="/book/req-book-delete" method="post">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="id" th:value="${authentication.id}">
+            <input type="hidden" name="memberName" th:value="${authentication.memberName}">
+            <div class="title-wrap">
+              <div class="title-wrapper">
+                <label class="title">제목</label>
+              </div>
+              <div class="input-wrap">
+                <input type="text" name="mailTitle" class="title" placeholder="제목을 입력해주세요.">
+              </div>
+            </div>
+            <div class="intro-wrap">
+              <div class="intro-wrapper">
+                <label class="intro">사유</label>
+              </div>
+              <div class="input-wrap">
+                <textarea maxlength="500" onkeyup="resize(this)" class="intro" name="why" placeholder="삭제 사유를 입력해주세요."></textarea>
+              </div>
+            </div>
+            <div class="send-wrap">
+              <div class="title-wrap">
+                <label class="title">이메일</label>
+              </div>
+              <div class="input-wrap">
+                <div class="from-wrap">
+                  <input type="text" name="fromAddress" placeholder="작가님의 이메일을 입력해주세요.">
+                </div>
+              </div>
+            </div>
+            <div class="btn-wrap">
+              <div class="btn-wrapper">
+                <button type="submit" class="submit-btn">삭제 요청</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const resize = (obj) => {
+    obj.style.height = '11.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+</script>
 </html>

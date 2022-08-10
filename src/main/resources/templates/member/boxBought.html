@@ -33,7 +33,7 @@
           <div class="list-detail-container">
             <div class="content-container" th:each="book:${bookList}">
               <div class="img-wrap">
-                <a href="#">
+                <a th:href="@{|/book/book/${book.id}|}">
                   <img th:src="@{|/upload/${book.bookImgName}|}" alt="">
                 </a>
               </div>

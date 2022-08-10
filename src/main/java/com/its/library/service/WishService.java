@@ -122,16 +122,17 @@ public class WishService {
         }
 
     }
-    public List<MemberDTO> memberWishlist(Long id) {
+    public List<MemberDTO> memberWishlist(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<MemberDTO> memberDTOList = new ArrayList<>();
+        MemberEntity memberEntity = new MemberEntity();
         wishEntityList = wishRepository.findAll();
         for (int i = 0; i < wishEntityList.size(); i++) {
-            if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberEntity().getId().equals(id)) {
+            if (wishEntityList.get(i).getBookEntity() == null && wishEntityList.get(i).getMemberName().equals(memberName)) {
                 Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(wishEntityList.get(i).getMemberEntity().getId());
                 if (optionalMemberEntity.isPresent()) {
-                    memberDTOList.add(MemberDTO.toDTO(optionalMemberEntity.get()));
-
+                    memberEntity = optionalMemberEntity.get();
+                    memberDTOList.add(MemberDTO.toDTO(memberEntity));
                 }
             }
         }
