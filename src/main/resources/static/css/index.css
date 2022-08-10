@@ -48,13 +48,13 @@
 .recent-debut-post-list-wrap, .recent-completion-list-wrap {display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-flex-wrap: nowrap; -webkit-flex-wrap: nowrap; -ms-flex-wrap: nowrap; flex-wrap: nowrap; overflow-x: hidden; overflow-y: hidden; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
 .recent-debut-post-div, .recent-completion-div {display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex: 1 0 auto; -ms-flex: 1 0 auto; flex: 1 0 auto;}
 .recent-debut-post-ul, .recent-completion-ul {display: flex; margin-top: 1.25rem;}
-.recent-debut-post-li, .recent-completion-li {margin-right: 2rem;}
+.recent-debut-post-li, .recent-completion-li {margin-right: 2.1rem; overflow: hidden; width: 13.5rem;}
 .recent-debut-post, .recent-completion {position: relative; display: flex; flex-direction: column; align-items: flex-start;}
 .recent-debut-post .img-wrap, .recent-completion .img-wrap {width: 13.5rem; height: 17.5rem;}
 .recent-debut-post .img-wrap .img, .recent-completion .img-wrap .img {width: 13.5rem; height: 17.5rem; border-radius: 0.375rem;}
 .recent-debut-post .detail-wrap, .recent-completion .detail-wrap {position: relative; display: flex; flex-direction: column; margin-top: 0.875rem;}
-.recent-debut-post .detail-wrap .title, .recent-completion .detail-wrap .title {font-size: 1.25rem; font-weight: 600;}
-.recent-debut-post .detail-wrap .author, .recent-completion .detail-wrap .author {margin-top: 0.5rem; font-size: 1rem;}
+.recent-debut-post .detail-wrap .title, .recent-completion .detail-wrap .title {display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; text-overflow: ellipsis; position: relative; overflow: hidden; word-break: break-all; font-size: 1.25rem; font-weight: 600;}
+.recent-debut-post .detail-wrap .author, .recent-completion .detail-wrap .author {display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; text-overflow: ellipsis; position: relative; overflow: hidden; word-break: break-all; margin-top: 0.5rem; font-size: 1rem;}
 .recent-debut-post .detail-wrap .star-wrap, .recent-completion .detail-wrap .star-wrap {display: flex; margin-top: 0.5rem; font-size: 0.875rem;}
 .recent-debut-post .detail-wrap .star-wrap .star, .recent-completion .detail-wrap .star-wrap .star {font-size: 0.875rem;}
 /* 신인 작가 */
