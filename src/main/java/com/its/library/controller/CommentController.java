@@ -32,18 +32,15 @@ public class CommentController {
 
     // 회차 댓글 신고처리
     @PostMapping("/report-save/{id}")
-    public @ResponseBody String reportSave(@PathVariable("id") Long id, @RequestParam("loginId") Long loginId,
-                                           @RequestParam("contents") String contents) {
-        String result = commentService.reportSave(id, loginId, contents);
+    public @ResponseBody String reportSave(@PathVariable("id") Long id, @RequestParam("loginId") Long loginId) {
+        String result = commentService.reportSave(id, loginId);
         return result;
     }
 
     // 회차 댓글 내용수정
     @PostMapping("/update")
     public @ResponseBody List<CommentDTO> update(@ModelAttribute CommentDTO commentDTO) {
-        System.out.println("commentDTO = " + commentDTO);
         List<CommentDTO> result = commentService.update(commentDTO);
-        System.out.println("result = " + result);
         return result;
     }
 

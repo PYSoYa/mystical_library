@@ -56,7 +56,6 @@ public class HistoryService {
         }
         List<BookDTO> bookDTOList = new ArrayList<>();
         List<Long> list = historyRepository.findByMemberId(memberEntity.getId());
-        System.out.println("list = " + list);
         for (int i = 0; i < list.size(); i++) {
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(list.get(i));
             if (optionalBookEntity.isPresent()) {

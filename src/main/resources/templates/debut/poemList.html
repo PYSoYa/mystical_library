@@ -10,6 +10,7 @@
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+
 <div class="category-div">
   <div class="category-container">
     <ul class="category-ul dropdown">
@@ -17,7 +18,7 @@
         <a href="/" class="category">홈</a>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
+        <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">웹소설</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/book/category?categoryId=1}" class="dropdown-item">웹소설 메인</a></li>
           <li><a th:href="@{|/book/genre?genreId=1&alignmentId=0|}" class="dropdown-item">판타지</a></li>
@@ -28,29 +29,19 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
+        <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">시 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a class="dropdown-item" th:href="@{/book/category?categoryId=2}">시 메인</a></li>
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
+        <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <ul class="dropdown-menu">
-          <li><a href="#" class="dropdown-item">에세이 메인</a></li>
-          <li><a href="#" class="dropdown-item">판타지</a></li>
-          <li><a href="#" class="dropdown-item">현대판타지</a></li>
-          <li><a href="#" class="dropdown-item">로맨스</a></li>
-          <li><a href="#" class="dropdown-item">로맨스판타지</a></li>
-          <li><a href="#" class="dropdown-item">무협</a></li>
+          <li><a class="dropdown-item" th:href="@{/book/category?categoryId=3}">에세이 메인</a></li>
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:void(0)" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
+        <a href="javascript:;" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/debut/main/0}" class="dropdown-item">데뷔글 메인</a></li>
           <li><a th:href="@{/debut/poem/1/0}" class="dropdown-item">시</a></li>
@@ -61,6 +52,7 @@
     </ul>
   </div>
 </div>
+
 <main class="main-container">
   <div class="genre-list-container">
     <div class="genre-list-title-container">
@@ -72,7 +64,6 @@
           <a th:href="@{/debut/poem/1/1}" class="order-btn">최신순</a>
           <a th:href="@{/debut/poem/1/2}" class="order-btn">조회순</a>
           <a th:href="@{/debut/poem/1/3}" class="order-btn">관심순</a>
-
         </div>
       </div>
     </div>
@@ -114,44 +105,6 @@
     </div>
   </div>
 </main>
-
-
-<!--<div class="container">-->
-<!--  <ul class="pagination justify-content-center">-->
-<!--    <li class="page-item">-->
-
-<!--      <a class="page-link" th:href="@{/debut(page=1)}">-->
-<!--        <span>First</span>-->
-<!--      </a>-->
-<!--    </li>-->
-
-<!--    <li th:class="${debutEpisodePage.first} ? 'disabled'" class="page-item">-->
-
-<!--      <a class="page-link" th:href="${debutEpisodePage.first} ? '#' : @{/debut(page=${debutEpisodePage.number})}">-->
-<!--        <span><</span> &lt;!&ndash; < &ndash;&gt;-->
-<!--      </a>-->
-<!--    </li>-->
-
-
-<!--    <li th:each="page: ${#numbers.sequence(startPage, endPage)}"-->
-<!--        th:class="${page == debutEpisodePage.number + 1} ? 'page-item active'" class="page-item">-->
-<!--      <a class="page-link" th:text="${page}" th:href="@{/debut(page=${page})}"></a>-->
-<!--    </li>-->
-
-
-<!--    <li th:class="${debutEpisodePage.last} ? 'disabled'">-->
-<!--      <a class="page-link" th:href="${debutEpisodePage.last} ? '#' : @{/debut(page=${debutEpisodePage.number + 2})}">-->
-<!--        <span>&gt;</span>-->
-<!--      </a>-->
-<!--    </li>-->
-
-<!--    <li class="page-item">-->
-<!--      <a class="page-link" th:href="@{/debut(page=${debutEpisodePage.totalPages})}">-->
-<!--        <span>Last</span>-->
-<!--      </a>-->
-<!--    </li>-->
-<!--  </ul>-->
-<!--</div>-->
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>

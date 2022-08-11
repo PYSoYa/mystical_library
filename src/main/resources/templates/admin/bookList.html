@@ -5,10 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
   <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+
 <main class="main-container">
   <div class="history-container">
     <div class="history-wrap">
@@ -92,15 +94,14 @@
   </div>
 </main>
 
-<script>
-function bookAgree(id){
-location.href="/admin/book-agree/"+id;
-
-}
-function bookDelete(id){
-  location.href="/admin/book-delete/"+id;
-}
-</script>
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  function bookAgree(id) {
+    location.href="/admin/book-agree/" + id;
+  }
+  function bookDelete(id) {
+    location.href="/admin/book-delete/" + id;
+  }
+</script>
 </html>
