@@ -18,17 +18,6 @@
   <script th:src="@{|https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js|}"></script>
 </head>
 <body>
-<!--<div class="not-mine" style="display: none">-->
-<!--  <select id="star" name="star">-->
-<!--    <option value="1">★☆☆☆☆</option>-->
-<!--    <option value="2">★★☆☆☆</option>-->
-<!--    <option value="3">★★★☆☆</option>-->
-<!--    <option value="4">★★★★☆</option>-->
-<!--    <option value="5">★★★★★</option>-->
-<!--  </select>-->
-<!--  <input type="button" onclick="saveStar()" value="버튼">-->
-<!--  <h3></h3>-->
-<!--</div>-->
 
 <div id="wrap">
   <div class="viewer-container">
@@ -190,6 +179,18 @@
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
                 <button type="button" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
+              </div>
+            </div>
+            <div class="btn-wrap" th:if="${authentication.memberName eq book.memberName}">
+              <div class="edit-btn-wrap">
+                <a th:href="@{|/book/req-episode-update?id=${episode.id}|}">
+                  <button type="button" class="edit-btn">수정</button>
+                </a>
+              </div>
+              <div class="delete-btn-wrap">
+                <a th:href="@{|/book/req-episode-delete?id=${episode.id}|}">
+                  <button type="button" class="delete-btn">삭제</button>
+                </a>
               </div>
             </div>
             <div class="attention-wrap">

@@ -78,7 +78,7 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .nav-btn button:hover span {border-radius: 5px; border-color: #bbb;}
 #wrap .viewer-container .nav-btn button:hover {width: 120px;}
 #wrap .viewer-container .nav-btn button:hover strong {color: #666; opacity: 1; filter: alpha(opacity=100); -webkit-transform: scale(1); transform: scale(1);}
-/* viewer-responsive-web */
+/* viewer-responsive-web (ing) */
 @media screen and (max-width:1000px) {#wrap .viewer-container .viewer {padding: 40px 100px;}}
 @media screen and (max-width:800px) {#wrap .viewer-container .viewer {padding: 20px 50px;} .book-info-desc, .view-option-desc {font-size: 0.85rem;}}
 @media screen and (max-width:696px) {.book-info-desc, .view-option-desc {font-size: 0.8rem;}}
@@ -91,8 +91,16 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .content-footer .rate-wrap .star-form > button:not(:last-child) {margin-right: 1rem;}
 #wrap .viewer-container .content-footer .star-wrap .love {color: #dd2424; cursor: pointer !important;}
 #wrap .viewer-container .content-footer .star-wrap .love:hover {opacity: 0.5; transition: 0.2s ease;}
-#wrap .viewer-container .content-footer .rate-wrap .star-btn {color: #1e9eff; outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
-#wrap .viewer-container .content-footer .rate-wrap .star-btn:hover {background-color: #1e9eff; color: #fff; transition: 0.3s ease;}
+#wrap .viewer-container .content-footer .rate-wrap .star-btn,
+#wrap .viewer-container .content-footer .btn-wrap .edit-btn,
+#wrap .viewer-container .content-footer .btn-wrap .delete-btn {color: #1e9eff; outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+#wrap .viewer-container .content-footer .rate-wrap .star-btn:hover,
+#wrap .viewer-container .content-footer .btn-wrap .edit-btn:hover,
+#wrap .viewer-container .content-footer .btn-wrap .delete-btn:hover {background-color: #1e9eff; color: #fff; transition: 0.3s ease;}
+#wrap .viewer-container .content-footer .btn-wrap .edit-btn,
+#wrap .viewer-container .content-footer .btn-wrap .delete-btn {width: 4rem;}
+#wrap .viewer-container .content-footer .btn-wrap {display: flex; padding: 15px 0; vertical-align: middle; flex-direction: row;}
+#wrap .viewer-container .content-footer .btn-wrap div {margin-left: 20px;}
 /* 별점 저장 폼 */
 .star-form fieldset {display: inline-block; direction: rtl; border: 0;}
 .star-form fieldset legend {text-align: left;}

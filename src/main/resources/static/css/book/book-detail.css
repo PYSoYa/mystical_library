@@ -1,8 +1,8 @@
 .book-episode-comment-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
 .book-episode-comment-container > div:not(:last-child) {margin-bottom: 2rem;}
 .book-detail-container {font-size: 0.938rem; line-height: 1.25rem; min-height: 316px; position: relative; margin-top: 1.25rem; display: flex; padding: 0.625rem;}
-.book-detail-container .book-img-wrap {width: 15.5rem; height: 22.15rem; margin-right: 4rem;}
-.book-detail-container .book-img-wrap .img {width: 15.5rem; height: 22.15rem; padding: 0; border-radius: 4px;}
+.book-detail-container .book-img-wrap {width: 15.5rem; height: 22.36rem; margin-right: 4rem;}
+.book-detail-container .book-img-wrap .img {width: 15.5rem; height: 100%; padding: 0; border-radius: 4px;}
 
 .book-detail-wrap {width: 100%;}
 .book-detail-wrap .detail-wrap .title-wrap {width: 100%; display: flex; position: relative;}
