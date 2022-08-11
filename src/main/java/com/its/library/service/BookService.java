@@ -365,22 +365,30 @@ public class BookService {
         if (alignmentId == 0) {
             bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
+                if (book.getWriterRole() == 1){
+                    bookDTOList.add(BookDTO.findDTO(book));
+                }
             }
         } else if (alignmentId == 1) { // 장르별 최신순 정렬
             bookEntityList = bookRepository.findByGenreEntity(genreEntity.getId());
             for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book)); // 장르가 일치하는 책 리스트
+                if (book.getWriterRole() == 1){
+                    bookDTOList.add(BookDTO.findDTO(book)); // 장르가 일치하는 책 리스트
+                }
             }
         } else if (alignmentId == 2) { // 장르별 별점순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
+                if (book.getWriterRole() == 1){
+                    bookDTOList.add(BookDTO.findDTO(book));
+                }
             }
         } else if (alignmentId == 3) { // 장르별 조회순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
+                if (book.getWriterRole() == 1){
+                    bookDTOList.add(BookDTO.findDTO(book));
+                }
             }
         }
         return bookDTOList;
@@ -393,10 +401,12 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 1) {
-                if (bookDTOList1.size() < 6) {
-                    bookDTOList1.add(BookDTO.findDTO(book));
-                    if (bookDTOList1.size() == 5) {
-                        break;
+                if (book.getWriterRole() == 1){
+                    if (bookDTOList1.size() < 6) {
+                        bookDTOList1.add(BookDTO.findDTO(book));
+                        if (bookDTOList1.size() == 5) {
+                            break;
+                        }
                     }
                 }
             }
@@ -411,10 +421,12 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 2) {
-                if (bookDTOList2.size() < 6) {
-                    bookDTOList2.add(BookDTO.findDTO(book));
-                    if (bookDTOList2.size() == 5) {
-                        break;
+                if (book.getWriterRole() == 1){
+                    if (bookDTOList2.size() < 6) {
+                        bookDTOList2.add(BookDTO.findDTO(book));
+                        if (bookDTOList2.size() == 5) {
+                            break;
+                        }
                     }
                 }
             }
@@ -429,10 +441,12 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
-                if (bookDTOList3.size() < 6) {
-                    bookDTOList3.add(BookDTO.findDTO(book));
-                    if (bookDTOList3.size() == 5) {
-                        break;
+                if (book.getWriterRole() == 1){
+                    if (bookDTOList3.size() < 6) {
+                        bookDTOList3.add(BookDTO.findDTO(book));
+                        if (bookDTOList3.size() == 5) {
+                            break;
+                        }
                     }
                 }
             }
@@ -447,10 +461,12 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 4) {
-                if (bookDTOList4.size() < 6) {
-                    bookDTOList4.add(BookDTO.findDTO(book));
-                    if (bookDTOList4.size() == 5) {
-                        break;
+                if (book.getWriterRole() == 1){
+                    if (bookDTOList4.size() < 6) {
+                        bookDTOList4.add(BookDTO.findDTO(book));
+                        if (bookDTOList4.size() == 5) {
+                            break;
+                        }
                     }
                 }
             }
@@ -465,10 +481,12 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 5) {
-                if (bookDTOList5.size() < 6) {
-                    bookDTOList5.add(BookDTO.findDTO(book));
-                    if (bookDTOList5.size() == 5) {
-                        break;
+                if (book.getWriterRole() == 1){
+                    if (bookDTOList5.size() < 6) {
+                        bookDTOList5.add(BookDTO.findDTO(book));
+                        if (bookDTOList5.size() == 5) {
+                            break;
+                        }
                     }
                 }
             }
@@ -481,7 +499,7 @@ public class BookService {
         List<BookDTO> bookDTOList = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
-            if (book.getCategoryEntity().getId() == 2) {
+            if (book.getCategoryEntity().getId() == 2 && book.getWriterRole() == 1) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
         }
@@ -493,7 +511,7 @@ public class BookService {
         List<BookDTO> bookDTOList = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
-            if (book.getCategoryEntity().getId() == 3) {
+            if (book.getCategoryEntity().getId() == 3 && book.getWriterRole() == 1) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
         }

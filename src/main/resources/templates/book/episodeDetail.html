@@ -46,7 +46,7 @@
                     <div class="inner-wrap">
                       <div class="inner-content">
                         <ul class="list" th:each="episode:${episodeList}">
-                          <li><a class="list-link" th:href="@{|/book/episode?bookId=${episode.bookId}&id=${}|}" th:text="${episode.episodeTitle}"></a></li>
+                          <li><a class="list-link" th:href="@{|/book/episode?bookId=${episode.bookId}&id=${episode.id}|}" th:text="${episode.episodeTitle}"></a></li>
                         </ul>
                       </div>
                     </div>
@@ -137,14 +137,14 @@
       </div>
     </div>
     <div class="body-area">
-      <div class="nav-btn">
-        <button type="button" class="prev-btn">
+      <div class="nav-btn" th:each="episode:${episodeList}">
+        <button type="button" class="prev-btn" th:if="${episode.id == id - 1}" th:href="@{|/book/episode?bookId=${episode.bookId}&id=${episode.id}|}">
           <span></span>
-          <strong>1화</strong>
+          <strong th:text="${episode.id}"></strong>
         </button>
-        <button type="button" class="next-btn">
+        <button type="button" class="next-btn" th:if="${episode.id == id + 1}" th:href="@{|/book/episode?bookId=${episode.bookId}&id=${episode.id}|}">
           <span></span>
-          <strong>3화</strong>
+          <strong th:text="${episode.id}"></strong>
         </button>
       </div>
       <div class="viewer-wrap">

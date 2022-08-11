@@ -183,12 +183,15 @@ public class BookController {
                 model.addAttribute("bookList3", bookDTOList3);
                 model.addAttribute("bookList4", bookDTOList4);
                 model.addAttribute("bookList5", bookDTOList5);
+                model.addAttribute("categoryId", 1);
             } else if (categoryId == 2) {
                 List<BookDTO> bookDTOList = bookService.siList();
                 model.addAttribute("bookList", bookDTOList);
+                model.addAttribute("categoryId", 2);
             } else {
                 List<BookDTO> bookDTOList = bookService.essayList();
                 model.addAttribute("booList", bookDTOList);
+                model.addAttribute("categoryId", 3);
             }
 
             String loginId = principalDetails.getUsername();
@@ -200,6 +203,31 @@ public class BookController {
 
         return "book/category";
     }
+
+    // 시 메인 페이지
+//    @GetMapping("/category")
+//    public String categoryList(@AuthenticationPrincipal PrincipalDetails principalDetails,
+//                               @RequestParam("categoryId") Long categoryId,
+//                               @RequestParam("alignmentId") Long alignmentId, Model model) {
+//        try {
+//             if (categoryId == 2) {
+//                List<BookDTO> bookDTOList = bookService.siList();
+//                model.addAttribute("bookList", bookDTOList);
+//                model.addAttribute("categoryId", 2);
+//            } else {
+//                List<BookDTO> bookDTOList = bookService.essayList();
+//                model.addAttribute("booList", bookDTOList);
+//                model.addAttribute("categoryId", 3);
+//            }
+//
+//            String loginId = principalDetails.getUsername();
+//            MemberDTO findDTO = memberService.findByLoginId(loginId);
+//            model.addAttribute("authentication", findDTO);
+//        } catch (NullPointerException e) {
+//            System.out.println("BookController.categoryList");
+//        }
+//        return "book/genre";
+//    }
 
     // 책 목록 조회 + 페이징
     @GetMapping
@@ -264,17 +292,19 @@ public class BookController {
             model.addAttribute("authentication", findDTO);
 
             BookDTO bookDTO = bookService.findById(id);
-            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-            int commentSize = commentDTOList.size();
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
-            int episodeSize = episodeDTOSize.size();
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
+
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
+            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
             List<WishDTO> bookLoveList = wishService.findByBookWish(id);
             int bookLove = bookLoveList.size();
             List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
+
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
             model.addAttribute("episodeSize", episodeSize);
@@ -342,6 +372,7 @@ public class BookController {
         List<CommentDTO> commentDTOList = commentService.commentList(id);
         starDTO = starService.starList(findDTO.getId(), id);
         List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(id);
+        model.addAttribute("id", id);
         model.addAttribute("episodeList", episodeDTOList);
         model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);
