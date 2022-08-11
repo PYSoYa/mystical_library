@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,7 @@ public class ReqWriterService {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             memberEntity.setRole("ROLE_WRITER");
+            memberEntity.setRoleChangeTime(LocalDateTime.now());
             memberRepository.save(memberEntity);
             reqWriterListDelete(id);
         }

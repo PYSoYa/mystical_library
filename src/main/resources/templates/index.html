@@ -295,63 +295,15 @@
       <div class="new-author-list-wrap">
         <div class="new-author-list-div">
           <ul class="new-author-list-ul">
-            <li class="new-author-li">
+            <li class="new-author-li" th:each="writer: ${writerList1}">
               <div class="new-author">
                 <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
+                  <a th:href="@{|/member/myPage/${writer.id}|}">
+                    <img th:src="@{|/upload/${writer.memberImgName}|}" class="img" alt="">
                   </a>
                 </div>
                 <div class="detail-wrap">
-                  <span class="author">톰보이1</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이2</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이3</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이4</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이5</span>
+                  <span class="author" th:text="${writer.memberName}"></span>
                 </div>
               </div>
             </li>
@@ -363,63 +315,15 @@
       <div class="new-author-list-wrap">
         <div class="new-author-list-div">
           <ul class="new-author-list-ul">
-            <li class="new-author-li">
+            <li class="new-author-li" th:each="writer: ${writerList2}">
               <div class="new-author">
                 <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
+                  <a th:href="@{|/member/myPage/${writer.id}|}">
+                    <img th:src="@{|/upload/${writer.memberImgName}|}" class="img" alt="">
                   </a>
                 </div>
                 <div class="detail-wrap">
-                  <span class="author">톰보이6</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이7</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_1.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이8</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_2.jpeg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이9</span>
-                </div>
-              </div>
-            </li>
-            <li class="new-author-li">
-              <div class="new-author">
-                <div class="img-wrap">
-                  <a href="#">
-                    <img th:src="@{/img/book_img_3.jpg}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="author">톰보이10</span>
+                  <span class="author" th:text="${writer.memberName}"></span>
                 </div>
               </div>
             </li>

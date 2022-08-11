@@ -66,6 +66,12 @@ public class HomeController {
             model.addAttribute("bookList1", popularEntityList1);
             model.addAttribute("newList", newList); // 전체 카테고리중 완결작
 
+            // 최신 작가 리스트
+            List<MemberDTO> writerList1 = memberService.findWriter1();
+            List<MemberDTO> writerList2 = memberService.findWriter2();
+            model.addAttribute("writerList1", writerList1);
+            model.addAttribute("writerList2", writerList2);
+
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);

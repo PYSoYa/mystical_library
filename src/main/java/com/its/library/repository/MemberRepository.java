@@ -5,6 +5,7 @@ import com.its.library.entity.MemberEntity;
 import com.its.library.entity.WishEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +22,12 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     List<MemberEntity> findAll();
 
     Optional<MemberEntity> findByLoginIdAndMemberEmail(String loginId, String memberEmail);
+
+    @Transactional
+    @Query (value = "select * from member order by role_change_time desc limit 0, 5", nativeQuery = true)
+    List<MemberEntity> findWriter1();
+
+    @Transactional
+    @Query (value = "select * from member order by role_change_time desc limit 5, 10", nativeQuery = true)
+    List<MemberEntity> findWriter2();
 }
