@@ -85,7 +85,6 @@ public class BoxService {
                 return "no";
             } else {
                 boxRepository.save(boxEntity.saveEntity(boxDTO, memberEntity));
-                System.out.println("여기로오면안돼");
                 return "ok";
             }
         } else {

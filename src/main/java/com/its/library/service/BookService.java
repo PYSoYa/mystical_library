@@ -128,7 +128,6 @@ public class BookService {
             episodeEntityList = episodeRepository.findByBookEntity_Id(bookEntity.getId());
             for (EpisodeEntity episode : episodeEntityList) {
                 episodeDTOList.add(EpisodeDTO.findDTO(episode));
-                System.out.println("episodeDTOList = " + episodeDTOList);
             }
             int hits = bookRepository.hitsSum(episodeEntityList.get(0).getBookEntity().getId());
             bookEntity.setHits(hits);
@@ -367,13 +366,8 @@ public class BookService {
 
     public List<BookDTO> genreList(Long genreId, Long alignmentId) {
         List<BookEntity> bookEntityList = new ArrayList<>();
-        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
-        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
-        List<EpisodeDTO> episodeDTOList1 = new ArrayList<>();
-        List<Long> list = new ArrayList<>();
         GenreEntity genreEntity = new GenreEntity();
-        BookEntity bookEntity = new BookEntity();
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(genreId);
 
         if (optionalGenreEntity.isPresent()) {

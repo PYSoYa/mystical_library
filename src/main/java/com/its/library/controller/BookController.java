@@ -204,31 +204,6 @@ public class BookController {
         return "book/category";
     }
 
-    // 시 메인 페이지
-//    @GetMapping("/category")
-//    public String categoryList(@AuthenticationPrincipal PrincipalDetails principalDetails,
-//                               @RequestParam("categoryId") Long categoryId,
-//                               @RequestParam("alignmentId") Long alignmentId, Model model) {
-//        try {
-//             if (categoryId == 2) {
-//                List<BookDTO> bookDTOList = bookService.siList();
-//                model.addAttribute("bookList", bookDTOList);
-//                model.addAttribute("categoryId", 2);
-//            } else {
-//                List<BookDTO> bookDTOList = bookService.essayList();
-//                model.addAttribute("booList", bookDTOList);
-//                model.addAttribute("categoryId", 3);
-//            }
-//
-//            String loginId = principalDetails.getUsername();
-//            MemberDTO findDTO = memberService.findByLoginId(loginId);
-//            model.addAttribute("authentication", findDTO);
-//        } catch (NullPointerException e) {
-//            System.out.println("BookController.categoryList");
-//        }
-//        return "book/genre";
-//    }
-
     // 책 목록 조회 + 페이징
     @GetMapping
     public String bookList(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -245,15 +220,6 @@ public class BookController {
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
-
-            System.out.println("boardEntities.getContent() = " + bookDTOList.getContent()); // 요청페이지에 들어있는 데이터
-            System.out.println("boardEntities.getTotalElements() = " + bookDTOList.getTotalElements()); // 전체 글갯수
-            System.out.println("boardEntities.getNumber() = " + bookDTOList.getNumber()); // 요청페이지(jpa 기준)
-            System.out.println("boardEntities.getTotalPages() = " + bookDTOList.getTotalPages()); // 전체 페이지 갯수
-            System.out.println("boardEntities.getSize() = " + bookDTOList.getSize()); // 한페이지에 보여지는 글갯수
-            System.out.println("boardEntities.hasPrevious() = " + bookDTOList.hasPrevious()); // 이전페이지 존재 여부
-            System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
-            System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
         } catch (NullPointerException e) {
             System.out.println("BookController.bookList");
             System.out.println("java.lang.NullPointerException: null");
