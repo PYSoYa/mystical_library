@@ -42,7 +42,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findByWriterRole(int num);
 
     @Transactional
-    @Query(value = "select * from book order by hits desc", nativeQuery = true)
+    @Query(value = "select * from book where writer_role = 1 order by hits desc", nativeQuery = true)
     List<BookEntity> findAllHits();
 
     @Transactional
