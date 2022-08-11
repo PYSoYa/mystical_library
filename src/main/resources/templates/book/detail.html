@@ -123,6 +123,14 @@
         <span class="quantity-episode">전체 (</span>
         <span class="quantity-episode" th:text="${episodeSize}"></span>
         <span class="quantity-episode">)</span>
+        <div class="order-wrap">
+          <div class="from-first-wrap">
+            <span class="from-first">등록순</span>
+          </div>
+          <div class="from-last-wrap">
+            <span class="from-last">최신순</span>
+          </div>
+        </div>
       </div>
         <div class="episode-list-wrap" th:each="episode:${episodeList}">
           <div class="img-wrap">
@@ -155,7 +163,7 @@
           <li class="page-item">
             <!--첫페이지 요청 링크-->
             <a class="page-link" th:href="@{|/book/book/${book.id}?page=1|}">
-              <span>First</span>
+              <span>처음</span>
             </a>
           </li>
 
@@ -185,7 +193,7 @@
 
           <li class="page-item">
             <a class="page-link" th:href="@{|/book/book/${book.id}?page=${episodeList.totalPages}|}">
-              <span>Last</span>
+              <span>마지막</span>
             </a>
           </li>
         </ul>
