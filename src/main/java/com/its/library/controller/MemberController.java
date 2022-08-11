@@ -8,7 +8,10 @@ import com.its.library.dto.WishDTO;
 import com.its.library.entity.BookEntity;
 import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,7 @@ public class MemberController {
     private final MemberService memberService;
     private final ReqWriterService reqWriterService;
     private final BookService bookService;
+    private final WishService wishService;
 
     // 회원가입시 이메일 인증
     @PostMapping("/email-authentication")
@@ -32,7 +36,6 @@ public class MemberController {
         String emailNum = memberService.emailAuthentication(memberEmail);
         return emailNum;
     }
-    private final WishService wishService;
 
     // 회원가입 처리
     @PostMapping("/save")
@@ -59,17 +62,18 @@ public class MemberController {
     @GetMapping("/myPage/{id}")
     public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
                          @PathVariable("id") Long id, Model model) {
-        List<WishDTO> wishDTOList = new ArrayList<>();
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
-        if (findDTO.getRole().equals("ROLE_ADMIN")) {
-            return "redirect:/admin/book-list";
-        } else {
+        try {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
-            wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+
+            if (findDTO.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/book-list";
+            }
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
             List<WishDTO> writerList = new ArrayList<>();
             for (int i = 0; i < wishDTOList.size(); i++) {
                 if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
@@ -77,21 +81,23 @@ public class MemberController {
                 }
             }
             model.addAttribute("wishlist", writerList);
+        } catch (Exception e) {
 
+        } finally {
             List<BookDTO> bookDTOList = bookService.findAllByOnStatus(id);
             model.addAttribute("bookList", bookDTOList);
 
             int wishCount = wishService.findByMemberId(id);
             model.addAttribute("wishCount", wishCount);
-            return "member/myPage";
         }
+        return "member/myPage";
     }
 
 
     // 회원정보 조회 (완결 작품)
     @GetMapping("/myPage/{id}/completion")
     public String myPage2(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                          @PathVariable("id") Long id, Model model){
+                          @PathVariable("id") Long id, Model model) {
         List<BookDTO> bookDTOList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
         String loginId = principalDetails.getUsername();
@@ -116,38 +122,47 @@ public class MemberController {
             model.addAttribute("wishCount", wishCount);
             model.addAttribute("bookList", bookDTOList);
             model.addAttribute("wishlist", writerList);
-            return "member/myPageCompletion";
         }
-
+        return "member/myPageCompletion";
     }
 
-    // 회원정보 조회 (데뷔 글)
+    // 회원정보 조회 (데뷔글)
     @GetMapping("/myPage/{id}/debut")
     public String myPage3(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                          @PathVariable("id") Long id, Model model){
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
-        model.addAttribute("myDebutList",debutEpisodeDTOList);
-        if (findDTO.getRole().equals("ROLE_ADMIN")) {
-            return "redirect:/admin/book-list";
-        } else {
+                          @PathVariable("id") Long id, Model model) {
+        try {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
-            int wishCount = wishService.findByMemberId(id);
-            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-            List<WishDTO> writerList = new ArrayList<>();
-            for (int i = 0; i < wishDTOList.size(); i++) {
-                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                    writerList.add(wishDTOList.get(i));
-                }
+
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+
+            if (findDTO.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/book-list";
             }
-            model.addAttribute("wishCount", wishCount);
-            model.addAttribute("wishlist", writerList);
-            return "member/myPageDebut";
+            List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+            model.addAttribute("myDebutList", debutEpisodeDTOList);
+            if (findDTO.getRole().equals("ROLE_ADMIN")) {
+                return "redirect:/admin/book-list";
+            } else {
+                int wishCount = wishService.findByMemberId(id);
+                List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+                List<WishDTO> writerList = new ArrayList<>();
+                for (int i = 0; i < wishDTOList.size(); i++) {
+                    if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                        writerList.add(wishDTOList.get(i));
+                    }
+                }
+                model.addAttribute("wishCount", wishCount);
+                model.addAttribute("wishlist", writerList);
+            }
+        } catch (Exception e) {
+            model.addAttribute("authentication", new MemberDTO());
         }
+        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+        model.addAttribute("myDebutList", debutEpisodeDTOList);
+        return "member/myPageDebut";
     }
 
     // 비밀번호 체크
@@ -180,7 +195,6 @@ public class MemberController {
         memberService.update(memberDTO);
         return "redirect:/member/myPage/" + memberDTO.getId();
     }
-
 
 
     // 닉네임 변경시 중복 체크
@@ -235,8 +249,8 @@ public class MemberController {
 
     // 카카오페이
     @GetMapping("/kkoPay")
-    public @ResponseBody String kkoPay(@RequestParam("id")Long id,
-                                       @RequestParam("cash") int memberPoint){
+    public @ResponseBody String kkoPay(@RequestParam("id") Long id,
+                                       @RequestParam("cash") int memberPoint) {
         String result = memberService.pointAdd(id, memberPoint);
         return result;
     }
@@ -248,22 +262,50 @@ public class MemberController {
         return result;
     }
 
-    // 비밀번호 설정 페이지 요청
-    @GetMapping("/set-password")
-    public String setPassword() {
-        return "login";
-    }
-
     // 아이디 찾기 페이지 요청
     @GetMapping("/find/id")
     public String findMemberId() {
-        return "member/findMemberId";
+        return "member/findLoginId";
+    }
+
+    @PostMapping("/find-by-email")
+    public @ResponseBody String findByEmail(@RequestParam String memberEmail) {
+        MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
+        if (memberDTO != null) {
+            String emailNum = memberService.emailAuthentication(memberEmail);
+            return emailNum;
+        } else {
+            return "empty";
+        }
+    }
+
+    @PostMapping("/find-login-id")
+    public @ResponseBody MemberDTO findLoginId(@RequestParam String memberEmail) {
+        MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
+        return memberDTO;
     }
 
     // 비밀번호 찾기 페이지 요청
     @GetMapping("/find/password")
     public String findMemberPassword() {
         return "member/findMemberPassword";
+    }
+
+    @PostMapping("/find-by-login-id-and-email")
+    public @ResponseBody String findByLoginIdAndMemberEmail(@ModelAttribute MemberDTO memberDTO) {
+        MemberDTO findDTO = memberService.findByLoginIdAndMemberEmail(memberDTO);
+        if (findDTO != null) {
+            String emailNum = memberService.emailAuthentication(memberDTO.getMemberEmail());
+            return emailNum;
+        } else {
+            return "empty";
+        }
+    }
+
+    @PostMapping("/password-reset")
+    public ResponseEntity passwordReset(@RequestParam String memberEmail) {
+        memberService.passwordReset(memberEmail);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

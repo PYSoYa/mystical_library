@@ -45,21 +45,8 @@
                   <div class="inner" tabindex="0">
                     <div class="inner-wrap">
                       <div class="inner-content">
-                        <ul class="list">
-                          <li><a class="list-link">1화</a></li>
-                          <li><a class="list-link">2화</a></li>
-                          <li><a class="list-link">3화</a></li>
-                          <li><a class="list-link">4화</a></li>
-                          <li><a class="list-link">5화</a></li>
-                          <li><a class="list-link">6화</a></li>
-                          <li><a class="list-link">7화</a></li>
-                          <li><a class="list-link">8화</a></li>
-                          <li><a class="list-link">9화</a></li>
-                          <li><a class="list-link">10화</a></li>
-                          <li><a class="list-link">11화</a></li>
-                          <li><a class="list-link">12화</a></li>
-                          <li><a class="list-link">13화</a></li>
-                          <li><a class="list-link">14화</a></li>
+                        <ul class="list" th:each="episode:${episodeList}">
+                          <li><a class="list-link" th:href="@{|/book/episode?bookId=${episode.bookId}&id=${}|}" th:text="${episode.episodeTitle}"></a></li>
                         </ul>
                       </div>
                     </div>
@@ -178,7 +165,7 @@
                   <input type="radio" name="star" value="2" id="rate4"><label for="rate4">⭐</label>
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
-                <button type="button" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
+                <button type="button" id="star-btn" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
               </div>
             </div>
             <div class="btn-wrap" th:if="${authentication.memberName eq book.memberName}">
@@ -514,6 +501,7 @@
         const star5 = document.getElementById("rate1").checked;
 
         const starPrint = document.getElementById("star");
+        const starBtn = document.getElementById("star-btn");
 
         if (star1 == true) {
             star = 1;
@@ -547,7 +535,10 @@
                 if (result != null) {
                     var output = "<span class=\"star\">⭐</span>\n" +
                         "                <span class=\"star-desc\">" + result + "</span>";
+                    // starBtn.setAttribute("hidden", true);
+                    starBtn.style.display = "none";
                 }
+
                 starPrint.innerHTML = output;
             },
         });

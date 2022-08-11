@@ -19,4 +19,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Override
     @Query (value = "select * from member where login_id not like 'admin'", nativeQuery = true)
     List<MemberEntity> findAll();
+
+    Optional<MemberEntity> findByLoginIdAndMemberEmail(String loginId, String memberEmail);
 }

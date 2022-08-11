@@ -73,6 +73,11 @@ public class BookService {
     }
 
     public EpisodeDTO reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTO.getBookId());
+        BookEntity bookEntity = new BookEntity();
+        if (optionalBookEntity.isPresent()) {
+            bookEntity = optionalBookEntity.get();
+        }
         MultipartFile episodeImg = episodeDTO.getEpisodeImg();
         String episodeImgName = episodeImg.getOriginalFilename();
         if (!episodeImg.isEmpty()) {
@@ -80,23 +85,16 @@ public class BookService {
             String savePath = "C:\\springboot_img\\" + episodeImgName;
             episodeImg.transferTo(new File(savePath));
             episodeDTO.setEpisodeImgName(episodeImgName);
-        }
-        Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTO.getBookId());
-
-        if (optionalBookEntity.isPresent()) {
-            BookEntity bookEntity = optionalBookEntity.get();
-
-            EpisodeEntity episodeEntity = EpisodeEntity.saveEntity(episodeDTO, bookEntity);
-            EpisodeEntity episodeEntity1 = episodeRepository.save(episodeEntity);
-            EpisodeDTO episodeDTO1 = EpisodeDTO.findDTO(episodeEntity1);
-            bookEntity.setEpisodeUpdateTime(episodeEntity.getCreatedDateTime());
-            bookRepository.save(bookEntity);
-
-            return episodeDTO1;
         } else {
-            return null;
+            episodeDTO.setEpisodeImgName(bookEntity.getBookImgName());
         }
+        EpisodeEntity episodeEntity = EpisodeEntity.saveEntity(episodeDTO, bookEntity);
+        EpisodeEntity episodeEntity1 = episodeRepository.save(episodeEntity);
+        EpisodeDTO episodeDTO1 = EpisodeDTO.findDTO(episodeEntity1);
+        bookEntity.setEpisodeUpdateTime(episodeEntity.getCreatedDateTime());
+        bookRepository.save(bookEntity);
 
+        return episodeDTO1;
 
     }
 
@@ -111,7 +109,7 @@ public class BookService {
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
             bookEntity = optionalBookEntity.get();
             episodeEntityList = episodeRepository.findByBookEntity_Id(bookEntity.getId());
-            for (EpisodeEntity episode: episodeEntityList) {
+            for (EpisodeEntity episode : episodeEntityList) {
                 episodeDTOList.add(EpisodeDTO.findDTO(episode));
                 System.out.println("episodeDTOList = " + episodeDTOList);
             }
@@ -280,7 +278,7 @@ public class BookService {
             StarEntity starEntity = StarEntity.saveEntity(starDTO, memberEntity, episodeEntity);
             starRepository.save(starEntity).getId();
             double starAvg = starRepository.starAvg(episodeEntity.getId());
-            episodeEntity.setStar(starAvg);
+            episodeEntity.setStar(Math.round(starAvg * 100) / 100.0);
             Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
             if (optionalBookEntity.isPresent()) {
                 episodeRepository.save(episodeEntity);
@@ -482,7 +480,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList) {
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 2) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
@@ -494,7 +492,7 @@ public class BookService {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
         bookEntityList = bookRepository.findAll();
-        for (BookEntity book: bookEntityList) {
+        for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 3) {
                 bookDTOList.add(BookDTO.findDTO(book));
             }
@@ -529,7 +527,7 @@ public class BookService {
     public List<BookDTO> finishBook(Long memberId) {
         List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "완결");
         List<BookDTO> bookDTOList = new ArrayList<>();
-        for (BookEntity book: bookEntityList) {
+        for (BookEntity book : bookEntityList) {
             bookDTOList.add(BookDTO.findDTO(book));
         }
         return bookDTOList;
