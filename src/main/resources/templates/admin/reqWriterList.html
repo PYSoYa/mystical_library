@@ -5,10 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
   <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
+
 <main class="main-container">
   <div class="history-container">
     <div class="history-wrap">
@@ -77,14 +79,14 @@
   </div>
 </main>
 
-<script>
-  function reqWriterAgree(id){
-    location.href="/admin/req-role-change/"+id;
-  }
-  function reqWriterDelete(id){
-    location.href="/admin/req-writer-delete/"+id;
-  }
-</script>
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  function reqWriterAgree(id) {
+    location.href="/admin/req-role-change/" + id;
+  }
+  function reqWriterDelete(id) {
+    location.href="/admin/req-writer-delete/" + id;
+  }
+</script>
 </html>
