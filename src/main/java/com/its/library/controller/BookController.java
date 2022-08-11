@@ -326,8 +326,8 @@ public class BookController {
     // 책 상세조회 + 회차목록 페이징 (비회원)
     @GetMapping("/{id}")
     public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                 @PageableDefault(page = 1) Pageable pageable,
-                                 @PathVariable("id") Long id, Model model) {
+                                     @PageableDefault(page = 1) Pageable pageable,
+                                     @PathVariable("id") Long id, Model model) {
         try {
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
@@ -371,7 +371,22 @@ public class BookController {
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
         starDTO = starService.starList(findDTO.getId(), id);
-        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(id);
+        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(bookId);
+        List<EpisodeDTO> episodeDTOList1 = bookService.beforeAfter(bookId);
+        for (int i = 0; i < episodeDTOList1.size(); i++) {
+            if (episodeDTOList1.get(i).getId() == id && i != 0) {
+                if (i != episodeDTOList1.size() - 1) {
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
+                    model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+                } else {
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
+                    model.addAttribute("after", 0);
+                }
+            } else if (episodeDTOList1.get(i).getId() == id && i == 0){
+                model.addAttribute("before", 0);
+                model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+            }
+        }
         model.addAttribute("id", id);
         model.addAttribute("episodeList", episodeDTOList);
         model.addAttribute("star", starDTO);

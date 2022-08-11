@@ -34,8 +34,8 @@ public class BoxService {
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             memberEntity = optionalMemberEntity.get();
             episodeEntity = optionalEpisodeEntity.get();
+            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
             if (episodeEntity.getPrice() == 0) {
-                Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
                 if (optionalHistoryEntity.isPresent()) {
                     historyEntity = optionalHistoryEntity.get();
                     historyDTO.setId(historyEntity.getId());
@@ -44,23 +44,21 @@ public class BoxService {
                 }
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "무료저장";
-            } else if (memberEntity.getMemberPoint() >= episodeEntity.getPrice()) {
-                Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
-                if (optionalHistoryEntity.isPresent()) {
-                    historyEntity = optionalHistoryEntity.get();
-                    historyDTO.setId(historyEntity.getId());
-                    historyRepository.save(HistoryEntity.updateEntity(historyDTO, memberEntity, episodeEntity));
-                    return "결제이력있음";
+            } else if (memberEntity.getMemberPoint() >= episodeEntity.getPrice() || optionalHistoryEntity.isPresent()) {
+                if (optionalHistoryEntity.isEmpty()) {
+                    historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
+                    return "유료저장";
                 }
-                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
-                return "유료저장";
+                historyEntity = optionalHistoryEntity.get();
+                historyDTO.setId(historyEntity.getId());
+                historyRepository.save(HistoryEntity.updateEntity(historyDTO, memberEntity, episodeEntity));
+                return "결제이력있음";
             } else {
                 return "잔고부족";
             }
-
+        } else {
+            return "잔고부족";
         }
-
-        return null;
     }
 
     public String save(BoxDTO boxDTO, String memberName) {

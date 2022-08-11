@@ -72,6 +72,23 @@ public class BookService {
         }
     }
 
+    public List<EpisodeDTO> beforeAfter(Long bookId) {
+        List<EpisodeEntity> episodeEntityList = new ArrayList<>();
+        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookId);
+        if (optionalBookEntity.isPresent()) {
+            BookEntity bookEntity = optionalBookEntity.get();
+            episodeEntityList = bookEntity.getEpisodeEntityList();
+            for (EpisodeEntity episode: episodeEntityList) {
+                episodeDTOList.add(EpisodeDTO.findDTO(episode));
+            }
+            return episodeDTOList;
+        } else {
+            return null;
+        }
+
+    }
+
     public EpisodeDTO reqEpisodeSave(EpisodeDTO episodeDTO) throws IOException {
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeDTO.getBookId());
         BookEntity bookEntity = new BookEntity();

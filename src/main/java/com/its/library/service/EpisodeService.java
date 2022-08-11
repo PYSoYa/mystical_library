@@ -45,10 +45,10 @@ public class EpisodeService {
         episodeRepository.deleteById(id);
     }
 
-    public List<EpisodeDTO> episodeFindAll(Long id) {
+    public List<EpisodeDTO> episodeFindAll(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();
-        episodeEntityList = episodeRepository.findByBookId(id);
+        episodeEntityList = episodeRepository.findByBookId(bookId);
         for (EpisodeEntity episode: episodeEntityList) {
             episodeDTOList.add(EpisodeDTO.findDTO(episode));
         }
