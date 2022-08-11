@@ -320,10 +320,10 @@
       success: function (result) {
           if (result === "잔고부족") {
             Swal.fire({
-              icon: 'success',
+              icon: 'error',
               text: '보유하신 포인트가 부족합니다.',
               showConfirmButton: false,
-              timer: 1500
+              timer: 1000
             });
           } else if (result === "유료저장") {
             $.ajax({
@@ -407,7 +407,7 @@
                   icon: 'success',
                   text: '관심 목록에서 삭제했어요.',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 1000
                 });
                 wishlist.className = "wishlist-btn1";
               } else {
@@ -434,7 +434,7 @@
                   icon: 'success',
                   text: '관심 목록에 해당 책을 등록했어요.',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 1000
                 });
                 wishlist.className = "wishlist-btn";
               } else {
