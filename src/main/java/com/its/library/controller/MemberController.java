@@ -89,8 +89,8 @@ public class MemberController {
 
             int wishCount = wishService.findByMemberId(id);
             model.addAttribute("wishCount", wishCount);
-            return "member/myPage";
         }
+        return "member/myPage";
     }
 
 

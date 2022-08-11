@@ -65,12 +65,12 @@ public class HomeController {
             model.addAttribute("bookList", popularEntityList); // 전체 카테고리중 조회수 제일 높은 리스트 두개
             model.addAttribute("bookList1", popularEntityList1);
             model.addAttribute("newList", newList); // 전체 카테고리중 완결작
+
             String loginId = principalDetails.getUsername();
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
             System.out.println("HomeController.index");
-            System.out.println("java.lang.NullPointerException: null");
         }
         return "index";
     }
