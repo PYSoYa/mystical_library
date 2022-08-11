@@ -178,7 +178,7 @@
               getNumber() 값은 2임.
               따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
           <li th:class="${episodeList.last} ? 'disabled'">
-            <a class="page-link" th:href="${episodeList.last} ? '#' : @{/book/book/${book.id}?page=${episodeList.number + 2}|}">
+            <a class="page-link" th:href="${episodeList.last} ? '#' : @{|/book/book/${book.id}?page=${episodeList.number + 2}|}">
               <span>&gt;</span>
             </a>
           </li>
