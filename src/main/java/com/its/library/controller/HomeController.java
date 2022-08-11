@@ -45,17 +45,14 @@ public class HomeController {
             bookHitsList = bookRepository.findAllHits();
             if (bookHitsList.size() != 0 && bookHitsList.size() > 5) {
                 for (int i = 0; i < 6; i++) {
-                    if (i <= 2) {
+                    if (i <= 2 ) {
                         popularEntityList.add(BookDTO.findDTO(bookHitsList.get(i))); // 1,2,3
                     }
                     if (i > 2) {
                         popularEntityList1.add(BookDTO.findDTO(bookHitsList.get(i))); // 4,5,6
-
                     }
                 }
             }
-            System.out.println("popularEntityList1 = " + popularEntityList1);
-            System.out.println("popularEntityList = " + popularEntityList);
             bookNewList = bookRepository.findAllNew();
             if (bookNewList.size() != 0) {
                 for (int i = 0; i < bookNewList.size(); i++) {

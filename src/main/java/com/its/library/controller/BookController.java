@@ -183,12 +183,15 @@ public class BookController {
                 model.addAttribute("bookList3", bookDTOList3);
                 model.addAttribute("bookList4", bookDTOList4);
                 model.addAttribute("bookList5", bookDTOList5);
+                model.addAttribute("categoryId", 1);
             } else if (categoryId == 2) {
                 List<BookDTO> bookDTOList = bookService.siList();
                 model.addAttribute("bookList", bookDTOList);
+                model.addAttribute("categoryId", 2);
             } else {
                 List<BookDTO> bookDTOList = bookService.essayList();
                 model.addAttribute("booList", bookDTOList);
+                model.addAttribute("categoryId", 3);
             }
 
             String loginId = principalDetails.getUsername();
@@ -217,15 +220,6 @@ public class BookController {
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
-
-            System.out.println("boardEntities.getContent() = " + bookDTOList.getContent()); // 요청페이지에 들어있는 데이터
-            System.out.println("boardEntities.getTotalElements() = " + bookDTOList.getTotalElements()); // 전체 글갯수
-            System.out.println("boardEntities.getNumber() = " + bookDTOList.getNumber()); // 요청페이지(jpa 기준)
-            System.out.println("boardEntities.getTotalPages() = " + bookDTOList.getTotalPages()); // 전체 페이지 갯수
-            System.out.println("boardEntities.getSize() = " + bookDTOList.getSize()); // 한페이지에 보여지는 글갯수
-            System.out.println("boardEntities.hasPrevious() = " + bookDTOList.hasPrevious()); // 이전페이지 존재 여부
-            System.out.println("boardEntities.isFirst() = " + bookDTOList.isFirst()); // 첫페이지인지 여부
-            System.out.println("boardEntities.isLast() = " + bookDTOList.isLast()); // 마지막페이지인지 여부
         } catch (NullPointerException e) {
             System.out.println("BookController.bookList");
             System.out.println("java.lang.NullPointerException: null");
@@ -264,17 +258,19 @@ public class BookController {
             model.addAttribute("authentication", findDTO);
 
             BookDTO bookDTO = bookService.findById(id);
-            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-            int commentSize = commentDTOList.size();
             Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
-            int episodeSize = episodeDTOSize.size();
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
+
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
+            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
             List<WishDTO> bookLoveList = wishService.findByBookWish(id);
             int bookLove = bookLoveList.size();
             List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
+
             int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
             int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
             model.addAttribute("episodeSize", episodeSize);
@@ -296,8 +292,8 @@ public class BookController {
     // 책 상세조회 + 회차목록 페이징 (비회원)
     @GetMapping("/{id}")
     public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                 @PageableDefault(page = 1) Pageable pageable,
-                                 @PathVariable("id") Long id, Model model) {
+                                     @PageableDefault(page = 1) Pageable pageable,
+                                     @PathVariable("id") Long id, Model model) {
         try {
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
@@ -341,7 +337,23 @@ public class BookController {
         MemberDTO memberDTO = memberService.myPage(findDTO.getId());
         List<CommentDTO> commentDTOList = commentService.commentList(id);
         starDTO = starService.starList(findDTO.getId(), id);
-        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(id);
+        List<EpisodeDTO> episodeDTOList = episodeService.episodeFindAll(bookId);
+        List<EpisodeDTO> episodeDTOList1 = bookService.beforeAfter(bookId);
+        for (int i = 0; i < episodeDTOList1.size(); i++) {
+            if (episodeDTOList1.get(i).getId() == id && i != 0) {
+                if (i != episodeDTOList1.size() - 1) {
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
+                    model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+                } else {
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
+                    model.addAttribute("after", 0);
+                }
+            } else if (episodeDTOList1.get(i).getId() == id && i == 0){
+                model.addAttribute("before", 0);
+                model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+            }
+        }
+        model.addAttribute("id", id);
         model.addAttribute("episodeList", episodeDTOList);
         model.addAttribute("star", starDTO);
         model.addAttribute("member", memberDTO);

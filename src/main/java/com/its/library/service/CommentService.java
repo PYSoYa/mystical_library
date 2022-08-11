@@ -96,7 +96,7 @@ public class CommentService {
 
     }
 
-    public String reportSave(Long id, Long loginId, String contents) {
+    public String reportSave(Long id, Long loginId) {
         Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(id);
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(loginId);
         CommentEntity commentEntity = new CommentEntity();
