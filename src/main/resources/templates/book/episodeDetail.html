@@ -24,13 +24,13 @@
     <div class="head-area">
       <div class="head-wrap">
         <div class="logo-wrap">
-          <a th:href="@{|/book/book/${book.id}|}" class="logo-link">
+          <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}" class="logo-link">
             <img th:src="@{|/upload/${episode.episodeImgName}|}" class="logo" alt="">
           </a>
         </div>
         <div class="info-wrap">
           <div class="book-title-wrap">
-            <a th:href="@{|/book/book/${book.id}|}" class="book-link">
+            <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}" class="book-link">
               <span class="book-title" th:text="${book.bookTitle}"></span>
             </a>
           </div>
@@ -59,7 +59,7 @@
       </div>
       <div class="tool-wrap">
         <div class="book-info-wrap">
-          <a th:href="@{|/book/book/${book.id}|}" class="book-info">
+          <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}" class="book-info">
               <span class="icon">
                 <img th:src="@{/img/icon_list.png}" class="list-icon" alt="">
               </span>
@@ -170,18 +170,6 @@
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
                 <button type="button" id="star-btn" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
-              </div>
-            </div>
-            <div class="btn-wrap" th:if="${authentication.memberName eq book.memberName}">
-              <div class="edit-btn-wrap">
-                <a th:href="@{|/book/req-episode-update?id=${episode.id}|}">
-                  <button type="button" class="edit-btn">수정</button>
-                </a>
-              </div>
-              <div class="delete-btn-wrap">
-                <a th:href="@{|/book/req-episode-delete?id=${episode.id}|}">
-                  <button type="button" class="delete-btn">삭제</button>
-                </a>
               </div>
             </div>
             <div class="attention-wrap">

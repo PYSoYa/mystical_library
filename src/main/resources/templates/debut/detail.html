@@ -12,6 +12,7 @@
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <script th:src="@{/js/episodeDetail.js}"></script>
   <script th:src="@{/js/jquery.js}"></script>
+  <script th:src="@{/js/sweetalert2.min.js}"></script>
   <script th:src="@{|https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js|}"></script>
 </head>
 <body>
@@ -521,18 +522,18 @@
   }
 
   function drop(id) {
-      Swal.fire({
-          title: '정말 삭제하시겠습니까?',
-          showCancelButton: true,
-          confirmButtonText: '삭제',
-          cancelButtonText: "취소",
-      }).then((result) => {
-          if (result.isConfirmed) {
-              location.href="/debut/delete/"+id;
-          } else if (result.isDenied) {
+          Swal.fire({
+              title: '정말 삭제하시겠습니까?',
+              showCancelButton: true,
+              confirmButtonText: '삭제',
+              cancelButtonText: "취소",
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  location.href="/debut/delete/"+id;
+              } else if (result.isDenied) {
 
-          }
-      });
+              }
+          });
   }
 </script>
 </html>

@@ -337,4 +337,10 @@ public class MemberController {
         }
         return "member/myPageWaiting";
     }
+
+    @GetMapping("/delete/{id}")
+    public String memberDelete(@PathVariable Long id) {
+         memberService.memberDelete(id);
+         return "redirect:/member/logout";
+    }
 }

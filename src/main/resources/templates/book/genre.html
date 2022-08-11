@@ -37,7 +37,7 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category dropdown-toggle" th:if="${genreId <= 5}" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
+        <a href="javascript:;" class="category dropdown-toggle" th:if="${genreId <= 6}" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <a href="javascript:;" class="category category-focus dropdown-toggle" th:if="${genreId == 7}" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" th:href="@{|/book/genre?genreId=7&alignmentId=0|}">에세이 메인</a></li>
@@ -81,7 +81,7 @@
         <div class="book-wrap" th:each="book:${bookList}">
           <div class="img-wrap">
             <div th:if="${authentication ne null}">
-            <a th:href="@{|/book/book/${book.id}|}">
+            <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
               <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
             </a>
             </div>
