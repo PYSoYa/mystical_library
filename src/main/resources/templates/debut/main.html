@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -100,7 +100,7 @@
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text" style="display: flex;">
           <span class="recent-debut-post-title">시</span>
-          <button type="button" class="save-form-btn" onclick="debutSave()">글쓰기</button>
+          <button type="button" class="save-form-btn" onclick="debutSave()" sec:authorize="isAuthenticated()">글쓰기</button>
         </div>
       </div>
     </div>

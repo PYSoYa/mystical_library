@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +27,7 @@
         </div>
         <div class="info-wrap">
           <div class="book-title-wrap">
-            <a th:href="@{|/member/myPage/${debut.memberId}|}" class="book-link">
+            <a th:href="@{|/member/myPage/${debut.memberId}/debut|}" class="book-link">
               <span class="book-title debut-writer" th:text="${debut.memberName}"></span>
             </a>
           </div>
@@ -128,14 +128,18 @@
             <div class="rate-wrap">
               <div class="rate-desc-wrap">
               </div>
-              <div th:if="${authentication.memberName==debut.memberName}" class="star-form">
+              <div sec:authorize="isAuthenticated()" th:if="${authentication.memberName==debut.memberName}" class="star-form">
                 <button type="button" class="star-btn" th:onclick="updateForm([[${debut.id}]])">수정</button>
                 <button type="button" class="star-btn" th:onclick="drop([[${debut.id}]])">삭제</button>
               </div>
             </div>
             <div class="attention-wrap">
-              <div class="star-wrap">
+              <div class="star-wrap" sec:authorize="isAuthenticated()">
                 <span class="love" onclick="heartCheck()">❤</span>
+                <span class="star-desc" th:text="${debut.love}"></span>
+              </div>
+              <div class="star-wrap" sec:authorize="isAnonymous()">
+                <span class="love" >❤</span>
                 <span class="star-desc" th:text="${debut.love}"></span>
               </div>
             </div>
@@ -154,8 +158,8 @@
           <h2 class="c-title">댓글 쓰기</h2>
         </div>
         <input type="hidden" id="debutId" th:value="${debut.id}">
-        <input type="hidden" id="memberId" name="memberId" th:value="${authentication.id}">
-        <input type="hidden" id="memberName" name="memberName" th:value="${authentication.memberName}">
+        <input type="hidden" id="memberId" name="memberId" sec:authorize="isAuthenticated()" th:value="${authentication.id}">
+        <input type="hidden" id="memberName" name="memberName" sec:authorize="isAuthenticated()" th:value="${authentication.memberName}">
         <textarea name="contents" id="input-contents" rows="5" placeholder="댓글은 500자 까지 등록 가능합니다."></textarea>
         <div class="btn-wrap">
           <div class="btn-align-right">
@@ -185,7 +189,7 @@
                   <span th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}" class="date">
                   </span>
                 </div>
-                <div th:if="${comment.memberName==authentication.memberName}">
+                <div sec:authorize="isAuthenticated()" th:if="${comment.memberName==authentication.memberName}">
                   <span class="update">
                     <a href="javascript:;" class="update-btn" th:onclick="commentUpdateForm([[${comment.id}]])">수정</a>
                   </span>
@@ -331,86 +335,89 @@
   }
 
   function heartCheck() {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
-    const memberId = [[${authentication.id}]];
-    const id = [[${debut.id}]];
+      if ([[${authentication}]] != null) {
+          let header = $("meta[name='_csrf_header']").attr('content');
+          let token = $("meta[name='_csrf']").attr('content');
+          if ([[${authentication.id}]] != null) {
+            const memberId = [[${authentication.id}]];
+          }
+          const id = [[${debut.id}]];
 
           $.ajax({
-            type:"get",
-            url:"/debut/loveCheck/"+id,
-            data:{"memberId":memberId},
-            dataType:"text",
-            beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-            }, success: function (result) {
+              type:"get",
+              url:"/debut/loveCheck/"+id,
+              data:{"memberId":memberId},
+              dataType:"text",
+              beforeSend: function(xhr){
+                  xhr.setRequestHeader(header, token);
+              }, success: function (result) {
 
 
 
-      if (result === "no") {
-        $.ajax({
-          type: "get",
-          url: "/debut/loveSave/" + id,
-          data: {"memberId": memberId},
-          dataType: "text",
-          beforeSend: function(xhr){
-            xhr.setRequestHeader(header, token);
-          },
-          success: function (result) {
-            console.log(result)
-            if (result==1){
-              location.reload();
-            }
+                  if (result === "no") {
+                      $.ajax({
+                          type: "get",
+                          url: "/debut/loveSave/" + id,
+                          data: {"memberId": memberId},
+                          dataType: "text",
+                          beforeSend: function(xhr){
+                              xhr.setRequestHeader(header, token);
+                          },
+                          success: function (result) {
+                              console.log(result)
+                              if (result==1){
+                                  location.reload();
+                              }
 
-        }
-      });
-      } else {
-        $.ajax({
-          type: "get",
-          url: "/debut/loveDelete/" + id,
-          data: {"memberId": memberId},
-          dataType: "text",
-          beforeSend: function(xhr){
-            xhr.setRequestHeader(header, token);
-          },
-          success: function (result) {
-            console.log(result)
-            if (result==1){
-              location.reload();
-            }
+                          }
+                      });
+                  } else {
+                      $.ajax({
+                          type: "get",
+                          url: "/debut/loveDelete/" + id,
+                          data: {"memberId": memberId},
+                          dataType: "text",
+                          beforeSend: function(xhr){
+                              xhr.setRequestHeader(header, token);
+                          },
+                          success: function (result) {
+                              console.log(result)
+                              if (result==1){
+                                  location.reload();
+                              }
 
-          }
-        });
-      }
-    }
+                          }
+                      });
+                  }
+              }
           });
+      }
+
     }
 
   function commentSave() {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
+    if ([[${authentication}]] != null) {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
 
-    const memberId = document.getElementById("memberId").value;
-    const debutId = document.getElementById("debutId").value;
-    const contents = document.getElementById("input-contents").value;
-    const memberName = document.getElementById("memberName").value;
+      const memberId = document.getElementById("memberId").value;
+      const debutId = document.getElementById("debutId").value;
+      const contents = document.getElementById("input-contents").value;
+      const memberName = document.getElementById("memberName").value;
 
-
-
-    $.ajax({
-      type: "post",
-      url: "/debutComment/save",
-      data: {"memberId": memberId, "debutId": debutId, "contents": contents, "memberName": memberName},
-      dataType: "json",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader(header, token);
-      },
-      success: function (result) {
-      location.reload();
-      }
-    });
-
-
+      $.ajax({
+        type: "post",
+        url: "/debutComment/save",
+        data: {"memberId": memberId, "debutId": debutId, "contents": contents, "memberName": memberName},
+        dataType: "json",
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          location.reload();
+        }
+      });
+    }
   }
 
   const commentCancel = () => {
@@ -473,9 +480,6 @@
         location.reload();
       }
     });
-
-
-
   }
 
   function commentReport(id) {
@@ -497,21 +501,38 @@
         }else {
           alert("댓글 신고 처리가 실패하였습니다 ")
         }
+      }
+    });
+  }
+
+  function updateForm(id) {
+    Swal.fire({
+      title: '수정하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '수정',
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.href="/debut/update-form/"+id;
+      } else if (result.isDenied) {
 
       }
     });
-
-
-
   }
-  function updateForm(id) {
-    location.href="/debut/update-form/"+id;
 
-  }
   function drop(id) {
-    location.href="/debut/delete/"+id;
+      Swal.fire({
+          title: '정말 삭제하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: '삭제',
+          cancelButtonText: "취소",
+      }).then((result) => {
+          if (result.isConfirmed) {
+              location.href="/debut/delete/"+id;
+          } else if (result.isDenied) {
 
-
+          }
+      });
   }
 </script>
 </html>
