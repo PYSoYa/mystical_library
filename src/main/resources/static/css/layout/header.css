@@ -23,6 +23,7 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .logo-container {margin-right:auto;}
 .logo-container, .logo-container a {display: flex;}
 .logo-container .logo-wrap {margin-right: 0.75rem;}
+.logo-container .logo-wrap img {width: 330px; height: 70px;}
 
 /* 검색 */
 .search-form {display: flex; align-items: flex-start; width: 20rem; margin-right: 1rem;}

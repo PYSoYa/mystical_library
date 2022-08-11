@@ -125,10 +125,10 @@
         <span class="quantity-episode">)</span>
         <div class="order-wrap">
           <div class="from-first-wrap">
-            <span class="from-first">등록순</span>
+            <span class="from-first" th:onclick="from(1)">등록순</span>
           </div>
           <div class="from-last-wrap">
-            <span class="from-last">최신순</span>
+            <span class="from-last" th:onclick="from(0)">최신순</span>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@
         <ul class="pagination justify-content-center">
           <li class="page-item">
             <!--첫페이지 요청 링크-->
-            <a class="page-link" th:href="@{|/book/book/${book.id}?page=1|}">
+            <a class="page-link" th:href="@{|/book/book?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
               <span>처음</span>
             </a>
           </li>
@@ -170,7 +170,7 @@
           <li th:class="${episodeList.first} ? 'disabled'" class="page-item">
             <!--boardList.first: isFirst()
                 boardList.number: getNumber()-->
-            <a class="page-link" th:href="${episodeList.first} ? '#' : @{|/book/book/${book.id}?page=${episodeList.number}|}">
+            <a class="page-link" th:href="${episodeList.first} ? '#' : @{|/book/book?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
               <span><</span> <!-- < -->
             </a>
           </li>
@@ -178,7 +178,7 @@
           <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
           <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
               th:class="${page == episodeList.number + 1} ? 'page-item active'" class="page-item">
-            <a class="page-link" th:text="${page}" th:href="@{|/book/book/${book.id}?page=${page}|}"></a>
+            <a class="page-link" th:text="${page}" th:href="@{|/book/book?id=${book.id}&page=${page}&alignmentId=${alignmentId}|}"></a>
           </li>
 
           <!-- 다음 페이지 요청
@@ -186,13 +186,13 @@
               getNumber() 값은 2임.
               따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
           <li th:class="${episodeList.last} ? 'disabled'">
-            <a class="page-link" th:href="${episodeList.last} ? '#' : @{/book/book/${book.id}?page=${episodeList.number + 2}|}">
+            <a class="page-link" th:href="${episodeList.last} ? '#' : @{|/book/book?id=${book.id}&page=${episodeList.number + 2}&alignmentId=${alignmentId}|}">
               <span>&gt;</span>
             </a>
           </li>
 
           <li class="page-item">
-            <a class="page-link" th:href="@{|/book/book/${book.id}?page=${episodeList.totalPages}|}">
+            <a class="page-link" th:href="@{|/book/book?id=${book.id}&page=${episodeList.totalPages}&alignmentId=${alignmentId}|}">
               <span>마지막</span>
             </a>
           </li>
@@ -242,258 +242,261 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-  const first = () => {
-    const memberId = [[${authentication.id}]];
-    const bookId = [[${book.id}]];
+    const from = (alignmentId) => {
+        location.href = "/book/book?id="+[[${book.id}]] + "&alignmentId=" + alignmentId;
+    }
+    const first = () => {
+      const memberId = [[${authentication.id}]];
+      const bookId = [[${book.id}]];
 
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
 
-    $.ajax({
-      type: "get",
-      url: "/book/first",
-      data: {
-        "bookId": bookId
-      },
-      dataType: "text",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader(header, token);
-      },
-      success: function (episodeId) {
-        if (episodeId != null) {
-          $.ajax({
-            type: "post",
-            url: "/box/pointCheck",
-            data: {
-              "memberId": memberId,
-              "episodeId": episodeId,
-              "bookId": bookId
-            },
-            dataType: "text",
-            beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-            },
-            success: function (result2) {
-              if (result2 == "무료저장")
-              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-            }
-          })
-        }
-      }
-    })
-  }
-  const again = () => {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
-
-    const memberId = [[${authentication.id}]];
-    const bookId = [[${book.id}]];
-
-    $.ajax({
+      $.ajax({
         type: "get",
-        url: "/history/again",
+        url: "/book/first",
+        data: {
+          "bookId": bookId
+        },
+        dataType: "text",
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (episodeId) {
+          if (episodeId != null) {
+            $.ajax({
+              type: "post",
+              url: "/box/pointCheck",
+              data: {
+                "memberId": memberId,
+                "episodeId": episodeId,
+                "bookId": bookId
+              },
+              dataType: "text",
+              beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+              },
+              success: function (result2) {
+                if (result2 == "무료저장")
+                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+              }
+            })
+          }
+        }
+      })
+    }
+    const again = () => {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
+
+      const memberId = [[${authentication.id}]];
+      const bookId = [[${book.id}]];
+
+      $.ajax({
+          type: "get",
+          url: "/history/again",
+          data: {
+              "memberId": memberId,
+              "bookId": bookId
+          },
+          dataType: "text",
+          success: function (episodeId) {
+              if (episodeId != null) {
+                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+              }
+          }
+      })
+    }
+    const priceMoney = (episodeId) => {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
+
+      const memberId = [[${authentication.id}]];
+      const memberName = [[${authentication.memberName}]];
+      const bookId = [[${book.id}]];
+
+      $.ajax({
+        type: "post",
+        url: "/box/pointCheck",
         data: {
             "memberId": memberId,
+            "memberName": memberName,
+            "episodeId": episodeId,
             "bookId": bookId
         },
         dataType: "text",
-        success: function (episodeId) {
-            if (episodeId != null) {
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+            if (result === "잔고부족") {
+              Swal.fire({
+                icon: 'success',
+                text: '보유하신 포인트가 부족합니다.',
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else if (result === "유료저장") {
+              $.ajax({
+                type: "post",
+                url: "/box/save",
+                data: {
+                    "memberId": memberId,
+                    "memberName": memberName,
+                    "bookId": bookId,
+                    "episodeId": episodeId
+                },
+                dataType: "text",
+                beforeSend: function(xhr){
+                  xhr.setRequestHeader(header, token);
+                },
+                success: function (result) {
+                  if (result === "ok") {
+                    $.ajax({
+                      type:"get",
+                      url:"/point/pay/"+memberId,
+                      data:{"episodeId":episodeId,"bookId":bookId},
+                      dataType:"text",
+                      success:function (result){
+                          if (result === "ok"){
+                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                          }
+                      }
+                    });
+                  } else if (result === "no") {
+                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                  }
+                }
+              })
+            } else if (result === "보여줘") {
+              alert("보여줘");
+            } else if (result === "무료저장") {
+                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+            } else if (result == "결제이력있음") {
                 location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
             }
-        }
-    })
-  }
-  const priceMoney = (episodeId) => {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
+          }
+        })
+    }
 
-    const memberId = [[${authentication.id}]];
-    const memberName = [[${authentication.memberName}]];
-    const bookId = [[${book.id}]];
+    const bookLove = () => {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
 
-    $.ajax({
-      type: "post",
-      url: "/box/pointCheck",
-      data: {
-          "memberId": memberId,
-          "memberName": memberName,
-          "episodeId": episodeId,
-          "bookId": bookId
-      },
-      dataType: "text",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader(header, token);
-      },
-      success: function (result) {
-          if (result === "잔고부족") {
-            Swal.fire({
-              icon: 'success',
-              text: '보유하신 포인트가 부족합니다.',
-              showConfirmButton: false,
-              timer: 1500
-            });
-          } else if (result === "유료저장") {
+      const loveChange = document.getElementById("loveChange");
+      const bookId = [[${book.id}]];
+      const memberName = [[${authentication.memberName}]];
+
+      $.ajax({
+        type: "post",
+        url: "/wish/check",
+        data: {
+          "bookId": bookId,
+          "memberName": memberName
+        },
+        dataType: "text",
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          if (result === "ok") {
             $.ajax({
-              type: "post",
-              url: "/box/save",
+              type: "delete",
+              url: "/wish/delete",
               data: {
-                  "memberId": memberId,
-                  "memberName": memberName,
-                  "bookId": bookId,
-                  "episodeId": episodeId
+                "bookId" : bookId,
+                "memberName" : memberName
               },
               dataType: "text",
               beforeSend: function(xhr){
                 xhr.setRequestHeader(header, token);
               },
               success: function (result) {
-                if (result === "ok") {
-                  $.ajax({
-                    type:"get",
-                    url:"/point/pay/"+memberId,
-                    data:{"episodeId":episodeId,"bookId":bookId},
-                    dataType:"text",
-                    success:function (result){
-                        if (result === "ok"){
-                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                        }
-                    }
+                const wishlist = document.querySelector(".wishlist-btn");
+                if (result == "ok"){
+                  Swal.fire({
+                    icon: 'success',
+                    text: '관심 목록에서 삭제했어요.',
+                    showConfirmButton: false,
+                    timer: 1500
                   });
-                } else if (result === "no") {
-                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                  wishlist.className = "wishlist-btn1";
+                } else {
+                  alert("실패");
                 }
               }
             })
-          } else if (result === "보여줘") {
-            alert("보여줘");
-          } else if (result === "무료저장") {
-              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-          } else if (result == "결제이력있음") {
-              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          } else {
+            $.ajax({
+              type: "post",
+              url: "/wish/save-writer",
+              data: {
+                "bookId": bookId,
+                "memberName": memberName
+              },
+              dataType: "text",
+              beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+              },
+              success: function (result) {
+                const wishlist = document.querySelector(".wishlist-btn1");
+                if (result == "ok") {
+                  Swal.fire({
+                    icon: 'success',
+                    text: '관심 목록에 해당 책을 등록했어요.',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  wishlist.className = "wishlist-btn";
+                } else {
+                  alert("실패");
+                }
+              },
+
+            })
           }
         }
-      })
-  }
-
-  const bookLove = () => {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
-
-    const loveChange = document.getElementById("loveChange");
-    const bookId = [[${book.id}]];
-    const memberName = [[${authentication.memberName}]];
-
-    $.ajax({
-      type: "post",
-      url: "/wish/check",
-      data: {
-        "bookId": bookId,
-        "memberName": memberName
-      },
-      dataType: "text",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader(header, token);
-      },
-      success: function (result) {
-        if (result === "ok") {
-          $.ajax({
-            type: "delete",
-            url: "/wish/delete",
-            data: {
-              "bookId" : bookId,
-              "memberName" : memberName
-            },
-            dataType: "text",
-            beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-              const wishlist = document.querySelector(".wishlist-btn");
-              if (result == "ok"){
-                Swal.fire({
-                  icon: 'success',
-                  text: '관심 목록에서 삭제했어요.',
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-                wishlist.className = "wishlist-btn1";
-              } else {
-                alert("실패");
-              }
-            }
-          })
-        } else {
-          $.ajax({
-            type: "post",
-            url: "/wish/save-writer",
-            data: {
-              "bookId": bookId,
-              "memberName": memberName
-            },
-            dataType: "text",
-            beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-              const wishlist = document.querySelector(".wishlist-btn1");
-              if (result == "ok") {
-                Swal.fire({
-                  icon: 'success',
-                  text: '관심 목록에 해당 책을 등록했어요.',
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-                wishlist.className = "wishlist-btn";
-              } else {
-                alert("실패");
-              }
-            },
-
-          })
-        }
-      }
-    });
-  }
-
-  const episodeSaveBTN = () => {
-    const bookId = [[${book.id}]];
-    location.href = '/book/episode-save-form/' + bookId;
-  }
-  const bookUpdateBTN = () => {
-    const bookId = [[${book.id}]];
-    location.href = '/book/req-book-update?id=' + bookId;
-  }
-  const bookDeleteBTN = () => {
-    const bookId = [[${book.id}]];
-    location.href = '/book/req-book-delete?id=' + bookId;
-  }
-  const reportComment = (id) => {
-
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-
-      const loginId = [[${authentication.id}]];
-
-      $.ajax({
-          type: "post",
-          url: "/comment/report-save/" + id,
-          data: {
-              "id": id,
-              "loginId": loginId
-          },
-          dataType: "text",
-          beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-          },
-          success: function (result) {
-              if (result === 'ok') {
-                  alert("신고완료");
-              } else {
-                  alert("신고실패");
-              }
-          }
       });
-  }
+    }
+
+    const episodeSaveBTN = () => {
+      const bookId = [[${book.id}]];
+      location.href = '/book/episode-save-form/' + bookId;
+    }
+    const bookUpdateBTN = () => {
+      const bookId = [[${book.id}]];
+      location.href = '/book/req-book-update?id=' + bookId;
+    }
+    const bookDeleteBTN = () => {
+      const bookId = [[${book.id}]];
+      location.href = '/book/req-book-delete?id=' + bookId;
+    }
+    const reportComment = (id) => {
+
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
+        const loginId = [[${authentication.id}]];
+
+        $.ajax({
+            type: "post",
+            url: "/comment/report-save/" + id,
+            data: {
+                "id": id,
+                "loginId": loginId
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+                if (result === 'ok') {
+                    alert("신고완료");
+                } else {
+                    alert("신고실패");
+                }
+            }
+        });
+    }
 </script>
 </html>

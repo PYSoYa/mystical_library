@@ -140,9 +140,10 @@ public class BookService {
     }
 
     @Transactional
-    public Page<EpisodeDTO> episodeFindAll(Long id, Pageable pageable) {
+    public Page<EpisodeDTO> episodeFindAll(Long id, Pageable pageable, Long alignmentId) {
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
         BookEntity bookEntity = new BookEntity();
+
         if (optionalBookEntity.isPresent()) {
             bookEntity = optionalBookEntity.get();
         }
@@ -150,25 +151,78 @@ public class BookService {
         int page = pageable.getPageNumber();
 
         page = (page == 1) ? 0 : (page - 1);
-        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
+        if (alignmentId == 0) { // 최신순
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
 
-        Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
+            Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
-                episode -> new EpisodeDTO(episode.getId(),
-                        episode.getBookEntity().getId(),
-                        episode.getEpisodeTitle(),
-                        episode.getEpisodeContents(),
-                        episode.getEpisodeImgName(),
-                        episode.getPayment(),
-                        episode.getHits(),
-                        episode.getWriterRole(),
-                        episode.getStar(),
-                        episode.getCreatedDateTime()
-                ));
+                    episode -> new EpisodeDTO(episode.getId(),
+                            episode.getBookEntity().getId(),
+                            episode.getEpisodeTitle(),
+                            episode.getEpisodeContents(),
+                            episode.getEpisodeImgName(),
+                            episode.getPayment(),
+                            episode.getHits(),
+                            episode.getWriterRole(),
+                            episode.getStar(),
+                            episode.getCreatedDateTime()
+                    ));
+            return episodeDTOList;
 
-        return episodeDTOList;
+        } else if (alignmentId == 1) { // 등록순
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntityOrderByIdAsc(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
 
+            Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
+
+                    episode -> new EpisodeDTO(episode.getId(),
+                            episode.getBookEntity().getId(),
+                            episode.getEpisodeTitle(),
+                            episode.getEpisodeContents(),
+                            episode.getEpisodeImgName(),
+                            episode.getPayment(),
+                            episode.getHits(),
+                            episode.getWriterRole(),
+                            episode.getStar(),
+                            episode.getCreatedDateTime()
+                    ));
+            return episodeDTOList;
+
+        }
+
+        return null;
     }
+
+//    @Transactional
+//    public Page<EpisodeDTO> episodeAlignment1(Long id, Pageable pageable) {
+//        Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
+//        BookEntity bookEntity = new BookEntity();
+//        if (optionalBookEntity.isPresent()) {
+//            bookEntity = optionalBookEntity.get();
+//        }
+//
+//        int page = pageable.getPageNumber();
+//
+//        page = (page == 1) ? 0 : (page - 1);
+//        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
+//
+//        Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
+//
+//                episode -> new EpisodeDTO(episode.getId(),
+//                        episode.getBookEntity().getId(),
+//                        episode.getEpisodeTitle(),
+//                        episode.getEpisodeContents(),
+//                        episode.getEpisodeImgName(),
+//                        episode.getPayment(),
+//                        episode.getHits(),
+//                        episode.getWriterRole(),
+//                        episode.getStar(),
+//                        episode.getCreatedDateTime()
+//                ));
+//
+//        return episodeDTOList;
+//
+//    }
+
 
     private final JavaMailSender mailSender;
     private final String mail = "oloveo24@naver.com";
