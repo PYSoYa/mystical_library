@@ -46,10 +46,17 @@
 
 .episode-detail-container,
 .comment-detail-container {padding: 0.625rem 6rem 0.625rem 5rem;}
+.episode-detail-container .container {margin-top: 2.5rem;}
 .episode-detail-container .quantity-episode-wrap,
-.comment-detail-container .comment-header-wrap {border-bottom: 1px solid #aaa; padding: 0.625rem;}
+.comment-detail-container .comment-header-wrap {display: flex; border-bottom: 1px solid #aaa; padding: 0.625rem;}
 .episode-detail-container .quantity-episode-wrap span,
 .comment-detail-container .comment-header-wrap span {font-size: 1.5rem; font-weight: 500; font-family: inherit; position: relative; letter-spacing: 0.05rem;}
+.episode-detail-container .quantity-episode-wrap .order-wrap {margin-left: auto; display: flex;}
+.episode-detail-container .quantity-episode-wrap .order-wrap .from-first-wrap {padding-right: 20px; cursor: pointer;}
+.episode-detail-container .quantity-episode-wrap .order-wrap .from-first-wrap:hover,
+.episode-detail-container .quantity-episode-wrap .order-wrap .from-last-wrap:hover {opacity: 0.5; transition: 0.3s ease;}
+.episode-detail-container .quantity-episode-wrap .order-wrap .from-last-wrap {cursor: pointer;}
+.episode-detail-container .quantity-episode-wrap .order-wrap span {padding-top: 4px; color: #666; font-size: 1rem; font-family: inherit;}
 .episode-detail-container .episode-list-wrap {display: flex;}
 .episode-detail-container .episode-list-wrap:not(:last-child) {border-bottom: 1px solid #e5e5e5;}
 .episode-detail-container .last-list-wrap {border-bottom: 1px solid #aaa !important;}

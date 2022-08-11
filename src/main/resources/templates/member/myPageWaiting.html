@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신비한 서재입니다.</title>
-    <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/member/myPage.css}">
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
@@ -72,7 +73,7 @@
       </div>
       <div class="profile-nav-container">
         <div class="profile-nav">
-          <div class="nav-item selected-item">
+          <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}|}">연재 작품</a>
           </div>
           <div class="nav-item">
@@ -81,13 +82,13 @@
           <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}/debut|}">데뷔 글</a>
           </div>
-          <div class="nav-item">
+          <div class="nav-item selected-item">
             <a th:href="@{|/member/myPage/${member.id}/waiting|}">승인 대기 중</a>
           </div>
         </div>
       </div>
-      <div th:each="book: ${bookList}">
-      <div class="post-list-container">
+
+      <div class="post-list-container" th:each="book:${bookList}">
         <div class="post-container">
           <div class="img-wrap">
             <a th:href="@{|/book/book/${book.id}|}">
@@ -110,100 +111,96 @@
           </div>
         </div>
       </div>
-      </div>
     </div>
   </div>
 </main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
-
 <script th:inline="javascript">
   const love = () => {
-      if ([[${authentication}]] != null) {
-          const memberId = [[${member.id}]];
-          const memberName = [[${authentication.memberName}]];
+    const memberId = [[${member.id}]];
+    const memberName = [[${authentication.memberName}]];
 
-          let header = $("meta[name='_csrf_header']").attr('content');
-          let token = $("meta[name='_csrf']").attr('content');
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-          console.log(memberId);
+    console.log(memberId);
+    $.ajax({
+      type: "post",
+      url: "/wish/check",
+      data: {
+        "memberId": memberId,
+        "memberName": memberName
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result === "ok") {
           $.ajax({
-              type: "post",
-              url: "/wish/check",
-              data: {
-                  "memberId": memberId,
-                  "memberName": memberName
-              },
-              dataType: "text",
-              beforeSend: function(xhr){
-                  xhr.setRequestHeader(header, token);
-              },
-              success: function (result) {
-                  if (result === "ok") {
-                      $.ajax({
-                          type: "delete",
-                          url: "/wish/delete",
-                          data: {
-                              "memberId" : memberId,
-                              "memberName" : memberName
-                          },
-                          dataType: "text",
-                          beforeSend: function(xhr){
-                              xhr.setRequestHeader(header, token);
-                          },
-                          success: function (result) {
-                              const loveChange1 = document.getElementById("loveChange1");
-                              if (result == "ok"){
-                                  Swal.fire({
-                                      icon: 'success',
-                                      text: '관심 목록에서 삭제했어요.',
-                                      showConfirmButton: false,
-                                      timer: 1500
-                                  });
-                                  setTimeout(function (){
-                                      location.reload();
-                                  },1000);
-                              } else {
-                                  alert("실패");
-                              }
-                          }
-                      })
-                  } else {
-                      $.ajax({
-                          type: "post",
-                          url: "/wish/save-writer",
-                          data: {
-                              "memberId": memberId,
-                              "memberName": memberName
-                          },
-                          dataType: "text",
-                          beforeSend: function(xhr){
-                              xhr.setRequestHeader(header, token);
-                          },
-                          success: function (result) {
-                              const loveChange2 = document.getElementById("loveChange2");
-                              if (result == "ok") {
-                                  Swal.fire({
-                                      icon: 'success',
-                                      text: '관심 목록에 해당 작가를 등록했어요.',
-                                      showConfirmButton: false,
-                                      timer: 1500
-                                  });
-                                  setTimeout(function (){
-                                      location.reload();
-                                  },1000);
-                              } else {
-                                  alert("실패");
-                              }
-
-                          },
-
-                      })
-                  }
+            type: "delete",
+            url: "/wish/delete",
+            data: {
+              "memberId" : memberId,
+              "memberName" : memberName
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+              const loveChange1 = document.getElementById("loveChange1");
+              if (result == "ok"){
+                Swal.fire({
+                  icon: 'success',
+                  text: '관심 목록에서 삭제했어요.',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                setTimeout(function (){
+                  location.reload();
+                },1000);
+              } else {
+                alert("실패");
               }
+            }
           })
+        } else {
+          $.ajax({
+            type: "post",
+            url: "/wish/save-writer",
+            data: {
+              "memberId": memberId,
+              "memberName": memberName
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+              const loveChange2 = document.getElementById("loveChange2");
+              if (result == "ok") {
+                Swal.fire({
+                  icon: 'success',
+                  text: '관심 목록에 해당 작가를 등록했어요.',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                setTimeout(function (){
+                  location.reload();
+                },1000);
+              } else {
+                alert("실패");
+              }
+
+            },
+
+          })
+        }
       }
+    })
   }
 
   const reqUpdate = () => {
@@ -212,54 +209,47 @@
 
     const id = document.getElementById('memberIdForUpdate').innerHTML;
     const loginId = [[${member.loginId}]];
-    const provider = [[${authentication.provider}]];
 
     // 비밀번호 입력 후 이동 해야 함
-    if (loginId == 'admin' || provider != null) {
-      location.href = '/member/update-form/' + id;
-    } else {
-      Swal.fire({
-        title: '비밀번호를 입력해주세요.',
-        input: 'password',
-        inputAttributes: {autocapitalize: 'off'},
-        showCancelButton: true,
-        confirmButtonText: '확인',
-        cancelButtonText: '취소',
-        showLoaderOnConfirm: true,
-        preConfirm: (pw) => {
-          $.ajax({
-            type: 'post',
-            url: '/member/check-password',
-            data: {"loginId": loginId, "memberPassword": pw},
-            dataType: 'text',
-            beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-              if (result !== 'no') {
-                Swal.fire({
-                  icon: 'success',
-                  title: '비밀번호가 일치해요.',
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-                setTimeout(() => {
-                  location.href = '/member/update-form/' + id
-                }, 2000)
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: '비밀번호가 달라요.'
-                })
-              }
-            },
-            err: function () {
-              alert('에러, 관리자에게 문의하세요.');
+    Swal.fire({
+      title: '비밀번호를 입력해주세요.',
+      input: 'password',
+      inputAttributes: {autocapitalize: 'off'},
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+      showLoaderOnConfirm: true,
+      preConfirm: (pw) => {
+        $.ajax({
+          type: 'post',
+          url: '/member/check-password',
+          data: {"loginId" : loginId, "memberPassword" : pw},
+          dataType: 'text',
+          beforeSend: function(xhr){
+            xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            if (result !== 'no') {
+              Swal.fire({
+                icon: 'success',
+                title: '비밀번호가 일치해요.',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              setTimeout( () => {location.href = '/member/update-form/' + id}, 2000)
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: '비밀번호가 달라요.'
+              })
             }
-          });
-        }
-      });
-    }
+          },
+          err: function () {
+            alert('에러, 관리자에게 문의하세요.');
+          }
+        });
+      }
+    });
   }
 </script>
 </html>
