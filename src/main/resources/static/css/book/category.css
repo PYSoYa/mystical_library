@@ -18,7 +18,7 @@
 .save-form-btn:hover {border: 1px solid #1e9eff; color: #1e9eff; background-color: #fff; transition: 0.3s ease;}
 
 .book-wrap .detail-wrap .tag-wrap .tag,
-.detail-wrap .star-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.detail-wrap .star-wrap .tag-wrap .tag {padding: 2px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
 .book-wrap .detail-wrap .tag-wrap .novel,
 .detail-wrap .star-wrap .tag-wrap .novel {background-color: #00bfdd;}
 .book-wrap .detail-wrap .tag-wrap .poem,

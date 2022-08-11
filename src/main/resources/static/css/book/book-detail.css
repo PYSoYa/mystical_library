@@ -21,7 +21,7 @@
 .book-detail-wrap .detail-wrap .tag-wrap .book-episode-btn-wrap {margin-left: auto; display: flex;}
 .book-detail-wrap .detail-wrap .tag-wrap button {margin-top: -20px; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 8rem; height: 180%; color: #faf7eb; background-color: #1e9eff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 .book-detail-wrap .detail-wrap .tag-wrap .wishlist-wrap {margin-right: 48px;}
-.book-detail-wrap .detail-wrap .tag-wrap .wishlist-wrap .wishlist-btn1 {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 8rem; height: 240%; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+.book-detail-wrap .detail-wrap .tag-wrap .wishlist-wrap .wishlist-btn1 {position: relative; border: 1px solid #1e9eff; outline: none; border-radius: 0.188rem; width: 8rem; color: #1e9eff; background-color: #fff; font-size: 1.125rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 .book-detail-wrap .detail-wrap .tag-wrap button:hover {opacity: 0.5; transition: 0.2s ease;}
 
 .book-detail-wrap .detail-wrap .intro-wrap {padding-right: 4rem; padding-top: 1.5rem; word-break: keep-all; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; position: relative; font-size: 1.125rem; line-height: 2rem; min-height: 100px; font-weight: 400; color: rgba(0, 0, 0, 0.471);}
