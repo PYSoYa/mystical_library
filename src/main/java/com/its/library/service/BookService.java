@@ -247,12 +247,14 @@ public class BookService {
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
                 "책 고유번호: " + mailDTO.getBookDTO().getId() + "\n" +
-                    "장르번호: " + mailDTO.getBookDTO().getGenreId() + "\n" +
-                    "도서명: " + mailDTO.getBookDTO().getBookTitle() + "\n" +
-                    "작가명: " + mailDTO.getBookDTO().getMemberName() + "\n" +
-                    "함께한 작가: " + mailDTO.getBookDTO().getFeat() + "\n" +
-                    "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
-                    "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n"
+                "장르번호: " + mailDTO.getBookDTO().getGenreId() + "\n" +
+                "도서명: " + mailDTO.getBookDTO().getBookTitle() + "\n" +
+                "작가명: " + mailDTO.getBookDTO().getMemberName() + "\n" +
+                "함께한 작가: " + mailDTO.getBookDTO().getFeat() + "\n" +
+                "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
+                "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n" +
+                "수정 사유: " + mailDTO.getWhy() + "\n" +
+                "회신 주소: " + mailDTO.getFromAddress()
         );
 
         mailSender.send(message);
@@ -276,11 +278,13 @@ public class BookService {
         message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
-                        "회차 고유번호: " + mailDTO.getEpisodeDTO().getId() + "\n" +
-                        "소속 책번호: " + mailDTO.getEpisodeDTO().getBookId() + "\n" +
-                        "회차 제목: " + mailDTO.getEpisodeDTO().getEpisodeTitle() + "\n" +
-                        "회차 내용: " + mailDTO.getEpisodeDTO().getEpisodeContents() + "\n" +
-                        "회차 금액: " + mailDTO.getEpisodeDTO().getPayment() + "\n"
+                "회차 고유번호: " + mailDTO.getEpisodeDTO().getId() + "\n" +
+                "소속 책번호: " + mailDTO.getEpisodeDTO().getBookId() + "\n" +
+                "회차 제목: " + mailDTO.getEpisodeDTO().getEpisodeTitle() + "\n" +
+                "회차 내용: " + mailDTO.getEpisodeDTO().getEpisodeContents() + "\n" +
+                "회차 금액: " + mailDTO.getEpisodeDTO().getPayment() + "\n" +
+                "수정 사유: " + mailDTO.getWhy() + "\n" +
+                "회신 주소: " + mailDTO.getFromAddress()
         );
 
         mailSender.send(message);
