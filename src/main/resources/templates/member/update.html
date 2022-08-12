@@ -75,7 +75,8 @@
                   <label class="label-name no-type">닉네임</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-name" name="memberName" th:value="${member.memberName}">
+                  <input type="text" id="new-name" class="input-name" name="memberName" th:value="${member.memberName}"
+                         required>
                 </div>
               </div>
               <div class="input-wrap">
@@ -126,7 +127,8 @@
                   <label class="label-instagram">인스타그램</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-instagram">
+                  <input type="text" class="input-instagram" name="instagramAddress"
+                         th:value="${member.instagramAddress}">
                 </div>
               </div>
               <div class="input-wrap">
@@ -134,7 +136,7 @@
                   <label class="label-instagram">트위터</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-twitter">
+                  <input type="text" class="input-twitter" name="twitterAddress" th:value="${member.twitterAddress}">
                 </div>
               </div>
               <div class="input-wrap">
@@ -142,7 +144,7 @@
                   <label class="label-instagram">페이스북</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-facebook">
+                  <input type="text" class="input-facebook" name="facebookAddress" th:value="${member.facebookAddress}">
                 </div>
               </div>
               <div class="btn-wrap">
@@ -171,13 +173,51 @@
     const id = [[${member.id}]];
 
     const updateMember = () => {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
         const updatePassword = document.getElementById("update-member-password").value;
         const updatePassword2 = document.getElementById("update-member-password2").value;
 
-        if (updatePassword == updatePassword2) {
+        if (updatePassword.length != 0 && updatePassword2.length != 0) {
+            if (updatePassword == updatePassword2) {
+                nameDupCheck();
+            }
+        } else {
+            nameDupCheck();
+        }
+    }
+
+    const nameDupCheck = () => {
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+
+        const newName = document.getElementById("new-name").value;
+        if (newName != [[${member.memberName}]]) {
+            $.ajax({
+                type: "post",
+                url: "/member/name-dup-check",
+                data: {"memberName": newName},
+                dataType: "text",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result) {
+                    if (result == "ok") {
+                        Swal.fire('정보수정이 완료되었습니다.').then((result) => {
+                            if (result.isConfirmed) {
+                                setTimeout(function () {
+                                    memberUpdateForm.submit();
+                                }, 500);
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            text: '이미 사용중인 닉네임입니다.',
+                            showConfirmButton: "확인"
+                        });
+                    }
+                }
+            });
+        } else {
             Swal.fire('정보수정이 완료되었습니다.').then((result) => {
                 if (result.isConfirmed) {
                     setTimeout(function () {
@@ -188,6 +228,6 @@
         }
     }
 
-    const role = [[${member.role}]];
+        const role = [[${member.role}]];
 </script>
 </html>
