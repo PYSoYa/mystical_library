@@ -13,6 +13,7 @@ public class MailDTO {
     private String toAddress;
     private String mailTitle;
     private String fromAddress;
+    private String why;
     private BookDTO bookDTO;
     private EpisodeDTO episodeDTO;
 }
