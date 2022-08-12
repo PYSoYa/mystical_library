@@ -141,13 +141,13 @@
         <a th:if="${before != 0}">
         <button type="button" class="prev-btn" th:onclick="before()">
           <span></span>
-          <strong th:text="${episodeBefore}"></strong>
+          <strong>이전 화</strong>
         </button>
         </a>
         <a th:if="${after != 0}">
         <button type="button" class="next-btn" th:onclick="after()">
           <span></span>
-          <strong th:text="${episodeAfter}"></strong>
+          <strong>다음 화</strong>
         </button>
         </a>
       </div>
@@ -170,6 +170,18 @@
                   <input type="radio" name="star" value="1" id="rate5"><label for="rate5">⭐</label>
                 </fieldset>
                 <button type="button" id="star-btn" class="star-btn" th:if="${star.id == null}" th:onclick="saveStar()">별점주기</button>
+              </div>
+            </div>
+            <div class="btn-wrap" th:if="${authentication.memberName eq book.memberName}">
+              <div class="edit-btn-wrap">
+                <a th:href="@{|/book/req-episode-update?id=${episode.id}|}">
+                  <button type="button" class="edit-btn">수정</button>
+                </a>
+              </div>
+              <div class="delete-btn-wrap">
+                <a th:href="@{|/book/req-episode-delete?id=${episode.id}|}">
+                  <button type="button" class="delete-btn">삭제</button>
+                </a>
               </div>
             </div>
             <div class="attention-wrap">
@@ -439,7 +451,6 @@
                            "                <div>" +
                            "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
                            "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
-                           "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
                            "                  </a>" +
                            "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
                            "                </div>" +
@@ -460,6 +471,7 @@
                            "              </div>" +
                            "              </div>" +
                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+                           "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
                            "              </div>" +
                            "            </li>";
                    }
