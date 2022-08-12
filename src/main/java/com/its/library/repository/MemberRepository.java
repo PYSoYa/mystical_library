@@ -26,11 +26,11 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Optional<MemberEntity> findByLoginIdAndMemberEmail(String loginId, String memberEmail);
 
     @Transactional
-    @Query (value = "select * from member order by role_change_time desc limit 0, 5", nativeQuery = true)
+    @Query (value = "select * from member where role='ROLE_WRITER' order by role_change_time desc limit 0, 5", nativeQuery = true)
     List<MemberEntity> findWriter1();
 
     @Transactional
-    @Query (value = "select * from member order by role_change_time desc limit 5, 10", nativeQuery = true)
+    @Query (value = "select * from member where role='ROLE_WRITER' order by role_change_time desc limit 5, 10", nativeQuery = true)
     List<MemberEntity> findWriter2();
 
     @Query(value = "select m from MemberEntity m where m.memberName like %:q%")
