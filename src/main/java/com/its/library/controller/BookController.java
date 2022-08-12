@@ -373,6 +373,9 @@ public class BookController {
                     model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
                     model.addAttribute("after", 0);
                 }
+            } else if (episodeDTOList1.size() == 1 && i == 0) {
+                model.addAttribute("before", 0);
+                model.addAttribute("after", 0);
             } else if (episodeDTOList1.get(i).getId() == id && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
