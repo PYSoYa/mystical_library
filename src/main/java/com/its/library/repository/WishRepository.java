@@ -22,4 +22,6 @@ public interface WishRepository extends JpaRepository<WishEntity, Long> {
     List<WishEntity> findByBookEntity_Id(Long id);
 
     int countByMemberEntity_Id(Long memberId);
+
+    void deleteByMemberName(String memberName);
 }
