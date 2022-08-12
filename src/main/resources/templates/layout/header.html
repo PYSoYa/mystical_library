@@ -3,6 +3,12 @@
 <th:block th:fragment="header">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
   <meta name="_csrf" th:content="${_csrf.token}">
+
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/icon/apple-touch-icon.png}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icon/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/icon/favicon-16x16.png}">
+  <link rel="manifest" th:href="@{/icon/site.webmanifest}">
+
   <link rel="stylesheet" th:href="@{/css/layout/header.css}">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/sweetalert2.min.css}">
@@ -125,7 +131,7 @@
                 <input type="password" name="memberPassword" class="input-pw" placeholder="********">
               </div>
               <div class="result-pw-wrap">
-                <span class="span-pw" id="result-pw-login">비밀번호도 입력해보세요</span>
+                <span class="span-pw" id="result-pw-login"></span>
               </div>
             </div>
             <div class="find-wrap">
@@ -423,7 +429,7 @@
       });
 
       $('#exampleModal1').on('shown.bs.modal', function () {
-        const input = document.getElementById('input-id');
+        const input = document.querySelector('.input-id');
         input.focus();
       });
 

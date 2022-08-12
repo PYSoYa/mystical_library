@@ -198,7 +198,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.categoryList");
+
         }
 
         return "book/category";
@@ -221,8 +221,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookList");
-            System.out.println("java.lang.NullPointerException: null");
+
         }
         return "redirect:/book/categoryId?categoryId=" + categoryId;
     }
@@ -241,8 +240,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.genreList");
-            System.out.println("java.lang.NullPointerException: null");
+
         }
         return "book/genre";
     }
@@ -298,7 +296,7 @@ public class BookController {
             model.addAttribute("historyList", historyDTOList);
 
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookDetail");
+
         }
         return "book/detail";
     }
@@ -345,7 +343,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookDetail");
+
         }
         return "book/detailNoLogin";
     }

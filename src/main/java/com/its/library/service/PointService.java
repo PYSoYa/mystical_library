@@ -38,14 +38,10 @@ public class PointService {
                         BookEntity bookEntity = optionalBookEntity.get();
                         pointDTOList.add(PointDTO.findDTO(pointEntity1, episodeEntity, bookEntity));
                     }
-
                 }
-
             }catch (NullPointerException e){
-                System.out.println("PointService.pointHistory");
-                System.out.println("포인트이셉션");
-            }
 
+            }
         }
         return pointDTOList;
     }
