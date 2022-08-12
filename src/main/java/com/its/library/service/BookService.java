@@ -242,7 +242,7 @@ public class BookService {
         mailDTO.setBookDTO(bookDTO);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mail);
+        message.setTo(mailDTO.getFromAddress());
         message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
@@ -283,7 +283,7 @@ public class BookService {
                 "회차 제목: " + mailDTO.getEpisodeDTO().getEpisodeTitle() + "\n" +
                 "회차 내용: " + mailDTO.getEpisodeDTO().getEpisodeContents() + "\n" +
                 "회차 금액: " + mailDTO.getEpisodeDTO().getPayment() + "\n" +
-                "수정 사유: " + mailDTO.getWhy() + "\n" +
+                "수정 사유: " + mailDTO.getEpisodeDTO().getUpdateContents() + "\n" +
                 "회신 주소: " + mailDTO.getFromAddress()
         );
 
