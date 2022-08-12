@@ -190,7 +190,11 @@ public class MemberService {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberDTO.getId());
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
-
+            if (memberDTO.getMemberPassword().length() != 0) {
+                String newPassword = memberDTO.getMemberPassword();
+                String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+                memberEntity.setMemberPassword(encodedPassword);
+            }
             MultipartFile memberImg = memberDTO.getMemberImg();
             if (!memberImg.isEmpty()) {
                 String memberImgName = memberImg.getOriginalFilename();
@@ -199,11 +203,19 @@ public class MemberService {
                 memberImg.transferTo(new File(savePath));
                 memberEntity.setMemberImgName(memberImgName);
             }
-            String newPassword = memberDTO.getMemberPassword();
-            String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
-            memberEntity.setMemberPassword(encodedPassword);
+            if (memberDTO.getInstagramAddress().length() != 0) {
+                memberEntity.setInstagramAddress(memberDTO.getInstagramAddress());
+            }
+            if (memberDTO.getTwitterAddress().length() != 0) {
+                memberEntity.setFacebookAddress(memberDTO.getTwitterAddress());
+            }
+            if (memberDTO.getFacebookAddress().length() != 0) {
+                memberEntity.setFacebookAddress(memberDTO.getFacebookAddress());
+            }
+            if (memberDTO.getIntroduction().length() != 0) {
+                memberEntity.setIntroduction(memberDTO.getIntroduction());
+            }
             memberEntity.setMemberName(memberDTO.getMemberName());
-            memberEntity.setIntroduction(memberDTO.getIntroduction());
             memberRepository.save(memberEntity);
         }
     }
