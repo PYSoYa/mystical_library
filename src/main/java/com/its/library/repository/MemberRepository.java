@@ -1,10 +1,12 @@
 package com.its.library.repository;
 
 
+import com.its.library.entity.BookEntity;
 import com.its.library.entity.MemberEntity;
 import com.its.library.entity.WishEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,4 +32,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Transactional
     @Query (value = "select * from member order by role_change_time desc limit 5, 10", nativeQuery = true)
     List<MemberEntity> findWriter2();
+
+    @Query(value = "select m from MemberEntity m where m.memberName like %:q%")
+    List<MemberEntity> findByMemberNameContaining(@Param("q") String q);
 }

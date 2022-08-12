@@ -56,9 +56,9 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .viewer .c-fnt-s-03 p {font-size: 16px;}
 #wrap .viewer-container .viewer .c-fnt-s-04 p {font-size: 18px;}
 #wrap .viewer-container .viewer .c-fnt-s-05 p {font-size: 20px;}
-#wrap .viewer-container .viewer .c-fnt-h-01 * {line-height: 1.5em;}
-#wrap .viewer-container .viewer .c-fnt-h-02 * {line-height: 2em;}
-#wrap .viewer-container .viewer .c-fnt-h-03 * {line-height: 2.5em;}
+#wrap .viewer-container .viewer .c-fnt-h-01 * {line-height: 1.5em !important;}
+#wrap .viewer-container .viewer .c-fnt-h-02 * {line-height: 2em !important;}
+#wrap .viewer-container .viewer .c-fnt-h-03 * {line-height: 2.5em !important;}
 /* viewer-next-button */
 #wrap .viewer-container .nav-btn .next-btn {right: 0;}
 #wrap .viewer-container .nav-btn .prev-btn {left: 0;}

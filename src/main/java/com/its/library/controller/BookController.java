@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -373,6 +374,9 @@ public class BookController {
                     model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
                     model.addAttribute("after", 0);
                 }
+            } else if (episodeDTOList1.size() == 1 && i == 0) {
+                model.addAttribute("before", 0);
+                model.addAttribute("after", 0);
             } else if (episodeDTOList1.get(i).getId() == id && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
@@ -401,17 +405,26 @@ public class BookController {
                          @RequestParam("searchType") String searchType,
                          @RequestParam("q") String q, Model model) {
         try {
-            List<BookDTO> bookDTOList = bookService.search(searchType, q);
-            model.addAttribute("bookList", bookDTOList);
+            if (searchType.equals("책")) {
+                List<BookDTO> bookDTOList = bookService.searchBook(q);
+                model.addAttribute("bookList", bookDTOList);
 
-            String loginId = principalDetails.getUsername();
-            MemberDTO findDTO = memberService.findByLoginId(loginId);
-            model.addAttribute("authentication", findDTO);
+                String loginId = principalDetails.getUsername();
+                MemberDTO findDTO = memberService.findByLoginId(loginId);
+                model.addAttribute("authentication", findDTO);
+                return "book/search";
+            } else {
+                List<MemberDTO> memberDTOList = bookService.searchMember(q);
+                model.addAttribute("memberList", memberDTOList);
+
+                String loginId = principalDetails.getUsername();
+                MemberDTO findDTO = memberService.findByLoginId(loginId);
+                model.addAttribute("authentication", findDTO);
+            }
         } catch (Exception e) {
 
         }
-
-        return "book/search";
+        return "member/search";
     }
 
     // 첫화보기

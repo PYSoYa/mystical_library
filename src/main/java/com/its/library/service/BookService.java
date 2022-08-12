@@ -254,6 +254,7 @@ public class BookService {
                     "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
                     "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n"
         );
+
         mailSender.send(message);
     }
     
@@ -275,14 +276,14 @@ public class BookService {
         message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
-                "책 고유번호: " + mailDTO.getBookDTO().getId() + "\n" +
-                        "장르번호: " + mailDTO.getBookDTO().getGenreId() + "\n" +
-                        "도서명: " + mailDTO.getBookDTO().getBookTitle() + "\n" +
-                        "작가명: " + mailDTO.getBookDTO().getMemberName() + "\n" +
-                        "함께한 작가: " + mailDTO.getBookDTO().getFeat() + "\n" +
-                        "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
-                        "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n"
-        );        mailSender.send(message);
+                        "회차 고유번호: " + mailDTO.getEpisodeDTO().getId() + "\n" +
+                        "소속 책번호: " + mailDTO.getEpisodeDTO().getBookId() + "\n" +
+                        "회차 제목: " + mailDTO.getEpisodeDTO().getEpisodeTitle() + "\n" +
+                        "회차 내용: " + mailDTO.getEpisodeDTO().getEpisodeContents() + "\n" +
+                        "회차 금액: " + mailDTO.getEpisodeDTO().getPayment() + "\n"
+        );
+
+        mailSender.send(message);
     }
     
     // 책 삭제 요청
@@ -386,27 +387,24 @@ public class BookService {
     }
 
     // 검색 목록
-    public List<BookDTO> search(String searchType, String q) {
+    public List<BookDTO> searchBook(String q) {
         List<BookDTO> bookDTOList = new ArrayList<>();
-        Map<String, String> search = new HashMap<>();
-        search.put("type", searchType);
-        search.put("q", q);
-        if (searchType.equals("작가")) {
-            List<BookEntity> bookEntityList = bookRepository.findByMemberNameContaining(q);
-            for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
-            }
-            return bookDTOList;
+
+        List<BookEntity> bookEntityList = bookRepository.findByBookTitleContaining(q);
+        for (BookEntity book : bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
         }
-        if (searchType.equals("책")) {
-            List<BookEntity> bookEntityList = bookRepository.findByBookTitleContaining(q);
-            for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
-            }
-            return bookDTOList;
-        } else {
-            return null;
+        return bookDTOList;
+    }
+
+    public List<MemberDTO> searchMember(String q) {
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+
+        List<MemberEntity> memberEntityList = memberRepository.findByMemberNameContaining(q);
+        for (MemberEntity member : memberEntityList) {
+            memberDTOList.add(MemberDTO.toDTO(member));
         }
+        return memberDTOList;
     }
 
     // 책 승인 전 리스트

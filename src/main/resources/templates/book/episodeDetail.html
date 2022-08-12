@@ -141,13 +141,13 @@
         <a th:if="${before != 0}">
         <button type="button" class="prev-btn" th:onclick="before()">
           <span></span>
-          <strong th:text="${episode.episodeTitle}"></strong>
+          <strong>이전 화</strong>
         </button>
         </a>
         <a th:if="${after != 0}">
         <button type="button" class="next-btn" th:onclick="after()">
           <span></span>
-          <strong th:text="${episode.episodeTitle}"></strong>
+          <strong>다음 화</strong>
         </button>
         </a>
       </div>
