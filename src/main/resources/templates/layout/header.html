@@ -111,7 +111,7 @@
                 <label class="label-id">아이디</label>
               </div>
               <div class="input-id-wrap">
-                <input type="text" name="loginId" class="input-id" placeholder="아이디123" onblur="idCheck()">
+                <input type="text" name="loginId" class="input-id" placeholder="아이디123">
               </div>
               <div class="result-id-wrap">
                 <span class="span-id" id="result-id-login"></span>
@@ -278,7 +278,7 @@
                 <label class="label-id">아이디</label>
               </div>
               <div class="input-id-wrap">
-                <input type="text" id="login-id" name="loginId" class="input-id" placeholder="5-16자의 영소문자,숫자" required autofocus>
+                <input type="text" id="login-id" name="loginId" class="input-id" placeholder="5-16자의 영소문자, 숫자" onblur="idCheck()">
               </div>
               <div class="result-id-wrap">
                 <span class="span-id" id="result-id"></span>
@@ -458,56 +458,66 @@
       location.href = "/oauth2/authorization/github";
     }
 
-    let loginIdCheck = false;
-    let passwordCheck = false;
-    let passwordCheck2 = false;
-    let nameCheck = false;
-    let emailCheck = false;
+    let loginIdCheck = true;
+    let passwordCheck = true;
+    let passwordCheck2 = true;
+    let nameCheck = true;
+    let emailCheck = true;
 
     const idCheck = () => {
         let header = $("meta[name='_csrf_header']").attr('content');
         let token = $("meta[name='_csrf']").attr('content');
 
-        const resultLoginId= document.getElementById("result-id-login");
+        const resultLoginId= document.getElementById("result-id");
         const loginId = document.getElementById("login-id").value;
-        const exp = /^[a-z\d]{5,16}$/;
+        const exp = /^(?=.*[a-z])[a-z\d]{5,16}$/;
 
-        if(loginId.match(exp)){
-            $.ajax({
-                type: "post",
-                url: "/member/login-id-dup-check",
-                data: {"loginId": loginId},
-                dataType: "text",
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    if (result == "ok") {
-                        resultLoginId.innerHTML = '사용가능한 아이디입니다.';
-                        resultLoginId.style.color = 'dodgerBlue';
-                        loginIdCheck = true;
-                    } else {
-                        resultLoginId.innerHTML = '이미 사용중인 아이디입니다.';
+        if (loginId.length != 0) {
+            if(loginId.match(exp)){
+                $.ajax({
+                    type: "post",
+                    url: "/member/login-id-dup-check",
+                    data: {"loginId": loginId},
+                    dataType: "text",
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result) {
+                        if (result == "ok") {
+                            resultLoginId.innerHTML = '사용가능한 아이디입니다.';
+                            resultLoginId.style.color = 'dodgerBlue';
+                            loginIdCheck = true;
+                        } else {
+                            resultLoginId.innerHTML = '이미 사용중인 아이디입니다.';
+                            resultLoginId.style.color = '#dd2424';
+                            loginIdCheck = true;
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                resultLoginId.innerHTML = '5~16자의 영문 소문자, 숫자만 사용 가능합니다.';
+                resultLoginId.style.color = '#dd2424';
+                loginIdCheck = true;
+            }
         } else {
-            resultLoginId.innerHTML = '5~16자의 영문 소문자,숫자만 사용 가능합니다.';
-            loginIdCheck = false;
+            resultLoginId.innerHTML = '필수 입력 항목입니다.';
+            resultLoginId.style.color = '#dd2424';
+            loginIdCheck = true;
         }
+
     }
 
     const pwCheck = () => {
         const resultPw = document.getElementById("result-pw");
         const inputPw = document.getElementById("input-pw").value;
-        const exp = /^(?=.*[a-z])(?=.*\d)[a-z\d!@#$%^&*()-+_=]{8,16}$/;
+        const exp = /^(?=.*[a-z])(?=.*\d)[a-z\d`~!@#$%^&*()-+_=]{8,16}$/;
 
         if(inputPw.match(exp)) {
             resultPw.innerHTML = '';
             passwordCheck = true;
         } else {
             resultPw.innerHTML = "8~16자의 영문 소문자(필수), 숫자(필수), 특수기호만 사용 가능합니다.";
-            passwordCheck = false;
+            passwordCheck = true;
         }
     }
 
@@ -516,13 +526,16 @@
         const inputPw = document.getElementById("input-pw").value;
         const inputPw2 = document.getElementById("input-pw2").value;
 
-        if (inputPw == inputPw2) {
-            passwordCheck2 = true;
-            resultPwAgain.innerHTML = '비밀번호가 일치합니다.';
-            resultPwAgain.style.color = 'dodgerBlue';
-        } else {
-            passwordCheck2 = false;
-            resultPwAgain.innerHTML = '비밀번호가 일치하지 않습니다.';
+        if (inputPw.length != 0) {
+            if (inputPw == inputPw2) {
+                passwordCheck2 = true;
+                resultPwAgain.innerHTML = '비밀번호가 일치합니다.';
+                resultPwAgain.style.color = 'dodgerBlue';
+            } else {
+                passwordCheck2 = true;
+                resultPwAgain.innerHTML = '비밀번호가 일치하지 않습니다.';
+                resultPwAgain.style.color = '#dd2424';
+            }
         }
     }
 
@@ -536,7 +549,7 @@
         if (memberName.length != 0) {
             $.ajax({
                 type: "post",
-                url: "/member/member-name-dup-check",
+                url: "/member/name-dup-check",
                 data: {"memberName": memberName},
                 dataType: "text",
                 beforeSend: function(xhr){
@@ -548,14 +561,16 @@
                         resultName.innerHTML = '사용가능한 닉네임입니다.';
                         resultName.style.color = 'dodgerBlue';
                     } else {
-                        nameCheck = false;
+                        nameCheck = true;
                         resultName.innerHTML = '이미 사용중인 닉네임입니다.';
+                        resultName.style.color = '#dd2424';
                     }
                 }
             });
         } else {
-            nameCheck = false;
+            nameCheck = true;
             resultName.innerHTML = '닉네임을 입력해주세요.';
+            resultName.style.color = '#dd2424';
         }
     }
 
@@ -565,7 +580,7 @@
 
       const resultEmail = document.getElementById("result-email");
       const memberEmail = document.getElementById("input-email").value;
-      const exp = /^(?=.*[a-z])(?=.*.[.@])[a-z\d.@]{5,30}$/;
+      const exp = /^(?=.*[a-z])(?=.*@)(?=.*\.)[a-z\d@\.]{5,30}$/;
 
 
         if (memberEmail.length != 0 && memberEmail.match(exp)) {
@@ -585,7 +600,8 @@
           });
       } else {
           resultEmail.innerHTML = '이메일을 다시 확인해주세요.';
-      }
+          resultEmail.style.color = '#dd2424';
+        }
 
     }
 
@@ -597,17 +613,21 @@
         resultAuth.innerHTML = "인증번호가 일치합니다.";
         resultAuth.style.color = "dodgerblue";
       } else {
-          emailCheck = false;
+          emailCheck = true;
         resultAuth.innerHTML = "인증번호를 다시 확인해주세요.";
+        resultAuth.style.color = '#dd2424';
       }
     }
 
     const goMemberSave = () => {
+        const afterHTML = document.querySelector('.register-form');
+
         if (loginIdCheck == true && passwordCheck == true && passwordCheck2 == true && nameCheck == true && emailCheck == true) {
             Swal.fire('회원가입이 완료되었습니다.')
                 .then((result) => {
                     if (result.isConfirmed) {
                         memberSaveForm.submit();
+                        afterHTML.setAttribute('aria-hidden', 'true');
                     }
                 });
         } else {
@@ -617,7 +637,6 @@
                 showConfirmButton: true,
             });
         }
-
     }
   </script>
 </th:block>

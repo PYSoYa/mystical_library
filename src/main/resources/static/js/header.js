@@ -1,5 +1,4 @@
 function countNotice (){
-  console.log("실행");
   let header = $("meta[name='_csrf_header']").attr('content');
   let token = $("meta[name='_csrf']").attr('content');
 
@@ -12,7 +11,6 @@ function countNotice (){
     },
 
     success: function (result) {
-      console.log(result);
       if (result == "true") {
         const icon = document.querySelector('.notification');
         icon.classList.add('new-notice');

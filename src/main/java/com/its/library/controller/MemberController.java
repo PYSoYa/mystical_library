@@ -209,7 +209,7 @@ public class MemberController {
 
 
     // 닉네임 변경시 중복 체크
-    @PostMapping("/member-name-dup-check")
+    @PostMapping("/name-dup-check")
     public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
         MemberDTO memberDTO = memberService.findByMemberName(memberName);
         if (memberDTO.getId() == null) {
