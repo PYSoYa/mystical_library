@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신비한 서재입니다.</title>
+
+  <link rel="stylesheet" th:href="@{/css/book/genre.css}">
+</head>
+<body>
+<th:block th:replace="layout/header :: header"></th:block>
+
+<main class="main-container">
+  <div class="genre-list-container">
+    <div class="genre-list-title-container">
+      <div class="genre-list-title-wrap">
+        <div class="genre-list-title-text">
+          <span class="genre-list-title">작가 검색 결과</span>
+        </div>
+      </div>
+    </div>
+    <div class="book-list-container">
+      <div class="series-list">
+        <div class="book-wrap" th:each="member:${memberList}">
+          <div class="img-wrap member-img-wrap">
+            <div th:if="${authentication ne null}">
+              <a href="#">
+                <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
+              </a>
+            </div>
+            <div th:if="${authentication eq null}">
+              <a href="#">
+                <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="detail-wrap">
+            <div class="title-wrap member-title-wrap">
+              <h5 class="title" th:text="${member.memberName}"></h5>
+            </div>
+            <div class="intro-wrap member-intro-wrap">
+              <span class="intro" th:text="${member.introduction}"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+</body>
+</html>

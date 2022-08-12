@@ -387,27 +387,24 @@ public class BookService {
     }
 
     // 검색 목록
-    public List<BookDTO> search(String searchType, String q) {
+    public List<BookDTO> searchBook(String q) {
         List<BookDTO> bookDTOList = new ArrayList<>();
-        Map<String, String> search = new HashMap<>();
-        search.put("type", searchType);
-        search.put("q", q);
-        if (searchType.equals("작가")) {
-            List<BookEntity> bookEntityList = bookRepository.findByMemberNameContaining(q);
-            for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
-            }
-            return bookDTOList;
+
+        List<BookEntity> bookEntityList = bookRepository.findByBookTitleContaining(q);
+        for (BookEntity book : bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(book));
         }
-        if (searchType.equals("책")) {
-            List<BookEntity> bookEntityList = bookRepository.findByBookTitleContaining(q);
-            for (BookEntity book : bookEntityList) {
-                bookDTOList.add(BookDTO.findDTO(book));
-            }
-            return bookDTOList;
-        } else {
-            return null;
+        return bookDTOList;
+    }
+
+    public List<MemberDTO> searchMember(String q) {
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+
+        List<MemberEntity> memberEntityList = memberRepository.findByMemberNameContaining(q);
+        for (MemberEntity member : memberEntityList) {
+            memberDTOList.add(MemberDTO.toDTO(member));
         }
+        return memberDTOList;
     }
 
     // 책 승인 전 리스트
