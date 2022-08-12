@@ -30,7 +30,7 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category dropdown-toggle" th:if="${genreId <= 5}" data-bs-toggle="dropdown" aria-expanded="false">시</a>
+        <a href="javascript:;" class="category dropdown-toggle" th:if="${genreId <= 5 || genreId == 7}" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <a href="javascript:;" class="category category-focus dropdown-toggle" th:if="${genreId == 6}" data-bs-toggle="dropdown" aria-expanded="false">시</a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" th:href="@{|/book/genre?genreId=6&alignmentId=0|}">시 메인</a></li>
