@@ -10,7 +10,7 @@
 
 /* 카테고리 드롭다운 */
 .dropdown-toggle::after {display: none !important; border: none !important;}
-.dropdown-menu > li {font-size: 16px; font-weight: 500; font-family: inherit; position: relative; display: block; height: 3rem;}
+.dropdown-menu > li {font-size: 1rem; font-weight: 500; font-family: inherit; position: relative; display: block; height: 3rem;}
 
 .genre-list-container {max-width: 1170px; padding: 0 1.875rem 1.875rem 1.875rem; margin: 2.5rem auto 0; border-bottom: 1px solid #e5e5e5;}
 .genre-list-wrap {margin-top: 1.25rem; position: relative;}
