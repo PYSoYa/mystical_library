@@ -48,6 +48,17 @@ public class MemberController {
         return emailNum;
     }
 
+    // 닉네임 중복 체크 (회원가입, 회원정보수정)
+    @PostMapping("/name-dup-check")
+    public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
+        MemberDTO memberDTO = memberService.findByMemberName(memberName);
+        if (memberDTO.getId() == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
     // 회원가입 처리
     @PostMapping("/save")
     public String save(@ModelAttribute MemberDTO memberDTO) throws IOException {
@@ -55,6 +66,7 @@ public class MemberController {
         return "redirect:/";
     }
 
+    // 접근 권한 없을 때 이동할 로그인 페이지
     @GetMapping("/login-page")
     public String loginPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
                             @RequestParam(value = "exception", required = false) String exception, Model model) {
@@ -93,7 +105,7 @@ public class MemberController {
             }
             model.addAttribute("wishlist", writerList);
         } catch (Exception e) {
-
+            model.addAttribute("authentication", new MemberDTO());
         } finally {
             List<BookDTO> bookDTOList = bookService.findAllByOnStatus(id);
             model.addAttribute("bookList", bookDTOList);
@@ -104,24 +116,27 @@ public class MemberController {
         return "member/myPage";
     }
 
-
     // 회원정보 조회 (완결 작품)
     @GetMapping("/myPage/{id}/completion")
     public String myPage2(@AuthenticationPrincipal PrincipalDetails principalDetails,
                           @PathVariable("id") Long id, Model model) {
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        List<WishDTO> wishDTOList = new ArrayList<>();
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
+        try {
+            List<BookDTO> bookDTOList = new ArrayList<>();
+            List<WishDTO> wishDTOList = new ArrayList<>();
 
-        if (findDTO.getRole().equals("ROLE_ADMIN")) {
-            return "redirect:/admin/book-list";
-        } else {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
-            bookDTOList = bookService.finishBook(id);
+
             int wishCount = wishService.findByMemberId(id);
+            model.addAttribute("wishCount", wishCount);
+
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+
+            bookDTOList = bookService.finishBook(id);
+            model.addAttribute("bookList", bookDTOList);
+
             wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
             List<WishDTO> writerList = new ArrayList<>();
             for (int i = 0; i < wishDTOList.size(); i++) {
@@ -130,9 +145,8 @@ public class MemberController {
                 }
             }
             model.addAttribute("wishlist", writerList);
-            model.addAttribute("wishCount", wishCount);
-            model.addAttribute("bookList", bookDTOList);
-            model.addAttribute("wishlist", writerList);
+        } catch (Exception e) {
+            model.addAttribute("authentication", new MemberDTO());
         }
         return "member/myPageCompletion";
     }
@@ -145,35 +159,61 @@ public class MemberController {
             MemberDTO memberDTO = memberService.myPage(id);
             model.addAttribute("member", memberDTO);
 
+            int wishCount = wishService.findByMemberId(id);
+            model.addAttribute("wishCount", wishCount);
+
+            List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
+            model.addAttribute("myDebutList", debutEpisodeDTOList);
+
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
 
-            if (findDTO.getRole().equals("ROLE_ADMIN")) {
-                return "redirect:/admin/book-list";
-            }
-            List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
-            model.addAttribute("myDebutList", debutEpisodeDTOList);
-            if (findDTO.getRole().equals("ROLE_ADMIN")) {
-                return "redirect:/admin/book-list";
-            } else {
-                int wishCount = wishService.findByMemberId(id);
-                List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-                List<WishDTO> writerList = new ArrayList<>();
-                for (int i = 0; i < wishDTOList.size(); i++) {
-                    if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                        writerList.add(wishDTOList.get(i));
-                    }
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> writerList = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    writerList.add(wishDTOList.get(i));
                 }
-                model.addAttribute("wishCount", wishCount);
-                model.addAttribute("wishlist", writerList);
             }
+            model.addAttribute("wishlist", writerList);
+
         } catch (Exception e) {
             model.addAttribute("authentication", new MemberDTO());
         }
-        List<DebutEpisodeDTO> debutEpisodeDTOList = debutService.myDebutWrite(id);
-        model.addAttribute("myDebutList", debutEpisodeDTOList);
         return "member/myPageDebut";
+    }
+
+    // 승인 대기 중 목록
+    @GetMapping("/myPage/{id}/waiting")
+    public String myPageWaiting(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                @PathVariable("id") Long id, Model model) {
+        try {
+            MemberDTO memberDTO = memberService.myPage(id);
+            model.addAttribute("member", memberDTO);
+
+            int wishCount = wishService.findByMemberId(id);
+            model.addAttribute("wishCount", wishCount);
+
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+
+            List<BookDTO> bookDTOList = bookService.beforeApproval(id);
+            model.addAttribute("bookList", bookDTOList);
+
+            List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> writerList = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    writerList.add(wishDTOList.get(i));
+                }
+            }
+            model.addAttribute("wishlist", writerList);
+        } catch (Exception e) {
+            model.addAttribute("authentication", new MemberDTO());
+        }
+        return "member/myPageWaiting";
     }
 
     // 비밀번호 체크
@@ -205,18 +245,6 @@ public class MemberController {
     public String update(MemberDTO memberDTO) throws IOException {
         memberService.update(memberDTO);
         return "redirect:/member/myPage/" + memberDTO.getId();
-    }
-
-
-    // 닉네임 변경시 중복 체크
-    @PostMapping("/name-dup-check")
-    public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
-        MemberDTO memberDTO = memberService.findByMemberName(memberName);
-        if (memberDTO.getId() == null) {
-            return "ok";
-        } else {
-            return "no";
-        }
     }
 
     // 포인트 충전 페이지 이동
@@ -319,39 +347,10 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/myPage/{id}/waiting")
-    public String myPageWaiting(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                @PathVariable("id") Long id, Model model) {
-        List<BookDTO> bookDTOList = new ArrayList<>();
-        List<WishDTO> wishDTOList = new ArrayList<>();
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
-        if (findDTO.getRole().equals("ROLE_ADMIN")) {
-            return "redirect:/admin/book-list";
-        } else {
-            MemberDTO memberDTO = memberService.myPage(id);
-            model.addAttribute("member", memberDTO);
-            bookDTOList = bookService.finishBook(id);
-            int wishCount = wishService.findByMemberId(id);
-            wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
-            List<WishDTO> writerList = new ArrayList<>();
-            for (int i = 0; i < wishDTOList.size(); i++) {
-                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
-                    writerList.add(wishDTOList.get(i));
-                }
-            }
-            model.addAttribute("wishCount", wishCount);
-            model.addAttribute("bookList", bookDTOList);
-            model.addAttribute("wishlist", writerList);
-        }
-        return "member/myPageWaiting";
-    }
 
     @GetMapping("/delete/{id}")
     public String memberDelete(@PathVariable Long id) {
-         memberService.memberDelete(id);
-         return "redirect:/member/logout";
+        memberService.memberDelete(id);
+        return "redirect:/member/logout";
     }
 }
