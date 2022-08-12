@@ -43,7 +43,7 @@ const requestSignUp = (social) => {
       icon: 'error',
       text: '개인정보보호정책 및 이용약관에 동의해주세요.',
       showConfirmButton: false,
-      timer: 2000
+      timer: 1000
     });
   } else {
     if (social == 'naver') {

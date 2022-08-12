@@ -55,17 +55,38 @@ public class PointService {
         List<PointEntity> pointEntityList = pointRepository.findByMemberEntity_Id(memberDTO.getId());
         List<PointDTO> pointDTOList = new ArrayList<>();
         for (PointEntity pointEntity : pointEntityList) {
-            PointEntity pointEntity1 = pointEntity;
-            Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(pointEntity1.getEpisodeEntity().getId());
-            if (optionalEpisodeEntity.isPresent()) {
-                EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-                Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
-                if (optionalBookEntity.isPresent()) {
-                    BookEntity bookEntity = optionalBookEntity.get();
-                    pointDTOList.add(PointDTO.findDTO(pointEntity1, episodeEntity, bookEntity));
+            if (pointEntity.getEpisodeEntity() != null) {
+                Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(pointEntity.getEpisodeEntity().getId());
+                if (optionalEpisodeEntity.isPresent()) {
+                    EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
+                    if (optionalBookEntity.isPresent()) {
+                        BookEntity bookEntity = optionalBookEntity.get();
+                        pointDTOList.add(PointDTO.findDTO(pointEntity, episodeEntity, bookEntity));
+                    }
                 }
+            } else {
+                pointDTOList.add(PointDTO.noPayMemberDTO(pointEntity));
+            }
+        }
+        return pointDTOList;
+    }
 
-
+    @Transactional
+    public List<PointDTO> findPointUserList(MemberDTO memberDTO) {
+        List<PointEntity> pointEntityList = pointRepository.findByMemberEntity_Id(memberDTO.getId());
+        List<PointDTO> pointDTOList = new ArrayList<>();
+        for (PointEntity pointEntity : pointEntityList) {
+            if (pointEntity.getEpisodeEntity() != null) {
+                Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(pointEntity.getEpisodeEntity().getId());
+                if (optionalEpisodeEntity.isPresent()) {
+                    EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+                    Optional<BookEntity> optionalBookEntity = bookRepository.findById(episodeEntity.getBookEntity().getId());
+                    if (optionalBookEntity.isPresent()) {
+                        BookEntity bookEntity = optionalBookEntity.get();
+                        pointDTOList.add(PointDTO.findDTO(pointEntity, episodeEntity, bookEntity));
+                    }
+                }
             }
         }
         return pointDTOList;

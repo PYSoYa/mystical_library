@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +25,11 @@ public class MemberDTO {
     private String role;
     private String introduction;
     private String provider;
+    private LocalDateTime roleChangeTime;
+    private String instagramAddress;
+    private String twitterAddress;
+    private String facebookAddress;
+
 
 
     @Builder
@@ -49,6 +56,10 @@ public class MemberDTO {
         memberDTO.setRole(memberEntity.getRole());
         memberDTO.setIntroduction(memberEntity.getIntroduction());
         memberDTO.setProvider(memberEntity.getProvider());
+        memberDTO.setRoleChangeTime(memberEntity.getRoleChangeTime());
+        memberDTO.setInstagramAddress(memberEntity.getInstagramAddress());
+        memberDTO.setTwitterAddress(memberEntity.getTwitterAddress());
+        memberDTO.setFacebookAddress(memberEntity.getFacebookAddress());
         return memberDTO;
     }
 }

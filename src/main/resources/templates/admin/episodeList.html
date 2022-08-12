@@ -56,9 +56,8 @@
               <div class="table-wrap">
                 <table class="history-table">
                   <tr>
-                    <th>책번호</th>
-                    <th>제목</th>
                     <th>표지</th>
+                    <th>제목</th>
                     <th>가격 </th>
                     <th>승인</th>
                     <th>거절</th>
@@ -66,9 +65,8 @@
 
                   <tr th:each="episode:${episodeList}">
                     <div th:if="${episode.writerRole}!=1">
-                      <td th:text="${episode.bookId}"></td>
-                      <td th:text="${episode.episodeTitle}"></td>
                       <td><img th:src="@{|/upload/${episode.episodeImgName}|}" width="75px" height="75px"></td>
+                      <td th:text="${episode.episodeTitle}"></td>
                       <td th:if="${episode.payment eq 1}">100p</td>
                       <td th:if="${episode.payment eq 0 }">무료</td>
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,14 @@ public class MemberEntity {
     private String introduction;
     @Column
     private String provider;
+    @Column
+    private LocalDateTime roleChangeTime;
+    @Column
+    private String instagramAddress;
+    @Column
+    private String twitterAddress;
+    @Column
+    private String facebookAddress;
     //멤버 - 책 oneToMany ㅇ
     //멤버 - 보관홤 oneToMany ㅇ
     //멤버 - 작가댓글 oneToMany ㅇ
@@ -123,6 +132,10 @@ public class MemberEntity {
         memberEntity.setMemberImgName(memberEntity.getMemberImgName());
         memberEntity.setRole(memberEntity.getRole());
         memberEntity.setProvider(memberEntity.getProvider());
+        memberEntity.setRoleChangeTime(memberEntity.getRoleChangeTime());
+        memberEntity.setInstagramAddress(memberEntity.getInstagramAddress());
+        memberEntity.setTwitterAddress(memberEntity.getFacebookAddress());
+        memberEntity.setFacebookAddress(memberEntity.getInstagramAddress());
         return memberEntity;
     }
 

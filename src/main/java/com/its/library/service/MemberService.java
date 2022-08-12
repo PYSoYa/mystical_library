@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -260,5 +261,23 @@ public class MemberService {
             message.setText(content);
             mailSender.send(message);
         }
+    }
+
+    public List<MemberDTO> findWriter1() {
+        List<MemberEntity> memberEntityList = memberRepository.findWriter1();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for (MemberEntity m: memberEntityList) {
+            memberDTOList.add(MemberDTO.toDTO(m));
+        }
+        return memberDTOList;
+    }
+
+    public List<MemberDTO> findWriter2() {
+        List<MemberEntity> memberEntityList = memberRepository.findWriter2();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+        for (MemberEntity m: memberEntityList) {
+            memberDTOList.add(MemberDTO.toDTO(m));
+        }
+        return memberDTOList;
     }
 }
