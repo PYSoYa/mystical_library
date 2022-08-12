@@ -45,7 +45,7 @@ public class PointController {
         model.addAttribute("authentication", findDTO);
 
         MemberDTO memberDTO = memberService.myPage(id);
-        List<PointDTO> pointDTOList = pointService.findPointList(memberDTO);
+        List<PointDTO> pointDTOList = pointService.findPointUserList(memberDTO);
         model.addAttribute("member", memberDTO);
         model.addAttribute("minusPointList", pointDTOList);
         return "member/pointHistoryUse";

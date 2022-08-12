@@ -30,6 +30,17 @@ public class MemberController {
     private final BookService bookService;
     private final WishService wishService;
 
+    // 회원가입시 아이디 중복체크
+    @PostMapping("/login-id-dup-check")
+    public @ResponseBody String LoginIdDupCheck(@RequestParam String loginId) {
+        MemberDTO memberDTO = memberService.findByLoginId(loginId);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
     // 회원가입시 이메일 인증
     @PostMapping("/email-authentication")
     public @ResponseBody String emailAuthentication(@RequestParam String memberEmail) {
@@ -198,7 +209,7 @@ public class MemberController {
 
 
     // 닉네임 변경시 중복 체크
-    @PostMapping("/member-name-dup-check")
+    @PostMapping("/name-dup-check")
     public @ResponseBody String memberNameDupCheck(@RequestParam String memberName) {
         MemberDTO memberDTO = memberService.findByMemberName(memberName);
         if (memberDTO.getId() == null) {

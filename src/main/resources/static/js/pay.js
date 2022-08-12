@@ -23,14 +23,14 @@ const requestPay = (id) => {
               text: '포인트 충전이 완료되었어요!',
               icon: 'success',
               showConfirmButton: false,
-              timer: 1500
+              timer: 1000
             });
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',
               icon: 'error',
               showConfirmButton: false,
-              timer: 1500
+              timer: 1000
             });
           }
         }
