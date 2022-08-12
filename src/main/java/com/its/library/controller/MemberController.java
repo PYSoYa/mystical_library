@@ -73,13 +73,13 @@ public class MemberController {
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
-            System.out.println("HomeController.index");
+
         }
         model.addAttribute("exception", exception);
         return "member/login";
     }
 
-    // 회원정보 조회
+    // 회원정보 조회 (연재 작품)
     @GetMapping("/myPage/{id}")
     public String myPage(@AuthenticationPrincipal PrincipalDetails principalDetails,
                          @PathVariable("id") Long id, Model model) {

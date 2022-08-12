@@ -46,6 +46,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     @Query(value = "select * from book where status = '완결' order by episode_update_time desc", nativeQuery = true)
     List<BookEntity> findAllNew();
 
+    List<BookEntity> findAllByMemberEntity_IdAndStatusAndWriterRole(Long memberId, String status, int number);
+
     List<BookEntity> findAllByMemberEntity_IdAndStatus(Long memberId, String status);
 
     List<BookEntity> findAllByMemberEntity_IdAndWriterRole(Long memberId, int number);

@@ -199,7 +199,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.categoryList");
+
         }
 
         return "book/category";
@@ -222,8 +222,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookList");
-            System.out.println("java.lang.NullPointerException: null");
+
         }
         return "redirect:/book/categoryId?categoryId=" + categoryId;
     }
@@ -242,8 +241,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.genreList");
-            System.out.println("java.lang.NullPointerException: null");
+
         }
         return "book/genre";
     }
@@ -299,7 +297,7 @@ public class BookController {
             model.addAttribute("historyList", historyDTOList);
 
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookDetail");
+
         }
         return "book/detail";
     }
@@ -346,7 +344,7 @@ public class BookController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
         } catch (NullPointerException e) {
-            System.out.println("BookController.bookDetail");
+
         }
         return "book/detailNoLogin";
     }
@@ -376,6 +374,9 @@ public class BookController {
                     model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
                     model.addAttribute("after", 0);
                 }
+            } else if (episodeDTOList1.size() == 1 && i == 0) {
+                model.addAttribute("before", 0);
+                model.addAttribute("after", 0);
             } else if (episodeDTOList1.get(i).getId() == id && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", episodeDTOList1.get(i + 1).getId());

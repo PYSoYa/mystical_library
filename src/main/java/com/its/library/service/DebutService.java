@@ -259,7 +259,7 @@ public class DebutService {
                 debutEpisodeDTOList.add(DebutEpisodeDTO.toDTO(debutEpisodeEntityList.get(i)));
             }
         } catch (Exception e) {
-            System.out.println("인덱스 최신 데뷔글 null catch");
+
         }
 
         return debutEpisodeDTOList;
