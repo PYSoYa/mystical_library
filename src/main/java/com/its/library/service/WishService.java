@@ -195,4 +195,11 @@ public class WishService {
     public int findByMemberId(Long writerId) {
         return wishRepository.countByMemberEntity_Id(writerId);
     }
+
+    public void deleteByMemberName(String memberName) {
+        List<WishEntity> wishEntityList =  wishRepository.findByMemberName(memberName);
+        for (WishEntity wish: wishEntityList) {
+            wishRepository.deleteById(wish.getId());
+        }
+    }
 }

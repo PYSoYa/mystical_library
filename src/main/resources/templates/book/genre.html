@@ -86,7 +86,7 @@
             </a>
             </div>
             <div th:if="${authentication eq null}">
-            <a th:href="@{|/book/${book.id}|}">
+            <a th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
               <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
             </a>
             </div>

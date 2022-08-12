@@ -268,6 +268,7 @@ public class MemberController {
         return "member/findLoginId";
     }
 
+    // 아이디 찾기
     @PostMapping("/find-by-email")
     public @ResponseBody String findByEmail(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
@@ -279,6 +280,7 @@ public class MemberController {
         }
     }
 
+    // 아이디 찾기
     @PostMapping("/find-login-id")
     public @ResponseBody MemberDTO findLoginId(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
@@ -291,6 +293,7 @@ public class MemberController {
         return "member/findMemberPassword";
     }
 
+    // 비밀번호 찾기
     @PostMapping("/find-by-login-id-and-email")
     public @ResponseBody String findByLoginIdAndMemberEmail(@ModelAttribute MemberDTO memberDTO) {
         MemberDTO findDTO = memberService.findByLoginIdAndMemberEmail(memberDTO);
@@ -302,12 +305,14 @@ public class MemberController {
         }
     }
 
+    // 비밀번호 찾기 후 초기화
     @PostMapping("/password-reset")
     public ResponseEntity passwordReset(@RequestParam String memberEmail) {
         memberService.passwordReset(memberEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // 책 승인전 목록
     @GetMapping("/myPage/{id}/waiting")
     public String myPageWaiting(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                 @PathVariable("id") Long id, Model model) {
@@ -338,9 +343,12 @@ public class MemberController {
         return "member/myPageWaiting";
     }
 
+    // 회원탈퇴
     @GetMapping("/delete/{id}")
     public String memberDelete(@PathVariable Long id) {
-         memberService.memberDelete(id);
-         return "redirect:/member/logout";
+        MemberDTO memberDTO = memberService.myPage(id);
+        wishService.deleteByMemberName(memberDTO.getMemberName());
+        memberService.memberDelete(id);
+        return "redirect:/member/logout";
     }
 }
