@@ -21,6 +21,7 @@
           <form class="form-to-save" action="/book/req-book-update" method="post" enctype="multipart/form-data">
             <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <input type="hidden" name="memberName" th:value="${authentication.memberName}">
+            <input type="hidden" name="id" th:value="${book.id}">
             <input type="hidden" name="bookImgName" th:value="${book.bookImgName}">
             <input type="hidden" name="writerRole" th:value="${book.writerRole}">
             <input type="hidden" name="star" th:value="${book.star}">
@@ -79,6 +80,14 @@
                 <div class="input-wrap">
                   <input type="file" name="bookImg">
                 </div>
+              </div>
+            </div>;
+            <div class="intro-wrap">
+              <div class="intro-wrapper">
+                <label class="intro">사유</label>
+              </div>
+              <div class="input-wrap">
+                <textarea maxlength="500" onkeyup="resize(this)" class="intro" name="why" placeholder="삭제 사유를 입력해주세요."></textarea>
               </div>
             </div>
             <div class="send-wrap">

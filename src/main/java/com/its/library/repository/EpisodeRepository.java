@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,11 +18,14 @@ import java.util.List;
 
 public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
-    Page<EpisodeEntity> findByBookEntity(Pageable pageable, BookEntity bookEntity);
+    @Transactional
+    @Query(value = "select e from EpisodeEntity e where e.writerRole = 1 and e.bookEntity.id = :bookId")
+    Page<EpisodeEntity> findByBookEntity(Pageable pageable, Long bookId);
 
 
     @Transactional
-    Page<EpisodeEntity> findByBookEntityOrderByIdAsc(Pageable pageable, BookEntity bookEntity);
+    @Query(value = "select e from EpisodeEntity e where e.writerRole = 1 and e.bookEntity.id = :bookId")
+    Page<EpisodeEntity> findByBookEntityOrderByIdAsc(Pageable pageable,Long bookId);
 
     List<EpisodeEntity> findByBookEntity_Id(Long bookId);
     @Transactional

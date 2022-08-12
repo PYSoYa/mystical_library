@@ -304,38 +304,51 @@ public class BookController {
     }
 
     // 책 상세조회 + 회차목록 페이징 (비회원)
-//    @GetMapping("/{id}")
-//    public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
-//                                     @PageableDefault(page = 1) Pageable pageable,
-//                                     @PathVariable("id") Long id, Model model) {
-//        try {
-//            String loginId = principalDetails.getUsername();
-//            MemberDTO findDTO = memberService.findByLoginId(loginId);
-//            model.addAttribute("authentication", findDTO);
-//        } catch (Exception e) {
-//
-//        } finally {
-//            BookDTO bookDTO = bookService.findById(id);
-//            Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-//
-//            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
-//            int episodeSize = episodeDTOSize.size();
-//            model.addAttribute("episodeSize", episodeSize);
-//
-//            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-//            int commentSize = commentDTOList.size();
-//            model.addAttribute("commentSize", commentSize);
-//
-//            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-//            int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
-//            model.addAttribute("book", bookDTO);
-//            model.addAttribute("commentList", commentDTOList);
-//            model.addAttribute("episodeList", episodeDTOList);
-//            model.addAttribute("startPage", startPage);
-//            model.addAttribute("endPage", endPage);
-//        }
-//        return "book/detailNoLogin";
-//    }
+    @GetMapping("/no")
+    public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                     @PageableDefault(page = 1) Pageable pageable,
+                                     @RequestParam("id") Long id,
+                                     @RequestParam("alignmentId") Long alignmentId, Model model) {
+        try {
+            BookDTO bookDTO = bookService.findById(id);
+            model.addAttribute("book", bookDTO);
+            if (alignmentId == 0) {
+                Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                model.addAttribute("episodeList", episodeDTOList);
+                model.addAttribute("alignmentId", alignmentId);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+            } else if (alignmentId == 1) {
+                Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                model.addAttribute("episodeList", episodeDTOList);
+                model.addAttribute("alignmentId", alignmentId);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+            }
+            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+            int episodeSize = episodeDTOSize.size();
+            model.addAttribute("episodeSize", episodeSize);
+
+            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+            int commentSize = commentDTOList.size();
+            model.addAttribute("commentSize", commentSize);
+            model.addAttribute("commentList", commentDTOList);
+            List<WishDTO> bookLoveList = wishService.findByBookWish(id);
+            int bookLove = bookLoveList.size();
+            model.addAttribute("bookLove", bookLove);
+
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+        } catch (NullPointerException e) {
+            System.out.println("BookController.bookDetail");
+        }
+        return "book/detailNoLogin";
+    }
 
     // 회차 상세조회
     @GetMapping("/episode")
@@ -362,7 +375,7 @@ public class BookController {
                     model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
                     model.addAttribute("after", 0);
                 }
-            } else if (episodeDTOList1.get(i).getId() == id && i == 0){
+            } else if (episodeDTOList1.get(i).getId() == id && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
             }

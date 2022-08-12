@@ -35,7 +35,7 @@ public class EpisodeService {
        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(id);
        if (optionalEpisodeEntity.isPresent()){
            EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-           episodeEntity.setWriterRole(2);
+           episodeEntity.setWriterRole(1);
            episodeRepository.save(episodeEntity);
            noticeService.save(id);
        }

@@ -6,6 +6,7 @@ import com.its.library.entity.*;
 import com.its.library.repository.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -79,7 +80,7 @@ public class BookService {
         if (optionalBookEntity.isPresent()) {
             BookEntity bookEntity = optionalBookEntity.get();
             episodeEntityList = bookEntity.getEpisodeEntityList();
-            for (EpisodeEntity episode: episodeEntityList) {
+            for (EpisodeEntity episode : episodeEntityList) {
                 episodeDTOList.add(EpisodeDTO.findDTO(episode));
             }
             return episodeDTOList;
@@ -152,7 +153,7 @@ public class BookService {
 
         page = (page == 1) ? 0 : (page - 1);
         if (alignmentId == 0) { // 최신순
-            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity.getId());
 
             Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
@@ -167,11 +168,11 @@ public class BookService {
                             episode.getStar(),
                             episode.getCreatedDateTime()
                     ));
+
             return episodeDTOList;
 
         } else if (alignmentId == 1) { // 등록순
-            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntityOrderByIdAsc(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
-
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntityOrderByIdAsc(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.ASC, "id")), bookEntity.getId());
             Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
                     episode -> new EpisodeDTO(episode.getId(),
@@ -227,6 +228,7 @@ public class BookService {
     private final JavaMailSender mailSender;
     private final String mail = "oloveo24@naver.com";
 
+    // 책 수정 요청
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
         MultipartFile bookImg = bookDTO.getBookImg();
         String bookImgName = bookImg.getOriginalFilename();
@@ -243,10 +245,19 @@ public class BookService {
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
-        message.setText(String.valueOf(mailDTO.getBookDTO()));
+        message.setText(
+                "책 고유번호: " + mailDTO.getBookDTO().getId() + "\n" +
+                    "장르번호: " + mailDTO.getBookDTO().getGenreId() + "\n" +
+                    "도서명: " + mailDTO.getBookDTO().getBookTitle() + "\n" +
+                    "작가명: " + mailDTO.getBookDTO().getMemberName() + "\n" +
+                    "함께한 작가: " + mailDTO.getBookDTO().getFeat() + "\n" +
+                    "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
+                    "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n"
+        );
         mailSender.send(message);
     }
-
+    
+    // 에피소드 수정 요청
     public void reqEpisodeUpdate(EpisodeDTO episodeDTO, MailDTO mailDTO) throws IOException {
         MultipartFile episodeImg = episodeDTO.getEpisodeImg();
         String episodeImgName = episodeImg.getOriginalFilename();
@@ -263,10 +274,18 @@ public class BookService {
         message.setTo(mail);
         message.setFrom(mail);
         message.setSubject(mailDTO.getMailTitle());
-        message.setText(String.valueOf(mailDTO.getEpisodeDTO()));
-        mailSender.send(message);
+        message.setText(
+                "책 고유번호: " + mailDTO.getBookDTO().getId() + "\n" +
+                        "장르번호: " + mailDTO.getBookDTO().getGenreId() + "\n" +
+                        "도서명: " + mailDTO.getBookDTO().getBookTitle() + "\n" +
+                        "작가명: " + mailDTO.getBookDTO().getMemberName() + "\n" +
+                        "함께한 작가: " + mailDTO.getBookDTO().getFeat() + "\n" +
+                        "소개글: " + mailDTO.getBookDTO().getIntroduce() + "\n" +
+                        "연재상태: " + mailDTO.getBookDTO().getStatus() + "\n"
+        );        mailSender.send(message);
     }
-
+    
+    // 책 삭제 요청
     public void reqBookDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
@@ -281,7 +300,8 @@ public class BookService {
                 + "삭제사유: " + why);
         mailSender.send(message);
     }
-
+    
+    // 에피소드 삭제 요청
     public void reqEpisodeDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
@@ -296,7 +316,8 @@ public class BookService {
                 + "삭제사유: " + why);
         mailSender.send(message);
     }
-
+    
+    
     @Transactional
     public Page<BookDTO> bookList(Pageable pageable, Long categoryId, Long genreId) {
         Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(categoryId);
@@ -334,7 +355,8 @@ public class BookService {
 
         return bookDTOList;
     }
-
+    
+    // 별점 저장
     public double saveStar(StarDTO starDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(starDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(starDTO.getEpisodeId());
@@ -363,7 +385,7 @@ public class BookService {
         }
     }
 
-
+    // 검색 목록
     public List<BookDTO> search(String searchType, String q) {
         List<BookDTO> bookDTOList = new ArrayList<>();
         Map<String, String> search = new HashMap<>();
@@ -387,6 +409,7 @@ public class BookService {
         }
     }
 
+    // 책 승인 전 리스트
     public List<BookDTO> findByHiddenBook() {
         List<BookEntity> bookEntityList = bookRepository.findByWriterRole(0);
         List<BookDTO> bookDTOList = new ArrayList<>();
@@ -398,7 +421,7 @@ public class BookService {
         return bookDTOList;
     }
 
-
+    // 책 승인 처리
     public void bookAgree(BookDTO bookDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberName(bookDTO.getMemberName());
         Optional<GenreEntity> optionalGenreEntity = genreRepository.findById(bookDTO.getGenreId());
@@ -430,28 +453,28 @@ public class BookService {
         if (alignmentId == 0) {
             bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     bookDTOList.add(BookDTO.findDTO(book));
                 }
             }
         } else if (alignmentId == 1) { // 장르별 최신순 정렬
             bookEntityList = bookRepository.findByGenreEntity(genreEntity.getId());
             for (BookEntity book : bookEntityList) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     bookDTOList.add(BookDTO.findDTO(book)); // 장르가 일치하는 책 리스트
                 }
             }
         } else if (alignmentId == 2) { // 장르별 별점순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByStarDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     bookDTOList.add(BookDTO.findDTO(book));
                 }
             }
         } else if (alignmentId == 3) { // 장르별 조회순 정렬
             bookEntityList = bookRepository.findByGenreEntityOrderByHitsDesc(genreEntity);
             for (BookEntity book : bookEntityList) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     bookDTOList.add(BookDTO.findDTO(book));
                 }
             }
@@ -466,7 +489,7 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 1) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     if (bookDTOList1.size() < 6) {
                         bookDTOList1.add(BookDTO.findDTO(book));
                         if (bookDTOList1.size() == 5) {
@@ -486,7 +509,7 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 2) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     if (bookDTOList2.size() < 6) {
                         bookDTOList2.add(BookDTO.findDTO(book));
                         if (bookDTOList2.size() == 5) {
@@ -506,7 +529,7 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 3) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     if (bookDTOList3.size() < 6) {
                         bookDTOList3.add(BookDTO.findDTO(book));
                         if (bookDTOList3.size() == 5) {
@@ -526,7 +549,7 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 4) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     if (bookDTOList4.size() < 6) {
                         bookDTOList4.add(BookDTO.findDTO(book));
                         if (bookDTOList4.size() == 5) {
@@ -546,7 +569,7 @@ public class BookService {
         bookEntityList = bookRepository.findAll();
         for (BookEntity book : bookEntityList) {
             if (book.getCategoryEntity().getId() == 1 && book.getGenreEntity().getId() == 5) {
-                if (book.getWriterRole() == 1){
+                if (book.getWriterRole() == 1) {
                     if (bookDTOList5.size() < 6) {
                         bookDTOList5.add(BookDTO.findDTO(book));
                         if (bookDTOList5.size() == 5) {
@@ -559,6 +582,7 @@ public class BookService {
         return bookDTOList5;
     }
 
+    // 시 목록
     public List<BookDTO> siList() {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
@@ -571,6 +595,7 @@ public class BookService {
         return bookDTOList;
     }
 
+    // 에세이 목록
     public List<BookDTO> essayList() {
         List<BookEntity> bookEntityList = new ArrayList<>();
         List<BookDTO> bookDTOList = new ArrayList<>();
@@ -583,6 +608,7 @@ public class BookService {
         return bookDTOList;
     }
 
+    // 첫 화 이동
     public Long first(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();
@@ -598,6 +624,7 @@ public class BookService {
         return episodeDTOList.get(0).getId();
     }
 
+    // 연재 책 목록
     public List<BookDTO> findAllByOnStatus(Long memberId) {
         List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "연재");
         List<BookDTO> bookDTOList = new ArrayList<>();
@@ -607,11 +634,22 @@ public class BookService {
         return bookDTOList;
     }
 
+    // 완결 책 목록
     public List<BookDTO> finishBook(Long memberId) {
         List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "완결");
         List<BookDTO> bookDTOList = new ArrayList<>();
         for (BookEntity book : bookEntityList) {
             bookDTOList.add(BookDTO.findDTO(book));
+        }
+        return bookDTOList;
+    }
+
+    // 승인 전 책 목록
+    public List<BookDTO> beforeApproval(Long memberId) {
+        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndWriterRole(memberId, 0);
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        for (BookEntity b: bookEntityList) {
+            bookDTOList.add(BookDTO.findDTO(b));
         }
         return bookDTOList;
     }

@@ -27,6 +27,7 @@ public class WishEntity {
 
     @Column(name = "memberName",length = 20)
     private String memberName;
+
     @OneToMany(mappedBy = "wishEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 

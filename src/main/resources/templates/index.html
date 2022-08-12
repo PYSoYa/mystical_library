@@ -109,7 +109,7 @@
               <a th:if="${authentication != null}" th:href="@{|/book/book?id=${popular1.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
               </a>
-              <a th:unless="${authentication != null}" th:href="@{|/book/${popular1.id}|}">
+              <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${popular1.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
               </a>
             </div>
@@ -131,7 +131,7 @@
               <a th:if="${authentication != null}" th:href="@{|/book/book?id=${popular2.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
-              <a th:unless="${authentication != null}" th:href="@{|/book/${popular2.id}|}">
+              <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${popular2.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
             </div>
@@ -169,7 +169,7 @@
                   <a th:if="${authentication != null}" th:href="@{|/book/book?id=${finsh.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
                   </a>
-                  <a th:unless="${authentication != null}" th:href="@{|/book/${finsh.id}|}">
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${finsh.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
