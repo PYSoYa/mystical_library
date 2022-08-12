@@ -248,17 +248,35 @@ public class BookController {
     }
 
     // 책 상세조회 + 회차목록 페이징 (회원)
-    @GetMapping("/book/{id}")
+    @GetMapping("/book")
     public String bookDetail(@AuthenticationPrincipal PrincipalDetails principalDetails,
                              @PageableDefault(page = 1) Pageable pageable,
-                             @PathVariable("id") Long id, Model model) {
+                             @RequestParam("id") Long id,
+                             @RequestParam("alignmentId") Long alignmentId, Model model) {
         try {
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
 
             BookDTO bookDTO = bookService.findById(id);
-            Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+            if (alignmentId == 0) {
+                Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                model.addAttribute("episodeList", episodeDTOList);
+                model.addAttribute("alignmentId", alignmentId);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+            } else if (alignmentId == 1) {
+                Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                model.addAttribute("episodeList", episodeDTOList);
+                model.addAttribute("alignmentId", alignmentId);
+                model.addAttribute("startPage", startPage);
+                model.addAttribute("endPage", endPage);
+            }
+
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
@@ -271,18 +289,14 @@ public class BookController {
             int bookLove = bookLoveList.size();
             List<HistoryDTO> historyDTOList = historyService.findByBookId(id, findDTO.getId());
 
-            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-            int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
             model.addAttribute("episodeSize", episodeSize);
             model.addAttribute("commentSize", commentSize);
             model.addAttribute("bookLove", bookLove);
             model.addAttribute("book", bookDTO);
             model.addAttribute("commentList", commentDTOList);
-            model.addAttribute("episodeList", episodeDTOList);
             model.addAttribute("wishlist", wishDTOList);
             model.addAttribute("historyList", historyDTOList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
+
         } catch (NullPointerException e) {
             System.out.println("BookController.bookDetail");
         }
@@ -290,38 +304,38 @@ public class BookController {
     }
 
     // 책 상세조회 + 회차목록 페이징 (비회원)
-    @GetMapping("/{id}")
-    public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                     @PageableDefault(page = 1) Pageable pageable,
-                                     @PathVariable("id") Long id, Model model) {
-        try {
-            String loginId = principalDetails.getUsername();
-            MemberDTO findDTO = memberService.findByLoginId(loginId);
-            model.addAttribute("authentication", findDTO);
-        } catch (Exception e) {
-
-        } finally {
-            BookDTO bookDTO = bookService.findById(id);
-            Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
-
-            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
-            int episodeSize = episodeDTOSize.size();
-            model.addAttribute("episodeSize", episodeSize);
-
-            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
-            int commentSize = commentDTOList.size();
-            model.addAttribute("commentSize", commentSize);
-
-            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-            int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
-            model.addAttribute("book", bookDTO);
-            model.addAttribute("commentList", commentDTOList);
-            model.addAttribute("episodeList", episodeDTOList);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
-        }
-        return "book/detailNoLogin";
-    }
+//    @GetMapping("/{id}")
+//    public String bookDetailNotLogin(@AuthenticationPrincipal PrincipalDetails principalDetails,
+//                                     @PageableDefault(page = 1) Pageable pageable,
+//                                     @PathVariable("id") Long id, Model model) {
+//        try {
+//            String loginId = principalDetails.getUsername();
+//            MemberDTO findDTO = memberService.findByLoginId(loginId);
+//            model.addAttribute("authentication", findDTO);
+//        } catch (Exception e) {
+//
+//        } finally {
+//            BookDTO bookDTO = bookService.findById(id);
+//            Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable);
+//
+//            List<EpisodeDTO> episodeDTOSize = episodeService.episodeFindAll(id);
+//            int episodeSize = episodeDTOSize.size();
+//            model.addAttribute("episodeSize", episodeSize);
+//
+//            List<CommentDTO> commentDTOList = commentService.bookCommentList(id);
+//            int commentSize = commentDTOList.size();
+//            model.addAttribute("commentSize", commentSize);
+//
+//            int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+//            int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+//            model.addAttribute("book", bookDTO);
+//            model.addAttribute("commentList", commentDTOList);
+//            model.addAttribute("episodeList", episodeDTOList);
+//            model.addAttribute("startPage", startPage);
+//            model.addAttribute("endPage", endPage);
+//        }
+//        return "book/detailNoLogin";
+//    }
 
     // 회차 상세조회
     @GetMapping("/episode")

@@ -81,13 +81,16 @@
           <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}/debut|}">데뷔 글</a>
           </div>
+          <div class="nav-item">
+            <a th:href="@{|/member/myPage/${member.id}/waiting|}">승인 대기 중</a>
+          </div>
         </div>
       </div>
       <div th:each="book: ${bookList}">
       <div class="post-list-container">
         <div class="post-container">
           <div class="img-wrap">
-            <a th:href="@{|/book/book/${book.id}|}">
+            <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
               <img th:src="@{|/upload/${book.bookImgName}|}" alt="">
             </a>
           </div>

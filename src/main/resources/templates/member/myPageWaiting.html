@@ -76,13 +76,13 @@
           <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}|}">연재 작품</a>
           </div>
-          <div class="nav-item selected-item">
+          <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}/completion|}">완결 작품</a>
           </div>
           <div class="nav-item">
             <a th:href="@{|/member/myPage/${member.id}/debut|}">데뷔 글</a>
           </div>
-          <div class="nav-item">
+          <div class="nav-item selected-item">
             <a th:href="@{|/member/myPage/${member.id}/waiting|}">승인 대기 중</a>
           </div>
         </div>
@@ -125,6 +125,7 @@
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
 
+    console.log(memberId);
     $.ajax({
       type: "post",
       url: "/wish/check",
@@ -200,8 +201,6 @@
         }
       }
     })
-
-
   }
 
   const reqUpdate = () => {

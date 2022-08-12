@@ -319,4 +319,39 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/myPage/{id}/waiting")
+    public String myPageWaiting(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                @PathVariable("id") Long id, Model model) {
+        List<BookDTO> bookDTOList = new ArrayList<>();
+        List<WishDTO> wishDTOList = new ArrayList<>();
+        String loginId = principalDetails.getUsername();
+        MemberDTO findDTO = memberService.findByLoginId(loginId);
+        model.addAttribute("authentication", findDTO);
+
+        if (findDTO.getRole().equals("ROLE_ADMIN")) {
+            return "redirect:/admin/book-list";
+        } else {
+            MemberDTO memberDTO = memberService.myPage(id);
+            model.addAttribute("member", memberDTO);
+            bookDTOList = bookService.finishBook(id);
+            int wishCount = wishService.findByMemberId(id);
+            wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
+            List<WishDTO> writerList = new ArrayList<>();
+            for (int i = 0; i < wishDTOList.size(); i++) {
+                if (wishDTOList.get(i).getMemberId() == memberDTO.getId()) {
+                    writerList.add(wishDTOList.get(i));
+                }
+            }
+            model.addAttribute("wishCount", wishCount);
+            model.addAttribute("bookList", bookDTOList);
+            model.addAttribute("wishlist", writerList);
+        }
+        return "member/myPageWaiting";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String memberDelete(@PathVariable Long id) {
+         memberService.memberDelete(id);
+         return "redirect:/member/logout";
+    }
 }

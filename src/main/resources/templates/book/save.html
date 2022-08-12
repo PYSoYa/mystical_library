@@ -21,7 +21,7 @@
             <input type="hidden" name="memberName" th:value="${authentication.memberName}">
             <div class="select-list-wrap">
               <div class="category-list-wrap">
-                <select name="categoryId" class="select-input">
+                <select id="categoryId" name="categoryId" class="select-input" th:onclick="genreHidden()">
                   <option value="" selected>카테고리</option>
                   <option value="1">웹소설</option>
                   <option value="2">시</option>
@@ -29,13 +29,15 @@
                 </select>
               </div>
               <div class="genre-list-wrap">
-                <select name="genreId" class="select-input">
+                <select id="genreSelect" name="genreId" class="select-input">
                   <option value="" selected>장르</option>
                   <option value="1">판타지</option>
                   <option value="2">현대판타지</option>
                   <option value="3">로맨스</option>
                   <option value="4">로맨스판타지</option>
                   <option value="5">무협</option>
+                  <option value="6">시</option>
+                  <option value="7">에세이</option>
                 </select>
               </div>
               <div class="feat-wrap">
@@ -86,6 +88,19 @@
   const resize = (obj) => {
     obj.style.height = '11.3rem';
     obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+
+  const genreHidden = () => {
+      const categoryId = document.getElementById("categoryId").value;
+      const genreSelect = document.getElementById("genreSelect");
+
+      if (categoryId == 2) {
+          const genreId = document.getElementById("genreSelect").value = 6;
+          genreSelect.style.display = "none";
+      } else if (categoryId == 3) {
+          const genreId = document.getElementById("genreSelect").value = 7;
+          genreSelect.style.display = "none";
+      }
   }
 </script>
 </html>
