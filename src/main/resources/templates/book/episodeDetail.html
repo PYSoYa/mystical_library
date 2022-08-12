@@ -141,13 +141,13 @@
         <a th:if="${before != 0}">
         <button type="button" class="prev-btn" th:onclick="before()">
           <span></span>
-          <strong th:text="${episode.episodeTitle}"></strong>
+          <strong th:text="${episodeBefore}"></strong>
         </button>
         </a>
         <a th:if="${after != 0}">
         <button type="button" class="next-btn" th:onclick="after()">
           <span></span>
-          <strong th:text="${episode.episodeTitle}"></strong>
+          <strong th:text="${episodeAfter}"></strong>
         </button>
         </a>
       </div>
@@ -439,6 +439,7 @@
                            "                <div>" +
                            "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
                            "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
+                           "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
                            "                  </a>" +
                            "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
                            "                </div>" +
@@ -459,7 +460,6 @@
                            "              </div>" +
                            "              </div>" +
                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
-                           "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
                            "              </div>" +
                            "            </li>";
                    }
