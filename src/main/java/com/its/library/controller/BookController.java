@@ -434,5 +434,13 @@ public class BookController {
         return result;
     }
 
+    // 알림창에서 이동
+    @GetMapping("/findBook/{id}")
+    public String findBook(@PathVariable Long id) {
+        Long bookId = episodeService.findBook(id);
+        return "redirect:/book/book?id=" + bookId +"&alignmentId=0";
+    }
+
+
 
 }

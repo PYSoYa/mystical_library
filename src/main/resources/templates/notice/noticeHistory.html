@@ -22,7 +22,7 @@
           <tr th:each="notice:${noticeList}">
             <td th:text="${notice.id}" hidden></td>
             <td th:text="${notice.memberId}" hidden></td>
-            <td th:text="${notice.episodeTitle}"></td>
+            <td><a th:href="@{|/book/findBook/${notice.episodeId}|}" th:text="${notice.episodeTitle}"></a></td>
             <td th:text="*{#temporals.format(notice.createdTime, 'yyyy-MM-dd')}"></td>
             <td th:text="${notice.episodeId}" hidden></td>
             <td th:text="${notice.wishId}" hidden></td>
@@ -37,4 +37,9 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 
 </body>
+<script>
+  const findBook = (episodeId) => {
+      location.href = "/board/findBook/" + episodeId;
+  }
+</script>
 </html>
