@@ -626,7 +626,7 @@ public class BookService {
 
     // 연재 책 목록
     public List<BookDTO> findAllByOnStatus(Long memberId) {
-        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatus(memberId, "연재");
+        List<BookEntity> bookEntityList = bookRepository.findAllByMemberEntity_IdAndStatusAndWriterRole(memberId, "연재", 1);
         List<BookDTO> bookDTOList = new ArrayList<>();
         for (BookEntity book : bookEntityList) {
             bookDTOList.add(BookDTO.findDTO(book));

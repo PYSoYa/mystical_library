@@ -73,7 +73,7 @@ public class HomeController {
             MemberDTO memberDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", memberDTO);
         } catch (NullPointerException e) {
-            System.out.println("HomeController.index");
+
         }
         return "index";
     }
