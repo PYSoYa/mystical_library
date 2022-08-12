@@ -5,13 +5,11 @@ import com.its.library.dto.BookDTO;
 import com.its.library.dto.DebutEpisodeDTO;
 import com.its.library.dto.MemberDTO;
 import com.its.library.dto.WishDTO;
-import com.its.library.entity.BookEntity;
 import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -307,6 +305,7 @@ public class MemberController {
         return "member/findLoginId";
     }
 
+    // 이메일 여부 체크
     @PostMapping("/find-by-email")
     public @ResponseBody String findByEmail(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
@@ -318,6 +317,7 @@ public class MemberController {
         }
     }
 
+    // 아이디 찾기
     @PostMapping("/find-login-id")
     public @ResponseBody MemberDTO findLoginId(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
@@ -330,6 +330,7 @@ public class MemberController {
         return "member/findMemberPassword";
     }
 
+    // 비밀번호 찾기
     @PostMapping("/find-by-login-id-and-email")
     public @ResponseBody String findByLoginIdAndMemberEmail(@ModelAttribute MemberDTO memberDTO) {
         MemberDTO findDTO = memberService.findByLoginIdAndMemberEmail(memberDTO);
@@ -341,6 +342,7 @@ public class MemberController {
         }
     }
 
+    // 비밀번호 찾기 후 초기화
     @PostMapping("/password-reset")
     public ResponseEntity passwordReset(@RequestParam String memberEmail) {
         memberService.passwordReset(memberEmail);
@@ -348,8 +350,11 @@ public class MemberController {
     }
 
 
+    // 회원탈퇴
     @GetMapping("/delete/{id}")
     public String memberDelete(@PathVariable Long id) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        wishService.deleteByMemberName(memberDTO.getMemberName());
         memberService.memberDelete(id);
         return "redirect:/member/logout";
     }
