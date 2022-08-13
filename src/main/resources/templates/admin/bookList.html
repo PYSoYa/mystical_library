@@ -56,18 +56,15 @@
               <div class="table-wrap">
                 <table class="history-table">
                   <tr>
-                    <th>책번호</th>
                     <th>카테고리</th>
                     <th>장르</th>
-                    <th>작가명</th>
-                    <th>제목</th>
                     <th>표지</th>
+                    <th>제목</th>
+                    <th>작가명</th>
                     <th>승인</th>
                     <th>거절</th>
                   </tr>
                   <tr th:each="book:${bookDTOList}">
-                      <td th:text="${book.id}"></td>
-
                       <td th:if="${book.categoryId eq 1}"><span class="tag novel">웹소설</span></td>
                       <td th:if="${book.categoryId eq 2}"><span class="tag poem">시</span></td>
                       <td th:if="${book.categoryId eq 3}"><span class="tag essay">에세이</span></td>
@@ -77,10 +74,12 @@
                       <td th:if="${book.genreId eq 3}">로맨스</td>
                       <td th:if="${book.genreId eq 4}">로맨스판타지</td>
                       <td th:if="${book.genreId eq 5}">무협</td>
+                      <td th:if="${book.genreId eq 6}">시</td>
+                      <td th:if="${book.genreId eq 7}">에세이</td>
 
-                      <td th:text="${book.memberName}"></td>
-                      <td th:text="${book.bookTitle}"></td>
                       <td><img th:src="@{|/upload/${book.bookImgName}|}" width="75px" height="75px"></td>
+                      <td th:text="${book.bookTitle}"></td>
+                      <td th:text="${book.memberName}"></td>
                       <td><input type="button" class="accept-btn" th:value="승인" th:onclick="bookAgree([[${book.id}]])"></td>
                       <td><input type="button" class="deny-btn" th:value="거절" th:onclick="bookDelete([[${book.id}]])"></td>
                   </tr>
