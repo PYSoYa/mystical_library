@@ -233,7 +233,7 @@
               <div class="info">
                 <div>
                   <a th:href="@{|/member/mypage/${comment.memberId}|}" class="writer-link">
-                    <span class="writer" th:text="${comment.memberName}">어쩔</span>
+                    <span class="writer" th:text="${comment.memberName}"></span>
                   </a>
                   <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>

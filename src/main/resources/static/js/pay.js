@@ -1,5 +1,8 @@
 const requestPay = (id) => {
   let cash = $('input[name=point-quantity]:checked').val();
+  if (cash >= 10000) {
+    cash = cash * 1.1;
+  }
 
   const IMP = window.IMP;
   IMP.init('imp87611393');
@@ -18,19 +21,20 @@ const requestPay = (id) => {
         data: {"id": id, "cash": cash},
         dataType: "text",
         success: function (result) {
+          console.log("결제완료");
           if (result === "ok") {
             Swal.fire({
               text: '포인트 충전이 완료되었어요!',
               icon: 'success',
               showConfirmButton: false,
-              timer: 1000
+              timer: 1200
             });
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',
               icon: 'error',
               showConfirmButton: false,
-              timer: 1000
+              timer: 1200
             });
           }
         }
@@ -46,8 +50,6 @@ const requestPay = (id) => {
 
         }
       });
-
-      location.reload();
     }
   });
 }

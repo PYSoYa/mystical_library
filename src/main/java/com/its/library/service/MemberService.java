@@ -149,7 +149,6 @@ public class MemberService {
             MemberEntity memberEntity = optionalMemberEntity.get();
             memberEntity.setMemberPoint(memberEntity.getMemberPoint() + memberPoint);
             memberRepository.save(memberEntity);
-
             return "ok";
         } else {
             return "no";

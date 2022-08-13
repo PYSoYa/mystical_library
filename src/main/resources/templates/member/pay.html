@@ -184,6 +184,8 @@
 <script th:inline="javascript">
   const id = [[${member.id}]];
 
+  const role = [[${member.role}]];
+
   const deleteMember = () => {
     Swal.fire({
       text: '정말로 탈퇴하시겠습니까?',

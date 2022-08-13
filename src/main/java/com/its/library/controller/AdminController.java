@@ -212,7 +212,7 @@ public class AdminController {
         return "redirect:/admin/req-writer-list";
     }
 
-    //회원 충전 리스트
+    //회원 포인트 충전 리스트
     @GetMapping("/point-history")
     public String pointHistory(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
         String loginId = principalDetails.getUsername();
