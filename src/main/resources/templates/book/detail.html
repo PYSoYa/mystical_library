@@ -224,7 +224,7 @@
               <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </div>
             <div class="report-wrap">
-              <a href="javascript:;" class="report" th:if="${authentication.memberName != comment.memberName}" th:onclick="reportComment([[${comment.id}]])">신고</a>
+              <a href="javascript:;" class="report" th:if="${authentication.memberName ne comment.memberName && comment.contents ne '관리자에 의해 숨겨진 글입니다'}" th:onclick="reportComment([[${comment.id}]])">신고</a>
             </div>
           </div>
           <div class="content-wrap">
