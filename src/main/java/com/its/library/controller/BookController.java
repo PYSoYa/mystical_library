@@ -435,10 +435,12 @@ public class BookController {
     }
 
     // 알림창에서 이동
-    @GetMapping("/findBook/{id}")
-    public String findBook(@PathVariable Long id) {
-        Long bookId = episodeService.findBook(id);
-        return "redirect:/book/book?id=" + bookId +"&alignmentId=0";
+    @PostMapping("/findBook")
+    public @ResponseBody Long findBook(@RequestParam("id") Long id,
+                                       @RequestParam("episodeId") Long episodeId) {
+        noticeService.deleteById(id);
+        Long result = episodeService.findBook(episodeId);
+        return result;
     }
 
 

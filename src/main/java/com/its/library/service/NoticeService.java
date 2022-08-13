@@ -71,5 +71,10 @@ public class NoticeService {
         }
         return true;
     }
+
+    public String deleteById(Long id) {
+        noticeRepository.deleteById(id);
+        return "삭제완료";
+    }
 }
 
