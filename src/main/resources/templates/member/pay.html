@@ -52,7 +52,7 @@
             </a>
           </div>
           <div class="delete-member">
-            <a href="#">
+            <a onclick="deleteMember()">
               <span class="item">회원탈퇴</span>
             </a>
           </div>
@@ -183,5 +183,17 @@
 </body>
 <script th:inline="javascript">
   const id = [[${member.id}]];
+
+  const deleteMember = () => {
+    Swal.fire({
+      text: '정말로 탈퇴하시겠습니까?',
+      showConfirmButton: 'OK',
+      showDenyButton: 'NO',
+    }).then(result => {
+      if (result.isConfirmed) {
+        location.href = '/member/delete/' + [[${member.id}]];
+      }
+    });
+  }
 </script>
 </html>

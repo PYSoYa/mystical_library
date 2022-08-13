@@ -49,7 +49,7 @@
             </a>
           </div>
           <div class="delete-member">
-            <a href="#">
+            <a onclick="deleteMember()">
               <span class="item">회원탈퇴</span>
             </a>
           </div>
@@ -107,7 +107,18 @@
       sum += parseInt(minusPoint[i].innerHTML);
     }
     count.innerHTML =String(sum);
+  }
 
+  const deleteMember = () => {
+    Swal.fire({
+      text: '정말로 탈퇴하시겠습니까?',
+      showConfirmButton: 'OK',
+      showDenyButton: 'NO',
+    }).then(result => {
+      if (result.isConfirmed) {
+        location.href = '/member/delete/' + [[${member.id}]];
+      }
+    });
   }
 </script>
 </html>

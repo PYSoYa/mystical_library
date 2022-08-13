@@ -41,7 +41,14 @@
 <!--        <p class="" th:text="${exception}"></p>-->
 <!--      </div>-->
     </div>
-
+    <div class="find-wrap">
+      <div class="find-id-wrap">
+        <span class="label-find-id" id="findId">아이디 찾기</span>
+      </div>
+      <div class="find-pw-wrap">
+        <span class="label-find-pw" id="findPw">비밀번호 찾기</span>
+      </div>
+    </div>
     <div class="btn-wrap">
       <button type="submit" class="submit-btn">로그인</button>
     </div>
@@ -51,4 +58,15 @@
 
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
+<script th:inline="javascript">
+  const findId = document.getElementById('findId');
+  const findPw = document.getElementById('findPw');
+
+  findId.addEventListener('click', () => {
+    location.href = '/member/find/id';
+  });
+  findPw.addEventListener('click', () => {
+    location.href = '/member/find/password';
+  });
+</script>
 </html>
