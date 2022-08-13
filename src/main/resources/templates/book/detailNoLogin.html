@@ -141,7 +141,7 @@
         <ul class="pagination justify-content-center">
           <li class="page-item">
             <!--첫페이지 요청 링크-->
-            <a class="page-link" th:href="@{|/book/book?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
+            <a class="page-link" th:href="@{|/book/no?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
               <span>처음</span>
             </a>
           </li>
@@ -149,7 +149,7 @@
           <li th:class="${episodeList.first} ? 'disabled'" class="page-item">
             <!--boardList.first: isFirst()
                 boardList.number: getNumber()-->
-            <a class="page-link" th:href="${episodeList.first} ? '#' : @{|/book/book?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
+            <a class="page-link" th:href="${episodeList.first} ? '#' : @{|/book/no?id=${book.id}&page=1&alignmentId=${alignmentId}|}">
               <span><</span> <!-- < -->
             </a>
           </li>
@@ -157,7 +157,7 @@
           <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
           <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
               th:class="${page == episodeList.number + 1} ? 'page-item active'" class="page-item">
-            <a class="page-link" th:text="${page}" th:href="@{|/book/book?id=${book.id}&page=${page}&alignmentId=${alignmentId}|}"></a>
+            <a class="page-link" th:text="${page}" th:href="@{|/book/no?id=${book.id}&page=${page}&alignmentId=${alignmentId}|}"></a>
           </li>
 
           <!-- 다음 페이지 요청
@@ -165,13 +165,13 @@
               getNumber() 값은 2임.
               따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
           <li th:class="${episodeList.last} ? 'disabled'">
-            <a class="page-link" th:href="${episodeList.last} ? '#' : @{|/book/book?id=${book.id}&page=${episodeList.number + 2}&alignmentId=${alignmentId}|}">
+            <a class="page-link" th:href="${episodeList.last} ? '#' : @{|/book/no?id=${book.id}&page=${episodeList.number + 2}&alignmentId=${alignmentId}|}">
               <span>&gt;</span>
             </a>
           </li>
 
           <li class="page-item">
-            <a class="page-link" th:href="@{|/book/book?id=${book.id}&page=${episodeList.totalPages}&alignmentId=${alignmentId}|}">
+            <a class="page-link" th:href="@{|/book/no?id=${book.id}&page=${episodeList.totalPages}&alignmentId=${alignmentId}|}">
               <span>마지막</span>
             </a>
           </li>
