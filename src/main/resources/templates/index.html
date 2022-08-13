@@ -241,7 +241,7 @@
         <div class="free-popular-books-list-div">
           <div th:each="top3:${top123}" class="free-popular-books">
             <div class="img-wrap">
-              <a href="#">
+              <a th:href="@{|/debut/detail/${top3.id}|}">
                 <img th:src="@{|/upload/${top3.debutImgName}|}" class="img" alt="">
               </a>
             </div>
@@ -260,7 +260,7 @@
         <div class="free-popular-books-list-div">
           <div th:each="top6:${top456}" class="free-popular-books">
             <div class="img-wrap">
-              <a href="#">
+              <a th:href="@{|/debut/detail/${top6.id}|}">
                 <img th:src="@{|/upload/${top6.debutImgName}|}" class="img" alt="">
               </a>
             </div>

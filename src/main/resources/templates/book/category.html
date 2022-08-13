@@ -102,9 +102,16 @@
             <li class="recent-debut-post-li" th:each="book:${bookList1}">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
-                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
-                  </a>
+                  <div th:if="${authentication ne null}">
+                    <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                      <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                    </a>
+                  </div>
+                  <div th:if="${authentication eq null}">
+                    <a th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
+                      <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                    </a>
+                  </div>
                 </div>
                 <div class="detail-wrap">
                   <span class="title" th:text="${book.bookTitle}"></span>
@@ -150,7 +157,10 @@
             <li class="recent-debut-post-li" th:each="book:${bookList2}">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
@@ -193,7 +203,10 @@
             <li class="recent-completion-li" th:each="book:${bookList3}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
@@ -229,7 +242,10 @@
             <li class="recent-completion-li" th:each="book:${bookList4}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
@@ -265,7 +281,10 @@
             <li class="recent-completion-li" th:each="book:${bookList5}">
               <div class="recent-completion">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>

@@ -258,32 +258,6 @@ public class MemberController {
         return "member/pay";
     }
 
-    // 포인트 충전내역 페이지 이동 (수정필요)
-    @GetMapping("/point-history/purchase/{id}")
-    public String purchaseHistory(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                  @PathVariable("id") Long id, Model model) {
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/pointHistoryPurchase";
-    }
-
-    // 포인트 이용내역 페이지 이동 (수정필요)
-    @GetMapping("/point-history/use/{id}")
-    public String useHistory(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                             @PathVariable("id") Long id, Model model) {
-        String loginId = principalDetails.getUsername();
-        MemberDTO findDTO = memberService.findByLoginId(loginId);
-        model.addAttribute("authentication", findDTO);
-
-        MemberDTO memberDTO = memberService.myPage(id);
-        model.addAttribute("member", memberDTO);
-        return "member/pointHistoryUse";
-    }
-
     // 카카오페이
     @GetMapping("/kkoPay")
     public @ResponseBody String kkoPay(@RequestParam("id") Long id,
@@ -354,8 +328,12 @@ public class MemberController {
     @GetMapping("/delete/{id}")
     public String memberDelete(@PathVariable Long id) {
         MemberDTO memberDTO = memberService.myPage(id);
-        wishService.deleteByMemberName(memberDTO.getMemberName());
-        memberService.memberDelete(id);
-        return "redirect:/member/logout";
+        if (!memberDTO.getRole().equals("ROLE_ADMIN")) {
+            wishService.deleteByMemberName(memberDTO.getMemberName());
+            memberService.memberDelete(id);
+            return "redirect:/member/logout";
+        } else {
+            return "redirect:/";
+        }
     }
 }

@@ -184,7 +184,7 @@
             <li>
               <div class="info">
                 <div>
-                  <a href="#" class="writer-link">
+                  <a th:href="@{|/member/myPage/${comment.memberId}|}" class="writer-link">
                     <span th:text="${comment.memberName}" class="writer"></span>
                   </a>
                   <span th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}" class="date">

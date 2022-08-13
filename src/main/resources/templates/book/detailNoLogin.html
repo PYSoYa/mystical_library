@@ -112,7 +112,7 @@
       </div>
             <div  class="episode-list-wrap" th:each="episode:${episodeList}">
               <div class="img-wrap">
-                <a href="javascript:;" class="img-link">
+                <a href="javascript:;" onclick="priceMoney()" class="img-link">
                   <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
                 </a>
               </div>
@@ -121,7 +121,7 @@
                   <div class="badge-wrap" th:if="${episode.payment==0}">
                     <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
                   </div>
-                  <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="title-link">
+                  <a href="javascript:;" onclick="priceMoney()" class="title-link">
                     <h5 class="title" th:text="${episode.episodeTitle}"></h5>
                   </a>
                 </div>
@@ -185,14 +185,14 @@
       </div>
       <div class="comment-detail-wrap" th:each="comment:${commentList}">
         <div class="img-wrap">
-          <a href="#" class="img-link">
+          <a th:href="@{|/member/myPage/${comment.memberId}|}" class="img-link">
             <img th:src="@{|/upload/${comment.memberImgName}|}" class="img" alt="">
           </a>
         </div>
         <div class="detail-wrap">
           <div class="header-wrap">
             <div class="writer-wrap">
-              <a href="#" class="writer-link">
+              <a th:href="@{|/member/myPage/${comment.memberId}|}" class="writer-link">
                 <h5 class="writer" th:text="${comment.memberName}"></h5>
               </a>
             </div>
@@ -262,6 +262,27 @@
   }
 
   const bookLove = () => {
+    Swal.fire({
+      title: '로그인 후에 이용가능한 메뉴입니다.',
+      showDenyButton: false,
+      showCancelButton: false,
+      confirmButtonText: '로그인'
+      // denyButtonText: ``,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 창으로 이동합니다.',
+          showConfirmButton: false,
+        });
+        setTimeout(function (){
+          location.href = "/member/login-page";
+        },1000);
+      }
+    });
+  }
+
+  const priceMoney = () => {
     Swal.fire({
       title: '로그인 후에 이용가능한 메뉴입니다.',
       showDenyButton: false,
