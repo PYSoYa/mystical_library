@@ -133,4 +133,18 @@ public class HistoryService {
             return null;
         }
     }
+
+    public String episodeCheck(Long memberId, Long episodeId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
+        if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
+            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
+            if (optionalHistoryEntity.isPresent()) {
+                return "내역있음";
+            }
+        }
+        return "내역없음";
+    }
 }

@@ -63,4 +63,11 @@ public class HistoryController {
         Long episodeId = historyService.findByAgain(bookId, memberId);
         return episodeId;
     }
+
+    @PostMapping("/episodeCheck")
+    public @ResponseBody String episodeCheck(@RequestParam("memberId") Long memberId,
+                                             @RequestParam("episodeId") Long episodeId) {
+        String result = historyService.episodeCheck(memberId, episodeId);
+        return result;
+    }
 }
