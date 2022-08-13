@@ -573,9 +573,19 @@
             },
             success: function (result) {
                 if (result === 'ok') {
-                    alert("신고완료");
+                    Swal.fire({
+                        icon: 'success',
+                        text: '신고처리가 완료되었습니다.',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 } else {
-                    alert("신고실패");
+                    Swal.fire({
+                        icon: 'success',
+                        text: '관심 목록에서 삭제했어요.',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 }
             }
         });
@@ -650,48 +660,54 @@
         const star4 = document.getElementById("rate2").checked;
         const star5 = document.getElementById("rate1").checked;
 
-        const starPrint = document.getElementById("star");
-        const starBtn = document.getElementById("star-btn");
+        if (star1 == true || star2 == true || star3 == true || star4 == true || star5 == true) {
+            const starPrint = document.getElementById("star");
+            const starBtn = document.getElementById("star-btn");
 
-        if (star1 == true) {
-            star = 1;
-        } else if (star2 == true) {
-            star = 2;
-        } else if (star3 == true) {
-            star = 3;
-        } else if (star4 == true) {
-            star = 4;
+            if (star1 == true) {
+                star = 1;
+            } else if (star2 == true) {
+                star = 2;
+            } else if (star3 == true) {
+                star = 3;
+            } else if (star4 == true) {
+                star = 4;
+            } else {
+                star = 5;
+            }
+
+
+            const memberId = [[${authentication.id}]];
+            const episodeId = [[${episode.id}]];
+
+            $.ajax({
+                type: "post",
+                url: "/book/save-star",
+                data: {
+                    "memberId": memberId,
+                    "episodeId": episodeId,
+                    "star": star
+                },
+                dataType: "text",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result) {
+                    if (result != null) {
+                        var output = "<span class=\"star\">⭐</span>\n" +
+                            "                <span class=\"star-desc\">" + result + "</span>";
+                        // starBtn.setAttribute("hidden", true);
+                        starBtn.style.display = "none";
+                    }
+
+                    starPrint.innerHTML = output;
+                },
+            });
+
         } else {
-            star = 5;
+            alert("별점을 입력해주세요");
         }
 
-
-        const memberId = [[${authentication.id}]];
-        const episodeId = [[${episode.id}]];
-
-        $.ajax({
-            type: "post",
-            url: "/book/save-star",
-            data: {
-                "memberId": memberId,
-                "episodeId": episodeId,
-                "star": star
-            },
-            dataType: "text",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result != null) {
-                    var output = "<span class=\"star\">⭐</span>\n" +
-                        "                <span class=\"star-desc\">" + result + "</span>";
-                    // starBtn.setAttribute("hidden", true);
-                    starBtn.style.display = "none";
-                }
-
-                starPrint.innerHTML = output;
-            },
-        });
     }
 
     const content = document.querySelector('.content');

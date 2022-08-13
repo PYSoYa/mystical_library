@@ -48,6 +48,8 @@ public class BookEntity {
     @Column
     private int hits;
     @Column
+    private int love;
+    @Column
     private double star;
     @Column
     private LocalDateTime episodeUpdateTime;
@@ -77,6 +79,7 @@ public class BookEntity {
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus("연재");
         bookEntity.setWriterRole(0);
+        bookEntity.setLove(0);
         bookEntity.setHits(0);
         bookEntity.setStar(0.0);
         return  bookEntity;
@@ -94,6 +97,7 @@ public class BookEntity {
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
         bookEntity.setWriterRole(0);
+        bookEntity.setLove(bookDTO.getLove());
         bookEntity.setHits(bookDTO.getHits());
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
@@ -112,6 +116,7 @@ public class BookEntity {
         bookEntity.setBookImgName(bookDTO.getBookImgName());
         bookEntity.setStatus(bookDTO.getStatus());
         bookEntity.setWriterRole(1);
+        bookEntity.setLove(bookDTO.getLove());
         bookEntity.setStar(bookDTO.getStar());
         return  bookEntity;
     }
