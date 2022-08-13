@@ -355,6 +355,7 @@ public class BookService {
                         book.getStatus(),
                         book.getWriterRole(),
                         book.getHits(),
+                        book.getLove(),
                         book.getStar()
                 ));
 

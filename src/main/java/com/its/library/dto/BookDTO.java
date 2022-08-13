@@ -26,10 +26,11 @@ public class BookDTO {
     private String status;
     private int writerRole;
     private int hits;
+    private int love;
     private double star;
     private LocalDateTime episodeUpdateTime;
 
-    public BookDTO(Long id, Long categoryId, Long genreId, Long memberId, String memberName, String feat, String bookTitle, String introduce, String bookImgName, String status, int writerRole, int hits,double star) {
+    public BookDTO(Long id, Long categoryId, Long genreId, Long memberId, String memberName, String feat, String bookTitle, String introduce, String bookImgName, String status, int writerRole, int hits, int love, double star) {
         this.id = id;
         this.categoryId = categoryId;
         this.genreId = genreId;
@@ -42,6 +43,7 @@ public class BookDTO {
         this.status = status;
         this.writerRole = writerRole;
         this.hits = hits;
+        this.love = love;
         this.star = star;
     }
 
@@ -59,6 +61,7 @@ public class BookDTO {
         bookDTO.setStatus(bookEntity.getStatus());
         bookDTO.setWriterRole(bookEntity.getWriterRole());
         bookDTO.setHits(bookEntity.getHits());
+        bookDTO.setLove(bookEntity.getLove());
         bookDTO.setStar(bookEntity.getStar());
         return bookDTO;
     }

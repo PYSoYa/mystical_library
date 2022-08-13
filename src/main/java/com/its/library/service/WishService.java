@@ -69,7 +69,7 @@ public class WishService {
             Long id = wishRepository.save(wishEntity).getId();
             Optional<WishEntity> optionalWishEntity = wishRepository.findById(id);
             if (optionalWishEntity.isPresent()) {
-                return "ok";
+                return "관심합산";
             } else {
                 return "no";
             }
@@ -102,7 +102,7 @@ public class WishService {
             Optional<WishEntity> optionalWishEntity = wishRepository.findByMemberEntityAndMemberName(memberEntity, wishDTO.getMemberName());
             if (optionalWishEntity.isPresent()) {
                 wishRepository.deleteById(optionalWishEntity.get().getId());
-                return "ok";
+                return "관심합산";
             } else {
                 return "no";
             }
