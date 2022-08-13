@@ -8,11 +8,13 @@ import com.its.library.entity.MemberEntity;
 import com.its.library.entity.ReqReportEntity;
 import com.its.library.repository.CommentRepository;
 import com.its.library.repository.DebutCommentRepository;
+import com.its.library.repository.MemberRepository;
 import com.its.library.repository.ReqReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,7 @@ public class ReqReportService {
     private final ReqReportRepository reqReportRepository;
     private final DebutCommentRepository debutCommentRepository;
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
     //데뷔글 신고 내역
 
     //작가글 신고내역
@@ -63,7 +66,7 @@ public class ReqReportService {
                 DebutCommentEntity debutComment = optionalDebutCommentEntity.get();
                 DebutCommentEntity debutCommentEntity = DebutCommentEntity.toUpdate(debutComment);
                 debutCommentRepository.save(debutCommentEntity);
-                reqReportRepository.deleteById(id);
+                reqReportRepository.deleteByDebutCommentEntity(debutComment);
 
             }
         }
@@ -80,12 +83,12 @@ public class ReqReportService {
         Optional<ReqReportEntity> reqReportEntity = reqReportRepository.findById(id);
         if (reqReportEntity.isPresent()) {
             ReqReportEntity reqReportEntity1 = reqReportEntity.get();
-            Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(reqReportEntity1.getDebutCommentEntity().getId());
+            Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(reqReportEntity1.getCommentEntity().getId());
             if (optionalCommentEntity.isPresent()) {
                 CommentEntity comment = optionalCommentEntity.get();
                 CommentEntity commentEntity = CommentEntity.toUpdate(comment);
                 commentRepository.save(commentEntity);
-                reqReportRepository.deleteById(id);
+                reqReportRepository.deleteByCommentEntity(comment);
 
             }
         }
@@ -95,6 +98,17 @@ public class ReqReportService {
         reqReportRepository.deleteById(id);
     }
 
-
-
+    public String findReportComment(Long id, Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        Optional<CommentEntity> optionalCommentEntity = commentRepository.findById(id);
+        if (optionalCommentEntity.isPresent() && optionalMemberEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            CommentEntity commentEntity = optionalCommentEntity.get();
+            Optional<ReqReportEntity> optionalReqReportEntity = reqReportRepository.findByMemberEntityAndCommentEntity(memberEntity, commentEntity);
+            if (optionalReqReportEntity.isPresent()) {
+                return "신고내역있음";
+            }
+        }
+        return null;
+    }
 }
