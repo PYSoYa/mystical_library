@@ -106,7 +106,10 @@
         <div class="popular-books-list-div">
           <div class="popular-books" th:each="popular1:${bookList}">
             <div class="img-wrap">
-              <a th:href="@{|/book/book?id=${popular1.id}&alignmentId=0|}">
+              <a th:if="${authentication != null}" th:href="@{|/book/book?id=${popular1.id}&alignmentId=0|}">
+                <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
+              </a>
+              <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${popular1.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular1.bookImgName}|}" alt="">
               </a>
             </div>
@@ -125,7 +128,10 @@
         <div class="popular-books-list-div">
           <div class="popular-books" th:each="popular2:${bookList1}">
             <div class="img-wrap">
-              <a th:href="@{|/book/book?id=${popular2.id}&alignmentId=0|}">
+              <a th:if="${authentication != null}" th:href="@{|/book/book?id=${popular2.id}&alignmentId=0|}">
+                <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
+              </a>
+              <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${popular2.id}&alignmentId=0|}">
                 <img th:src="@{|/upload/${popular2.bookImgName}|}" alt="">
               </a>
             </div>
@@ -160,7 +166,10 @@
             <li th:each="finsh:${newList}"  class="recent-debut-post-li" >
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${finsh.id}&alignmentId=0|}">
+                  <a th:if="${authentication != null}" th:href="@{|/book/book?id=${finsh.id}&alignmentId=0|}">
+                    <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
+                  </a>
+                  <a th:unless="${authentication != null}" th:href="@{|/book/no?id=${finsh.id}&alignmentId=0|}">
                     <img th:src="@{|/upload/${finsh.bookImgName}|}" class="img" alt="">
                   </a>
                 </div>
