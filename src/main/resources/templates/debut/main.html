@@ -154,7 +154,7 @@
                 </div>
                 <div class="detail-wrap">
                   <span class="title" th:text="${essay.debutTitle}"></span>
-                  <a href="#" class="author">
+                  <a th:href="@{|/member/myPage/${essay.memberId}|}" class="author">
                     <span class="author" th:text="${essay.memberName}"></span>
                   </a>
                   <div class="star-wrap debut-star-wrap">
@@ -200,7 +200,7 @@
                 </div>
                 <div class="detail-wrap">
                   <span class="title" th:text="${web.debutTitle}"></span>
-                  <a href="#" class="author">
+                  <a th:href="@{|/member/myPage/${web.memberId}|}" class="author">
                     <span class="author" th:text="${web.memberName}"></span>
                   </a>
                   <div class="star-wrap debut-star-wrap">

@@ -24,16 +24,9 @@
       <div class="series-list">
         <div class="book-wrap" th:each="member:${memberList}">
           <div class="img-wrap member-img-wrap">
-            <div th:if="${authentication ne null}">
-              <a href="#">
+              <a th:href="@{|/member/myPage/${member.id}|}">
                 <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
               </a>
-            </div>
-            <div th:if="${authentication eq null}">
-              <a href="#">
-                <img th:src="@{|/upload/${member.memberImgName}|}" class="img" alt="">
-              </a>
-            </div>
           </div>
           <div class="detail-wrap">
             <div class="title-wrap member-title-wrap">

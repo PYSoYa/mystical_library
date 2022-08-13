@@ -102,9 +102,16 @@
             <li class="recent-debut-post-li" th:each="book:${bookList1}">
               <div class="recent-debut-post">
                 <div class="img-wrap">
-                  <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
-                    <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
-                  </a>
+                  <div th:if="${authentication ne null}">
+                    <a th:href="@{|/book/book?id=${book.id}&alignmentId=0|}">
+                      <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                    </a>
+                  </div>
+                  <div th:if="${authentication eq null}">
+                    <a th:href="@{|/book/no?id=${book.id}&alignmentId=0|}">
+                      <img th:src="@{|/upload/${book.bookImgName}|}" class="img" alt="">
+                    </a>
+                  </div>
                 </div>
                 <div class="detail-wrap">
                   <span class="title" th:text="${book.bookTitle}"></span>

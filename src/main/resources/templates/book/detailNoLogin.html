@@ -185,14 +185,14 @@
       </div>
       <div class="comment-detail-wrap" th:each="comment:${commentList}">
         <div class="img-wrap">
-          <a href="#" class="img-link">
+          <a th:href="@{|/member/myPage/${comment.memberId}|}" class="img-link">
             <img th:src="@{|/upload/${comment.memberImgName}|}" class="img" alt="">
           </a>
         </div>
         <div class="detail-wrap">
           <div class="header-wrap">
             <div class="writer-wrap">
-              <a href="#" class="writer-link">
+              <a th:href="@{|/member/myPage/${comment.memberId}|}" class="writer-link">
                 <h5 class="writer" th:text="${comment.memberName}"></h5>
               </a>
             </div>
