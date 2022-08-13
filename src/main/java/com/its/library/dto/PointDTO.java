@@ -51,12 +51,11 @@ public class PointDTO {
     }
 
 
-    public static PointDTO noPayMemberDTO(PointEntity pointEntity) {
+    public static PointDTO findPointListDTO(PointEntity pointEntity) {
         PointDTO pointDTO = new PointDTO();
         pointDTO.setId(pointEntity.getId());
         pointDTO.setMemberId(pointEntity.getMemberEntity().getId());
         pointDTO.setPlusPoint(pointEntity.getPlusPoint());
-        pointDTO.setTotalPoint(pointEntity.getTotalPoint());
         pointDTO.setPointTime(pointEntity.getCreatedDateTime());
         return pointDTO;
     }
