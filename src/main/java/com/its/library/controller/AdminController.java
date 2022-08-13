@@ -224,4 +224,5 @@ public class AdminController {
         return "admin/pointHistory";
     }
 
+
 }

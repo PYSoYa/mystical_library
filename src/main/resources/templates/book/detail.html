@@ -134,7 +134,7 @@
       </div>
         <div class="episode-list-wrap" th:each="episode:${episodeList}">
           <div class="img-wrap">
-            <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]])" class="img-link">
+            <a href="javascript:;" th:onclick="priceMoney([[${episode.id}]], [[${episode.payment}]])" class="img-link">
               <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
             </a>
           </div>
@@ -224,7 +224,7 @@
               <span class="date" th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </div>
             <div class="report-wrap">
-              <a href="javascript:;" class="report" th:onclick="reportComment([[${comment.id}]])">신고</a>
+              <a href="javascript:;" class="report" th:if="${authentication.memberName != comment.memberName}" th:onclick="reportComment([[${comment.id}]])">신고</a>
             </div>
           </div>
           <div class="content-wrap">
@@ -315,7 +315,7 @@
       const memberId = [[${authentication.id}]];
       const memberName = [[${authentication.memberName}]];
       const bookId = [[${book.id}]];
-      if (payment == 1) {
+      if (payment != 0) {
           Swal.fire({
               icon: 'info',
               text: '결제하시겠습니까?',
@@ -572,22 +572,50 @@
         const loginId = [[${authentication.id}]];
 
         $.ajax({
-            type: "post",
-            url: "/comment/report-save/" + id,
-            data: {
-                "id": id,
-                "loginId": loginId
-            },
+           type: "post",
+           url: "/comment/req-report-check",
+           data: {
+               "id": id,
+               "memberId": loginId
+           },
             dataType: "text",
             beforeSend: function(xhr){
                 xhr.setRequestHeader(header, token);
             },
             success: function (result) {
-                if (result === 'ok') {
-                    alert("신고완료");
-                } else {
-                    alert("신고실패");
-                }
+               if (result == "신고내역있음") {
+                   Swal.fire({
+                       icon: 'error',
+                       text: '이미 신고하신 댓글입니다.',
+                       showConfirmButton: false,
+                       timer: 1000
+                   });
+               } else {
+                   $.ajax({
+                       type: "post",
+                       url: "/comment/report-save/" + id,
+                       data: {
+                           "id": id,
+                           "loginId": loginId
+                       },
+                       dataType: "text",
+                       beforeSend: function(xhr){
+                           xhr.setRequestHeader(header, token);
+                       },
+                       success: function (result) {
+                           if (result === 'ok') {
+                               Swal.fire({
+                                   icon: 'success',
+                                   text: '신고처리가 완료되었습니다.',
+                                   showConfirmButton: false,
+                                   timer: 1000
+                               });
+                           } else {
+                               alert("신고실패");
+                           }
+                       }
+                   });
+               }
             }
         });
     }

@@ -33,6 +33,7 @@ public class BookController {
     private final NoticeService noticeService;
     private final EpisodeService episodeService;
     private final StarService starService;
+    private final ReqReportService reqReportService;
 
     // 책 저장페이지 요청
     @PreAuthorize("hasRole('ROLE_WRITER') or hasRole('ROLE_ADMIN')")
@@ -275,7 +276,6 @@ public class BookController {
                 model.addAttribute("startPage", startPage);
                 model.addAttribute("endPage", endPage);
             }
-
             String memberName = findDTO.getMemberName();
             MemberDTO memberDTO = memberService.findByMemberName(memberName);
             List<WishDTO> wishDTOList = wishService.findByBook(memberDTO.getMemberName());
