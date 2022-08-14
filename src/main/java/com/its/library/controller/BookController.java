@@ -404,26 +404,22 @@ public class BookController {
                          @RequestParam("searchType") String searchType,
                          @RequestParam("q") String q, Model model) {
         try {
+            String loginId = principalDetails.getUsername();
+            MemberDTO findDTO = memberService.findByLoginId(loginId);
+            model.addAttribute("authentication", findDTO);
+        } catch (Exception e) {
+
+        } finally {
             if (searchType.equals("책")) {
                 List<BookDTO> bookDTOList = bookService.searchBook(q);
                 model.addAttribute("bookList", bookDTOList);
-
-                String loginId = principalDetails.getUsername();
-                MemberDTO findDTO = memberService.findByLoginId(loginId);
-                model.addAttribute("authentication", findDTO);
                 return "book/search";
             } else {
                 List<MemberDTO> memberDTOList = bookService.searchMember(q);
                 model.addAttribute("memberList", memberDTOList);
-
-                String loginId = principalDetails.getUsername();
-                MemberDTO findDTO = memberService.findByLoginId(loginId);
-                model.addAttribute("authentication", findDTO);
+                return "member/search";
             }
-        } catch (Exception e) {
-
         }
-        return "member/search";
     }
 
     // 첫화보기

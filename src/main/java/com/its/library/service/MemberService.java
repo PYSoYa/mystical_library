@@ -206,7 +206,7 @@ public class MemberService {
                 memberEntity.setInstagramAddress(memberDTO.getInstagramAddress());
             }
             if (memberDTO.getTwitterAddress().length() != 0) {
-                memberEntity.setFacebookAddress(memberDTO.getTwitterAddress());
+                memberEntity.setTwitterAddress(memberDTO.getTwitterAddress());
             }
             if (memberDTO.getFacebookAddress().length() != 0) {
                 memberEntity.setFacebookAddress(memberDTO.getFacebookAddress());

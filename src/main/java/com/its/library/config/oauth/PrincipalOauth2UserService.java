@@ -27,6 +27,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
+        System.out.println("PrincipalOauth2UserService.loadUser");
+        System.out.println("oAuth2User = " + oAuth2User);
+        System.out.println("oAuth2User.getAttributes(): " + oAuth2User.getAttributes());
+
         Oauth2UserInfo oauth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             oauth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
