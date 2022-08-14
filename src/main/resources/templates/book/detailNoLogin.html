@@ -36,17 +36,19 @@
             <div class="status-wrap">
               <span class="status" th:text="${book.status}"></span>
             </div>
-            <div class="book-episode-btn-wrap">
-                <button type="button" th:onclick="bookLove()" class="wishlist-btn">+ 관심</button>
-            </div>
           </div>
           <div class="intro-wrap">
               <span class="intro" th:text="${book.introduce}"></span>
           </div>
           <div class="tag-wrap">
-            <span class="tag novel">웹소설</span>
-            <span class="tag poem">시</span>
-            <span class="tag essay">에세이</span>
+            <span class="tag novel" th:if="${book.categoryId eq 1}">웹소설</span>
+            <span class="tag poem" th:if="${book.categoryId eq 2}">시</span>
+            <span class="tag essay" th:if="${book.categoryId eq 3}">에세이</span>
+            <div class="book-episode-btn-wrap">
+              <div class="wishlist-wrap">
+                <button type="button" th:onclick="bookLove()" class="wishlist-btn1">+ 관심</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="action-wrap">
@@ -107,7 +109,7 @@
     <div class="episode-detail-container">
       <div class="quantity-episode-wrap">
         <span class="quantity-episode">전체 (</span>
-        <span class="quantity-episode" th:text="${episodeList.size}"></span>
+        <span class="quantity-episode" th:text="${episodeSize}"></span>
         <span class="quantity-episode">)</span>
       </div>
             <div  class="episode-list-wrap" th:each="episode:${episodeList}">
