@@ -39,11 +39,11 @@
 .book-wrap .detail-wrap .author-wrap > a, span:not(:last-child) {margin-right: 1.5rem;}
 .book-wrap .detail-wrap .author-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
 .book-wrap .detail-wrap .author-wrap > span:not(:first-child) {opacity: 0.6;}
-.book-wrap .detail-wrap .author-wrap .author {color: #1e9eff; font-weight: 600;}
+.book-wrap .detail-wrap .author-wrap .author {color: #1e9eff; font-weight: 600; cursor: pointer;}
 .book-wrap .detail-wrap .author-wrap .eye-icon {padding-top: 0.225rem; opacity: 0.8;}
-.book-wrap .detail-wrap .author-wrap .heart-icon {padding-top: 0.35rem; opacity: 0.8;}
-.book-wrap .detail-wrap .author-wrap .star-icon {padding-top: 0.3rem; opacity: 0.8;}
-.book-wrap .detail-wrap .author-wrap span {font-size: 1rem; font-weight: 500; font-family: inherit; position: relative;}
+.book-wrap .detail-wrap .author-wrap .heart-icon {padding-top: 0.35rem; opacity: 0.8; color: #dd2424;}
+.book-wrap .detail-wrap .author-wrap .star-icon {padding-top: 0.3rem; opacity: 0.8; color: #1e9eff;}
+.book-wrap .detail-wrap .author-wrap span {margin-left: 2px; font-size: 1rem; font-weight: 500; font-family: inherit; position: relative;}
 .book-wrap .detail-wrap .intro-wrap {height: 4rem; display: block; opacity: 0.6;}
 .book-wrap .detail-wrap .member-intro-wrap {margin-bottom: 28px;}
 .book-wrap .detail-wrap .member-intro-wrap span {-webkit-line-clamp: 3 !important;}
