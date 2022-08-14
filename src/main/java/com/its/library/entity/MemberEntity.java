@@ -90,6 +90,7 @@ public class MemberEntity {
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DebutEpisodeEntity> debutEpisodeEntityList = new ArrayList<>();
+
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 

@@ -348,10 +348,6 @@
                                                     }
                                                 }
                                             })
-                                        } else if (result === "보여줘") {
-                                            alert("보여줘");
-                                        } else if (result === "무료저장") {
-                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                         } else if (result == "결제이력있음") {
                                             location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                         }
@@ -374,50 +370,7 @@
                                 xhr.setRequestHeader(header, token);
                             },
                             success: function (result) {
-                                if (result === "잔고부족") {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        text: '보유하신 포인트가 부족합니다.',
-                                        showConfirmButton: false,
-                                        timer: 1000
-                                    });
-                                } else if (result === "유료저장") {
-                                    $.ajax({
-                                        type: "post",
-                                        url: "/box/save",
-                                        data: {
-                                            "memberId": memberId,
-                                            "memberName": memberName,
-                                            "bookId": bookId,
-                                            "episodeId": episodeId
-                                        },
-                                        dataType: "text",
-                                        beforeSend: function (xhr) {
-                                            xhr.setRequestHeader(header, token);
-                                        },
-                                        success: function (result) {
-                                            if (result === "ok") {
-                                                $.ajax({
-                                                    type: "get",
-                                                    url: "/point/pay/" + memberId,
-                                                    data: {"episodeId": episodeId, "bookId": bookId},
-                                                    dataType: "text",
-                                                    success: function (result) {
-                                                        if (result === "ok") {
-                                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                        }
-                                                    }
-                                                });
-                                            } else if (result === "no") {
-                                                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                            }
-                                        }
-                                    });
-                                } else if (result === "보여줘") {
-                                    alert("보여줘");
-                                } else if (result === "무료저장") {
-                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                } else if (result == "결제이력있음") {
+                                if (result === "무료저장") {
                                     location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                 }
                             }
@@ -516,10 +469,6 @@
                                                     }
                                                 }
                                             })
-                                        } else if (result === "보여줘") {
-                                            alert("보여줘");
-                                        } else if (result === "무료저장") {
-                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                         } else if (result == "결제이력있음") {
                                             location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                         }
@@ -542,50 +491,7 @@
                                 xhr.setRequestHeader(header, token);
                             },
                             success: function (result) {
-                                if (result === "잔고부족") {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        text: '보유하신 포인트가 부족합니다.',
-                                        showConfirmButton: false,
-                                        timer: 1000
-                                    });
-                                } else if (result === "유료저장") {
-                                    $.ajax({
-                                        type: "post",
-                                        url: "/box/save",
-                                        data: {
-                                            "memberId": memberId,
-                                            "memberName": memberName,
-                                            "bookId": bookId,
-                                            "episodeId": episodeId
-                                        },
-                                        dataType: "text",
-                                        beforeSend: function (xhr) {
-                                            xhr.setRequestHeader(header, token);
-                                        },
-                                        success: function (result) {
-                                            if (result === "ok") {
-                                                $.ajax({
-                                                    type: "get",
-                                                    url: "/point/pay/" + memberId,
-                                                    data: {"episodeId": episodeId, "bookId": bookId},
-                                                    dataType: "text",
-                                                    success: function (result) {
-                                                        if (result === "ok") {
-                                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                        }
-                                                    }
-                                                });
-                                            } else if (result === "no") {
-                                                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                            }
-                                        }
-                                    });
-                                } else if (result === "보여줘") {
-                                    alert("보여줘");
-                                } else if (result === "무료저장") {
-                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                } else if (result == "결제이력있음") {
+                                if (result === "무료저장") {
                                     location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                                 }
                             }

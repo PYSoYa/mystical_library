@@ -33,6 +33,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     @Query (value = "select * from member where role='ROLE_WRITER' order by role_change_time desc limit 5, 10", nativeQuery = true)
     List<MemberEntity> findWriter2();
 
-    @Query(value = "select m from MemberEntity m where m.memberName like %:q%")
+    @Query(value = "select m from MemberEntity m where m.role = 'ROLE_WRITER' and m.memberName like %:q%")
     List<MemberEntity> findByMemberNameContaining(@Param("q") String q);
 }
