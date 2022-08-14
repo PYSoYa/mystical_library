@@ -9,6 +9,7 @@ import com.its.library.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -266,7 +267,7 @@ public class MemberController {
         return result;
     }
 
-    //작가 승인 요청
+    // 작가 승인 요청
     @PostMapping("/req-writer-save")
     public @ResponseBody String reqWriterSave(@RequestParam("id") Long id) {
         String result = reqWriterService.save(id);
@@ -322,7 +323,6 @@ public class MemberController {
         memberService.passwordReset(memberEmail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     // 회원탈퇴
     @GetMapping("/delete/{id}")
