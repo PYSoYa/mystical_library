@@ -11,7 +11,7 @@
 /*.more-see-btn-wrap a {font-size: 1.5rem; color: inherit;}*/
 /*.more-see-btn-wrap ::after {content: '+'; color: #1e9eff; margin-left: 0.5rem; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;}*/
 .detail-wrap .star-wrap .eye-icon {padding-top: 2px; margin-right: 0.125rem;}
-.detail-wrap .author {color: #1e9eff;}
+.detail-wrap .author {color: #1e9eff; cursor: pointer !important;}
 .detail-wrap .star-wrap {margin-top: 0.75rem !important;}
 .detail-wrap span {margin-right: 1.5rem; cursor: default;}
 .save-form-btn {margin-left: auto; position: relative; border: none; outline: none; border-radius: 0.188rem; width: 6rem; height: 140%; color: #faf7eb; background-color: #1e9eff; font-size: 1rem; letter-spacing: 0.013rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
