@@ -35,3 +35,23 @@
 .list-author-container .list-author-wrap .author-wrap .img-wrap .img:hover {opacity: 0.5; transition: 0.2s ease;}
 .list-author-container .list-author-wrap .author-wrap .detail-wrap {text-align: center; padding-top: 1.5rem;}
 .list-author-container .list-author-wrap .author-wrap .detail-wrap .title {font-weight: 600; font-size: 1.125rem; font-family: inherit; position: relative;}
+
+.list-detail-container .detail-wrap .tag {padding: 2px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.list-detail-container .detail-wrap .novel {background-color: #00bfdd;}
+.list-detail-container .detail-wrap .poem {background-color: #ffca28;}
+.list-detail-container .detail-wrap .essay {background-color: #ff702a;}
+.list-detail-container .detail-wrap .intro-wrap {margin-bottom: 1rem; height: 4rem; display: block; opacity: 0.6;}
+.list-detail-container .detail-wrap .intro-wrap span {display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; font-size: 1.125rem; overflow: hidden; text-overflow: ellipsis; position: relative;}
+.list-detail-container .detail-wrap .title-wrap {margin-bottom: 0.5rem;}
+.list-detail-container .detail-wrap .author-wrap {display: flex; flex-direction: row; margin-bottom: 1.25rem;}
+.list-detail-container .detail-wrap .author-wrap > a, span:not(:last-child) {margin-right: 1.5rem;}
+.list-detail-container .detail-wrap .author-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.list-detail-container .detail-wrap .author-wrap > span:not(:first-child) {opacity: 0.6;}
+.list-detail-container .detail-wrap .author-wrap .author {color: #1e9eff; font-weight: 600; cursor: pointer;}
+.list-detail-container .detail-wrap .author-wrap .eye-icon {padding-top: 0.225rem; opacity: 0.8; margin-top: 0.1rem;}
+.list-detail-container .detail-wrap .author-wrap .heart-icon {padding-top: 0.35rem; opacity: 0.8; color: #dd2424;}
+.list-detail-container .detail-wrap .author-wrap .star-icon {padding-top: 0.3rem; opacity: 0.8; color: #1e9eff;}
+.list-detail-container .detail-wrap .author-wrap span {margin-left: 2px; font-size: 1rem; font-weight: 500; font-family: inherit; position: relative;}
+
+.list-detail-container .detail-wrap .no-margin-right-span {margin-right: 0.5rem; opacity: 0.6;}
+.list-detail-container .detail-wrap .updated-wrap span {font-size: 1rem;}
