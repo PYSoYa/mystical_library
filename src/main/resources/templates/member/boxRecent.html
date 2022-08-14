@@ -49,6 +49,8 @@
                 </div>
                 <div class="intro-wrap item">
                   <span class="intro" th:text="${book.introduce}"></span></br>
+                  <span class="intro">최근 업데이트:</span>
+                  <span class="intro" th:text="*{#temporals.format(book.episodeUpdateTime, 'yyyy-MM-dd')}"></span></br>
                 </div>
                 <div class="star-wrap item">
                   <svg  width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">

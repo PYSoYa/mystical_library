@@ -58,6 +58,7 @@ public class WishController {
         return "member/wishlistAuthor";
     }
 
+
     // 위시리스트-관심 책 목록 페이지 이동
     @GetMapping("/wishlist/book/{id}")
     public String wishlistBook(@AuthenticationPrincipal PrincipalDetails principalDetails,

@@ -193,40 +193,8 @@ public class BookService {
         return null;
     }
 
-//    @Transactional
-//    public Page<EpisodeDTO> episodeAlignment1(Long id, Pageable pageable) {
-//        Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
-//        BookEntity bookEntity = new BookEntity();
-//        if (optionalBookEntity.isPresent()) {
-//            bookEntity = optionalBookEntity.get();
-//        }
-//
-//        int page = pageable.getPageNumber();
-//
-//        page = (page == 1) ? 0 : (page - 1);
-//        Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity);
-//
-//        Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
-//
-//                episode -> new EpisodeDTO(episode.getId(),
-//                        episode.getBookEntity().getId(),
-//                        episode.getEpisodeTitle(),
-//                        episode.getEpisodeContents(),
-//                        episode.getEpisodeImgName(),
-//                        episode.getPayment(),
-//                        episode.getHits(),
-//                        episode.getWriterRole(),
-//                        episode.getStar(),
-//                        episode.getCreatedDateTime()
-//                ));
-//
-//        return episodeDTOList;
-//
-//    }
-
-
     private final JavaMailSender mailSender;
-    private final String mail = "oloveo24@naver.com";
+    private final String mail = "asfornow@naver.com";
 
     // 책 수정 요청
     public void reqBookUpdate(BookDTO bookDTO, MailDTO mailDTO) throws IOException {
@@ -242,8 +210,8 @@ public class BookService {
         mailDTO.setBookDTO(bookDTO);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailDTO.getFromAddress());
-        message.setFrom(mail);
+        message.setTo(mail);
+        message.setFrom(mailDTO.getFromAddress());
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
                 "책 고유번호: " + mailDTO.getBookDTO().getId() + "\n" +
@@ -275,7 +243,7 @@ public class BookService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
-        message.setFrom(mail);
+        message.setFrom(mailDTO.getFromAddress());
         message.setSubject(mailDTO.getMailTitle());
         message.setText(
                 "회차 고유번호: " + mailDTO.getEpisodeDTO().getId() + "\n" +
@@ -294,7 +262,7 @@ public class BookService {
     public void reqBookDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
-        message.setFrom(mail);
+        message.setFrom(fromAddress);
         message.setSubject(mailTitle);
         message.setText("회신 이메일: " + fromAddress +
                 "\n"
@@ -310,7 +278,7 @@ public class BookService {
     public void reqEpisodeDelete(Long id, String memberName, String why, String mailTitle, String fromAddress) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);
-        message.setFrom(mail);
+        message.setFrom(fromAddress);
         message.setSubject(mailTitle);
         message.setText("회신 이메일: " + fromAddress +
                 "\n"
