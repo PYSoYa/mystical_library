@@ -46,9 +46,9 @@
         <a href="javascript:;" class="category category-focus dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
         <ul class="dropdown-menu">
           <li><a th:href="@{/debut/main/0}" class="dropdown-item">데뷔글 메인</a></li>
+          <li><a th:href="@{/debut/web/3/0}" class="dropdown-item">웹소설</a></li>
           <li><a th:href="@{/debut/poem/1/0}" class="dropdown-item">시</a></li>
           <li><a th:href="@{/debut/essay/2/0}" class="dropdown-item">에세이</a></li>
-          <li><a th:href="@{/debut/web/3/0}" class="dropdown-item">웹소설</a></li>
         </ul>
       </li>
     </ul>
@@ -86,12 +86,58 @@
       </div>
     </div>
   </div>
+  <div class="recent-completion-container">
+    <div class="recent-debut-post-title-container">
+      <div class="recent-debut-post-title-wrap">
+        <div class="recent-debut-post-title-text" style="display: flex;">
+          <span class="recent-debut-post-title">웹소설</span>
+          <button type="button" class="save-form-btn" onclick="debutSave()" sec:authorize="isAuthenticated()">글쓰기</button>
+        </div>
+      </div>
+    </div>
+    <div class="recent-completion-list-container">
+      <div class="recent-completion-list-wrap">
+        <div class="recent-completion-div">
+          <ul class="recent-completion-ul">
+            <li class="recent-completion-li" th:each="web:${webList}">
+              <div class="recent-completion">
+                <div class="img-wrap">
+                  <a th:href="@{|/debut/detail/${web.id}/|}">
+                    <img th:src="@{|/upload/${web.debutImgName}|}" class="img" alt="">
+                  </a>
+                </div>
+                <div class="detail-wrap">
+                  <span class="title" th:text="${web.debutTitle}"></span>
+                  <a th:href="@{|/member/myPage/${web.memberId}|}" class="author">
+                    <span class="author" th:text="${web.memberName}"></span>
+                  </a>
+                  <div class="star-wrap debut-star-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-heart-fill full-heart debut-heart" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg>
+                    <span class="heart" th:text="${web.love}"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon debut-eye" viewBox="0 0 16 16">
+                      <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                      <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <span class="hits" th:text="${web.debutHits}"></span>
+                    <div class="tag-wrap">
+                      <span class="tag novel">웹소설</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="recent-debut-post-container">
     <div class="recent-debut-post-title-container">
       <div class="recent-debut-post-title-wrap">
         <div class="recent-debut-post-title-text" style="display: flex;">
           <span class="recent-debut-post-title">시</span>
-          <button type="button" class="save-form-btn" onclick="debutSave()" sec:authorize="isAuthenticated()">글쓰기</button>
         </div>
       </div>
     </div>
@@ -169,52 +215,6 @@
                     <span class="hits" th:text="${essay.debutHits}"></span>
                     <div class="tag-wrap">
                       <span class="tag essay">에세이</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="recent-completion-container">
-    <div class="recent-completion-title-container">
-      <div class="recent-completion-title-wrap">
-        <div class="recent-completion-title-text">
-          <span class="recent-completion-title">웹소설</span>
-        </div>
-      </div>
-    </div>
-    <div class="recent-completion-list-container">
-      <div class="recent-completion-list-wrap">
-        <div class="recent-completion-div">
-          <ul class="recent-completion-ul">
-            <li class="recent-completion-li" th:each="web:${webList}">
-              <div class="recent-completion">
-                <div class="img-wrap">
-                  <a th:href="@{|/debut/detail/${web.id}/|}">
-                    <img th:src="@{|/upload/${web.debutImgName}|}" class="img" alt="">
-                  </a>
-                </div>
-                <div class="detail-wrap">
-                  <span class="title" th:text="${web.debutTitle}"></span>
-                  <a th:href="@{|/member/myPage/${web.memberId}|}" class="author">
-                    <span class="author" th:text="${web.memberName}"></span>
-                  </a>
-                  <div class="star-wrap debut-star-wrap">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-heart-fill full-heart debut-heart" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                    </svg>
-                    <span class="heart" th:text="${web.love}"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon debut-eye" viewBox="0 0 16 16">
-                      <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                      <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                    </svg>
-                    <span class="hits" th:text="${web.debutHits}"></span>
-                    <div class="tag-wrap">
-                      <span class="tag novel">웹소설</span>
                     </div>
                   </div>
                 </div>
