@@ -2,6 +2,7 @@ package com.its.library.controller;
 
 import com.its.library.dto.DebutCommentDTO;
 import com.its.library.service.DebutCommentService;
+import com.its.library.service.ReqReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/debutComment")
 public class DebutCommentController {
     private final DebutCommentService debutCommentService;
+    private final ReqReportService reqReportService;
 
     //댓글 저장
     @PostMapping("/save")
@@ -46,6 +48,14 @@ public class DebutCommentController {
        String result =debutCommentService.reportSave(id,memberId);
        return result;
 
+    }
+
+    // 신고내역 체크
+    @PostMapping("/req-report-check")
+    public @ResponseBody String reqReportDebutComment(@RequestParam("id") Long id,
+                                               @RequestParam("memberId") Long memberId) {
+        String result = reqReportService.reqReportDebutComment(id, memberId);
+        return result;
     }
 
 }

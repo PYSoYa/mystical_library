@@ -190,14 +190,14 @@
                   <span th:text="*{#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}" class="date">
                   </span>
                 </div>
-                <div sec:authorize="isAuthenticated()" th:if="${comment.memberName==authentication.memberName}">
-                  <span class="update">
+                <div sec:authorize="isAuthenticated()">
+                  <span class="update" th:if="${comment.memberName == authentication.memberName && comment.contents != '관리자에 의해 숨겨진 글입니다'}">
                     <a href="javascript:;" class="update-btn" th:onclick="commentUpdateForm([[${comment.id}]])">수정</a>
                   </span>
-                  <span class="delete">
+                  <span class="delete" th:if="${comment.memberName == authentication.memberName && comment.contents != '관리자에 의해 숨겨진 글입니다'}">
                     <a href="javascript:;" class="delete-btn" th:onclick="commentDelete([[${comment.id}]])">삭제</a>
                   </span>
-                  <span class="report">
+                  <span class="report" th:if="${comment.memberName != authentication.memberName && comment.contents != '관리자에 의해 숨겨진 글입니다'}">
                     <a href="javascript:;" class="report-btn" th:onclick="commentReport([[${comment.id}]])">신고</a>
                   </span>
                 </div>
@@ -484,22 +484,51 @@
     let token = $("meta[name='_csrf']").attr('content');
 
     const memberId = [[${debut.memberId}]];
-    $.ajax({
-      type:"post",
-      url:"/debutComment/list/"+id,
-      data:{"memberId":memberId},
-      dataType:"text",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader(header, token);
-      },
-      success:function (result){
-        if (result==="ok"){
-          alert("댓글 신고가 접수되었습니다 ")
-        }else {
-          alert("댓글 신고 처리가 실패하였습니다 ")
-        }
-      }
-    });
+
+      $.ajax({
+          type: "post",
+          url: "/debutComment/req-report-check",
+          data: {
+              "id": id,
+              "memberId": memberId
+          },
+          dataType: "text",
+          beforeSend: function (xhr) {
+              xhr.setRequestHeader(header, token);
+          },
+          success: function (result) {
+              if (result == "신고내역있음") {
+                  Swal.fire({
+                      icon: 'error',
+                      text: '이미 신고하신 댓글입니다.',
+                      showConfirmButton: false,
+                      timer: 1000
+                  });
+              } else {
+                  $.ajax({
+                      type:"post",
+                      url:"/debutComment/list/"+id,
+                      data:{"memberId":memberId},
+                      dataType:"text",
+                      beforeSend: function(xhr){
+                          xhr.setRequestHeader(header, token);
+                      },
+                      success:function (result){
+                          if (result==="ok"){
+                              Swal.fire({
+                                  icon: 'success',
+                                  text: '신고처리가 완료되었습니다.',
+                                  showConfirmButton: false,
+                                  timer: 1000
+                              });
+                          }else {
+                              alert("댓글 신고 처리가 실패하였습니다 ")
+                          }
+                      }
+                  });
+              }
+          }
+      });
   }
 
   function updateForm(id) {
