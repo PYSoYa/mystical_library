@@ -69,8 +69,8 @@
                       <td th:text="${writer.memberId}"></td>
                       <td th:text="${writer.commentId}"></td>
                       <td th:text="${writer.writerContents}"></td>
-                      <td><input type="button" th:value="승인" th:onclick="reportTrue([[${writer.id}]])"></td>
-                      <td><input type="button" th:value="거절" th:onclick="reportFalse([[${writer.id}]])"></td>
+                      <td><input type="button" class="accept-btn" th:value="승인" th:onclick="reportTrue([[${writer.id}]])"></td>
+                      <td><input type="button" class="deny-btn" th:value="거절" th:onclick="reportFalse([[${writer.id}]])"></td>
                     </tr>
                   </table>
                 </div>

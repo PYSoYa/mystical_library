@@ -111,4 +111,18 @@ public class ReqReportService {
         }
         return null;
     }
+
+    public String reqReportDebutComment(Long id, Long memberId) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
+        Optional<DebutCommentEntity> optionalDebutCommentEntity = debutCommentRepository.findById(id);
+        if (optionalMemberEntity.isPresent() && optionalDebutCommentEntity.isPresent()) {
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            DebutCommentEntity debutCommentEntity = optionalDebutCommentEntity.get();
+            Optional<ReqReportEntity> optionalReqReportEntity = reqReportRepository.findByMemberEntityAndDebutCommentEntity(memberEntity, debutCommentEntity);
+            if (optionalReqReportEntity.isPresent()) {
+                return "신고내역있음";
+            }
+        }
+        return null;
+    }
 }

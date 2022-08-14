@@ -27,4 +27,7 @@ public interface ReqReportRepository extends JpaRepository<ReqReportEntity,Long>
 
     @Transactional
     Optional<ReqReportEntity> findByMemberEntityAndCommentEntity(MemberEntity memberEntity, CommentEntity commentEntity);
+
+    @Transactional
+    Optional<ReqReportEntity> findByMemberEntityAndDebutCommentEntity(MemberEntity memberEntity, DebutCommentEntity debutCommentEntity);
 }

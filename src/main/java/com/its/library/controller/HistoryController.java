@@ -30,6 +30,7 @@ public class HistoryController {
         model.addAttribute("authentication", findDTO);
 
         List<BookDTO> bookDTOList =  historyService.list(id);
+        System.out.println("bookDTOList = " + bookDTOList);
         MemberDTO memberDTO = memberService.myPage(id);
         model.addAttribute("bookList", bookDTOList);
         model.addAttribute("member", memberDTO);

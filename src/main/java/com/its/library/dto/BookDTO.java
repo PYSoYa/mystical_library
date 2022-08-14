@@ -63,6 +63,7 @@ public class BookDTO {
         bookDTO.setHits(bookEntity.getHits());
         bookDTO.setLove(bookEntity.getLove());
         bookDTO.setStar(bookEntity.getStar());
+        bookDTO.setEpisodeUpdateTime(bookEntity.getEpisodeUpdateTime());
         return bookDTO;
     }
 }
