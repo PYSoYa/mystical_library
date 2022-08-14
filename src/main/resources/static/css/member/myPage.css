@@ -39,7 +39,26 @@
 .post-container .img-wrap img {position: relative; width: 8.5rem; height: 12rem; border: none; border-radius: 0.188rem;}
 .post-container .detail-wrap {display: flex; flex-direction: column; position: relative; padding: 0;}
 .post-container .detail-wrap .item:not(:last-child) {margin-bottom: 1.25rem;}
-.post-container .detail-wrap .title-wrap .title {font-size: 1.125rem; font-weight: 600; font-family: inherit;}
+.post-container .detail-wrap .title-wrap .title {font-size: 1.25rem; font-weight: 600; font-family: inherit;}
 .post-container .detail-wrap .intro-wrap {height: 6rem; width: 50rem; word-break: keep-all;}
 .post-container .detail-wrap .intro-wrap .intro {font-size: 1rem; font-weight: 500; font-family: inherit;}
 .post-container .detail-wrap .debut-heart-wrap .debut-heart {color: #dd2424;}
+
+
+
+.post-container .detail-wrap .tag-wrap .tag {padding: 4px; border-radius: 4px; color: #fff; font-size: 0.825rem;}
+.post-container .detail-wrap .tag-wrap .novel {background-color: #00bfdd;}
+.post-container .detail-wrap .tag-wrap .poem {background-color: #ffca28;}
+.post-container .detail-wrap .tag-wrap .essay {background-color: #ff702a;}
+.post-container .detail-wrap .intro-wrap {margin-bottom: 1rem; height: 4rem; display: block; opacity: 0.6;}
+.post-container .detail-wrap .intro-wrap span {display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; font-size: 1.125rem; overflow: hidden; text-overflow: ellipsis; position: relative;}
+.post-container .detail-wrap .title-wrap {margin-bottom: 0.5rem;}
+.post-container .detail-wrap .author-wrap {display: flex; flex-direction: row; margin-bottom: 1.25rem;}
+.post-container .detail-wrap .author-wrap > a, span:not(:last-child) {margin-right: 1.5rem;}
+.post-container .detail-wrap .author-wrap a:hover {color: #666; opacity: 0.5; transition: 0.2s ease;}
+.post-container .detail-wrap .author-wrap > span:not(:first-child) {opacity: 0.6;}
+.post-container .detail-wrap .author-wrap .author {color: #1e9eff; font-weight: 600; cursor: pointer;}
+.post-container .detail-wrap .author-wrap .eye-icon {padding-top: 0.225rem; opacity: 0.8; margin-top: 0.1rem;}
+.post-container .detail-wrap .author-wrap .heart-icon {padding-top: 0.35rem; opacity: 0.8; color: #dd2424;}
+.post-container .detail-wrap .author-wrap .star-icon {padding-top: 0.3rem; opacity: 0.8; color: #1e9eff;}
+.post-container .detail-wrap .author-wrap span {margin-left: 2px; font-size: 1rem; font-weight: 500; font-family: inherit; position: relative;}

@@ -36,8 +36,8 @@
                   <option value="3">로맨스</option>
                   <option value="4">로맨스판타지</option>
                   <option value="5">무협</option>
-                  <option value="6">시</option>
-                  <option value="7">에세이</option>
+                  <option id="poem-option" value="6">시</option>
+                  <option id="essay-option" value="7">에세이</option>
                 </select>
               </div>
               <div class="feat-wrap">
@@ -100,6 +100,12 @@
       } else if (categoryId == 3) {
           const genreId = document.getElementById("genreSelect").value = 7;
           genreSelect.style.display = "none";
+      } else if (categoryId == 1 || categoryId == 0) {
+          document.getElementById("genreSelect").value = '';
+          genreSelect.style.display = "inline-block";
+
+          document.getElementById('poem-option').style.display = 'none';
+          document.getElementById('essay-option').style.display = 'none';
       }
   }
 </script>
