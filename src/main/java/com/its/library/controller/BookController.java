@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -236,7 +237,7 @@ public class BookController {
         try {
             List<BookDTO> bookDTOList = bookService.genreList(genreId, alignmentId);
             model.addAttribute("bookList", bookDTOList);
-            model.addAttribute("genreId", bookDTOList.get(0).getGenreId());
+            model.addAttribute("genreId", genreId);
 
             String loginId = principalDetails.getUsername();
             MemberDTO findDTO = memberService.findByLoginId(loginId);
