@@ -38,17 +38,36 @@
                 </a>
               </div>
               <div class="detail-wrap">
-                <div class="title-wrap item">
+                <div class="title-wrap">
                   <span class="title" th:text="${book.bookTitle}"></span>
                 </div>
-                <div class="intro-wrap item">
-                  <span class="intro" th:text="${book.introduce}"></span>
-                </div>
-                <div class="star-wrap item">
-                  <svg width="1.2em" height="1.2em" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="구매자 평균 별점" class="star-symbol">
+                <div class="author-wrap">
+                  <a th:href="@{|/member/myPage/${book.memberId}|}" class="author-link">
+                    <span class="author" th:text="${book.memberName}"></span>
+                  </a>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-eye eye-icon" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                  </svg>
+                  <span class="hits" th:text="${book.hits}"></span>
+                  <svg width="1.2rem" height="1.2rem" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" class="star-symbol star-icon">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M5.5 0l1.812 3.303L11 4.025 8.446 6.759l.459 3.741L5.5 8.903 2.095 10.5l.459-3.74L0 4.002l3.688-.7L5.5 0z" fill="currentColor"></path>
                   </svg>
                   <span class="star" th:text="${book.star}"></span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-heart-fill full-heart debut-heart heart-icon" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                  </svg>
+                  <span class="heart" th:text="${book.love}"></span>
+                  <span class="tag novel" th:if="${book.categoryId eq 1}">웹소설</span>
+                  <span class="tag poem" th:if="${book.categoryId eq 2}">시</span>
+                  <span class="tag essay" th:if="${book.categoryId eq 3}">에세이</span>
+                </div>
+                <div class="intro-wrap">
+                  <span class="intro" th:text="${book.introduce}"></span>
+                </div>
+                <div class="updated-wrap">
+                  <span class="no-margin-right-span">최근 업데이트 > </span>
+                  <span class="updated" th:text="*{#temporals.format(book.episodeUpdateTime, 'yyyy-MM-dd')}"></span>
                 </div>
               </div>
             </div>
