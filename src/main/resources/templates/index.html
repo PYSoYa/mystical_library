@@ -29,16 +29,10 @@
         </ul>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">시</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" th:href="@{|/book/genre?genreId=6&alignmentId=0|}">시 메인</a></li>
-        </ul>
+        <a th:href="@{|/book/genre?genreId=6&alignmentId=0|}" class="category">시</a>
       </li>
       <li class="category-wrap">
-        <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">에세이</a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" th:href="@{|/book/genre?genreId=7&alignmentId=0|}">에세이 메인</a></li>
-        </ul>
+        <a th:href="@{|/book/genre?genreId=7&alignmentId=0|}" class="category">에세이</a>
       </li>
       <li class="category-wrap">
         <a href="javascript:;" class="category dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">데뷔글</a>
@@ -434,7 +428,7 @@
       document.getElementById('move-slider').click();
     }
     setTimeout(slideClick, 5000);
-    setInterval(countNotice, 3000);
+    setInterval(countNotice, 30000);
   }
 </script>
 </html>
