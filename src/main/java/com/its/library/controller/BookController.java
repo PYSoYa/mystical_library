@@ -74,7 +74,7 @@ public class BookController {
         EpisodeDTO episodeDTO1 = bookService.reqEpisodeSave(episodeDTO);
         BookDTO bookDTO = bookService.findById(episodeDTO.getBookId());
 
-        return "redirect:/book?id=" + episodeDTO.getBookId() + "&alignmentId=0";
+        return "redirect:/book/book?id=" + episodeDTO.getBookId() + "&alignmentId=0";
     }
 
     // 책 수정 페이지 출력
