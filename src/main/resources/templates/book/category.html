@@ -65,7 +65,12 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img th:src="@{/img/slider_img_3.jpg}" class="d-block w-100" alt="...">
+            <a th:if="${authentication ne null}" th:href="@{|/book/book?id=14&alignmentId=0|}">
+              <img th:src="@{/img/slider_img_3.jpg}" class="d-block w-100" alt="...">
+            </a>
+            <a th:if="${authentication eq null}" th:href="@{|/book/no?id=14&alignmentId=0|}">
+              <img th:src="@{/img/slider_img_3.jpg}" class="d-block w-100" alt="...">
+            </a>
           </div>
           <div class="carousel-item">
             <img th:src="@{/img/slider_img_5.jpg}" class="d-block w-100" alt="...">
