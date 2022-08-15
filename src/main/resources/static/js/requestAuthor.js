@@ -34,7 +34,6 @@ const requestAuthor = () => {
   }
 }
 
-
 const goBack = () => {
   location.href = "/member/myPage/" + id;
 }

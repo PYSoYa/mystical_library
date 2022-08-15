@@ -41,33 +41,31 @@
 </main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
-
 </body>
 <script>
   const findBook = (id,episodeId) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-
-      $.ajax({
-          type: "post",
-          url: "/book/findBook",
-          data: {
-              "id": id,
-              "episodeId": episodeId
-          },
-          dataType: "text",
-          beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-          },
-          success: function (result) {
-              if (result != null) {
-                  location.href = "/book/book?id=" + result +"&alignmentId=0";
-              } else {
-                  alert("삭제실패");
-              }
-          }
-      });
+    $.ajax({
+      type: "post",
+      url: "/book/findBook",
+      data: {
+        "id": id,
+        "episodeId": episodeId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result != null) {
+          location.href = "/book/book?id=" + result +"&alignmentId=0";
+        } else {
+          alert("삭제실패");
+        }
+      }
+    });
   }
 </script>
 </html>

@@ -100,10 +100,11 @@
 </body>
 <script th:inline="javascript">
   ClassicEditor
-      .create(document.getElementById('editor'))
-      .catch(err => {
-        console.error('error');
-      });
+    .create(document.getElementById('editor'))
+    .catch(err => {
+      console.error('error');
+    });
+
   const payment = [[${episode.payment}]];
 </script>
 </html>

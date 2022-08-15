@@ -73,8 +73,6 @@
                     <th>에피소드 제목</th>
                     <th>구매 시간</th>
                     <th>가격</th>
-
-
                   </tr>
                   <tr th:each="point:${minusPointList}">
                     <td th:text="${point.id}"></td>
@@ -82,7 +80,6 @@
                     <td th:text="${point.episodeTitle}"></td>
                     <td th:text="*{#temporals.format(point.pointTime, 'yyyy-MM-dd')}"></td>
                     <td th:text="${point.minusPoint}" class="minusPoint"></td>
-                  </tr>
                   </tr>
                 </table>
               </div>

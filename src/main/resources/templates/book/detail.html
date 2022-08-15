@@ -247,202 +247,201 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-    const from = (alignmentId) => {
-        location.href = "/book/book?id="+[[${book.id}]] + "&alignmentId=" + alignmentId;
-    }
-    const first = () => {
-      const memberId = [[${authentication.id}]];
-      const bookId = [[${book.id}]];
+  const from = (alignmentId) => {
+      location.href = "/book/book?id="+[[${book.id}]] + "&alignmentId=" + alignmentId;
+  }
+  const first = () => {
+    const memberId = [[${authentication.id}]];
+    const bookId = [[${book.id}]];
 
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-      $.ajax({
+    $.ajax({
+      type: "get",
+      url: "/book/first",
+      data: {
+        "bookId": bookId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (episodeId) {
+        if (episodeId != null) {
+          $.ajax({
+            type: "post",
+            url: "/box/pointCheck",
+            data: {
+              "memberId": memberId,
+              "episodeId": episodeId,
+              "bookId": bookId
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result2) {
+              if (result2 == "무료저장")
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+            }
+          });
+        }
+      }
+    });
+  }
+
+  const again = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
+    const bookId = [[${book.id}]];
+
+    $.ajax({
         type: "get",
-        url: "/book/first",
+        url: "/history/again",
         data: {
+          "memberId": memberId,
           "bookId": bookId
         },
         dataType: "text",
-        beforeSend: function(xhr){
-          xhr.setRequestHeader(header, token);
-        },
         success: function (episodeId) {
           if (episodeId != null) {
+            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          }
+        }
+    });
+  }
+
+  const priceMoney = (episodeId, payment) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
+    const memberName = [[${authentication.memberName}]];
+    const bookId = [[${book.id}]];
+
+
+    $.ajax({
+      type: "post",
+      url: "/history/episodeCheck",
+      data: {
+          "memberId": memberId,
+          "episodeId": episodeId
+      },
+      dataType: "text",
+      beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+          if (result == "내역있음") {
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          } else if (result == "내역없음") {
+            if (payment != 0) {
+              Swal.fire({
+                icon: 'info',
+                text: '결제하시겠습니까?',
+                showConfirmButton: 'OK',
+                showDenyButton: 'NO'
+              }).then(result => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                    type: "post",
+                    url: "/box/pointCheck",
+                    data: {
+                        "memberId": memberId,
+                        "memberName": memberName,
+                        "episodeId": episodeId,
+                        "bookId": bookId
+                    },
+                    dataType: "text",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result) {
+                      if (result === "잔고부족") {
+                        Swal.fire({
+                          icon: 'error',
+                          text: '보유하신 포인트가 부족합니다.',
+                          showConfirmButton: false,
+                          timer: 1000
+                        });
+                      } else if (result === "유료저장") {
+                        $.ajax({
+                          type: "post",
+                          url: "/box/save",
+                          data: {
+                            "memberId": memberId,
+                            "memberName": memberName,
+                            "bookId": bookId,
+                            "episodeId": episodeId
+                          },
+                          dataType: "text",
+                          beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                          },
+                          success: function (result) {
+                            if (result === "ok") {
+                              $.ajax({
+                                type: "get",
+                                url: "/point/pay/" + memberId,
+                                data: {"episodeId": episodeId, "bookId": bookId},
+                                dataType: "text",
+                                success: function (result) {
+                                  if (result === "ok") {
+                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                                  }
+                                }
+                              });
+                            } else if (result === "no") {
+                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                            }
+                          }
+                        });
+                      } else if (result == "결제이력있음") {
+                        location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                      }
+                    }
+                  });
+                }
+              });
+          } else {
             $.ajax({
               type: "post",
               url: "/box/pointCheck",
               data: {
                 "memberId": memberId,
+                "memberName": memberName,
                 "episodeId": episodeId,
                 "bookId": bookId
               },
               dataType: "text",
-              beforeSend: function(xhr){
+              beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
               },
-              success: function (result2) {
-                if (result2 == "무료저장")
-                location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-              }
-            })
-          }
-        }
-      })
-    }
-
-    const again = () => {
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-
-      const memberId = [[${authentication.id}]];
-      const bookId = [[${book.id}]];
-
-      $.ajax({
-          type: "get",
-          url: "/history/again",
-          data: {
-              "memberId": memberId,
-              "bookId": bookId
-          },
-          dataType: "text",
-          success: function (episodeId) {
-              if (episodeId != null) {
-                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-              }
-          }
-      });
-    }
-
-    const priceMoney = (episodeId, payment) => {
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-
-      const memberId = [[${authentication.id}]];
-      const memberName = [[${authentication.memberName}]];
-      const bookId = [[${book.id}]];
-
-
-          $.ajax({
-              type: "post",
-              url: "/history/episodeCheck",
-              data: {
-                  "memberId": memberId,
-                  "episodeId": episodeId
-              },
-              dataType: "text",
-              beforeSend: function (xhr) {
-                  xhr.setRequestHeader(header, token);
-              },
               success: function (result) {
-                  if (result == "내역있음") {
-                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                  } else if (result == "내역없음") {
-
-                      if (payment != 0) {
-                          Swal.fire({
-                              icon: 'info',
-                              text: '결제하시겠습니까?',
-                              showConfirmButton: 'OK',
-                              showDenyButton: 'NO'
-                          }).then(result => {
-                              if (result.isConfirmed) {
-                                  $.ajax({
-                                      type: "post",
-                                      url: "/box/pointCheck",
-                                      data: {
-                                          "memberId": memberId,
-                                          "memberName": memberName,
-                                          "episodeId": episodeId,
-                                          "bookId": bookId
-                                      },
-                                      dataType: "text",
-                                      beforeSend: function (xhr) {
-                                          xhr.setRequestHeader(header, token);
-                                      },
-                                      success: function (result) {
-                                          if (result === "잔고부족") {
-                                              Swal.fire({
-                                                  icon: 'error',
-                                                  text: '보유하신 포인트가 부족합니다.',
-                                                  showConfirmButton: false,
-                                                  timer: 1000
-                                              });
-                                          } else if (result === "유료저장") {
-                                              $.ajax({
-                                                  type: "post",
-                                                  url: "/box/save",
-                                                  data: {
-                                                      "memberId": memberId,
-                                                      "memberName": memberName,
-                                                      "bookId": bookId,
-                                                      "episodeId": episodeId
-                                                  },
-                                                  dataType: "text",
-                                                  beforeSend: function (xhr) {
-                                                      xhr.setRequestHeader(header, token);
-                                                  },
-                                                  success: function (result) {
-                                                      if (result === "ok") {
-                                                          $.ajax({
-                                                              type: "get",
-                                                              url: "/point/pay/" + memberId,
-                                                              data: {"episodeId": episodeId, "bookId": bookId},
-                                                              dataType: "text",
-                                                              success: function (result) {
-                                                                  if (result === "ok") {
-                                                                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                                  }
-                                                              }
-                                                          });
-                                                      } else if (result === "no") {
-                                                          location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                      }
-                                                  }
-                                              })
-                                          } else if (result == "결제이력있음") {
-                                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                          }
-                                      }
-                                  });
-                              }
-                          });
-                      } else {
-                          $.ajax({
-                              type: "post",
-                              url: "/box/pointCheck",
-                              data: {
-                                  "memberId": memberId,
-                                  "memberName": memberName,
-                                  "episodeId": episodeId,
-                                  "bookId": bookId
-                              },
-                              dataType: "text",
-                              beforeSend: function (xhr) {
-                                  xhr.setRequestHeader(header, token);
-                              },
-                              success: function (result) {
-                                  if (result === "무료저장") {
-                                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                  }
-                              }
-                          });
-                      }
-                  } else {
-                      alert("몰라");
-                  }
+                if (result === "무료저장") {
+                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                }
               }
-          });
-    }
+            });
+          }
+        } else {
+          alert("몰라");
+        }
+      }
+    });
+  }
 
 
-    const bookLove = () => {
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
+  const bookLove = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-      const loveChange = document.getElementById("loveChange");
-      const bookId = [[${book.id}]];
-      const memberName = [[${authentication.memberName}]];
+    const loveChange = document.getElementById("loveChange");
+    const bookId = [[${book.id}]];
+    const memberName = [[${authentication.memberName}]];
 
     $.ajax({
       type: "post",
@@ -491,7 +490,7 @@
                 alert("실패");
               }
             }
-          })
+          });
         } else {
           $.ajax({
             type: "post",
@@ -516,92 +515,88 @@
                 });
                 wishlist.className = "wishlist-btn";
                 heart.innerHTML = "              <div class=\"icon-wrap\">\n" +
-                    "                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-heart heart-icon\" viewBox=\"0 0 16 16\">\n" +
-                    "                  <path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>\n" +
-                    "                </svg>\n" +
-                    "              </div>\n" +
-                    "              <div class=\"desc-wrap\">\n" +
-                    "                <span class=\"desc\">" + result + "</span>\n" +
-                    "              </div>";
-
+                  "                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1em\" height=\"1em\" fill=\"currentColor\" class=\"bi bi-heart heart-icon\" viewBox=\"0 0 16 16\">\n" +
+                  "                  <path d=\"m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z\"/>\n" +
+                  "                </svg>\n" +
+                  "              </div>\n" +
+                  "              <div class=\"desc-wrap\">\n" +
+                  "                <span class=\"desc\">" + result + "</span>\n" +
+                  "              </div>";
               } else {
                 alert("실패");
               }
             },
-
-            })
-          }
+          });
         }
-      });
-    }
+      }
+    });
+  }
 
-    const episodeSaveBTN = () => {
-      const bookId = [[${book.id}]];
-      location.href = '/book/episode-save-form/' + bookId;
-    }
-    const bookUpdateBTN = () => {
-      const bookId = [[${book.id}]];
-      location.href = '/book/req-book-update?id=' + bookId;
-    }
-    const bookDeleteBTN = () => {
-      const bookId = [[${book.id}]];
-      location.href = '/book/req-book-delete?id=' + bookId;
-    }
-    const reportComment = (id) => {
+  const episodeSaveBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/episode-save-form/' + bookId;
+  }
+  const bookUpdateBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/req-book-update?id=' + bookId;
+  }
+  const bookDeleteBTN = () => {
+    const bookId = [[${book.id}]];
+    location.href = '/book/req-book-delete?id=' + bookId;
+  }
+  const reportComment = (id) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
+    const loginId = [[${authentication.id}]];
 
-        const loginId = [[${authentication.id}]];
-
-        $.ajax({
-           type: "post",
-           url: "/comment/req-report-check",
-           data: {
-               "id": id,
-               "memberId": loginId
-           },
+    $.ajax({
+      type: "post",
+      url: "/comment/req-report-check",
+      data: {
+        "id": id,
+        "memberId": loginId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result == "신고내역있음") {
+          Swal.fire({
+            icon: 'error',
+            text: '이미 신고하신 댓글입니다.',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        } else {
+          $.ajax({
+            type: "post",
+            url: "/comment/report-save/" + id,
+            data: {
+              "id": id,
+              "loginId": loginId
+            },
             dataType: "text",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader(header, token);
             },
             success: function (result) {
-                if (result == "신고내역있음") {
-                    Swal.fire({
-                        icon: 'error',
-                        text: '이미 신고하신 댓글입니다.',
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                } else {
-                    $.ajax({
-                        type: "post",
-                        url: "/comment/report-save/" + id,
-                        data: {
-                            "id": id,
-                            "loginId": loginId
-                        },
-                        dataType: "text",
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader(header, token);
-                        },
-                        success: function (result) {
-                            if (result === 'ok') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    text: '신고처리가 완료되었습니다.',
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                });
-                            } else {
-                                alert("신고실패");
-                            }
-                        }
-                    });
-                }
+              if (result === 'ok') {
+                Swal.fire({
+                  icon: 'success',
+                  text: '신고처리가 완료되었습니다.',
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+              } else {
+                alert("신고실패");
+              }
             }
-
-        });
-    }
+          });
+        }
+      }
+    });
+  }
 </script>
 </html>
