@@ -353,54 +353,55 @@
 
   function heartCheck() {
     if ([[${authentication}]] != null) {
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-      if ([[${authentication.id}]] != null) {
-        const memberId = [[${authentication.id}]];
-      }
-      const id = [[${debut.id}]];
+        let header = $("meta[name='_csrf_header']").attr('content');
+        let token = $("meta[name='_csrf']").attr('content');
+        if ([[${authentication.id}]] != null) {
+            const memberId = [[${authentication.id}]];
 
-      $.ajax({
-        type:"get",
-        url:"/debut/loveCheck/"+id,
-        data:{"memberId":memberId},
-        dataType:"text",
-        beforeSend: function(xhr){
-          xhr.setRequestHeader(header, token);
-        }, success: function (result) {
-          if (result === "no") {
-            $.ajax({
-              type: "get",
-              url: "/debut/loveSave/" + id,
-              data: {"memberId": memberId},
-              dataType: "text",
-              beforeSend: function(xhr){
+        const id = [[${debut.id}]];
+
+        $.ajax({
+            type: "get",
+            url: "/debut/loveCheck/" + id,
+            data: {"memberId": memberId},
+            dataType: "text",
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
-              },
-              success: function (result) {
-                if (result == 1){
-                  location.reload();
+            }, success: function (result) {
+                if (result === "no") {
+                    $.ajax({
+                        type: "get",
+                        url: "/debut/loveSave/" + id,
+                        data: {"memberId": memberId},
+                        dataType: "text",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                        success: function (result) {
+                            if (result == 1) {
+                                location.reload();
+                            }
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "get",
+                        url: "/debut/loveDelete/" + id,
+                        data: {"memberId": memberId},
+                        dataType: "text",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                        success: function (result) {
+                            if (result == 1) {
+                                location.reload();
+                            }
+                        }
+                    });
                 }
-              }
-            });
-          } else {
-            $.ajax({
-              type: "get",
-              url: "/debut/loveDelete/" + id,
-              data: {"memberId": memberId},
-              dataType: "text",
-              beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-              },
-              success: function (result) {
-                if (result == 1){
-                  location.reload();
-                }
-              }
-            });
-          }
-        }
-      });
+            }
+        });
+      }
     }
   }
 
