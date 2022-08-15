@@ -145,13 +145,17 @@
                 <span class="star-desc" th:text="${debut.love}"></span>
               </div>
               <div class="star-wrap" sec:authorize="isAnonymous()">
-                <span class="love" >❤</span>
+                <span class="love">❤</span>
                 <span class="star-desc" th:text="${debut.love}"></span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div id="slider_percent" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
+      <div class="ui-slider-range ui-corner-all ui-widget-header ui-slider-range-min" style="width: 0;"></div>
+      <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0;">0%</span>
     </div>
     <button id="moveTop" class="">
       <span>최상단으로 이동</span>
