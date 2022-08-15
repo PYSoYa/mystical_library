@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
 
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/icon/apple-touch-icon.png}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icon/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/icon/favicon-16x16.png}">
+  <link rel="manifest" th:href="@{/icon/site.webmanifest}">
+
   <link rel="stylesheet" th:href="@{/css/book/book-detail.css}">
 </head>
 <body>
@@ -112,32 +117,32 @@
         <span class="quantity-episode" th:text="${episodeSize}"></span>
         <span class="quantity-episode">)</span>
       </div>
-            <div  class="episode-list-wrap" th:each="episode:${episodeList}">
-              <div class="img-wrap">
-                <a href="javascript:;" onclick="priceMoney()" class="img-link">
-                  <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
-                </a>
-              </div>
-              <div class="detail-wrap">
-                <div class="title-wrap">
-                  <div class="badge-wrap" th:if="${episode.payment==0}">
-                    <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
-                  </div>
-                  <a href="javascript:;" onclick="priceMoney()" class="title-link">
-                    <h5 class="title" th:text="${episode.episodeTitle}"></h5>
-                  </a>
-                </div>
-                <div class="date-wrap">
-                  <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
-                  <div class="star-wrap">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
-                      <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                    </svg>
-                    <span class="star" th:text="${episode.star}"></span>
-                  </div>
-                </div>
-              </div>
+      <div class="episode-list-wrap" th:each="episode:${episodeList}">
+        <div class="img-wrap">
+          <a href="javascript:;" onclick="priceMoney()" class="img-link">
+            <img th:src="@{|/upload/${episode.episodeImgName}|}" alt="">
+          </a>
+        </div>
+        <div class="detail-wrap">
+          <div class="title-wrap">
+            <div class="badge-wrap" th:if="${episode.payment==0}">
+              <img th:src="@{/img/badge_free.png}" class="badge-img" alt="">
             </div>
+            <a href="javascript:;" onclick="priceMoney()" class="title-link">
+              <h5 class="title" th:text="${episode.episodeTitle}"></h5>
+            </a>
+          </div>
+          <div class="date-wrap">
+            <span class="date" th:text="*{#temporals.format(episode.createdTime, 'yyyy-MM-dd')}"></span>
+            <div class="star-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" fill="currentColor" class="bi bi-star-fill star-icon" viewBox="0 0 20 20">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <span class="star" th:text="${episode.star}"></span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="container">
         <ul class="pagination justify-content-center">

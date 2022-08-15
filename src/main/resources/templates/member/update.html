@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
 
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/icon/apple-touch-icon.png}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icon/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/icon/favicon-16x16.png}">
+  <link rel="manifest" th:href="@{/icon/site.webmanifest}">
+
   <link rel="stylesheet" th:href="@{/css/member/update.css}">
   <script th:src="@{/js/requestAuthor.js}"></script>
 </head>
@@ -58,8 +63,7 @@
             <h5 class="title">회원정보 수정</h5>
           </div>
           <div class="member-detail-wrap">
-            <form class="form-for-update" action="/member/update" method="post" enctype="multipart/form-data"
-                  name="memberUpdateForm">
+            <form class="form-for-update" action="/member/update" method="post" enctype="multipart/form-data" name="memberUpdateForm">
               <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
               <input type="hidden" name="id" th:value="${member.id}">
               <div class="input-wrap">
@@ -75,8 +79,7 @@
                   <label class="label-name no-type">닉네임</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" id="new-name" class="input-name" name="memberName" th:value="${member.memberName}"
-                         required>
+                  <input type="text" id="new-name" class="input-name" name="memberName" th:value="${member.memberName}" required>
                 </div>
               </div>
               <div class="input-wrap">
@@ -84,8 +87,7 @@
                   <label class="label-name no-type">비밀번호</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-name" name="memberPassword" id="update-member-password"
-                         placeholder="변경할 비밀번호">
+                  <input type="text" class="input-name" name="memberPassword" id="update-member-password" placeholder="변경할 비밀번호">
                 </div>
               </div>
               <div class="input-wrap">
@@ -109,8 +111,7 @@
                   <label class="label-intro no-type">소개글</label>
                 </div>
                 <div class="input-wrapper">
-                  <textarea maxlength="500" name="introduction" th:text="${member.introduction}" onkeyup="resize(this)"
-                            class="input-intro"></textarea>
+                  <textarea maxlength="500" name="introduction" th:text="${member.introduction}" onkeyup="resize(this)" class="input-intro"></textarea>
                 </div>
               </div>
               <div class="input-wrap">
@@ -127,8 +128,7 @@
                   <label class="label-instagram">인스타그램</label>
                 </div>
                 <div class="input-wrapper">
-                  <input type="text" class="input-instagram" name="instagramAddress"
-                         th:value="${member.instagramAddress}">
+                  <input type="text" class="input-instagram" name="instagramAddress" th:value="${member.instagramAddress}">
                 </div>
               </div>
               <div class="input-wrap">
@@ -166,80 +166,80 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-    const resize = (obj) => {
-        obj.style.height = '9.3rem';
-        obj.style.height = (12 + obj.scrollHeight) + 'px';
+  const resize = (obj) => {
+    obj.style.height = '9.3rem';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+  }
+  const id = [[${member.id}]];
+
+  const updateMember = () => {
+    const updatePassword = document.getElementById("update-member-password").value;
+    const updatePassword2 = document.getElementById("update-member-password2").value;
+
+    if (updatePassword.length != 0 && updatePassword2.length != 0) {
+      if (updatePassword == updatePassword2) {
+        nameDupCheck();
+      }
+    } else {
+      nameDupCheck();
     }
-    const id = [[${member.id}]];
+  }
 
-    const updateMember = () => {
-        const updatePassword = document.getElementById("update-member-password").value;
-        const updatePassword2 = document.getElementById("update-member-password2").value;
+  const nameDupCheck = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-        if (updatePassword.length != 0 && updatePassword2.length != 0) {
-            if (updatePassword == updatePassword2) {
-                nameDupCheck();
-            }
-        } else {
-            nameDupCheck();
-        }
-    }
-
-    const nameDupCheck = () => {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const newName = document.getElementById("new-name").value;
-        if (newName != [[${member.memberName}]]) {
-            $.ajax({
-                type: "post",
-                url: "/member/name-dup-check",
-                data: {"memberName": newName},
-                dataType: "text",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    if (result == "ok") {
-                        Swal.fire('정보수정이 완료되었습니다.').then((result) => {
-                            if (result.isConfirmed) {
-                                setTimeout(function () {
-                                    memberUpdateForm.submit();
-                                }, 500);
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            text: '이미 사용중인 닉네임입니다.',
-                            showConfirmButton: "확인"
-                        });
-                    }
-                }
-            });
-        } else {
+    const newName = document.getElementById("new-name").value;
+    if (newName != [[${member.memberName}]]) {
+      $.ajax({
+        type: "post",
+        url: "/member/name-dup-check",
+        data: {"memberName": newName},
+        dataType: "text",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          if (result == "ok") {
             Swal.fire('정보수정이 완료되었습니다.').then((result) => {
-                if (result.isConfirmed) {
-                    setTimeout(function () {
-                        memberUpdateForm.submit();
-                    }, 500);
-                }
+              if (result.isConfirmed) {
+                setTimeout(function () {
+                  memberUpdateForm.submit();
+                }, 500);
+              }
             });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: '이미 사용중인 닉네임입니다.',
+              showConfirmButton: "확인"
+            });
+          }
         }
-    }
-
-    const role = [[${member.role}]];
-
-    const deleteMember = () => {
-      Swal.fire({
-        text: '정말로 탈퇴하시겠습니까?',
-        showConfirmButton: 'OK',
-        showDenyButton: 'NO',
-      }).then(result => {
+      });
+    } else {
+      Swal.fire('정보수정이 완료되었습니다.').then((result) => {
         if (result.isConfirmed) {
-          location.href = '/member/delete/' + [[${member.id}]];
+          setTimeout(function () {
+            memberUpdateForm.submit();
+          }, 500);
         }
       });
     }
+  }
+
+  const role = [[${member.role}]];
+
+  const deleteMember = () => {
+    Swal.fire({
+      text: '정말로 탈퇴하시겠습니까?',
+      showConfirmButton: 'OK',
+      showDenyButton: 'NO',
+    }).then(result => {
+      if (result.isConfirmed) {
+        location.href = '/member/delete/' + [[${member.id}]];
+      }
+    });
+  }
 </script>
 </html>

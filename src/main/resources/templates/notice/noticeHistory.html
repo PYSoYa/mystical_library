@@ -5,6 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>신비한 서재입니다.</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/icon/apple-touch-icon.png}">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icon/favicon-32x32.png}">
+  <link rel="icon" type="image/png" sizes="16x16" th:href="@{/icon/favicon-16x16.png}">
+  <link rel="manifest" th:href="@{/icon/site.webmanifest}">
+
   <link rel="stylesheet" th:href="@{/css/member/point-history.css}">
 </head>
 <body>
@@ -35,33 +41,31 @@
 </main>
 
 <th:block th:replace="layout/footer :: footer"></th:block>
-
 </body>
 <script>
   const findBook = (id,episodeId) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-      let header = $("meta[name='_csrf_header']").attr('content');
-      let token = $("meta[name='_csrf']").attr('content');
-
-      $.ajax({
-          type: "post",
-          url: "/book/findBook",
-          data: {
-              "id": id,
-              "episodeId": episodeId
-          },
-          dataType: "text",
-          beforeSend: function(xhr){
-              xhr.setRequestHeader(header, token);
-          },
-          success: function (result) {
-              if (result != null) {
-                  location.href = "/book/book?id=" + result +"&alignmentId=0";
-              } else {
-                  alert("삭제실패");
-              }
-          }
-      });
+    $.ajax({
+      type: "post",
+      url: "/book/findBook",
+      data: {
+        "id": id,
+        "episodeId": episodeId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result != null) {
+          location.href = "/book/book?id=" + result +"&alignmentId=0";
+        } else {
+          alert("삭제실패");
+        }
+      }
+    });
   }
 </script>
 </html>
