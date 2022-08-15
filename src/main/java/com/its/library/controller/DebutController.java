@@ -172,9 +172,9 @@ public class DebutController {
         } catch (Exception e) {
 
         } finally {
-            List<DebutEpisodeDTO> poemList = debutService.categoryList(1L, addressId);
-            List<DebutEpisodeDTO> essayList = debutService.categoryList(2L, addressId);
-            List<DebutEpisodeDTO> webList = debutService.categoryList(3L, addressId);
+            List<DebutEpisodeDTO> poemList = debutService.categoryList(2L, addressId);
+            List<DebutEpisodeDTO> essayList = debutService.categoryList(3L, addressId);
+            List<DebutEpisodeDTO> webList = debutService.categoryList(1L, addressId);
             model.addAttribute("poemList", poemList);
             model.addAttribute("essayList", essayList);
             model.addAttribute("webList", webList);
