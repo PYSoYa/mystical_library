@@ -40,6 +40,11 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .tool-wrap .view-option-wrap {width: 50%; float: left;}
 #wrap .viewer-container .tool-wrap a {font-size: 0.933rem;}
 #wrap .viewer-container .tool-wrap .icon {width: 100%; height: 23px; margin: 0 0 5px; display: inline-block; text-align: center; overflow: hidden;}
+/* viewer-scroll nav slider bar % */
+#wrap #slider_percent {width: 1069px; height: 3px; margin: 0 0 0 -546px; position: fixed; left: 50%; top: 70px; right: 1px; opacity: .8; filter: alpha(opacity=80); z-index: 3; border: 0; background: none; border-radius: 3px; color: #333; font-size: 1em; text-align: left;}
+#wrap .ui-widget-header {background: #1e9eff; left: 0; top: 0; height: 100%; position: absolute; z-index: 1; font-size: .7em; display: block; border: #0a53be; border-radius: 3px; font-weight: bold; transition: .1s ease;}
+#wrap .ui-slider-horizontal .ui-slider-handle {width: 46px; height: 28px; margin-left: -12px; left: 0; top: 0; background: #1e9eff; border: 0; border-radius: 0 0 5px 5px; text-align: center; font-size: 12px; line-height: 28px; color: #fff; outline: none; font-weight: 400; position: absolute; z-index: 2; cursor: default; touch-action: none; transition: .1s ease;}
+#wrap .ui-widget-header:before {content: ''; width: 23px; height: 3px; position: absolute; left: -13px; top: 0; background: #1e9eff; transition: .1s ease;}
 /* viewer */
 #wrap .viewer-container .viewer-wrap {background: #fff; overflow: hidden;}
 #wrap .viewer-container .viewer::-webkit-scrollbar {display: none;}
