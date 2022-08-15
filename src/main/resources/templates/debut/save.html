@@ -85,10 +85,10 @@
 </body>
 <script th:inline="javascript">
   ClassicEditor
-      .create(document.getElementById('editor'))
-      .catch(err => {
-        console.error('error');
-      });
+    .create(document.getElementById('editor'))
+    .catch(err => {
+      console.error('error');
+    });
 
   const resize = (obj) => {
     obj.style.height = '11.3rem';

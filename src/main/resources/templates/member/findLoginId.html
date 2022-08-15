@@ -53,85 +53,85 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
-    let code = "";
-    let emailNumCheckResult = false;
+  let code = "";
+  let emailNumCheckResult = false;
 
-    const memberEmailCheck = () => {
-        const memberEmail = document.getElementById("memberEmail").value;
-        const resultEmail = document.getElementById("resultEmail");
-        if (memberEmail.length != 0) {
-            let header = $("meta[name='_csrf_header']").attr('content');
-            let token = $("meta[name='_csrf']").attr('content');
+  const memberEmailCheck = () => {
+    const memberEmail = document.getElementById("memberEmail").value;
+    const resultEmail = document.getElementById("resultEmail");
+    if (memberEmail.length != 0) {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
 
-            $.ajax({
-                type: "post",
-                url: "/member/find-by-email",
-                data: {"memberEmail": memberEmail},
-                dataType: "text",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    if (result != 'empty') {
-                        code = result;
-                        Swal.fire('메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.');
-                    } else {
-                        resultEmail.innerHTML = '해당하는 이메일이 없습니다. 이메일을 다시 확인해주세요.';
-                    }
-                }
-            });
-        } else {
-            resultEmail.innerHTML = '이메일을 입력해주세요.';
+      $.ajax({
+        type: "post",
+        url: "/member/find-by-email",
+        data: {"memberEmail": memberEmail},
+        dataType: "text",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          if (result != 'empty') {
+            code = result;
+            Swal.fire('메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.');
+          } else {
+            resultEmail.innerHTML = '해당하는 이메일이 없습니다. 이메일을 다시 확인해주세요.';
+          }
         }
+      });
+    } else {
+      resultEmail.innerHTML = '이메일을 입력해주세요.';
     }
+  }
 
-    const emailNumCheck = () => {
-        const resultAuth = document.getElementById("resultAuth");
-        const inputNumber = document.getElementById("inputAuth").value;
+  const emailNumCheck = () => {
+    const resultAuth = document.getElementById("resultAuth");
+    const inputNumber = document.getElementById("inputAuth").value;
 
-        if (inputNumber == code) {
-            emailNumCheckResult = true;
-            resultAuth.innerHTML = "인증번호가 일치합니다.";
-            resultAuth.style.color = "dodgerblue";
-        } else {
-            resultAuth.innerHTML = "인증번호를 다시 확인해주세요.";
+    if (inputNumber == code) {
+      emailNumCheckResult = true;
+      resultAuth.innerHTML = "인증번호가 일치합니다.";
+      resultAuth.style.color = "dodgerblue";
+    } else {
+      resultAuth.innerHTML = "인증번호를 다시 확인해주세요.";
+    }
+  }
+
+  const findId = () => {
+    if (emailNumCheckResult == true) {
+      let header = $("meta[name='_csrf_header']").attr('content');
+      let token = $("meta[name='_csrf']").attr('content');
+
+      const memberEmail = document.getElementById("memberEmail").value;
+
+      $.ajax({
+        type: "post",
+        url: "/member/find-login-id",
+        data: {"memberEmail": memberEmail},
+        dataType: "json",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          if (result.provider == null) {
+            Swal.fire('회원님의 로그인 아이디는 ' + "'" + result.loginId + "'" + ' 입니다.');
+          } else if (result.provider == 'naver') {
+            Swal.fire('회원님은 네이버 로그인 USER 입니다.');
+          } else if (result.provider == 'google') {
+            Swal.fire('회원님은 구글 로그인 USER 입니다.');
+          } else if (result.provider == 'facebook') {
+            Swal.fire('회원님은 페이스북 로그인 USER 입니다.');
+          } else if (result.provider == 'kakao') {
+            Swal.fire('회원님은 카카오 로그인 USER 입니다.');
+          } else if (result.provider == 'github') {
+            Swal.fire('회원님은 깃허브 로그인 USER 입니다.');
+          }
         }
+      });
+    } else {
+      Swal.fire('"인증하기" 를 눌러주세요.');
     }
-
-    const findId = () => {
-        if (emailNumCheckResult == true) {
-            let header = $("meta[name='_csrf_header']").attr('content');
-            let token = $("meta[name='_csrf']").attr('content');
-
-            const memberEmail = document.getElementById("memberEmail").value;
-
-            $.ajax({
-                type: "post",
-                url: "/member/find-login-id",
-                data: {"memberEmail": memberEmail},
-                dataType: "json",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    if (result.provider == null) {
-                        Swal.fire('회원님의 로그인 아이디는 ' + "'" + result.loginId + "'" + ' 입니다.');
-                    } else if (result.provider == 'naver') {
-                        Swal.fire('회원님은 네이버 로그인 USER 입니다.');
-                    } else if (result.provider == 'google') {
-                        Swal.fire('회원님은 구글 로그인 USER 입니다.');
-                    } else if (result.provider == 'facebook') {
-                        Swal.fire('회원님은 페이스북 로그인 USER 입니다.');
-                    } else if (result.provider == 'kakao') {
-                        Swal.fire('회원님은 카카오 로그인 USER 입니다.');
-                    } else if (result.provider == 'github') {
-                        Swal.fire('회원님은 깃허브 로그인 USER 입니다.');
-                    }
-                }
-            });
-        } else {
-            Swal.fire('"인증하기" 를 눌러주세요.');
-        }
-    }
+  }
 </script>
 </html>

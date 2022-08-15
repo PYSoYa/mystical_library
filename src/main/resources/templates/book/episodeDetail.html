@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -267,691 +266,681 @@
 </body>
 
 <script th:inline="javascript">
-    const after = (payment) => {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
+  const after = (payment) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-        const memberId = [[${authentication.id}]];
-        const memberName = [[${authentication.memberName}]];
-        const bookId = [[${book.id}]];
-        const episodeId = [[${after}]];
+    const memberId = [[${authentication.id}]];
+    const memberName = [[${authentication.memberName}]];
+    const bookId = [[${book.id}]];
+    const episodeId = [[${after}]];
 
-        $.ajax({
-            type: "post",
-            url: "/history/episodeCheck",
-            data: {
-                "memberId": memberId,
-                "episodeId": episodeId
-            },
-            dataType: "text",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result == "내역있음") {
-                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                } else if (result == "내역없음") {
-
-                    if (payment != 0) {
-                        Swal.fire({
-                            icon: 'info',
-                            text: '결제하시겠습니까?',
-                            showConfirmButton: 'OK',
-                            showDenyButton: 'NO'
-                        }).then(result => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "post",
-                                    url: "/box/pointCheck",
-                                    data: {
-                                        "memberId": memberId,
-                                        "memberName": memberName,
-                                        "episodeId": episodeId,
-                                        "bookId": bookId
-                                    },
-                                    dataType: "text",
-                                    beforeSend: function (xhr) {
-                                        xhr.setRequestHeader(header, token);
-                                    },
-                                    success: function (result) {
-                                        if (result === "잔고부족") {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                text: '보유하신 포인트가 부족합니다.',
-                                                showConfirmButton: false,
-                                                timer: 1000
-                                            });
-                                        } else if (result === "유료저장") {
-                                            $.ajax({
-                                                type: "post",
-                                                url: "/box/save",
-                                                data: {
-                                                    "memberId": memberId,
-                                                    "memberName": memberName,
-                                                    "bookId": bookId,
-                                                    "episodeId": episodeId
-                                                },
-                                                dataType: "text",
-                                                beforeSend: function (xhr) {
-                                                    xhr.setRequestHeader(header, token);
-                                                },
-                                                success: function (result) {
-                                                    if (result === "ok") {
-                                                        $.ajax({
-                                                            type: "get",
-                                                            url: "/point/pay/" + memberId,
-                                                            data: {"episodeId": episodeId, "bookId": bookId},
-                                                            dataType: "text",
-                                                            success: function (result) {
-                                                                if (result === "ok") {
-                                                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                                }
-                                                            }
-                                                        });
-                                                    } else if (result === "no") {
-                                                        location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                    }
-                                                }
-                                            })
-                                        } else if (result == "결제이력있음") {
-                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        $.ajax({
-                            type: "post",
-                            url: "/box/pointCheck",
-                            data: {
-                                "memberId": memberId,
-                                "memberName": memberName,
-                                "episodeId": episodeId,
-                                "bookId": bookId
-                            },
-                            dataType: "text",
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader(header, token);
-                            },
-                            success: function (result) {
-                                if (result === "무료저장") {
-                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    alert("몰라");
-                }
-            }
-        });
-    }
-
-    const before = (payment) => {
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const memberId = [[${authentication.id}]];
-        const memberName = [[${authentication.memberName}]];
-        const bookId = [[${book.id}]];
-        const episodeId = [[${before}]];
-
-        $.ajax({
-            type: "post",
-            url: "/history/episodeCheck",
-            data: {
-                "memberId": memberId,
-                "episodeId": episodeId
-            },
-            dataType: "text",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result == "내역있음") {
-                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                } else if (result == "내역없음") {
-
-                    if (payment != 0) {
-                        Swal.fire({
-                            icon: 'info',
-                            text: '결제하시겠습니까?',
-                            showConfirmButton: 'OK',
-                            showDenyButton: 'NO'
-                        }).then(result => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "post",
-                                    url: "/box/pointCheck",
-                                    data: {
-                                        "memberId": memberId,
-                                        "memberName": memberName,
-                                        "episodeId": episodeId,
-                                        "bookId": bookId
-                                    },
-                                    dataType: "text",
-                                    beforeSend: function (xhr) {
-                                        xhr.setRequestHeader(header, token);
-                                    },
-                                    success: function (result) {
-                                        if (result === "잔고부족") {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                text: '보유하신 포인트가 부족합니다.',
-                                                showConfirmButton: false,
-                                                timer: 1000
-                                            });
-                                        } else if (result === "유료저장") {
-                                            $.ajax({
-                                                type: "post",
-                                                url: "/box/save",
-                                                data: {
-                                                    "memberId": memberId,
-                                                    "memberName": memberName,
-                                                    "bookId": bookId,
-                                                    "episodeId": episodeId
-                                                },
-                                                dataType: "text",
-                                                beforeSend: function (xhr) {
-                                                    xhr.setRequestHeader(header, token);
-                                                },
-                                                success: function (result) {
-                                                    if (result === "ok") {
-                                                        $.ajax({
-                                                            type: "get",
-                                                            url: "/point/pay/" + memberId,
-                                                            data: {"episodeId": episodeId, "bookId": bookId},
-                                                            dataType: "text",
-                                                            success: function (result) {
-                                                                if (result === "ok") {
-                                                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                                }
-                                                            }
-                                                        });
-                                                    } else if (result === "no") {
-                                                        location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                                    }
-                                                }
-                                            })
-                                        } else if (result == "결제이력있음") {
-                                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        $.ajax({
-                            type: "post",
-                            url: "/box/pointCheck",
-                            data: {
-                                "memberId": memberId,
-                                "memberName": memberName,
-                                "episodeId": episodeId,
-                                "bookId": bookId
-                            },
-                            dataType: "text",
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader(header, token);
-                            },
-                            success: function (result) {
-                                if (result === "무료저장") {
-                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    alert("몰라");
-                }
-            }
-        });
-    }
-    const cancelBTN = () => {
-        document.getElementById('input-contents').value = '';
-    }
-    const cancelBTN1 = () => {
-        document.getElementById('input-content1').value = '';
-    }
-    const commentSave = () => {
-        const memberId = [[${authentication.id}]];
-        const loginName = [[${authentication.memberName}]];
-        const episodeId = document.getElementById("episodeId").value;
-        const memberName = document.getElementById("memberName").value;
-        const memberImgName = document.getElementById("memberImgName").value;
-        const commentEpisode = document.getElementById("commentEpisode").value;
-        const inputContents = document.getElementById("input-contents").value;
-        const saveComment = document.getElementById("saveComment");
-
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        $.ajax({
-            type: "post",
-            url: "/comment/save",
-            data: {
-                "memberId": memberId,
-                "episodeId": episodeId,
-                "memberName": memberName,
-                "memberImgName": memberImgName,
-                "commentEpisode": commentEpisode,
-                "contents": inputContents
-            },
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result != null) {
-                    document.getElementById('input-contents').value = '';
-                    var output = "";
-                   for (let i in result) {
-                       output += "<li>" +
-                           "              <div class=\"info\">" +
-                           "                <div>" +
-                           "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
-                           "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
-                           "                  </a>" +
-                           "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
-                           "                </div>" +
-                           "                <div>";
-
-                       if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
-                           output += "            <span class=\"update\">" +
-                               "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
-                               "                  </span>" +
-                               "                  <span class=\"delete\">" +
-                               "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
-                               "                  </span>";
-
-                       }
-                       if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
-                           output += "                <span class=\"report\">" +
-                               "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
-                               "                      </span>";
-                       }
-
-                            output += "              </div>" +
-                           "              </div>" +
-                           "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
-                           "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
-                           "              </div>" +
-                           "            </li>";
-                   }
-                   saveComment.innerHTML = output;
-                }
-            }
-        })
-    }
-
-    const updateComment = (id) => {
-        const contentsUpdate = document.getElementById(id + "comment");
-        const contentsBefore = document.getElementById(id + "span").innerHTML;
-
-        var output = "<textarea type=\'text\' id=\'input-content1\' name=\'contents\' class='input-contents'>"+ contentsBefore + "</textarea>";
-        output += "<button type=\"button\" onclick=\"modify("+ id + ")\" class=\"comment-update-btn\">" + "<span>" + "수정" +"</span>" + "</button>";
-        output += "<button type=\"button\" onclick=\"cancelBTN1()\" class=\"comment-cancel-btn\">" + "<span>" + "취소" +"</span>" + "</button>";
-        contentsUpdate.innerHTML = output;
-    }
-
-    const modify = (id) => {
-
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const saveComment = document.getElementById("saveComment");
-        const loginName = [[${authentication.memberName}]];
-        const contentsAfter = document.getElementById("input-content1").value;
-        const episodeId = [[${episode.id}]];
-
-        $.ajax({
-            type: "post",
-            url: "/comment/update",
-            data: {
-                "id": id,
-                "contents": contentsAfter,
-                "episodeId": episodeId
-            },
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result != null) {
-
-                    var output = "";
-                    for (let i in result) {
-                        output += "<li>" +
-                            "              <div class=\"info\">" +
-                            "                <div>" +
-                            "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
-                            "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
-                            "                  </a>" +
-                            "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
-                            "                </div>" +
-                            "                <div>";
-
-                        if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
-                            output += "            <span class=\"update\">" +
-                                "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
-                                "                  </span>" +
-                                "                  <span class=\"delete\">" +
-                                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
-                                "                  </span>";
-
-                        }
-                        if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
-                            output += "                <span class=\"report\">" +
-                                "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
-                                "                      </span>";
-                        }
-
-                        output += "              </div>" +
-                            "              </div>" +
-                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
-                            "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
-                            "              </div>" +
-                            "            </li>";
-                    }
-                    saveComment.innerHTML = output;
-                }
-            }
-        });
-    }
-
-    const reportComment = (id) => {
-
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const loginId = [[${authentication.id}]];
-
-        $.ajax({
-            type: "post",
-            url: "/comment/req-report-check",
-            data: {
-                "id": id,
-                "memberId": loginId
-            },
-            dataType: "text",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result == "신고내역있음") {
-                    Swal.fire({
+    $.ajax({
+      type: "post",
+      url: "/history/episodeCheck",
+      data: {
+        "memberId": memberId,
+        "episodeId": episodeId
+      },
+      dataType: "text",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result == "내역있음") {
+          location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+        } else if (result == "내역없음") {
+          if (payment != 0) {
+            Swal.fire({
+              icon: 'info',
+              text: '결제하시겠습니까?',
+              showConfirmButton: 'OK',
+              showDenyButton: 'NO'
+            }).then(result => {
+              if (result.isConfirmed) {
+                $.ajax({
+                  type: "post",
+                  url: "/box/pointCheck",
+                  data: {
+                    "memberId": memberId,
+                    "memberName": memberName,
+                    "episodeId": episodeId,
+                    "bookId": bookId
+                  },
+                  dataType: "text",
+                  beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                  },
+                  success: function (result) {
+                    if (result === "잔고부족") {
+                      Swal.fire({
                         icon: 'error',
-                        text: '이미 신고하신 댓글입니다.',
+                        text: '보유하신 포인트가 부족합니다.',
                         showConfirmButton: false,
                         timer: 1000
-                    });
-                } else {
-                    $.ajax({
+                      });
+                    } else if (result === "유료저장") {
+                      $.ajax({
                         type: "post",
-                        url: "/comment/report-save/" + id,
+                        url: "/box/save",
                         data: {
-                            "id": id,
-                            "loginId": loginId
+                          "memberId": memberId,
+                          "memberName": memberName,
+                          "bookId": bookId,
+                          "episodeId": episodeId
                         },
                         dataType: "text",
-                        beforeSend: function(xhr){
-                            xhr.setRequestHeader(header, token);
+                        beforeSend: function (xhr) {
+                          xhr.setRequestHeader(header, token);
                         },
                         success: function (result) {
-                            if (result === 'ok') {
-                                Swal.fire({
-                                    icon: 'success',
-                                    text: '신고처리가 완료되었습니다.',
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                });
-                            } else {
-                                alert("신고실패");
-                            }
+                          if (result === "ok") {
+                            $.ajax({
+                              type: "get",
+                              url: "/point/pay/" + memberId,
+                              data: {"episodeId": episodeId, "bookId": bookId},
+                              dataType: "text",
+                              success: function (result) {
+                                if (result === "ok") {
+                                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                                }
+                              }
+                            });
+                          } else if (result === "no") {
+                            location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                          }
                         }
-                    });
-                }
-            }
-        });
-    }
-
-    const deleteComment = (id) => {
-
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        const saveComment = document.getElementById("saveComment");
-        const loginName = [[${authentication.memberName}]];
-        const episodeId = [[${episode.id}]];
-
-        $.ajax({
-            type: "delete",
-            url: "/comment/delete/" + id,
-            data: {
-                "episodeId": episodeId
-            },
-            dataType: "json",
-            beforeSend: function(xhr){
-                xhr.setRequestHeader(header, token);
-            },
-            success: function (result) {
-                if (result != null) {
-
-                    var output = "";
-                    for (let i in result) {
-                        output += "<li>" +
-                            "              <div class=\"info\">" +
-                            "                <div>" +
-                            "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
-                            "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
-                            "                  </a>" +
-                            "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
-                            "                </div>" +
-                            "                <div>";
-
-                        if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
-                            output += "            <span class=\"update\">" +
-                                "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
-                                "                  </span>" +
-                                "                  <span class=\"delete\">" +
-                                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
-                                "                  </span>";
-
-                        }
-                        if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
-                            output += "                <span class=\"report\">" +
-                                "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
-                                "                      </span>";
-                        }
-
-                        output += "              </div>" +
-                            "              </div>" +
-                            "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
-                            "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
-                            "              </div>" +
-                            "            </li>";
+                      });
+                    } else if (result == "결제이력있음") {
+                      location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
                     }
-                    saveComment.innerHTML = output;
-                }
-            }
-        });
-    }
-    const saveStar = () => {
-
-        let header = $("meta[name='_csrf_header']").attr('content');
-        let token = $("meta[name='_csrf']").attr('content');
-
-        var star = 0;
-        const star1 = document.getElementById("rate5").checked;
-        const star2 = document.getElementById("rate4").checked;
-        const star3 = document.getElementById("rate3").checked;
-        const star4 = document.getElementById("rate2").checked;
-        const star5 = document.getElementById("rate1").checked;
-
-        if (star1 == true || star2 == true || star3 == true || star4 == true || star5 == true) {
-            const starPrint = document.getElementById("star");
-            const starBtn = document.getElementById("star-btn");
-
-            if (star1 == true) {
-                star = 1;
-            } else if (star2 == true) {
-                star = 2;
-            } else if (star3 == true) {
-                star = 3;
-            } else if (star4 == true) {
-                star = 4;
-            } else {
-                star = 5;
-            }
-
-
-            const memberId = [[${authentication.id}]];
-            const episodeId = [[${episode.id}]];
-
+                  }
+                });
+              }
+            });
+          } else {
             $.ajax({
+              type: "post",
+              url: "/box/pointCheck",
+              data: {
+                "memberId": memberId,
+                "memberName": memberName,
+                "episodeId": episodeId,
+                "bookId": bookId
+              },
+              dataType: "text",
+              beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+              },
+              success: function (result) {
+                if (result === "무료저장") {
+                  location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                }
+              }
+            });
+          }
+        } else {
+          alert("몰라");
+        }
+      }
+    });
+  }
+
+  const before = (payment) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const memberId = [[${authentication.id}]];
+    const memberName = [[${authentication.memberName}]];
+    const bookId = [[${book.id}]];
+    const episodeId = [[${before}]];
+
+    $.ajax({
+      type: "post",
+      url: "/history/episodeCheck",
+      data: {
+          "memberId": memberId,
+          "episodeId": episodeId
+      },
+      dataType: "text",
+      beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+          if (result == "내역있음") {
+              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+          } else if (result == "내역없음") {
+            if (payment != 0) {
+              Swal.fire({
+                  icon: 'info',
+                  text: '결제하시겠습니까?',
+                  showConfirmButton: 'OK',
+                  showDenyButton: 'NO'
+              }).then(result => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                    type: "post",
+                    url: "/box/pointCheck",
+                    data: {
+                      "memberId": memberId,
+                      "memberName": memberName,
+                      "episodeId": episodeId,
+                      "bookId": bookId
+                    },
+                    dataType: "text",
+                    beforeSend: function (xhr) {
+                      xhr.setRequestHeader(header, token);
+                    },
+                    success: function (result) {
+                      if (result === "잔고부족") {
+                        Swal.fire({
+                          icon: 'error',
+                          text: '보유하신 포인트가 부족합니다.',
+                          showConfirmButton: false,
+                          timer: 1000
+                        });
+                      } else if (result === "유료저장") {
+                        $.ajax({
+                          type: "post",
+                          url: "/box/save",
+                          data: {
+                            "memberId": memberId,
+                            "memberName": memberName,
+                            "bookId": bookId,
+                            "episodeId": episodeId
+                          },
+                          dataType: "text",
+                          beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                          },
+                          success: function (result) {
+                            if (result === "ok") {
+                              $.ajax({
+                                type: "get",
+                                url: "/point/pay/" + memberId,
+                                data: {"episodeId": episodeId, "bookId": bookId},
+                                dataType: "text",
+                                success: function (result) {
+                                  if (result === "ok") {
+                                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                                  }
+                                }
+                              });
+                            } else if (result === "no") {
+                              location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                            }
+                          }
+                        });
+                      } else if (result == "결제이력있음") {
+                        location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                      }
+                    }
+                  });
+                }
+              });
+            } else {
+              $.ajax({
                 type: "post",
-                url: "/book/save-star",
+                url: "/box/pointCheck",
                 data: {
-                    "memberId": memberId,
-                    "episodeId": episodeId,
-                    "star": star
+                  "memberId": memberId,
+                  "memberName": memberName,
+                  "episodeId": episodeId,
+                  "bookId": bookId
                 },
                 dataType: "text",
-                beforeSend: function(xhr){
-                    xhr.setRequestHeader(header, token);
+                beforeSend: function (xhr) {
+                  xhr.setRequestHeader(header, token);
                 },
                 success: function (result) {
-                    if (result != null) {
-                        var output = "<span class=\"star\">⭐</span>\n" +
-                            "                <span class=\"star-desc\">" + result + "</span>";
-                        // starBtn.setAttribute("hidden", true);
-                        starBtn.style.display = "none";
-                    }
-
-                    starPrint.innerHTML = output;
-                },
-            });
-
-        } else {
-            alert("별점을 입력해주세요");
+                  if (result === "무료저장") {
+                    location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
+                  }
+                }
+              });
+            }
+          } else {
+            alert("몰라");
+          }
         }
+    });
+  }
+  const cancelBTN = () => {
+    document.getElementById('input-contents').value = '';
+  }
+  const cancelBTN1 = () => {
+    document.getElementById('input-content1').value = '';
+  }
+  const commentSave = () => {
+    const memberId = [[${authentication.id}]];
+    const loginName = [[${authentication.memberName}]];
+    const episodeId = document.getElementById("episodeId").value;
+    const memberName = document.getElementById("memberName").value;
+    const memberImgName = document.getElementById("memberImgName").value;
+    const commentEpisode = document.getElementById("commentEpisode").value;
+    const inputContents = document.getElementById("input-contents").value;
+    const saveComment = document.getElementById("saveComment");
 
-    }
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
 
-    const content = document.querySelector('.content');
-    const label01 = document.getElementById('fnt-01');
-    const label02 = document.getElementById('fnt-02');
-    const label03 = document.getElementById('fnt-03');
-    const label04 = document.getElementById('fnt-04');
-    const fslabel01 = document.getElementById('fnt-s-01');
-    const fslabel02 = document.getElementById('fnt-s-02');
-    const fslabel03 = document.getElementById('fnt-s-03');
-    const fslabel04 = document.getElementById('fnt-s-04');
-    const fslabel05 = document.getElementById('fnt-s-05');
-    const lhlabel01 = document.getElementById('fnt-h-01');
-    const lhlabel02 = document.getElementById('fnt-h-02');
-    const lhlabel03 = document.getElementById('fnt-h-03');
+    $.ajax({
+      type: "post",
+      url: "/comment/save",
+      data: {
+        "memberId": memberId,
+        "episodeId": episodeId,
+        "memberName": memberName,
+        "memberImgName": memberImgName,
+        "commentEpisode": commentEpisode,
+        "contents": inputContents
+      },
+      dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result != null) {
+          document.getElementById('input-contents').value = '';
+          var output = "";
 
-    const fnt01 = () => {
-        content.classList.add('c-fnt-01');
-        content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
-        label01.className = 'opt-button type01 active';
-        label02.className = 'opt-button type02';
-        label03.className = 'opt-button type03';
-        label04.className = 'opt-button type04';
-    }
-    const fnt02 = () => {
-        content.classList.add('c-fnt-02');
-        content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
-        label01.className = 'opt-button type01';
-        label02.className = 'opt-button type02 active';
-        label03.className = 'opt-button type03';
-        label04.className = 'opt-button type04';
-    }
-    const fnt03 = () => {
-        content.classList.add('c-fnt-03');
-        content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
-        label01.className = 'opt-button type01';
-        label02.className = 'opt-button type02';
-        label03.className = 'opt-button type03 active';
-        label04.className = 'opt-button type04';
-    }
-    const fnt04 = () => {
-        content.classList.add('c-fnt-04');
-        content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
-        label01.className = 'opt-button type01';
-        label02.className = 'opt-button type02';
-        label03.className = 'opt-button type03';
-        label04.className = 'opt-button type04 active';
-    }
+          for (let i in result) {
+            output += "<li>" +
+              "<div class=\"info\">" +
+              "  <div>" +
+              "    <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
+              "      <span class=\"writer\">" + result[i].memberName + "</span>" +
+              "    </a>" +
+              "    <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
+              "  </div>" +
+              "<div>";
 
-    const size01 = () => {
-        content.classList.add('c-fnt-s-01');
-        content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
-        fslabel01.className = 'opt-button size01 active';
-        fslabel02.className = 'opt-button size02';
-        fslabel03.className = 'opt-button size03';
-        fslabel04.className = 'opt-button size04';
-        fslabel05.className = 'opt-button size05';
-    }
-    const size02 = () => {
-        content.classList.add('c-fnt-s-02');
-        content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
-        fslabel01.className = 'opt-button size01';
-        fslabel02.className = 'opt-button size02 active';
-        fslabel03.className = 'opt-button size03';
-        fslabel04.className = 'opt-button size04';
-        fslabel05.className = 'opt-button size05';
-    }
-    const size03 = () => {
-        content.classList.add('c-fnt-s-03');
-        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
-        fslabel01.className = 'opt-button size01';
-        fslabel02.className = 'opt-button size02';
-        fslabel03.className = 'opt-button size03 active';
-        fslabel04.className = 'opt-button size04';
-        fslabel05.className = 'opt-button size05';
-    }
-    const size04 = () => {
-        content.classList.add('c-fnt-s-04');
-        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
-        fslabel01.className = 'opt-button size01';
-        fslabel02.className = 'opt-button size02';
-        fslabel03.className = 'opt-button size03';
-        fslabel04.className = 'opt-button size04 active';
-        fslabel05.className = 'opt-button size05';
-    }
-    const size05 = () => {
-        content.classList.add('c-fnt-s-05');
-        content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
-        fslabel01.className = 'opt-button size01';
-        fslabel02.className = 'opt-button size02';
-        fslabel03.className = 'opt-button size03';
-        fslabel04.className = 'opt-button size04';
-        fslabel05.className = 'opt-button size05 active';
-    }
+            if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
+              output += "<span class=\"update\">" +
+                "  <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
+                "</span>" +
+                "<span class=\"delete\">" +
+                "  <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
+                "</span>";
+            }
 
-    const height01 = () => {
-        content.classList.add('c-fnt-h-01');
-        content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
-        lhlabel01.className = 'opt-button height01 active';
-        lhlabel02.className = 'opt-button height02';
-        lhlabel03.className = 'opt-button height03';
+            if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
+              output += "<span class=\"report\">" +
+                  "  <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                  "</span>";
+            }
+
+              output += "</div>" +
+              "</div>" +
+              "<div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+              "  <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
+              "</div>" +
+              "</li>";
+          }
+          saveComment.innerHTML = output;
+        }
+      }
+    });
+  }
+
+  const updateComment = (id) => {
+    const contentsUpdate = document.getElementById(id + "comment");
+    const contentsBefore = document.getElementById(id + "span").innerHTML;
+
+    var output = "<textarea type=\'text\' id=\'input-content1\' name=\'contents\' class='input-contents'>"+ contentsBefore + "</textarea>";
+    output += "<button type=\"button\" onclick=\"modify("+ id + ")\" class=\"comment-update-btn\">" + "<span>" + "수정" +"</span>" + "</button>";
+    output += "<button type=\"button\" onclick=\"cancelBTN1()\" class=\"comment-cancel-btn\">" + "<span>" + "취소" +"</span>" + "</button>";
+    contentsUpdate.innerHTML = output;
+  }
+
+  const modify = (id) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const saveComment = document.getElementById("saveComment");
+    const loginName = [[${authentication.memberName}]];
+    const contentsAfter = document.getElementById("input-content1").value;
+    const episodeId = [[${episode.id}]];
+
+    $.ajax({
+      type: "post",
+      url: "/comment/update",
+      data: {
+        "id": id,
+        "contents": contentsAfter,
+        "episodeId": episodeId
+      },
+      dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result != null) {
+          var output = "";
+          for (let i in result) {
+            output += "<li>" +
+              "              <div class=\"info\">" +
+              "                <div>" +
+              "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
+              "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
+              "                  </a>" +
+              "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
+              "                </div>" +
+              "                <div>";
+
+            if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
+              output += "            <span class=\"update\">" +
+                "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
+                "                  </span>" +
+                "                  <span class=\"delete\">" +
+                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
+                "                  </span>";
+
+            }
+            if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
+              output += "                <span class=\"report\">" +
+                "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                "                      </span>";
+            }
+
+            output += "              </div>" +
+              "              </div>" +
+              "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+              "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
+              "              </div>" +
+              "            </li>";
+          }
+          saveComment.innerHTML = output;
+        }
+      }
+    });
+  }
+
+  const reportComment = (id) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const loginId = [[${authentication.id}]];
+
+    $.ajax({
+      type: "post",
+      url: "/comment/req-report-check",
+      data: {
+        "id": id,
+        "memberId": loginId
+      },
+      dataType: "text",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result == "신고내역있음") {
+        Swal.fire({
+            icon: 'error',
+            text: '이미 신고하신 댓글입니다.',
+            showConfirmButton: false,
+            timer: 1000
+          });
+        } else {
+          $.ajax({
+            type: "post",
+            url: "/comment/report-save/" + id,
+            data: {
+              "id": id,
+              "loginId": loginId
+            },
+            dataType: "text",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader(header, token);
+            },
+            success: function (result) {
+              if (result === 'ok') {
+                Swal.fire({
+                  icon: 'success',
+                  text: '신고처리가 완료되었습니다.',
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+              } else {
+                alert("신고실패");
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+
+  const deleteComment = (id) => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    const saveComment = document.getElementById("saveComment");
+    const loginName = [[${authentication.memberName}]];
+    const episodeId = [[${episode.id}]];
+
+    $.ajax({
+      type: "delete",
+      url: "/comment/delete/" + id,
+      data: {
+          "episodeId": episodeId
+      },
+      dataType: "json",
+      beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+      },
+      success: function (result) {
+        if (result != null) {
+          var output = "";
+          for (let i in result) {
+            output += "<li>" +
+              "              <div class=\"info\">" +
+              "                <div>" +
+              "                  <a href=\"/member/mypage/" + result[i].memberId + "\" class=\"writer-link\">" +
+              "                    <span class=\"writer\">" + result[i].memberName + "</span>" +
+              "                  </a>" +
+              "                  <span class=\"date\">" + moment(result[i].createdTime).format("YYYY-MM-DD HH:mm:ss") + "</span>" +
+              "                </div>" +
+              "                <div>";
+
+            if (result[i].memberName == loginName && result[i].contents != "관리자에 의해 숨겨진 글입니다") {
+              output += "            <span class=\"update\">" +
+                "                    <a href=\"javascript:;\" class=\"update-btn\" onclick=\"updateComment(" + result[i].id + ")\">수정</a>" +
+                "                  </span>" +
+                "                  <span class=\"delete\">" +
+                "                    <a href=\"javascript:;\" class=\"delete-btn\" onclick=\"deleteComment(" + result[i].id + ")\">삭제</a>" +
+                "                  </span>";
+
+            }
+            if (result[i].memberName != loginName && result[i].contents == "관리자에 의해 숨겨진 글입니다"){
+              output += "                <span class=\"report\">" +
+                "                        <a href=\"javascript:;\" class=\"report-btn\" onclick=\"reportComment(" + result[i].id + ")\">신고</a>" +
+                "                      </span>";
+            }
+
+            output += "              </div>" +
+              "              </div>" +
+              "              <div id=\"" + result[i].id + 'comment' + "\" class=\"content\">" +
+              "                <span class=\"content\" id=\"" + result[i].id + 'span' + "\">" + result[i].contents + "</span>" +
+              "              </div>" +
+              "            </li>";
+          }
+          saveComment.innerHTML = output;
+        }
+      }
+    });
+  }
+
+  const saveStar = () => {
+    let header = $("meta[name='_csrf_header']").attr('content');
+    let token = $("meta[name='_csrf']").attr('content');
+
+    var star = 0;
+    const star1 = document.getElementById("rate5").checked;
+    const star2 = document.getElementById("rate4").checked;
+    const star3 = document.getElementById("rate3").checked;
+    const star4 = document.getElementById("rate2").checked;
+    const star5 = document.getElementById("rate1").checked;
+
+    if (star1 == true || star2 == true || star3 == true || star4 == true || star5 == true) {
+      const starPrint = document.getElementById("star");
+      const starBtn = document.getElementById("star-btn");
+
+      if (star1 == true) {
+          star = 1;
+      } else if (star2 == true) {
+          star = 2;
+      } else if (star3 == true) {
+          star = 3;
+      } else if (star4 == true) {
+          star = 4;
+      } else {
+          star = 5;
+      }
+
+      const memberId = [[${authentication.id}]];
+      const episodeId = [[${episode.id}]];
+
+      $.ajax({
+        type: "post",
+        url: "/book/save-star",
+        data: {
+          "memberId": memberId,
+          "episodeId": episodeId,
+          "star": star
+        },
+        dataType: "text",
+        beforeSend: function(xhr){
+          xhr.setRequestHeader(header, token);
+        },
+        success: function (result) {
+          if (result != null) {
+            var output = "<span class=\"star\">⭐</span>\n" +
+              "                <span class=\"star-desc\">" + result + "</span>";
+            // starBtn.setAttribute("hidden", true);
+            starBtn.style.display = "none";
+          }
+          starPrint.innerHTML = output;
+        },
+      });
+    } else {
+      alert("별점을 입력해주세요");
     }
-    const height02 = () => {
-        content.classList.add('c-fnt-h-02');
-        content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
-        lhlabel01.className = 'opt-button height01';
-        lhlabel02.className = 'opt-button height02 active';
-        lhlabel03.className = 'opt-button height03';
-    }
-    const height03 = () => {
-        content.classList.add('c-fnt-h-03');
-        content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
-        lhlabel01.className = 'opt-button height01';
-        lhlabel02.className = 'opt-button height02';
-        lhlabel03.className = 'opt-button height03 active';
-    }
+  }
+
+  const content = document.querySelector('.content');
+  const label01 = document.getElementById('fnt-01');
+  const label02 = document.getElementById('fnt-02');
+  const label03 = document.getElementById('fnt-03');
+  const label04 = document.getElementById('fnt-04');
+  const fslabel01 = document.getElementById('fnt-s-01');
+  const fslabel02 = document.getElementById('fnt-s-02');
+  const fslabel03 = document.getElementById('fnt-s-03');
+  const fslabel04 = document.getElementById('fnt-s-04');
+  const fslabel05 = document.getElementById('fnt-s-05');
+  const lhlabel01 = document.getElementById('fnt-h-01');
+  const lhlabel02 = document.getElementById('fnt-h-02');
+  const lhlabel03 = document.getElementById('fnt-h-03');
+
+  const fnt01 = () => {
+    content.classList.add('c-fnt-01');
+    content.classList.remove('c-fnt-02', 'c-fnt-03', 'c-fnt-04');
+    label01.className = 'opt-button type01 active';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04';
+  }
+  const fnt02 = () => {
+    content.classList.add('c-fnt-02');
+    content.classList.remove('c-fnt-01', 'c-fnt-03', 'c-fnt-04');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02 active';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04';
+  }
+  const fnt03 = () => {
+    content.classList.add('c-fnt-03');
+    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-04');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03 active';
+    label04.className = 'opt-button type04';
+  }
+  const fnt04 = () => {
+    content.classList.add('c-fnt-04');
+    content.classList.remove('c-fnt-01', 'c-fnt-02', 'c-fnt-03');
+    label01.className = 'opt-button type01';
+    label02.className = 'opt-button type02';
+    label03.className = 'opt-button type03';
+    label04.className = 'opt-button type04 active';
+  }
+
+  const size01 = () => {
+    content.classList.add('c-fnt-s-01');
+    content.classList.remove('c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01 active';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size02 = () => {
+    content.classList.add('c-fnt-s-02');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-03', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02 active';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size03 = () => {
+    content.classList.add('c-fnt-s-03');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-04', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03 active';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size04 = () => {
+    content.classList.add('c-fnt-s-04');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-05');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04 active';
+    fslabel05.className = 'opt-button size05';
+  }
+  const size05 = () => {
+    content.classList.add('c-fnt-s-05');
+    content.classList.remove('c-fnt-s-01', 'c-fnt-s-02', 'c-fnt-s-03', 'c-fnt-s-04');
+    fslabel01.className = 'opt-button size01';
+    fslabel02.className = 'opt-button size02';
+    fslabel03.className = 'opt-button size03';
+    fslabel04.className = 'opt-button size04';
+    fslabel05.className = 'opt-button size05 active';
+  }
+
+  const height01 = () => {
+    content.classList.add('c-fnt-h-01');
+    content.classList.remove('c-fnt-h-02', 'c-fnt-h-03');
+    lhlabel01.className = 'opt-button height01 active';
+    lhlabel02.className = 'opt-button height02';
+    lhlabel03.className = 'opt-button height03';
+  }
+  const height02 = () => {
+    content.classList.add('c-fnt-h-02');
+    content.classList.remove('c-fnt-h-01', 'c-fnt-h-03');
+    lhlabel01.className = 'opt-button height01';
+    lhlabel02.className = 'opt-button height02 active';
+    lhlabel03.className = 'opt-button height03';
+  }
+  const height03 = () => {
+    content.classList.add('c-fnt-h-03');
+    content.classList.remove('c-fnt-h-01', 'c-fnt-h-02');
+    lhlabel01.className = 'opt-button height01';
+    lhlabel02.className = 'opt-button height02';
+    lhlabel03.className = 'opt-button height03 active';
+  }
 </script>
 </html>
