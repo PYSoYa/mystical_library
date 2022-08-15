@@ -37,4 +37,18 @@ window.onload = () => {
       optionPanel.className = 'option-panel';
     }
   });
+
+  let wrap = document.querySelector(".viewer");
+  let bar = document.querySelector('.ui-slider-range');
+  let per = document.querySelector('.ui-slider-handle');
+
+  wrap.addEventListener('scroll', function(){
+    let scrollTop = wrap.scrollTop;
+    let scrollHeight = wrap.scrollHeight - wrap.clientHeight;
+    let percentage = (scrollTop/scrollHeight) * 100;
+    if(isNaN(percentage)) percentage = 0;
+    bar.style.width = percentage + '%';
+    per.style.left = percentage + '%';
+    per.innerText = Math.floor(percentage) + '%';
+  });
 }
