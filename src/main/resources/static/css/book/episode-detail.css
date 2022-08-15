@@ -41,16 +41,16 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .tool-wrap a {font-size: 0.933rem;}
 #wrap .viewer-container .tool-wrap .icon {width: 100%; height: 23px; margin: 0 0 5px; display: inline-block; text-align: center; overflow: hidden;}
 /* viewer-scroll nav slider bar % */
-#wrap #slider_percent {width: 1069px; height: 3px; margin: 0 0 0 -546px; position: fixed; left: 50%; top: 70px; right: 1px; opacity: .8; filter: alpha(opacity=80); z-index: 3; border: 0; background: none; border-radius: 3px; color: #333; font-size: 1em; text-align: left;}
-#wrap .ui-widget-header {background: #1e9eff; left: 0; top: 0; height: 100%; position: absolute; z-index: 1; font-size: .7em; display: block; border: #0a53be; border-radius: 3px; font-weight: bold; transition: .1s ease;}
+#wrap #slider_percent {width: 1069px; height: 3px; margin: 0 0 0 -546px; position: fixed; left: 50%; top: 69px; right: 1px; opacity: .8; filter: alpha(opacity=80); z-index: 3; border: 0; background: none; border-radius: 3px; color: #333; font-size: 1em; text-align: left;}
+#wrap .ui-widget-header {background: #1e9eff; left: 1px; top: 0; height: 100%; position: absolute; z-index: 1; font-size: .7em; display: block; border: #0a53be; border-radius: 3px; font-weight: bold; transition: .1s ease;}
 #wrap .ui-slider-horizontal .ui-slider-handle {width: 46px; height: 28px; margin-left: -12px; left: 0; top: 0; background: #1e9eff; border: 0; border-radius: 0 0 5px 5px; text-align: center; font-size: 12px; line-height: 28px; color: #fff; outline: none; font-weight: 400; position: absolute; z-index: 2; cursor: default; touch-action: none; transition: .1s ease;}
 #wrap .ui-widget-header:before {content: ''; width: 23px; height: 3px; position: absolute; left: -13px; top: 0; background: #1e9eff; transition: .1s ease;}
 /* viewer */
 #wrap .viewer-container .viewer-wrap {background: #fff; overflow: hidden;}
 #wrap .viewer-container .viewer::-webkit-scrollbar {display: none;}
-#wrap .viewer-container .viewer {padding: 80px 200px; -ms-overflow-style: none; overflow: hidden scroll; position: relative; background-color: #fff; height: 872px; min-width: 570px;}
+#wrap .viewer-container .viewer {transition: all 0.5s ease; padding: 80px 200px; -ms-overflow-style: none; overflow: hidden scroll; position: relative; background-color: #fff; height: 872px; min-width: 570px;}
 #wrap .viewer-container .viewer .content {font-size: 16px; pointer-events: none; user-select: none; line-height: 1.4; height: 100%; overflow: hidden;}
-#wrap .viewer-container .viewer .content p {text-align: justify; font-size: 16px; text-indent: 0.8em; line-height: 1.7em; margin: 5% 0.2em 5% 0.2em; padding: 0 2px 2px 0; color: #666; word-break: keep-all;}
+#wrap .viewer-container .viewer .content p {transition: all 0.5s ease; text-align: justify; font-size: 16px; text-indent: 0.8em; line-height: 1.7em; margin: 5% 0.2em 5% 0.2em; padding: 0 2px 2px 0; color: #666; word-break: keep-all;}
 #wrap .viewer-container .viewer .content * {text-align: justify; text-indent: 0.8em; line-height: 1.7em; margin: 5% 0.2em 5% 0.2em; padding: 0 2px 2px 0; color: #666;}
 #wrap .viewer-container .viewer .c-fnt-01 * {font-family: 'Noto Sans KR', sans-serif;}
 #wrap .viewer-container .viewer .c-fnt-02 * {font-family: 'Noto Serif KR', serif;}
@@ -210,3 +210,21 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn span {color: #fff; transition: color 0.3s; min-width: 78px; height: 38px; display: block; padding: 0 30px; border: 1px solid #333; text-align: center; font-size: 15px; line-height: 36px; position: relative;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-update-btn:hover span {color: #1e9eff !important; background-color: #fff; border: 1px solid #1e9eff;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn:hover span {color: #333 !important; background-color: #fff; border: 1px solid #333;}
+
+
+/* 다크 모드 */
+#wrap .viewer-wrap .viewer.dark {background: #2b2b2b; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .content.dark p {color: #ccc; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .rate-desc.dark {color: #ccc; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .content-footer.dark {border-top: 1px solid #666; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .star-desc.dark {color: #ccc; text-shadow: none !important; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .star-btn.dark {background-color: #2b2b2b; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .edit-btn.dark {background-color: #2b2b2b; transition: all 0.5s ease;}
+#wrap .viewer-wrap .viewer .delete-btn.dark {background-color: #2b2b2b; transition: all 0.5s ease;}
+.dark-mode-btn-wrap {position: fixed; left: 50%; top: 200px; padding: 0 0 0; margin: 0 0 0 610px; opacity: 1; transition: all 0.5s ease-out;}
+.dark-mode-btn-wrap.on {opacity: 0; transition: all 0.5s ease-out;}
+.toggleSwitch {width: 4rem; margin: 0; height: 2rem; display: block; position: relative; border-radius: 2rem; background-color: #fff; box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%); cursor: pointer;}
+.toggleSwitch .toggleButton {width: 1.5rem; height: 1.5rem; position: absolute; top: 50%; left: .2rem; transform: translateY(-50%); border-radius: 50%; background: #1e9eff;}
+#toggle:checked ~ .toggleSwitch {background: #2d2d2d;}
+#toggle:checked ~ .toggleSwitch .toggleButton {left: calc(100% - 1.8rem); background: #fff;}
+.toggleSwitch, .toggleButton {transition: all 0.2s ease-in;}
