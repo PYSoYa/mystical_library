@@ -836,7 +836,12 @@
         },
       });
     } else {
-      alert("별점을 입력해주세요");
+        Swal.fire({
+            icon: 'error',
+            text: '별점을 눌러주세요.',
+            showConfirmButton: false,
+            timer: 1000
+        });
     }
   }
 
