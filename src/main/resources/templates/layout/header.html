@@ -12,89 +12,89 @@
   <script th:src="@{/js/jquery.js}"></script>
   <script th:src="@{/js/sweetalert2.min.js}"></script>
 
-<div class="header-div">
-  <header class="header-header">
-    <nav class="header-nav">
-      <div class="logo-container">
-        <a class="logo-a" href="/">
-          <div class="logo-wrap">
-            <img th:src="@{/img/mystical_logo.jpg}" alt="">
+  <div class="header-div">
+    <header class="header-header">
+      <nav class="header-nav">
+        <div class="logo-container">
+          <a class="logo-a" href="/">
+            <div class="logo-wrap">
+              <img th:src="@{/img/mystical_logo.jpg}" alt="">
+            </div>
+            <!--          <div class="logo2-wrap">-->
+            <!--            <img th:src="@{/img/logo2.svg}" alt="">-->
+            <!--          </div>-->
+          </a>
+        </div>
+
+        <form action="/book/search" method="get" class="search-form">
+          <div tabindex="-1" class="search-container">
+            <label class="search-wrap">
+              <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.026 9.862a6.163 6.163 0 11-12.327 0 6.163 6.163 0 0112.327 0zm-1.183 5.824a7.663 7.663 0 111-1.031c.066.035.13.08.186.137l5.4 5.4a.75.75 0 01-1.06 1.06l-5.4-5.4a.746.746 0 01-.126-.166z" fill="currentColor"></path>
+              </svg>
+              <select name="searchType" class="search-input-select">
+                <option value="작가">작가</option>
+                <option value="책">책</option>
+              </select>
+              <input type="text" maxlength="64" name="q" class="search-input">
+            </label>
           </div>
-<!--          <div class="logo2-wrap">-->
-<!--            <img th:src="@{/img/logo2.svg}" alt="">-->
-<!--          </div>-->
-        </a>
-      </div>
+        </form>
 
-      <form action="/book/search" method="get" class="search-form">
-        <div tabindex="-1" class="search-container">
-          <label class="search-wrap">
-            <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-icon">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.026 9.862a6.163 6.163 0 11-12.327 0 6.163 6.163 0 0112.327 0zm-1.183 5.824a7.663 7.663 0 111-1.031c.066.035.13.08.186.137l5.4 5.4a.75.75 0 01-1.06 1.06l-5.4-5.4a.746.746 0 01-.126-.166z" fill="currentColor"></path>
-            </svg>
-            <select name="searchType" class="search-input-select">
-              <option value="작가">작가</option>
-              <option value="책">책</option>
-            </select>
-            <input type="text" maxlength="64" name="q" class="search-input">
-          </label>
+        <div class="menu-icon-container" sec:authorize="isAuthenticated()">
+          <div class="menu-icon-wrap">
+            <a th:href="@{|/notice/history/${authentication.id}|}" class="notification">
+              <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-notification">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.55 10.02A6.445 6.445 0 0112 3.57a6.445 6.445 0 016.45 6.45v6.851H5.55v-6.85zm-1.5 6.851v-6.85A7.945 7.945 0 0112 2.07a7.945 7.945 0 017.95 7.95v6.85h.452a.75.75 0 010 1.5h-16.8a.75.75 0 010-1.5h.449zm5.5 4.328a.75.75 0 01.75-.75h3.4a.75.75 0 010 1.5h-3.4a.75.75 0 01-.75-.75z" fill="currentColor"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="menu-icon-wrap">
+            <a th:href="@{|/wish/wishlist/author/${authentication.id}|}" class="wishlist">
+              <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-wishlist">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M.25 3A.75.75 0 011 2.25h2.838c.34 0 .639.23.725.56l.751 2.866a.75.75 0 01.227-.035H22a.75.75 0 01.707 1l-3.405 9.61a.75.75 0 01-.707.499H7.243a.75.75 0 01-.725-.56L3.259 3.75H1A.75.75 0 01.25 3zm5.448 4.141l2.124 8.109h10.243l2.873-8.109H5.699zM9 20.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm9.5 1.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="menu-icon-wrap">
+            <a th:href="@{|/history/${authentication.id}|}" class="box">
+              <svg width="1em" height="1em" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-box">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.207 4.083c0-.483.392-.875.875-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H4.082a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084H9.04V4.958H4.957z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9.04 4.083c0-.483.39-.875.874-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H9.914a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084h4.082V4.958H10.79z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.195 7.343a.875.875 0 01.619-1.071l5.634-1.51a.875.875 0 011.072.619l4.53 16.903a.875.875 0 01-.62 1.072l-5.634 1.51a.875.875 0 01-1.072-.62L15.195 7.344zm1.917.392L21.19 22.95l3.944-1.057-4.077-15.213-3.944 1.056z" fill="currentColor"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="menu-icon-wrap">
+            <a th:href="@{|/member/myPage/${authentication.id}|}" class="my-page">
+              <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-my-page">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.389A2.194 2.194 0 1012 4a2.194 2.194 0 000 4.389zm0 1.5a3.694 3.694 0 100-7.39 3.694 3.694 0 000 7.39zM12.384 12.973h-.768A7.617 7.617 0 004.022 20h15.956a7.617 7.617 0 00-7.594-7.027zm-.768-1.5A9.116 9.116 0 002.5 20.589c0 .503.408.911.912.911h17.176a.912.912 0 00.912-.911 9.116 9.116 0 00-9.116-9.116h-.768z" fill="currentColor"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="menu-icon-wrap">
+            <a href="/member/logout" class="log-out">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-box-arrow-right icon-log-out" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+              </svg>
+            </a>
+          </div>
         </div>
-      </form>
 
-      <div class="menu-icon-container" sec:authorize="isAuthenticated()">
-        <div class="menu-icon-wrap">
-          <a th:href="@{|/notice/history/${authentication.id}|}" class="notification">
-            <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-notification">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.55 10.02A6.445 6.445 0 0112 3.57a6.445 6.445 0 016.45 6.45v6.851H5.55v-6.85zm-1.5 6.851v-6.85A7.945 7.945 0 0112 2.07a7.945 7.945 0 017.95 7.95v6.85h.452a.75.75 0 010 1.5h-16.8a.75.75 0 010-1.5h.449zm5.5 4.328a.75.75 0 01.75-.75h3.4a.75.75 0 010 1.5h-3.4a.75.75 0 01-.75-.75z" fill="currentColor"></path>
-            </svg>
-          </a>
+        <div class="menu-container" sec:authorize="isAnonymous()">
+          <div class="menu-wrap-div">
+            <ul class="menu-wrap-ul">
+              <li class="sign-up-wrap">
+                <a href="javascript:;" class="sign-up" data-bs-toggle="modal" data-bs-target="#exampleModal2">회원가입</a>
+              </li>
+              <li class="sign-in-wrap">
+                <a href="javascript:;" class="sign-in" data-bs-toggle="modal" data-bs-target="#exampleModal1">로그인</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="menu-icon-wrap">
-          <a th:href="@{|/wish/wishlist/author/${authentication.id}|}" class="wishlist">
-            <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-wishlist">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M.25 3A.75.75 0 011 2.25h2.838c.34 0 .639.23.725.56l.751 2.866a.75.75 0 01.227-.035H22a.75.75 0 01.707 1l-3.405 9.61a.75.75 0 01-.707.499H7.243a.75.75 0 01-.725-.56L3.259 3.75H1A.75.75 0 01.25 3zm5.448 4.141l2.124 8.109h10.243l2.873-8.109H5.699zM9 20.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm9.5 1.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-        <div class="menu-icon-wrap">
-          <a th:href="@{|/history/${authentication.id}|}" class="box">
-            <svg width="1em" height="1em" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-box">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M3.207 4.083c0-.483.392-.875.875-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H4.082a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084H9.04V4.958H4.957z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M9.04 4.083c0-.483.39-.875.874-.875h5.833c.484 0 .875.392.875.875v19.834a.875.875 0 01-.875.875H9.914a.875.875 0 01-.875-.875V4.083zm1.75.875v18.084h4.082V4.958H10.79z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.195 7.343a.875.875 0 01.619-1.071l5.634-1.51a.875.875 0 011.072.619l4.53 16.903a.875.875 0 01-.62 1.072l-5.634 1.51a.875.875 0 01-1.072-.62L15.195 7.344zm1.917.392L21.19 22.95l3.944-1.057-4.077-15.213-3.944 1.056z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-        <div class="menu-icon-wrap">
-          <a th:href="@{|/member/myPage/${authentication.id}|}" class="my-page">
-            <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-my-page">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.389A2.194 2.194 0 1012 4a2.194 2.194 0 000 4.389zm0 1.5a3.694 3.694 0 100-7.39 3.694 3.694 0 000 7.39zM12.384 12.973h-.768A7.617 7.617 0 004.022 20h15.956a7.617 7.617 0 00-7.594-7.027zm-.768-1.5A9.116 9.116 0 002.5 20.589c0 .503.408.911.912.911h17.176a.912.912 0 00.912-.911 9.116 9.116 0 00-9.116-9.116h-.768z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-        <div class="menu-icon-wrap">
-          <a href="/member/logout" class="log-out">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-box-arrow-right icon-log-out" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-              <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="menu-container" sec:authorize="isAnonymous()">
-        <div class="menu-wrap-div">
-          <ul class="menu-wrap-ul">
-            <li class="sign-up-wrap">
-              <a href="javascript:;" class="sign-up" data-bs-toggle="modal" data-bs-target="#exampleModal2">회원가입</a>
-            </li>
-            <li class="sign-in-wrap">
-              <a href="javascript:;" class="sign-in" data-bs-toggle="modal" data-bs-target="#exampleModal1">로그인</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-</div>
+      </nav>
+    </header>
+  </div>
 
   <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -172,9 +172,9 @@
             </div>
             <div class="github-login-wrap">
               <button type="button" class="github" onclick="githubLogin()">
-              <img th:src="@{/img/github.png}" class="github-img" alt="">
-              <span class="github-content">깃허브 아이디로 로그인</span>
-            </button>
+                <img th:src="@{/img/github.png}" class="github-img" alt="">
+                <span class="github-content">깃허브 아이디로 로그인</span>
+              </button>
             </div>
           </div>
         </div>
@@ -432,10 +432,10 @@
       const findPw = document.getElementById('find-pw');
 
       findId.addEventListener('click', () => {
-          location.href = '/member/find/id';
+        location.href = '/member/find/id';
       });
       findPw.addEventListener('click', () => {
-          location.href = '/member/find/password';
+        location.href = '/member/find/password';
       });
     });
 
@@ -459,11 +459,11 @@
       location.href = "/oauth2/authorization/github";
     }
 
-    let loginIdCheck = true;
-    let passwordCheck = true;
-    let passwordCheck2 = true;
-    let nameCheck = true;
-    let emailCheck = true;
+    let loginIdCheck = false;
+    let passwordCheck = false;
+    let passwordCheck2 = false;
+    let nameCheck = false;
+    let emailCheck = false;
 
     const idCheck = () => {
       let header = $("meta[name='_csrf_header']").attr('content');
@@ -491,20 +491,21 @@
               } else {
                 resultLoginId.innerHTML = '이미 사용중인 아이디입니다.';
                 resultLoginId.style.color = '#dd2424';
-                loginIdCheck = true;
+                loginIdCheck = false;
               }
             }
           });
         } else {
           resultLoginId.innerHTML = '5~16자의 영문 소문자, 숫자만 사용 가능합니다.';
           resultLoginId.style.color = '#dd2424';
-          loginIdCheck = true;
+          loginIdCheck = false;
         }
       } else {
         resultLoginId.innerHTML = '필수 입력 항목입니다.';
         resultLoginId.style.color = '#dd2424';
-        loginIdCheck = true;
+        loginIdCheck = false;
       }
+
     }
 
     const pwCheck = () => {
@@ -517,7 +518,7 @@
         passwordCheck = true;
       } else {
         resultPw.innerHTML = "8~16자의 영문 소문자(필수), 숫자(필수), 특수기호만 사용 가능합니다.";
-        passwordCheck = true;
+        passwordCheck = false;
       }
     }
 
@@ -532,7 +533,7 @@
           resultPwAgain.innerHTML = '비밀번호가 일치합니다.';
           resultPwAgain.style.color = 'dodgerBlue';
         } else {
-          passwordCheck2 = true;
+          passwordCheck2 = false;
           resultPwAgain.innerHTML = '비밀번호가 일치하지 않습니다.';
           resultPwAgain.style.color = '#dd2424';
         }
@@ -561,14 +562,14 @@
               resultName.innerHTML = '사용가능한 닉네임입니다.';
               resultName.style.color = 'dodgerBlue';
             } else {
-              nameCheck = true;
+              nameCheck = false;
               resultName.innerHTML = '이미 사용중인 닉네임입니다.';
               resultName.style.color = '#dd2424';
             }
           }
         });
       } else {
-        nameCheck = true;
+        nameCheck = false;
         resultName.innerHTML = '닉네임을 입력해주세요.';
         resultName.style.color = '#dd2424';
       }
@@ -583,36 +584,37 @@
       const exp = /^(?=.*[a-z])(?=.*@)(?=.*\.)[a-z\d@\.]{5,30}$/;
 
 
-        if (memberEmail.length != 0 && memberEmail.match(exp)) {
-          $.ajax({
-            type: "post",
-            url: "/member/email-authentication",
-            data: {"memberEmail": memberEmail},
-            dataType: "text",
-            beforeSend: function(result){
-              result.setRequestHeader(header, token);
-            },
-            success: function (result) {
-              code = result;
-              Swal.fire("메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.");
-              resultEmail.innerHTML = '';
-            }
-          });
+      if (memberEmail.length != 0 && memberEmail.match(exp)) {
+        $.ajax({
+          type: "post",
+          url: "/member/email-authentication",
+          data: {"memberEmail": memberEmail},
+          dataType: "text",
+          beforeSend: function(result){
+            result.setRequestHeader(header, token);
+          },
+          success: function (result) {
+            code = result;
+            Swal.fire("메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.");
+            resultEmail.innerHTML = '';
+          }
+        });
       } else {
         resultEmail.innerHTML = '이메일을 다시 확인해주세요.';
         resultEmail.style.color = '#dd2424';
       }
+
     }
 
     const emailNumberCheck = () => {
       const resultAuth = document.getElementById("result-auth");
       const inputNumber = document.getElementById("input-auth").value;
       if (inputNumber == code) {
-          emailCheck = true;
+        emailCheck = true;
         resultAuth.innerHTML = "인증번호가 일치합니다.";
         resultAuth.style.color = "dodgerblue";
       } else {
-          emailCheck = true;
+        emailCheck = false;
         resultAuth.innerHTML = "인증번호를 다시 확인해주세요.";
         resultAuth.style.color = '#dd2424';
       }
@@ -623,12 +625,12 @@
 
       if (loginIdCheck == true && passwordCheck == true && passwordCheck2 == true && nameCheck == true && emailCheck == true) {
         Swal.fire('회원가입이 완료되었습니다.')
-          .then((result) => {
-            if (result.isConfirmed) {
-              memberSaveForm.submit();
-              afterHTML.setAttribute('aria-hidden', 'true');
-            }
-          });
+            .then((result) => {
+              if (result.isConfirmed) {
+                memberSaveForm.submit();
+                afterHTML.setAttribute('aria-hidden', 'true');
+              }
+            });
       } else {
         Swal.fire({
           icon: 'error',
