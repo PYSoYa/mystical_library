@@ -91,14 +91,14 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 #wrap .viewer-container .content-footer {width: 100%; display: flex; border-spacing: 0; border-collapse: collapse; border-top: 1px solid #ccc;}
 #wrap .viewer-container .content-footer .rate-wrap {padding: 15px 0; vertical-align: middle; display: flex; flex-direction: row;}
 #wrap .viewer-container .content-footer .rate-wrap .rate-desc-wrap {padding-left: 16px;}
-#wrap .viewer-container .content-footer .rate-wrap .rate-desc {font-size: 1.25rem; font-weight: 600; padding-right: 16px; cursor: default;}
+#wrap .viewer-container .content-footer .rate-wrap .rate-desc {transition: all 0.5s ease; font-size: 1.25rem; font-weight: 600; padding-right: 16px; cursor: default;}
 #wrap .viewer-container .content-footer .rate-wrap .last-star {padding-right: 16px;}
 #wrap .viewer-container .content-footer .rate-wrap .star-form > button:not(:last-child) {margin-right: 1rem;}
 #wrap .viewer-container .content-footer .star-wrap .love {color: #dd2424; cursor: pointer !important;}
 #wrap .viewer-container .content-footer .star-wrap .love:hover {opacity: 0.5; transition: 0.2s ease;}
 #wrap .viewer-container .content-footer .rate-wrap .star-btn,
 #wrap .viewer-container .content-footer .btn-wrap .edit-btn,
-#wrap .viewer-container .content-footer .btn-wrap .delete-btn {color: #1e9eff; outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
+#wrap .viewer-container .content-footer .btn-wrap .delete-btn {transition: all 0.5s ease; color: #1e9eff; outline: none; border: 1px solid #1e9eff; background-color: #fff; width: 6rem; position: relative; padding: 4px; font-size: 0.938rem; box-shadow: 0 0.125rem 0.313rem #00000026;}
 #wrap .viewer-container .content-footer .rate-wrap .star-btn:hover,
 #wrap .viewer-container .content-footer .btn-wrap .edit-btn:hover,
 #wrap .viewer-container .content-footer .btn-wrap .delete-btn:hover {background-color: #1e9eff; color: #fff; transition: 0.3s ease;}
@@ -210,8 +210,6 @@ h1, h2, h3, h4, button, input, p, span {letter-spacing: -0.03em;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn span {color: #fff; transition: color 0.3s; min-width: 78px; height: 38px; display: block; padding: 0 30px; border: 1px solid #333; text-align: center; font-size: 15px; line-height: 36px; position: relative;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-update-btn:hover span {color: #1e9eff !important; background-color: #fff; border: 1px solid #1e9eff;}
 .comment-container .comment-list-container .list-wrap ul li .content .comment-cancel-btn:hover span {color: #333 !important; background-color: #fff; border: 1px solid #333;}
-
-
 /* 다크 모드 */
 #wrap .viewer-wrap .viewer.dark {background: #2b2b2b; transition: all 0.5s ease;}
 #wrap .viewer-wrap .viewer .content.dark p {color: #ccc; transition: all 0.5s ease;}
