@@ -116,6 +116,14 @@
         <span class="quantity-episode">전체 (</span>
         <span class="quantity-episode" th:text="${episodeSize}"></span>
         <span class="quantity-episode">)</span>
+        <div class="order-wrap">
+          <div class="from-first-wrap">
+            <span class="from-first" th:onclick="from(1)">등록순</span>
+          </div>
+          <div class="from-last-wrap">
+            <span class="from-last" th:onclick="from(0)">최신순</span>
+          </div>
+        </div>
       </div>
       <div class="episode-list-wrap" th:each="episode:${episodeList}">
         <div class="img-wrap">
@@ -226,6 +234,9 @@
 <th:block th:replace="layout/footer :: footer"></th:block>
 </body>
 <script th:inline="javascript">
+    const from = (alignmentId) => {
+        location.href = "/book/no?id="+[[${book.id}]] + "&alignmentId=" + alignmentId;
+    }
   const first = () => {
     Swal.fire({
       title: '로그인 후에 이용가능한 메뉴입니다.',
