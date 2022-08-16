@@ -85,7 +85,7 @@
               </div>
               <div class="total-amount">
                 <div class="title">총 구매 금액</div>
-                <div id="count" class="detail history-detail-amount">300 포인트</div>
+                <div id="count" class="detail history-detail-amount"></div>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@
     for (let i =0; i<minusPoint.length;i++){
       sum += parseInt(minusPoint[i].innerHTML);
     }
-    count.innerHTML =String(sum);
+    count.innerHTML = String(sum);
   }
 
   const role = [[${member.role}]];
