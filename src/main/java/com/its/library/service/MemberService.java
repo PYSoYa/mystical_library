@@ -202,6 +202,14 @@ public class MemberService {
                 memberImg.transferTo(new File(savePath));
                 memberEntity.setMemberImgName(memberImgName);
             }
+            if (memberDTO.getInstagramAddress().equals("")) {
+                memberEntity.setInstagramAddress(null);
+            } if (memberDTO.getTwitterAddress().equals("")) {
+                memberEntity.setTwitterAddress(null);
+            } if (memberDTO.getFacebookAddress().equals("")) {
+                memberEntity.setFacebookAddress(null);
+            }
+
             if (memberDTO.getInstagramAddress().length() != 0) {
                 memberEntity.setInstagramAddress(memberDTO.getInstagramAddress());
             }
