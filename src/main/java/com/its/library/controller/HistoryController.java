@@ -66,9 +66,8 @@ public class HistoryController {
     }
 
     @PostMapping("/episodeCheck")
-    public @ResponseBody String episodeCheck(@RequestParam("memberId") Long memberId,
-                                             @RequestParam("episodeId") Long episodeId) {
-        String result = historyService.episodeCheck(memberId, episodeId);
+    public @ResponseBody String episodeCheck(@ModelAttribute HistoryDTO historyDTO) {
+        String result = historyService.episodeCheck(historyDTO);
         return result;
     }
 }
