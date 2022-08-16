@@ -3,14 +3,8 @@ package com.its.library.service;
 import com.its.library.dto.BookDTO;
 import com.its.library.dto.EpisodeDTO;
 import com.its.library.dto.HistoryDTO;
-import com.its.library.entity.BookEntity;
-import com.its.library.entity.EpisodeEntity;
-import com.its.library.entity.HistoryEntity;
-import com.its.library.entity.MemberEntity;
-import com.its.library.repository.BookRepository;
-import com.its.library.repository.EpisodeRepository;
-import com.its.library.repository.HistoryRepository;
-import com.its.library.repository.MemberRepository;
+import com.its.library.entity.*;
+import com.its.library.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +20,7 @@ public class HistoryService {
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
     private final EpisodeRepository episodeRepository;
+    private final BoxRepository boxRepository;
 
     public String historyUpdate(HistoryDTO historyDTO) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
@@ -134,14 +129,19 @@ public class HistoryService {
         }
     }
 
-    public String episodeCheck(Long memberId, Long episodeId) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberId);
-        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(episodeId);
+    public String episodeCheck(HistoryDTO historyDTO) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
+        Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyDTO.getEpisodeId());
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
             Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
+            List<BoxEntity> boxEntityList = boxRepository.findByMemberEntityAndEpisodeId(memberEntity, historyDTO.getEpisodeId());
             if (optionalHistoryEntity.isPresent()) {
+                return "내역있음";
+            }
+            if (boxEntityList.size() != 0) {
+                historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "내역있음";
             }
         }
