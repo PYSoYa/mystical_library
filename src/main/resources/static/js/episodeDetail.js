@@ -62,8 +62,9 @@ window.onload = () => {
       document.querySelector('.viewer').classList.add('dark');
       document.querySelector('.content').classList.add('dark');
       document.querySelector('.content-footer').classList.add('dark');
-      if (document.querySelector('.star-desc') != null) {
-        document.querySelector('.star-desc').classList.add('dark');
+      document.querySelector('.star-desc').classList.add('dark');
+      if (document.querySelector('.star-btn') != null) {
+        document.querySelector('.star-btn').classList.add('dark');
       }
       if (document.querySelector('.rate-desc') != null) {
         document.querySelector('.rate-desc').classList.add('dark');
