@@ -284,7 +284,9 @@ public class MemberController {
     @PostMapping("/find-by-email")
     public @ResponseBody String findByEmail(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
-        if (memberDTO != null) {
+        if(memberDTO.getProvider() != null) {
+            return memberDTO.getProvider();
+        } else if (memberDTO != null) {
             String emailNum = memberService.emailAuthentication(memberEmail);
             return emailNum;
         } else {
@@ -309,7 +311,9 @@ public class MemberController {
     @PostMapping("/find-by-login-id-and-email")
     public @ResponseBody String findByLoginIdAndMemberEmail(@ModelAttribute MemberDTO memberDTO) {
         MemberDTO findDTO = memberService.findByLoginIdAndMemberEmail(memberDTO);
-        if (findDTO != null) {
+        if(memberDTO.getProvider() != null) {
+            return memberDTO.getProvider();
+        } else if (memberDTO != null) {
             String emailNum = memberService.emailAuthentication(memberDTO.getMemberEmail());
             return emailNum;
         } else {

@@ -116,7 +116,13 @@
       showDenyButton: 'NO',
     }).then(result => {
       if (result.isConfirmed) {
-        location.href = '/member/delete/' + [[${member.id}]];
+        Swal.fire({
+          text: '회원 탈퇴가 완료되었습니다.',
+          showConfirmButton: false
+        });
+        setTimeout(function () {
+          location.href = '/member/delete/' + [[${member.id}]];
+        }, 1000);
       }
     });
   }

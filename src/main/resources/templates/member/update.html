@@ -179,9 +179,15 @@
     if (updatePassword.length != 0 && updatePassword2.length != 0) {
       if (updatePassword == updatePassword2) {
         nameDupCheck();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          text: '비밀번호가 일치하지 않습니다.',
+          showConfirmButton: false
+        });
       }
     } else {
-      nameDupCheck();
+        nameDupCheck();
     }
   }
 
@@ -201,7 +207,10 @@
         },
         success: function (result) {
           if (result == "ok") {
-            Swal.fire('정보수정이 완료되었습니다.').then((result) => {
+            Swal.fire({
+              text: '정보수정이 완료되었습니다.',
+              showConfirmButton: true
+            }).then((result) => {
               if (result.isConfirmed) {
                 setTimeout(function () {
                   memberUpdateForm.submit();
@@ -218,7 +227,10 @@
         }
       });
     } else {
-      Swal.fire('정보수정이 완료되었습니다.').then((result) => {
+      Swal.fire({
+        text: '정보수정이 완료되었습니다.',
+        showConfirmButton: true
+      }).then((result) => {
         if (result.isConfirmed) {
           setTimeout(function () {
             memberUpdateForm.submit();
@@ -237,7 +249,13 @@
       showDenyButton: 'NO',
     }).then(result => {
       if (result.isConfirmed) {
-        location.href = '/member/delete/' + [[${member.id}]];
+        Swal.fire({
+          text: '회원 탈퇴가 완료되었습니다.',
+          showConfirmButton: false
+        });
+        setTimeout(function () {
+          location.href = '/member/delete/' + [[${member.id}]];
+        }, 1000);
       }
     });
   }
