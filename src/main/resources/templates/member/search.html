@@ -35,7 +35,9 @@
           </div>
           <div class="detail-wrap">
             <div class="title-wrap member-title-wrap">
-              <h5 class="title" th:text="${member.memberName}"></h5>
+              <a th:href="@{|/member/myPage/${member.id}|}">
+                <h5 class="title" th:text="${member.memberName}"></h5>
+              </a>
             </div>
             <div class="intro-wrap member-intro-wrap">
               <span class="intro" th:text="${member.introduction}"></span>

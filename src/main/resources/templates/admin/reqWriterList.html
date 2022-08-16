@@ -69,7 +69,7 @@
                   </tr>
                   <tr th:each="member:${memberList}">
                     <td th:text="${member.id}"></td>
-                    <td th:text="${member.memberName}"></td>
+                    <td><a th:href="@{|/member/myPage/${member.id}|}" th:text="${member.memberName}"></a></td>
                     <td th:text="${member.introduction}"></td>
                     <td><input type="button" class="accept-btn" th:value="승인" th:onclick="reqWriterAgree([[${member.id}]])"></td>
                     <td><input type="button" class="deny-btn" th:value="거절" th:onclick="reqWriterDelete([[${member.id}]])"></td>

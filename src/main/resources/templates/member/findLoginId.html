@@ -72,11 +72,33 @@
           xhr.setRequestHeader(header, token);
         },
         success: function (result) {
-          if (result != 'empty') {
-            code = result;
-            Swal.fire('메일 전송이 완료되었습니다.\n확인 후 인증번호를 입력해주세요.');
+          if (result == 'naver') {
+            Swal.fire({
+              text: '회원님은 네이버 로그인 USER 입니다.'
+            });
+          } else if (result == 'google') {
+            Swal.fire({
+              text: '회원님은 구글 로그인 USER 입니다.'
+            });
+          } else if (result == 'facebook') {
+            Swal.fire({
+              text: '회원님은 페이스북 로그인 USER 입니다.'
+            });
+          } else if (result == 'kakao') {
+            Swal.fire({
+              text: '회원님은 카카오 로그인 USER 입니다.'
+            });
+          } else if (result == 'github') {
+            Swal.fire({
+              text: '회원님은깃허브 로그인 USER 입니다.'
+            });
+          } else if (result == 'empty') {
+            resultEmail.innerHTML = '해당하는 이메일이 없습니다.\n이메일을 다시 확인해주세요.';
           } else {
-            resultEmail.innerHTML = '해당하는 이메일이 없습니다. 이메일을 다시 확인해주세요.';
+            code = result;
+            Swal.fire({
+              html: '메일 전송이 완료되었습니다.<br>확인 후 인증번호를 입력해주세요.',
+            });
           }
         }
       });
@@ -115,17 +137,36 @@
         },
         success: function (result) {
           if (result.provider == null) {
-            Swal.fire('회원님의 로그인 아이디는 ' + "'" + result.loginId + "'" + ' 입니다.');
-          } else if (result.provider == 'naver') {
-            Swal.fire('회원님은 네이버 로그인 USER 입니다.');
-          } else if (result.provider == 'google') {
-            Swal.fire('회원님은 구글 로그인 USER 입니다.');
-          } else if (result.provider == 'facebook') {
-            Swal.fire('회원님은 페이스북 로그인 USER 입니다.');
-          } else if (result.provider == 'kakao') {
-            Swal.fire('회원님은 카카오 로그인 USER 입니다.');
-          } else if (result.provider == 'github') {
-            Swal.fire('회원님은 깃허브 로그인 USER 입니다.');
+            Swal.fire({
+              html: '회원님의 로그인 아이디는<br>' + result.loginId + '</br>입니다.',
+              showConfirmButton: true,
+            }).then(result => {
+              if (result.isConfirmed()) {
+                setTimeout(function () {
+                  location.href = '/';
+                });
+              }
+            });
+          } else if (result == 'naver') {
+            Swal.fire({
+              text: '회원님은 네이버 로그인 USER 입니다.'
+            });
+          } else if (result == 'google') {
+            Swal.fire({
+              text: '회원님은 구글 로그인 USER 입니다.'
+            });
+          } else if (result == 'facebook') {
+            Swal.fire({
+              text: '회원님은 페이스북 로그인 USER 입니다.'
+            });
+          } else if (result == 'kakao') {
+            Swal.fire({
+              text: '회원님은 카카오 로그인 USER 입니다.'
+            });
+          } else if (result == 'github') {
+            Swal.fire({
+              text: '회원님은깃허브 로그인 USER 입니다.'
+            });
           }
         }
       });

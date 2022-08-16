@@ -92,7 +92,7 @@ public class MemberController {
             MemberDTO findDTO = memberService.findByLoginId(loginId);
             model.addAttribute("authentication", findDTO);
 
-            if (findDTO.getRole().equals("ROLE_ADMIN")) {
+            if (findDTO.getRole().equals("ROLE_ADMIN") && memberDTO.getRole().equals("ROLE_ADMIN")) {
                 return "redirect:/admin/book-list";
             }
             List<WishDTO> wishDTOList = wishService.findByMemberName(findDTO.getMemberName());
@@ -285,6 +285,9 @@ public class MemberController {
     public @ResponseBody String findByEmail(@RequestParam String memberEmail) {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
         if (memberDTO != null) {
+            if (memberDTO.getProvider() != null) {
+                return memberDTO.getProvider();
+            }
             String emailNum = memberService.emailAuthentication(memberEmail);
             return emailNum;
         } else {
@@ -310,6 +313,9 @@ public class MemberController {
     public @ResponseBody String findByLoginIdAndMemberEmail(@ModelAttribute MemberDTO memberDTO) {
         MemberDTO findDTO = memberService.findByLoginIdAndMemberEmail(memberDTO);
         if (findDTO != null) {
+            if (findDTO.getProvider() != null) {
+                return findDTO.getProvider();
+            }
             String emailNum = memberService.emailAuthentication(memberDTO.getMemberEmail());
             return emailNum;
         } else {
