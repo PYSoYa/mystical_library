@@ -5,7 +5,7 @@
 .profile-detail-container {margin-top: 1.25rem; position: relative;}
 .profile-detail-wrap {display: block; position: relative; width: 100%; overflow: hidden; -ms-overflow-style: none; text-align: center; justify-content: center; padding: 2rem 1.25rem 2.25rem 1.25rem; border-bottom: 1px solid #e5e5e5; margin-bottom: 1.25rem;}
 .profile-image-wrap {margin-bottom: 1.25rem; display: inline-block;}
-.profile-image-wrap img {width: 7.5rem; height: 7.5rem; border-radius: 50%;}
+.profile-image-wrap img {width: 12rem; height: 12rem; border-radius: 50%;}
 .profile-author-wrap {position: relative; margin-bottom: 1.25rem;}
 .profile-author-wrap h5 {font-weight: 600; font-size: 1.25rem; white-space: initial;}
 .profile-intro-wrap {position: relative; margin-bottom: 1.25rem;}

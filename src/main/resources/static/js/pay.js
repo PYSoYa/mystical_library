@@ -23,12 +23,7 @@ const requestPay = (id) => {
         success: function (result) {
           console.log("결제완료");
           if (result === "ok") {
-            Swal.fire({
-              text: '포인트 충전이 완료되었어요!',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1200
-            });
+c
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',

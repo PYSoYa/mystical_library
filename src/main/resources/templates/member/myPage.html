@@ -257,12 +257,12 @@
             },
             success: function (result) {
               if (result !== 'no') {
-                Swal.fire({
-                  icon: 'success',
-                  title: '비밀번호가 일치해요.',
-                  showConfirmButton: false,
-                  timer: 1000
-                });
+                  Swal.fire({
+                      text: '비밀번호가 일치합니다.',
+                      icon: 'success',
+                      showConfirmButton: false,
+                      timer: 1000
+                  });
                 setTimeout(() => {
                   location.href = '/member/update-form/' + id
                 }, 1000)
