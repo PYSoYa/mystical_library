@@ -230,7 +230,7 @@
     // 비밀번호 입력 후 이동 해야 함
 
     Swal.fire({
-      title: '비밀번호를 입력해주세요.',
+        text: '비밀번호를 입력해주세요.',
       input: 'password',
       inputAttributes: {autocapitalize: 'off'},
       showCancelButton: true,
@@ -250,7 +250,7 @@
             if (result !== 'no') {
               Swal.fire({
                 icon: 'success',
-                title: '비밀번호가 일치해요.',
+                  text: '비밀번호가 일치해요.',
                 showConfirmButton: false,
                 timer: 1500
               });
@@ -258,7 +258,7 @@
             } else {
               Swal.fire({
                 icon: 'error',
-                title: '비밀번호가 달라요.'
+                  text: '비밀번호가 달라요.'
               })
             }
           },

@@ -90,6 +90,9 @@
       </div>
     </div>
   </div>
+  <button id="moveTop" class="">
+    <span>최상단으로 이동</span>
+  </button>
   <div class="recent-debut-post-container">
     <div class="recent-debut-post-title-container">
       <div class="recent-debut-post-title-wrap">
@@ -381,6 +384,20 @@
     }
     setTimeout(slideClick, 5000);
     setInterval(countNotice, 3000);
+
+    const topButton = document.getElementById('moveTop');
+
+    document.addEventListener('scroll', function () {
+        if (document.documentElement.scrollTop === 0) {
+            topButton.className = '';
+        } else {
+            topButton.className = 'on';
+        }
+    });
+
+    topButton.addEventListener('click', function () {
+        document.documentElement.scrollTop = 0;
+    });
   }
 
   const bookSaveForm = () => {

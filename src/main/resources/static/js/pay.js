@@ -23,7 +23,7 @@ const requestPay = (id) => {
         success: function (result) {
           console.log("결제완료");
           if (result === "ok") {
-c
+
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',

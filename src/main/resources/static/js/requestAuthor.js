@@ -1,7 +1,7 @@
 const requestAuthor = () => {
   if (role != 'ROLE_WRITER'){
     Swal.fire({
-      title: '작가 신청을 할까요?',
+      text: '작가 신청을 할까요?',
       showDenyButton: true,
       confirmButtonText: '네!',
       denyButtonText: '아니요..'
