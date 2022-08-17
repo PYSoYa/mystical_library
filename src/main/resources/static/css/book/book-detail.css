@@ -45,6 +45,7 @@
 
 .book-detail-wrap .more-detail-wrap {display: flex; width: 30rem; margin-left: 3.825rem; text-align: center; justify-content: center;}
 .book-detail-wrap .more-detail-wrap > div {padding: 0 2rem;}
+.book-detail-wrap .more-detail-wrap > div .icon-wrap {height: 1.5rem;}
 .book-detail-wrap .more-detail-wrap > div:not(:last-child) {border-right: 1px solid #e5e5e5;}
 .book-detail-wrap .more-detail-wrap .desc-wrap {padding-top: 0.25rem;}
 .book-detail-wrap .more-detail-wrap .star-wrap {display: flex; flex-direction: column;}

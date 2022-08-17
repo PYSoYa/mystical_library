@@ -1,8 +1,5 @@
 const requestPay = (id) => {
-  let cash = $('input[name=point-quantity]:checked').val();
-  if (cash >= 10000) {
-    cash = cash * 1.1;
-  }
+  let cash = parseInt($('input[name=point-quantity]:checked').val());
 
   const IMP = window.IMP;
   IMP.init('imp87611393');
@@ -15,6 +12,9 @@ const requestPay = (id) => {
   }, function (rsp) {
     //결제 성공시 구매한 포인트를 해당 회원 컬럼에 추가
     if (rsp.success) {
+      if (cash >= 10000) {
+        cash = cash + (cash / 10)
+      }
       $.ajax({
         type: "get",
         url: "/member/kkoPay",
@@ -23,7 +23,14 @@ const requestPay = (id) => {
         success: function (result) {
           console.log("결제완료");
           if (result === "ok") {
-
+            Swal.fire({
+              text: '결제가 완료되었습니다.',
+              showConfirmButton: false,
+              timer: 1200
+            });
+            setTimeout(function() {
+              location.reload();
+            }, 1000);
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',
@@ -34,18 +41,18 @@ const requestPay = (id) => {
           }
         }
       });
-
-      //포인트 충전내역에 해당 기록 save
-      $.ajax({
-        type: "get",
-        url: "/point/point-history-save",
-        data: {"id": id, "cash": cash},
-        dataType: "text",
-        success: function (result) {
-
-        }
-      });
     }
+
+    //포인트 충전내역에 해당 기록 save
+    $.ajax({
+      type: "get",
+      url: "/point/point-history-save",
+      data: {"id": id, "cash": cash},
+      dataType: "text",
+      success: function (result) {
+
+      }
+    });
   });
 }
 
