@@ -45,7 +45,7 @@ public class PointEntity extends BaseEntity  {
         PointEntity pointEntity = new PointEntity();
         pointEntity.setPlusPoint(pointDTO.getPlusPoint());
         pointEntity.setMemberEntity(memberEntity);
-        pointEntity.setTotalPoint(memberEntity.getMemberPoint());
+        pointEntity.setTotalPoint(memberEntity.getMemberPoint()+pointDTO.getPlusPoint());
         return pointEntity;
     }
 

@@ -183,6 +183,7 @@ public class WishService {
         return wishDTOList;
     }
 
+    // 로그인한 사용자 관심목록
     public List<WishDTO> findByBook(String memberName) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();
@@ -195,6 +196,7 @@ public class WishService {
         return wishDTOList;
     }
 
+    // 해당 책을 관심한 회원수
     public List<WishDTO> findByBookWish(Long bookId) {
         List<WishEntity> wishEntityList = new ArrayList<>();
         List<WishDTO> wishDTOList = new ArrayList<>();

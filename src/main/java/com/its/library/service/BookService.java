@@ -62,6 +62,7 @@ public class BookService {
 
     }
 
+    // 책에대한 정보 찾기
     public BookDTO findById(Long id) {
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
         if (optionalBookEntity.isPresent()) {
@@ -116,6 +117,7 @@ public class BookService {
 
     }
 
+    //
     public EpisodeDTO episodeFindById(Long id) {
         BookEntity bookEntity = new BookEntity();
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
@@ -140,6 +142,7 @@ public class BookService {
         }
     }
 
+    // 책 상세페이지, 등록순, 최신수 페이징 정렬
     @Transactional
     public Page<EpisodeDTO> episodeFindAll(Long id, Pageable pageable, Long alignmentId) {
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(id);
@@ -153,7 +156,9 @@ public class BookService {
 
         page = (page == 1) ? 0 : (page - 1);
         if (alignmentId == 0) { // 최신순
-            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")), bookEntity.getId());
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntity(
+                    PageRequest.of(page, PagingConst.PAGE_LIMIT,
+                            Sort.by(Sort.Direction.DESC, "id")), bookEntity.getId());
 
             Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
@@ -172,7 +177,9 @@ public class BookService {
             return episodeDTOList;
 
         } else if (alignmentId == 1) { // 등록순
-            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntityOrderByIdAsc(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.ASC, "id")), bookEntity.getId());
+            Page<EpisodeEntity> episodeEntities = episodeRepository.findByBookEntityOrderByIdAsc(
+                    PageRequest.of(page, PagingConst.PAGE_LIMIT,
+                            Sort.by(Sort.Direction.ASC, "id")), bookEntity.getId());
             Page<EpisodeDTO> episodeDTOList = episodeEntities.map(
 
                     episode -> new EpisodeDTO(episode.getId(),

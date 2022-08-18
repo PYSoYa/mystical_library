@@ -119,7 +119,7 @@ public class HistoryService {
             return null;
         }
     }
-
+    // 이어보기
     public Long findByAgain(Long bookId, Long memberId) {
         List<HistoryEntity> historyEntityList = historyRepository.findByAgain(memberId, bookId);
         if (historyEntityList.get(0).getEpisodeEntity().getId() != null) {
@@ -130,17 +130,22 @@ public class HistoryService {
     }
 
     public String episodeCheck(HistoryDTO historyDTO) {
+        System.out.println("historyDTO.getEpisodeId() = " + historyDTO.getEpisodeId());
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(historyDTO.getMemberId());
         Optional<EpisodeEntity> optionalEpisodeEntity = episodeRepository.findById(historyDTO.getEpisodeId());
         if (optionalMemberEntity.isPresent() && optionalEpisodeEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             EpisodeEntity episodeEntity = optionalEpisodeEntity.get();
-            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
+            System.out.println("episodeEntity = " + episodeEntity.getId());
+            System.out.println("memberEntity = " + memberEntity.getId());
             List<BoxEntity> boxEntityList = boxRepository.findByMemberEntityAndEpisodeId(memberEntity, historyDTO.getEpisodeId());
+            Optional<HistoryEntity> optionalHistoryEntity = historyRepository.findByMemberEntityAndEpisodeEntity(memberEntity, episodeEntity);
             if (optionalHistoryEntity.isPresent()) {
+                System.out.println("히스토리있음");
                 return "내역있음";
             }
             if (boxEntityList.size() != 0) {
+                System.out.println("박스에만있음");
                 historyRepository.save(HistoryEntity.saveEntity(historyDTO, memberEntity, episodeEntity));
                 return "내역있음";
             }

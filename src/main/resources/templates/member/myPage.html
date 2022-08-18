@@ -255,7 +255,7 @@
       location.href = '/member/update-form/' + id;
     } else {
       Swal.fire({
-        title: '비밀번호를 입력해주세요.',
+          text: '비밀번호를 입력해주세요.',
         input: 'password',
         inputAttributes: {autocapitalize: 'off'},
         showCancelButton: true,
@@ -285,7 +285,7 @@
               } else {
                 Swal.fire({
                   icon: 'error',
-                  title: '비밀번호가 달라요.'
+                    text: '비밀번호가 달라요.'
                 });
               }
             },
