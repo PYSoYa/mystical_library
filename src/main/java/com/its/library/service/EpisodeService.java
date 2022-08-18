@@ -50,6 +50,7 @@ public class EpisodeService {
         episodeRepository.deleteById(id);
     }
 
+    // 책에 해당하는 회차 목록전체 리스트
     public List<EpisodeDTO> episodeFindAll(Long bookId) {
         List<EpisodeEntity> episodeEntityList = new ArrayList<>();
         List<EpisodeDTO> episodeDTOList = new ArrayList<>();

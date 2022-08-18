@@ -28,9 +28,7 @@ const requestPay = (id) => {
               showConfirmButton: false,
               timer: 1200
             });
-            setTimeout(function() {
-              location.reload();
-            }, 1000);
+
           } else {
             Swal.fire({
               text: '오류가 발생했어요! 관리자에게 문의하세요.',
@@ -50,7 +48,9 @@ const requestPay = (id) => {
       data: {"id": id, "cash": cash},
       dataType: "text",
       success: function (result) {
-
+        setTimeout(function() {
+          location.reload();
+        }, 1000);
       }
     });
   });

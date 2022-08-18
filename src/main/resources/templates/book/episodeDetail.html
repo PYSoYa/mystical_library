@@ -155,13 +155,13 @@
     <div class="body-area">
       <div class="nav-btn">
         <a th:if="${before != 0}">
-        <button type="button" class="prev-btn" th:onclick="before([[${episode.payment}]])">
+        <button type="button" class="prev-btn" th:onclick="before([[${payment}]])">
           <span></span>
           <strong>이전 화</strong>
         </button>
         </a>
         <a th:if="${after != 0}">
-        <button type="button" class="next-btn" th:onclick="after([[${episode.payment}]])">
+        <button type="button" class="next-btn" th:onclick="after([[${payment}]])">
           <span></span>
           <strong>다음 화</strong>
         </button>
@@ -292,16 +292,19 @@
       url: "/history/episodeCheck",
       data: {
         "memberId": memberId,
-        "episodeId": episodeId
+        "episodeId": episodeId,
+          "bookId": bookId
       },
       dataType: "text",
       beforeSend: function (xhr) {
         xhr.setRequestHeader(header, token);
       },
       success: function (result) {
+          console.log(result);
         if (result == "내역있음") {
           location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
         } else if (result == "내역없음") {
+
           if (payment != 0) {
             Swal.fire({
               icon: 'info',

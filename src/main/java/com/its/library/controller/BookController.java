@@ -260,16 +260,20 @@ public class BookController {
             BookDTO bookDTO = bookService.findById(id);
             if (alignmentId == 0) {
                 Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
-                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() /
+                        PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ?
+                        startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
                 model.addAttribute("episodeList", episodeDTOList);
                 model.addAttribute("alignmentId", alignmentId);
                 model.addAttribute("startPage", startPage);
                 model.addAttribute("endPage", endPage);
             } else if (alignmentId == 1) {
                 Page<EpisodeDTO> episodeDTOList = bookService.episodeFindAll(id, pageable, alignmentId);
-                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
-                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ? startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
+                int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() /
+                        PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+                int endPage = ((startPage + PagingConst.BLOCK_LIMIT - 1) < episodeDTOList.getTotalPages()) ?
+                        startPage + PagingConst.BLOCK_LIMIT - 1 : episodeDTOList.getTotalPages();
                 model.addAttribute("episodeList", episodeDTOList);
                 model.addAttribute("alignmentId", alignmentId);
                 model.addAttribute("startPage", startPage);
@@ -367,18 +371,22 @@ public class BookController {
         for (int i = 0; i < episodeDTOList1.size(); i++) {
             if (episodeDTOList1.get(i).getId() == id && i != 0) {
                 if (i != episodeDTOList1.size() - 1) {
-                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
-                    model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId()); // 이전화
+                    model.addAttribute("after", episodeDTOList1.get(i + 1).getId()); // 다음화
+                    model.addAttribute("payment", episodeDTOList1.get(i + 1).getPayment()); // 무료,유료 판단 컬럼
                 } else {
-                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId());
-                    model.addAttribute("after", 0);
+                    model.addAttribute("before", episodeDTOList1.get(i - 1).getId()); // 이전화
+                    model.addAttribute("after", 0); // 다음화
+                    model.addAttribute("payment", episodeDTOList1.get(i - 1).getPayment()); // 무료, 유료 판단 컬럼
                 }
             } else if (episodeDTOList1.size() == 1 && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", 0);
+                model.addAttribute("payment", 0);
             } else if (episodeDTOList1.get(i).getId() == id && i == 0) {
                 model.addAttribute("before", 0);
                 model.addAttribute("after", episodeDTOList1.get(i + 1).getId());
+                model.addAttribute("payment", episodeDTOList1.get(i + 1).getPayment());
             }
         }
         model.addAttribute("id", id);

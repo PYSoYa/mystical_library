@@ -44,6 +44,7 @@ public class CommentService {
         return commentDTOList;
     }
 
+    // 책에 해당하는 회차 전체의 댓글 리스트
     public List<CommentDTO> bookCommentList(Long id) {
         List<CommentEntity> commentEntityList = commentRepository.findByBookId(id);
         List<CommentDTO> commentDTOList = new ArrayList<>();

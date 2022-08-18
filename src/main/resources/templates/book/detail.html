@@ -354,6 +354,7 @@
           xhr.setRequestHeader(header, token);
       },
       success: function (result) {
+          console.log(result);
           if (result == "내역있음") {
               location.href = "/book/episode?bookId=" + bookId + "&id=" + episodeId;
           } else if (result == "내역없음") {
@@ -379,7 +380,9 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (result) {
-                      if (result === "잔고부족") {
+                        console.log(result);
+
+                        if (result === "잔고부족") {
                         Swal.fire({
                           icon: 'error',
                           text: '보유하신 포인트가 부족합니다.',
@@ -401,7 +404,8 @@
                             xhr.setRequestHeader(header, token);
                           },
                           success: function (result) {
-                            if (result === "ok") {
+                              console.log(result);
+                              if (result === "ok") {
                               $.ajax({
                                 type: "get",
                                 url: "/point/pay/" + memberId,

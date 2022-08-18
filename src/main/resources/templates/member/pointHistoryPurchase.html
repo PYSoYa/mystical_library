@@ -70,7 +70,7 @@
                   <tr>
                     <th>#</th>
                     <th>충전일자</th>
-                    <th>충전 금액</th>
+                    <th>충전 포인트</th>
                   </tr>
                   <tr th:each="point:${plusPointList}">
                     <td th:text="${point.id}"></td>
@@ -80,7 +80,7 @@
                 </table>
               </div>
               <div class="total-amount">
-                <div class="title">총 충전 금액</div>
+                <div class="title">총 충전 포인트</div>
                 <div id="count" class="detail"></div>
               </div>
             </div>
